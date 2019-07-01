@@ -1,0 +1,14 @@
+{
+  "name": "mythgard-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Alex Middeleer",
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.17.x"
+  }
+}
