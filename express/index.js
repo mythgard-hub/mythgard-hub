@@ -1,7 +1,19 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+const http = require("http");
+const { postgraphile } = require("postgraphile");
 
-app.get("/", (req, res) => res.send("Hello World!"));
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+http
+  .createServer(
+    postgraphile(
+      {
+        user: "postgres",
+        database: "postgres",
+        password: "example",
+        host: "db"
+      },
+      "mythgard",
+      {
+        graphiql: true
+      }
+    )
+  )
+  .listen(process.env.PORT || 3000);

@@ -9,6 +9,7 @@
   "author": "Alex Middeleer",
   "license": "MIT",
   "dependencies": {
-    "express": "4.17.x"
+    "express": "4.17.x",
+    "postgraphile": "4.4.x"
   }
 }

@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t dct-express .
+docker build --no-cache -t dct-express .
