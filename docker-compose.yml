@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  db:
+    image: dct-postgres
+    environment:
+      POSTGRES_PASSWORD: example
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+  express:
+    image: dct-express
+    restart: always
+    volumes:
+      - type: bind
+        source: ./express
+        target: /app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+  next:
+    image: dct-next
+    build: "./next"
+    volumes:
+      - type: bind
+        source: ./next
+        target: /app
+      - /app/node_modules
+    ports:
+      - "3001:3000"
