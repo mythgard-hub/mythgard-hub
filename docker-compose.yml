@@ -21,7 +21,7 @@ services:
       - "3000:3000"
   next:
     image: dct-next
-    build: "./next"
+    build: ./next
     volumes:
       - type: bind
         source: ./next

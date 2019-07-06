@@ -6,6 +6,8 @@ COPY package.json package.json
 
 RUN npm i
 
-COPY . .
+COPY pages .
+
+COPY components .
 
 CMD ["npm", "run", "dev"]
