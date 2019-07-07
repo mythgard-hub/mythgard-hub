@@ -4,16 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "4.17.x",
+    "next": "8.1.x",
     "react": "16.8.x",
-    "react-dom": "16.8.x",
-    "next": "8.1.x"
+    "react-dom": "16.8.x"
   }
 }

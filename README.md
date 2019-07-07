@@ -13,8 +13,7 @@ Postgres (data in SQL)
 # Quickstart
 
 1 Install docker
-2 docker swarm init
-3 docker stack deploy -c compose.yml <somename>
+2 docker-compose up
 
 ## Usage: Adminer
 
@@ -45,3 +44,11 @@ Example query:
   }
 }
 ```
+
+## Next
+
+The next service is a simple next.js app. The source files are bound using docker to the /next folder, so you should be able to just edit them with your editor of choice without restarting anything and next will recompile and refresh the page automatically. If you need to add a new npm package, you will either need to kill the remove the next container and then prune the volume, or more easily, docker exec <container-id> /bin.sh and run npm i from inside the container.
+
+## Express
+
+Just a simple node app. The postgraphile-middleware does most of the work. See instructions for Next on how to update add new node modules.
