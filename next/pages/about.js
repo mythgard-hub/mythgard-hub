@@ -1,7 +1,9 @@
-// pages/about.js
+import Layout from "../components/MyLayout.js";
 
-import withLayout from "../components/MyLayout";
-
-const Page = () => <p>This is the about page</p>;
-
-export default withLayout(Page);
+export default function Home() {
+  return (
+    <Layout>
+      <p>This is a fan site for the game mythgard</p>
+    </Layout>
+  );
+}

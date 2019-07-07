@@ -12,9 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-boost": "^0.1.28",
     "express": "4.17.x",
+    "graphql": "^14.0.2",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "8.1.x",
+    "prop-types": "^15.6.2",
     "react": "16.8.x",
-    "react-dom": "16.8.x"
+    "react-apollo": "^2.1.11",
+    "react-dom": "16.8.x",
+    "react-markdown": "^4.1.0"
   }
 }
