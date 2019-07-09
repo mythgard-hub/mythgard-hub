@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build --no-cache -t dct-next .
+docker build --no-cache -t mg-next .

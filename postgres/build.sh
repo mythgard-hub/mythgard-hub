@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t dct-postgres .
+docker build -t mg-postgres .

@@ -7,6 +7,7 @@ export const allCardsQuery = gql`
     allCards {
       nodes {
         id
+        name
         atk
         def
       }
@@ -28,6 +29,7 @@ export default function CardsList() {
                 <li key={card.id}>
                   <div>
                     <span>{index + 1}. </span>
+                    <span>name: {card.name} </span>
                     <span>attack: {card.atk}</span>
                     <span>defence: {card.def}</span>
                   </div>

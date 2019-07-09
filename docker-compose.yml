@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   db:
-    image: dct-postgres
+    image: mg-postgres
     environment:
       POSTGRES_PASSWORD: example
   adminer:
@@ -10,7 +10,7 @@ services:
     ports:
       - "8080:8080"
   express:
-    image: dct-express
+    image: mg-server
     restart: always
     volumes:
       - type: bind
@@ -20,7 +20,7 @@ services:
     ports:
       - "3000:3000"
   next:
-    image: dct-next
+    image: mg-next
     build: ./next
     volumes:
       - type: bind
