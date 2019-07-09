@@ -9,7 +9,7 @@ The stack is Next.js (Node - front-end and SSR) on top of Node with Postgraphile
 
 1. Install docker
 1. docker-compose up
-1. navigate to localhost:3000
+1. navigate to localhost:3001
 
 ## Usage: Adminer
 
