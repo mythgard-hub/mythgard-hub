@@ -2,18 +2,13 @@
 
 This card database + fansite is built on Postgres, Postgraphile, Next.js, and Express.js. Postgres is the sql database. Postgraphile is a GraphQL server that provides api access to Postgres. Express.js proxies requests from the front-end and Next.js, and is the only node that communicates with Postgraphile. Nest.js handles the front-end javascript and server-side rendering.
 
-Next.js (Node - front-end and SSR)
-^
-Express (Node - back-end)
-^
-Postgraphile (GraphQL)
-^
-Postgres (data in SQL)
+The stack is Next.js (Node - front-end and SSR) on top of Node with Postgraphile middleware on top of Postgres.
+
 
 # Quickstart
 
-1 Install docker
-2 docker-compose up
+1. Install docker
+1. docker-compose up
 
 ## Usage: Adminer
 
@@ -49,6 +44,6 @@ Example query:
 
 The next service is a simple next.js app. The source files are bound using docker to the /next folder, so you should be able to just edit them with your editor of choice without restarting anything and next will recompile and refresh the page automatically. If you need to add a new npm package, you will either need to kill the remove the next container and then prune the volume, or more easily, docker exec <container-id> /bin.sh and run npm i from inside the container.
 
-## Express
+## Server
 
 Just a simple node app. The postgraphile-middleware does most of the work. See instructions for Next on how to update add new node modules.
