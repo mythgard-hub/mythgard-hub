@@ -3,6 +3,7 @@ version: "3.7"
 services:
   db:
     image: mg-postgres
+    build: ./postgres
     environment:
       POSTGRES_PASSWORD: example
   adminer:
@@ -11,6 +12,7 @@ services:
       - "8080:8080"
   express:
     image: mg-server
+    build: ./express
     restart: always
     volumes:
       - type: bind
