@@ -4,7 +4,6 @@ This card database + fansite is built on Postgres, Postgraphile, Next.js, and Ex
 
 The stack is Next.js (Node - front-end and SSR) on top of Node with Postgraphile middleware on top of Postgres.
 
-
 # Quickstart
 
 1. Install docker
@@ -48,3 +47,14 @@ The next service is a simple next.js app. The source files are bound using docke
 ## Server
 
 Just a simple node app. The postgraphile-middleware does most of the work. See instructions for Next on how to update add new node modules.
+
+## Testing
+
+End-to-end tests are written using cypress.
+
+1. cd e2e
+1. npx cypress open
+
+## Development Environment
+
+Please use prettier and eslint. Configs are located in next, express, and e2e, but you will need to `npm install` the necessary eslint plugins.
