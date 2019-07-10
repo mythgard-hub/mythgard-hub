@@ -22,5 +22,10 @@
     "react-apollo": "^2.1.11",
     "react-dom": "16.8.x",
     "react-markdown": "^4.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "eslint-config-recommended": "^4.0.0",
+    "eslint-plugin-react": "^7.14.2"
   }
 }

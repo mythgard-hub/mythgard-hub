@@ -1,5 +1,5 @@
-node_modules/*
 .eslintrc
 .prettierrc.yml
 .gitignore
 build.sh
+node_modules/*

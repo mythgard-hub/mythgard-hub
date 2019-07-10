@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm i
+RUN npm i --production
 
 EXPOSE 3000
 

@@ -11,5 +11,10 @@
   "dependencies": {
     "express": "4.17.x",
     "postgraphile": "4.4.x"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-recommended": "^4.0.0",
+    "eslint-plugin-node": "^9.1.0"
   }
 }

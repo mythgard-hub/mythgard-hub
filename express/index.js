@@ -1,16 +1,16 @@
-const http = require("http");
-const { postgraphile } = require("postgraphile");
+const http = require('http');
+const { postgraphile } = require('postgraphile');
 
 http
   .createServer(
     postgraphile(
       {
-        user: "postgres",
-        database: "postgres",
-        password: "example",
-        host: "db"
+        user: 'postgres',
+        database: 'postgres',
+        password: 'example',
+        host: 'db'
       },
-      "mythgard",
+      'mythgard',
       {
         graphiql: true
       }
