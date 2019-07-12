@@ -8,6 +8,27 @@ CREATE TABLE mythgard.card (
   def integer
 );
 
+INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (1, 'Furball', 'rules', 'cat', '1', '2');
+INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (2, 'Imp', 'rules', 'devil', '2', '1');
+INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (3, 'Grizzly Bear', 'rules', 'bear', '2', '2');
+INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (4, 'Dragon', 'flying', 'dragon', '5', '5');
+
+CREATE TABLE mythgard.deck (
+  id SERIAL PRIMARY KEY,
+  name varchar(255),
+  author_id integer
+);
+
+
+CREATE TABLE mythgard.card_deck (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  card_id integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id),
+  FOREIGN KEY (card_id)
+    REFERENCES mythgard.card (id)
+);
 -- CREATE TABLE your_schema.parent_table (
 --     id SERIAL PRIMARY KEY,
 --     name TEXT,
