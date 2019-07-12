@@ -1,5 +1,8 @@
-describe('My First Test', function() {
-  it('Does not do much!', function() {
-    expect(true).to.equal(true);
+describe('Home Page', function() {
+  beforeEach(() => {
+    cy.visit('http://localhost:3001');
+  });
+  it('has a header', function() {
+    cy.get('h1').should('have.text', 'Cards');
   });
 });

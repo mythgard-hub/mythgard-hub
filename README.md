@@ -50,7 +50,7 @@ Just a simple node app. The postgraphile-middleware does most of the work. See i
 
 ## Testing
 
-End-to-end tests are written using cypress.
+End-to-end tests are written using cypress. Ignore example tests except for reference. They will be removed at some point.
 
 1. cd e2e
 1. npx cypress open
