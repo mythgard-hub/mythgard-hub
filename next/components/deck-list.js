@@ -26,7 +26,7 @@ export default function DecksList() {
             <ul>
               {allDecks.nodes.map((card, index) => (
                 <li key={card.id}>
-                  <Link href={`/post?title=${card.id}`} key={index}>
+                  <Link href={`/card?id=${card.id}`} key={index}>
                     <a>
                       {index + 1}. name: {card.name}
                     </a>

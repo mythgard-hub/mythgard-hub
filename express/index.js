@@ -1,19 +1,38 @@
-const http = require('http');
+const express = require('express');
 const { postgraphile } = require('postgraphile');
 
-http
-  .createServer(
-    postgraphile(
-      {
-        user: 'postgres',
-        database: 'postgres',
-        password: 'example',
-        host: 'db'
-      },
-      'mythgard',
-      {
-        graphiql: true
-      }
-    )
+const app = express();
+
+app.use(
+  postgraphile(
+    {
+      user: 'postgres',
+      database: 'postgres',
+      password: 'example',
+      host: 'db'
+    },
+    'mythgard',
+    {
+      graphiql: true
+    }
   )
-  .listen(process.env.PORT || 3000);
+);
+
+app.listen(process.env.PORT || 3000);
+
+// http
+//   .createServer(
+//     postgraphile(
+//       {
+//         user: 'postgres',
+//         database: 'postgres',
+//         password: 'example',
+//         host: 'db'
+//       },
+//       'mythgard',
+//       {
+//         graphiql: true
+//       }
+//     )
+//   )
+//   .listen(process.env.PORT || 3000);
