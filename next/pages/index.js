@@ -1,9 +1,9 @@
-import CardsList from '../components/cards-list';
+import DeckList from '../components/deck-list';
 
 const index = () => (
   <div>
-    <h1>Cards</h1>
-    <CardsList />
+    <h1>Decks</h1>
+    <DeckList />
   </div>
 );
 

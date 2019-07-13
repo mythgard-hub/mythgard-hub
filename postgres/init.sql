@@ -19,6 +19,8 @@ CREATE TABLE mythgard.deck (
   author_id integer
 );
 
+INSERT INTO mythgard.deck("id", "name") VALUES (1, 'dragons');
+INSERT INTO mythgard.deck("id", "name") VALUES (2, 'cats');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
@@ -29,6 +31,9 @@ CREATE TABLE mythgard.card_deck (
   FOREIGN KEY (card_id)
     REFERENCES mythgard.card (id)
 );
+
+INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (1, 4);
+INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (2, 1);
 -- CREATE TABLE your_schema.parent_table (
 --     id SERIAL PRIMARY KEY,
 --     name TEXT,
