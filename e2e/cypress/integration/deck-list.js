@@ -1,6 +1,6 @@
-describe('List detail', function() {
+describe('Deck list', function() {
   beforeEach(() => {
-    cy.visit('http://localhost:3001');
+    cy.visit('/decks');
   });
   it('has a list', function() {
     cy.get('li').should('have.length', 2);
@@ -10,6 +10,6 @@ describe('List detail', function() {
     cy.location().should(location => {
       expect(location.pathname).to.eq('/card');
     });
-    cy.get('h1').should('contain', 'Furball');
+    cy.get('h1').should('have.class', 'cardName');
   });
 });

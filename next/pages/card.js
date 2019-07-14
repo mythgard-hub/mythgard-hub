@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
 import Card from '../components/card';
+import Layout from '../components/layout';
 
 export const cardByIdQuery = gql`
   query cardById($id: Int!) {
@@ -16,7 +17,7 @@ export const cardByIdQuery = gql`
 `;
 
 export default withRouter(({ router }) => (
-  <div>
+  <Layout>
     <Query query={cardByIdQuery} variables={{ id: parseInt(router.query.id) }}>
       {({ loading, error, data }) => {
         if (loading) return null;
@@ -25,5 +26,5 @@ export default withRouter(({ router }) => (
         return <Card card={data.cardById} />;
       }}
     </Query>
-  </div>
+  </Layout>
 ));
