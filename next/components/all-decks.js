@@ -1,6 +1,6 @@
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 
 export const allDecksQuery = gql`

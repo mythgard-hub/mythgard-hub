@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-export default function DeckList(props) {
+export default function DeckList({ decks }) {
   return (
     <ul>
-      {props.decks.map((card, index) => (
+      {decks.map((card, index) => (
         <li key={card.id}>
           <Link href={`/card?id=${card.id}`} key={index}>
             <a>

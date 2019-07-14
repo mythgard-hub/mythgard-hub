@@ -1,6 +1,6 @@
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
-import ErrorMessage from "./ErrorMessage";
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import ErrorMessage from './error-message';
 
 export const allCardsQuery = gql`
   query allCards {
