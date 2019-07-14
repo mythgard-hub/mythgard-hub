@@ -3,7 +3,12 @@ import fetch from 'isomorphic-unfetch';
 
 let apolloClient = null;
 
-const uri = `http://${!process.browser ? 'express' : 'localhost'}:3000/graphql`;
+// To work around CORS issues, next/server.js
+// currently proxies requests for the graphql server.
+// This will need to be removed in production.
+const serverUri = 'express:3000/graphql'; // docker-compose url
+const browserUri = 'localhost:3001/graphql'; // proxied through next
+const uri = `http://${process.browser ? browserUri : serverUri}`;
 
 const makeCache = initialState =>
   new InMemoryCache({
