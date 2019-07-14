@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import CardList from './card-list';
 
-export const allCardsQuery = gql`
-  query allCards {
-    allCards {
+export const cardsQuery = gql`
+  query cards {
+    cards {
       nodes {
         id
         name
@@ -16,12 +16,12 @@ export const allCardsQuery = gql`
 
 export default function AllCards() {
   return (
-    <Query query={allCardsQuery}>
-      {({ loading, error, data: { allCards } }) => {
+    <Query query={cardsQuery}>
+      {({ loading, error, data: { cards } }) => {
         if (error) return <ErrorMessage message={error} />;
         if (loading) return <div>Loading</div>;
 
-        return <CardList cards={allCards.nodes} />;
+        return <CardList cards={cards.nodes} />;
       }}
     </Query>
   );

@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 
-export const allDecksQuery = gql`
-  query allDecks {
-    allDecks {
+export const decksQuery = gql`
+  query decks {
+    decks {
       nodes {
         id
         name
@@ -16,12 +16,12 @@ export const allDecksQuery = gql`
 
 export default function DecksList() {
   return (
-    <Query query={allDecksQuery}>
-      {({ loading, error, data: { allDecks } }) => {
+    <Query query={decksQuery}>
+      {({ loading, error, data: { decks } }) => {
         if (error) return <ErrorMessage message="Error loading decks." />;
         if (loading) return <div>Loading</div>;
 
-        return <DeckList decks={allDecks.nodes} />;
+        return <DeckList decks={decks.nodes} />;
       }}
     </Query>
   );
