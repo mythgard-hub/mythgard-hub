@@ -1,4 +1,4 @@
-describe('Deck list', function() {
+describe('Decks Page', function() {
   beforeEach(() => {
     cy.visit('/decks');
   });
