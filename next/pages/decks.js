@@ -12,7 +12,7 @@ class DecksPage extends React.Component {
   }
 
   handleSearchSubmit(search) {
-    this.setState({ search });
+    this.setState({ ...search });
   }
 
   render() {
@@ -20,7 +20,7 @@ class DecksPage extends React.Component {
       <Layout>
         <h1>Decks</h1>
         <DeckSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
-        <AllDecks search={this.props.search} />
+        <AllDecks search={this.state} />
       </Layout>
     );
   }
