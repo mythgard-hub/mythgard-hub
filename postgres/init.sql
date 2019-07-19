@@ -35,9 +35,10 @@ CREATE TABLE mythgard.card_deck (
 INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (1, 4);
 INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (2, 1);
 
--- Create the function named `search_decks` with a text argument named `search`.
--- This will expose `Query.searchDecks(search: String!, ...)` to GraphQL.
-create function mythgard.search_decks(name text)
+-- Create the function named `search_decks` with a text argument named `title`.
+-- This will expose `Query.searchDecks(name: String!, ...)` to GraphQL.
+-- title is a bit of a hack but `name ilike name` doesn't work
+create function mythgard.search_decks(title text)
   -- This function will return a set of decks from the `deck` table. The
   -- `setof` part is important to PostGraphile, check out our Functions article
   -- to learn why.
@@ -48,7 +49,7 @@ create function mythgard.search_decks(name text)
     where
       -- Use the `ILIKE` operator on both the `headline` and `body` columns. If
       -- either return true, return the post.
-      name ilike ('%' || name || '%')
+      name ilike ('%' || title || '%')
       -- or body ilike ('%' || search || '%')
   -- End the function declaring the language we used as SQL and add the
   -- `STABLE` marker so PostGraphile knows its a query and not a mutation.

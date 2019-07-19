@@ -6,7 +6,7 @@ import DeckList from './deck-list';
 
 export const decksSearchQuery = gql`
   query decks($name: String!) {
-    searchDecks(name: $name) {
+    searchDecks(title: $name) {
       nodes {
         id
         name
