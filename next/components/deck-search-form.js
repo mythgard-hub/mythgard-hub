@@ -34,6 +34,7 @@ class DeckSearchForm extends React.Component {
             type="text"
             value={this.state.name}
             name="name"
+            className="name"
             onChange={this.handleInputChange}
           />
         </label>

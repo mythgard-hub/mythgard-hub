@@ -12,4 +12,10 @@ describe('Decks Page', function() {
     });
     cy.get('h1').should('have.class', 'cardName');
   });
+  it('should search for decks', function() {
+    cy.get('input.name').type('cat');
+    cy.get('input[type="submit"]').click();
+    cy.get('li').should('have.length', 1);
+    cy.get('li a').should('contain', 'cat');
+  });
 });
