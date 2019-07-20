@@ -2,7 +2,11 @@ import React from 'react';
 import Layout from '../components/layout';
 import AllDecks from '../components/all-decks';
 import DeckSearchForm from '../components/deck-search-form';
-import PropTypes from 'prop-types';
+import SomeDecks from '../components/some-decks';
+
+const hasSearch = function(searchQuery) {
+  return searchQuery && searchQuery.name;
+};
 
 class DecksPage extends React.Component {
   constructor(props) {
@@ -11,8 +15,8 @@ class DecksPage extends React.Component {
     this.handlSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
-  handleSearchSubmit(search) {
-    this.setState({ ...search });
+  handleSearchSubmit(searchQuery) {
+    this.setState({ searchQuery });
   }
 
   render() {
@@ -20,13 +24,14 @@ class DecksPage extends React.Component {
       <Layout>
         <h1>Decks</h1>
         <DeckSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
-        <AllDecks search={this.state} />
+        {hasSearch(this.state.searchQuery) ? (
+          <SomeDecks search={this.state.searchQuery} />
+        ) : (
+          <AllDecks />
+        )}
       </Layout>
     );
   }
 }
-DecksPage.propTypes = {
-  search: PropTypes.object
-};
 
 export default DecksPage;

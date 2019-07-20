@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
@@ -15,10 +16,11 @@ export const decksSearchQuery = gql`
   }
 `;
 
-class AllDecks extends React.Component {
+class SomeDecks extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <Query query={decksSearchQuery} variables={this.props.search}>
@@ -32,5 +34,8 @@ class AllDecks extends React.Component {
     );
   }
 }
+SomeDecks.propTypes = {
+  search: PropTypes.object.isRequired
+};
 
-export default AllDecks;
+export default SomeDecks;
