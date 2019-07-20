@@ -17,6 +17,12 @@ app
       app.render(req, res, actualPage, queryParams);
     });
 
+    server.get('/deck/:id', (req, res) => {
+      const actualPage = '/deck';
+      const queryParams = { id: req.params.id };
+      app.render(req, res, actualPage, queryParams);
+    });
+
     server.use(
       '/graphql',
       proxy('http://express:3000', {
