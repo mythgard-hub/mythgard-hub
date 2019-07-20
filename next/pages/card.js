@@ -1,4 +1,5 @@
 import { withRouter } from 'next/router';
+import Head from 'next/head';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
@@ -21,7 +22,18 @@ export default withRouter(({ router }) => (
       if (loading) return null;
       if (error) return <ErrorMessage message={`Error: ${error}`} />;
 
-      return <Card card={data.card} />;
+      return (
+        <>
+          <Head>
+            <title>Mythgard Hub | Cards | {data.card.name}</title>
+            <meta
+              name="description"
+              content={`Details and rulings for Mythgard card ${data.card.name}.`}
+            />
+          </Head>
+          <Card card={data.card} />
+        </>
+      );
     }}
   </Query>
 ));
