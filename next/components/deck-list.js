@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 export default function DeckList({ decks }) {
   return (
     <ul>
-      {decks.map((card, index) => (
-        <li key={card.id}>
-          <Link href={`/card?id=${card.id}`} key={index}>
+      {decks.map((deck, index) => (
+        <li key={deck.id}>
+          <Link href={`/deck?id=${deck.id}`} key={index}>
             <a>
-              {index + 1}. name: {card.name}
+              {index + 1}. name: {deck.name}
             </a>
           </Link>
         </li>

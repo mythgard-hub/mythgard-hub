@@ -8,9 +8,9 @@ describe('Decks Page', function() {
   it('should have working links', function() {
     cy.get('li a:first').click();
     cy.location().should(location => {
-      expect(location.pathname).to.eq('/card');
+      expect(location.pathname).to.eq('/deck');
     });
-    cy.get('h1').should('have.class', 'cardName');
+    cy.get('h1').should('have.class', 'deckName');
   });
   it('should search for decks', function() {
     cy.get('input.name').type('cat');

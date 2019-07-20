@@ -10,4 +10,3 @@ export default function Deck({ deck }) {
 Deck.propTypes = {
   deck: PropTypes.object.isRequired
 };
-
