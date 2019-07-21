@@ -1,9 +1,10 @@
 import { withRouter } from 'next/router';
+import Head from 'next/head';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
 import Card from '../components/card';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 
 export const cardQuery = gql`
   query card($id: Int!) {
@@ -17,14 +18,19 @@ export const cardQuery = gql`
 `;
 
 export default withRouter(({ router }) => (
-  <Layout>
-    <Query query={cardQuery} variables={{ id: parseInt(router.query.id) }}>
-      {({ loading, error, data }) => {
-        if (loading) return null;
-        if (error) return <ErrorMessage message={`Error: ${error}`} />;
+  <Query query={cardQuery} variables={{ id: parseInt(router.query.id) }}>
+    {({ loading, error, data }) => {
+      if (loading) return null;
+      if (error) return <ErrorMessage message={`Error: ${error}`} />;
 
-        return <Card card={data.card} />;
-      }}
-    </Query>
-  </Layout>
+      return (
+        <Layout
+          title={`Mythgard Hub | Cards | ${data.card.name}`}
+          desc={`Details and rulings for Mythgard card ${data.card.name}`}
+        >
+          <Card card={data.card} />
+        </Layout>
+      );
+    }}
+  </Query>
 ));

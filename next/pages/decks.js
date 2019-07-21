@@ -1,8 +1,8 @@
 import React from 'react';
-import Layout from '../components/layout';
 import AllDecks from '../components/all-decks';
 import DeckSearchForm from '../components/deck-search-form';
 import SomeDecks from '../components/some-decks';
+import Layout from '../components/Layout';
 
 const hasSearch = function(searchQuery) {
   return searchQuery && searchQuery.name;
@@ -21,7 +21,7 @@ class DecksPage extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
         <h1>Decks</h1>
         <DeckSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
         {hasSearch(this.state.searchQuery) ? (
