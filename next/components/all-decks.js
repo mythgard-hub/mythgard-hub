@@ -1,3 +1,4 @@
+import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
@@ -14,7 +15,7 @@ export const decksQuery = gql`
   }
 `;
 
-export default function DecksList() {
+export default function AllDecks() {
   return (
     <Query query={decksQuery}>
       {({ loading, error, data: { decks } }) => {
