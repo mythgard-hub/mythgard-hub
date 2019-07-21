@@ -6,10 +6,10 @@ describe('Deck Page', function() {
     cy.get('h1').should('have.class', 'deckName');
   });
   it('should have cards', function() {
-    cy.get('.deckList').should('have.length', 1);
+    cy.get('.cardList').should('have.length', 1);
   });
   it('should link from cards to /card', function() {
-    cy.get('.deckList a:first').click();
+    cy.get('.cardList a:first').click();
     cy.location().should(location => {
       expect(location.pathname).to.contain('/card');
     });

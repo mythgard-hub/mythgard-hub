@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import ErrorMessage from './error-message';
+import CardList from './card-list';
 import Link from 'next/link';
 
 export const deckCardsQuery = gql`
@@ -31,15 +32,7 @@ export default function Deck({ deck }) {
         return (
           <>
             <h1 className="deckName">{deck.name}</h1>
-            <ul className="deckList">
-              {deck.cardDecks.nodes.map(({ card }) => (
-                <li key={card.id}>
-                  <Link href={`/card?id=${card.id}`}>
-                    <a>{card.name}</a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <CardList cards={deck.cardDecks.nodes} />
           </>
         );
       }}
