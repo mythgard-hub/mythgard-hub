@@ -1,5 +1,7 @@
+import Layout from '../components/Layout';
+
 const index = () => (
-  <>
+  <Layout>
     <div>
       <span>
         <b>Top Articles</b>
@@ -21,7 +23,7 @@ const index = () => (
     <div>
       <h2>recent articles</h2>
     </div>
-  </>
+  </Layout>
 );
 
 export default index;

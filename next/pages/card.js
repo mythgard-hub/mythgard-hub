@@ -4,6 +4,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
 import Card from '../components/card';
+import Layout from '../components/Layout';
 
 export const cardQuery = gql`
   query card($id: Int!) {
@@ -23,16 +24,12 @@ export default withRouter(({ router }) => (
       if (error) return <ErrorMessage message={`Error: ${error}`} />;
 
       return (
-        <>
-          <Head>
-            <title>Mythgard Hub | Cards | {data.card.name}</title>
-            <meta
-              name="description"
-              content={`Details and rulings for Mythgard card ${data.card.name}.`}
-            />
-          </Head>
+        <Layout
+          title={`Mythgard Hub | Cards | ${data.card.name}`}
+          desc={`Details and rulings for Mythgard card ${data.card.name}`}
+        >
           <Card card={data.card} />
-        </>
+        </Layout>
       );
     }}
   </Query>
