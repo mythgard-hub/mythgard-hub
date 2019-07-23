@@ -1,12 +1,11 @@
 import Document, { Head, Main, NextScript } from 'next/document';
-
-import { GA_TRACKING_ID } from '../lib/gtag';
+import { GA_TRACKING_ID, USE_GOOGLE_ANALYTICS } from '../lib/gtag';
 
 export default class extends Document {
   render() {
     return (
       <html>
-        {process.env.NODE_ENV === 'production' && (
+        {USE_GOOGLE_ANALYTICS && (
           <Head>
             <script
               async

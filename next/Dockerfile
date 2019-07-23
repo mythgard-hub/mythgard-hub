@@ -10,5 +10,6 @@ COPY server.js .
 COPY pages .
 COPY components .
 COPY lib .
+copy next.config.js .
 
 CMD ["npm", "run", "dev"]
