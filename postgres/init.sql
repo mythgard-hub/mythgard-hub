@@ -18,7 +18,6 @@ CREATE TABLE mythgard.deck (
   name varchar(255),
   author_id integer
 );
-
 INSERT INTO mythgard.deck("id", "name") VALUES (1, 'dragons');
 INSERT INTO mythgard.deck("id", "name") VALUES (2, 'cats');
 
@@ -55,31 +54,12 @@ create function mythgard.search_decks(title text)
   -- `STABLE` marker so PostGraphile knows its a query and not a mutation.
   $$ language sql stable;
 
--- CREATE TABLE your_schema.parent_table (
---     id SERIAL PRIMARY KEY,
---     name TEXT,
---     description TEXT,
---     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
--- COMMENT ON TABLE your_schema.parent_table IS
--- 'Provide a description for your parent table.';
--- CREATE TABLE your_schema.child_table (
---     id SERIAL PRIMARY KEY,
---     name TEXT,
---     description TEXT,
---     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     parent_table_id INTEGER NOT NULL REFERENCES your_schema.parent_table(id)
--- );
--- COMMENT ON TABLE your_schema.child_table IS
--- 'Provide a description for your child table.';
--- 
--- INSERT INTO your_schema.parent_table (name, description) VALUES
--- ('Parent name 1', 'Parent description 1'),
--- ('Parent name 2', 'Parent description 2'),
--- ('Parent name 3', 'Parent description 3');
--- INSERT INTO your_schema.child_table (name, description, parent_table_id) VALUES
--- ('Child name 1', 'Child description 1', 1),
--- ('Child name 2', 'Child description 2', 2),
--- ('Child name 3', 'Child description 3', 3);
+CREATE TABLE mythgard.deck_comment (
+  id SERIAL PRIMARY KEY,
+  body text,
+  deck_id integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+);
+
+INSERT INTO mythgard.deck_comment("deck_id", "body") VALUES (1, 'I made masters with this last week');
