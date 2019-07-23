@@ -9,5 +9,6 @@ RUN npm i --production
 COPY server.js .
 COPY pages .
 COPY components .
+COPY lib .
 
 CMD ["npm", "run", "dev"]
