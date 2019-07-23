@@ -3,7 +3,6 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import ErrorMessage from './error-message';
 import CardList from './card-list';
-import Link from 'next/link';
 
 export const deckCardsQuery = gql`
   query($id: Int!) {
@@ -40,5 +39,9 @@ export default function Deck({ deck }) {
   );
 }
 Deck.propTypes = {
-  deck: PropTypes.object.isRequired
+  deck: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    cardDecks: PropTypes.array
+  }).isRequired
 };
