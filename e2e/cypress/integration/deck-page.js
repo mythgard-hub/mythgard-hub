@@ -14,4 +14,7 @@ describe('Deck Page', function() {
       expect(location.pathname).to.contain('/card');
     });
   });
+  it('should have comments', function() {
+    cy.get('.commentList').should('have.length', 1);
+  });
 });
