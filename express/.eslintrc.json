@@ -1,6 +1,10 @@
 {
-  "extends": ["eslint:recommended", "plugin:node/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "plugin:prettier/recommended"
+  ],
   "rules": {
-    "node/no-missing-require": false
+    "node/no-missing-require": 0
   }
 }

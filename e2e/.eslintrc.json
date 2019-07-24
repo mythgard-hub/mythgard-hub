@@ -2,5 +2,6 @@
   "plugins": ["cypress"],
   "env": {
     "cypress/globals": true
-  }
+  },
+  "extends": ["plugin:prettier/recommended"]
 }
