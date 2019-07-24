@@ -74,7 +74,19 @@ class DeckComments extends React.Component {
             <>
               <h2 className="deckCommentsHeader">Comments</h2>
               <CommentList comments={deck.deckComments.nodes} />
-              <Mutation mutation={addCommentQuery}>
+              <Mutation
+                mutation={addCommentQuery}
+                update={(cache, { data: newData }) => {
+                  const data = { deck };
+                  data.deck.deckComments.nodes.push(
+                    newData.createDeckComment.deckComment
+                  );
+                  cache.writeQuery({
+                    query: deckCommentsQuery,
+                    data: data
+                  });
+                }}
+              >
                 {(addComment, { loading, error }) => {
                   if (error)
                     return <ErrorMessage message="Error Saving comments." />;
@@ -114,7 +126,7 @@ class DeckComments extends React.Component {
 
 DeckComments.propTypes = {
   deck: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     deckComments: PropTypes.array
   }).isRequired
 };

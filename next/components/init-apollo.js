@@ -6,6 +6,7 @@ let apolloClient = null;
 // To work around CORS issues, next/server.js
 // currently proxies requests for the graphql server.
 // This will need to be removed in production.
+// TODO https://trello.com/c/EwDfaRIo/28
 const serverUri = 'express:3000/graphql'; // docker-compose url
 const browserUri = 'localhost:3001/graphql'; // proxied through next
 const uri = `http://${process.browser ? browserUri : serverUri}`;
