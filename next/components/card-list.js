@@ -8,7 +8,7 @@ export default function CardList({ cards }) {
         <li key={card.id}>
           <Link href={`/card?id=${card.id}`} key={index}>
             <a>
-              {index + 1}. name: {card.name}
+              {card.id}. name: {card.name}
             </a>
           </Link>
         </li>

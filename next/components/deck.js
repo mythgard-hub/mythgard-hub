@@ -31,7 +31,7 @@ export default function Deck({ deck }) {
         return (
           <>
             <h1 className="deckName">{deck.name}</h1>
-            <CardList cards={deck.cardDecks.nodes} />
+            <CardList cards={deck.cardDecks.nodes.map(({ card }) => card)} />
           </>
         );
       }}
@@ -40,7 +40,7 @@ export default function Deck({ deck }) {
 }
 Deck.propTypes = {
   deck: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     cardDecks: PropTypes.array
   }).isRequired
