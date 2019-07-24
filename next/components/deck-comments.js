@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import ErrorMessage from './error-message';
 import CommentList from './comment-list';
 
@@ -50,15 +50,23 @@ class DeckComments extends React.Component {
     });
   }
 
-  handleSubmit(e, refetchFn) {
+  handleSubmit(e, addCommentQuery) {
     e.preventDefault();
-    refetchFn();
+    addCommentQuery({
+      variables: {
+        deck_id: this.state.deckId,
+        body: this.state.commentBody
+      }
+    });
+    this.setState({
+      commentBody: ''
+    });
   }
 
   render() {
     return (
       <Query query={deckCommentsQuery} variables={{ id: this.props.deck.id }}>
-        {({ loading, error, data: { deck }, refetch }) => {
+        {({ loading, error, data: { deck } }) => {
           if (error) return <ErrorMessage message="Error loading comments." />;
           if (loading) return <div>Loading</div>;
 
@@ -66,27 +74,36 @@ class DeckComments extends React.Component {
             <>
               <h2 className="deckCommentsHeader">Comments</h2>
               <CommentList comments={deck.deckComments.nodes} />
-              <form>
-                <label>
-                  Add a comment:
-                  <input
-                    type="text"
-                    value={this.state.commentBody}
-                    name="commentBody"
-                    className="commentBody"
-                    onChange={this.handleInputChange}
-                  />
-                </label>
-                <br />
-                <br />
-                <input
-                  type="submit"
-                  value="Submit"
-                  onClick={e => {
-                    this.handleSubmit(e, refetch);
-                  }}
-                />
-              </form>
+              <Mutation mutation={addCommentQuery}>
+                {(addComment, { loading, error }) => {
+                  if (error)
+                    return <ErrorMessage message="Error Saving comments." />;
+                  if (loading) return <div>Loading</div>;
+                  return (
+                    <form>
+                      <label>
+                        Add a comment:
+                        <input
+                          type="text"
+                          value={this.state.commentBody}
+                          name="commentBody"
+                          className="commentBody"
+                          onChange={this.handleInputChange}
+                        />
+                      </label>
+                      <br />
+                      <br />
+                      <input
+                        type="submit"
+                        value="Submit"
+                        onClick={e => {
+                          this.handleSubmit(e, addComment);
+                        }}
+                      />
+                    </form>
+                  );
+                }}
+              </Mutation>
             </>
           );
         }}
