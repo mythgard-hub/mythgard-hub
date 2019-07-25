@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { Query, Mutation } from 'react-apollo';
 import ErrorMessage from './error-message';
 import CommentList from './comment-list';
+import CreateCommentForm from './create-comment';
 
 export const deckCommentsQuery = gql`
   query($id: Int!) {
@@ -13,19 +14,6 @@ export const deckCommentsQuery = gql`
           body
           id
         }
-      }
-    }
-  }
-`;
-
-export const addCommentQuery = gql`
-  mutation CreateDeckComment($deck_id: Int!, $body: String!) {
-    createDeckComment(
-      input: { deckComment: { deckId: $deck_id, body: $body } }
-    ) {
-      deckComment {
-        body
-        id
       }
     }
   }
@@ -74,48 +62,11 @@ class DeckComments extends React.Component {
             <>
               <h2 className="deckCommentsHeader">Comments</h2>
               <CommentList comments={deck.deckComments.nodes} />
-              <Mutation
-                mutation={addCommentQuery}
-                update={(cache, { data: newData }) => {
-                  const data = { deck };
-                  data.deck.deckComments.nodes.push(
-                    newData.createDeckComment.deckComment
-                  );
-                  cache.writeQuery({
-                    query: deckCommentsQuery,
-                    data: data
-                  });
-                }}
-              >
-                {(addComment, { loading, error }) => {
-                  if (error)
-                    return <ErrorMessage message="Error Saving comments." />;
-                  if (loading) return <div>Loading</div>;
-                  return (
-                    <form>
-                      <label>
-                        Add a comment:
-                        <input
-                          type="text"
-                          value={this.state.commentBody}
-                          name="commentBody"
-                          className="commentBody"
-                          onChange={this.handleInputChange}
-                        />
-                      </label>
-                      <br />
-                      <br />
-                      <input
-                        type="submit"
-                        value="Submit"
-                        onClick={e => {
-                          this.handleSubmit(e, addComment);
-                        }}
-                      />
-                    </form>
-                  );
-                }}
-              </Mutation>
+              <CreateCommentForm
+                deck={{ deck }}
+                deckId={this.props.deck.id}
+                deckCommentsQuery={deckCommentsQuery}
+              />
             </>
           );
         }}

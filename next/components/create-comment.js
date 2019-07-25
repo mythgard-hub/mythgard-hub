@@ -1,0 +1,108 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
+import ErrorMessage from './error-message';
+
+export const addCommentQuery = gql`
+  mutation CreateDeckComment($deck_id: Int!, $body: String!) {
+    createDeckComment(
+      input: { deckComment: { deckId: $deck_id, body: $body } }
+    ) {
+      deckComment {
+        body
+        id
+      }
+    }
+  }
+`;
+
+class CreateComment extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { commentBody: '', deckId: props.deckId };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(e, addCommentQuery) {
+    e.preventDefault();
+    addCommentQuery({
+      variables: {
+        deck_id: this.state.deckId,
+        body: this.state.commentBody
+      }
+    });
+    this.setState({
+      commentBody: ''
+    });
+  }
+
+  render() {
+    return (
+      <Mutation
+        mutation={addCommentQuery}
+        update={(cache, { data: newData }) => {
+          const data = this.props.deck;
+          data.deck.deckComments.nodes.push(
+            newData.createDeckComment.deckComment
+          );
+          cache.writeQuery({
+            query: this.props.deckCommentsQuery,
+            data: data
+          });
+        }}
+      >
+        {(addComment, { loading, error }) => {
+          if (error) return <ErrorMessage message="Error Saving comments." />;
+          if (loading) return <div>Loading</div>;
+          return (
+            <form>
+              <label>
+                Add a comment:
+                <input
+                  type="text"
+                  value={this.state.commentBody}
+                  name="commentBody"
+                  className="commentBody"
+                  onChange={this.handleInputChange}
+                />
+              </label>
+              <br />
+              <br />
+              <input
+                type="submit"
+                value="Submit"
+                onClick={e => {
+                  this.handleSubmit(e, addComment);
+                }}
+              />
+            </form>
+          );
+        }}
+      </Mutation>
+    );
+  }
+}
+
+CreateComment.propTypes = {
+  deckId: PropTypes.number,
+  deckCommentsQuery: PropTypes.object,
+  deck: PropTypes.shape({
+    id: PropTypes.number,
+    deckComments: PropTypes.array
+  }).isRequired
+};
+
+export default CreateComment;
