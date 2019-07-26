@@ -18,5 +18,6 @@ describe('Deck Page', function() {
     cy.get('input.commentBody').type('I made masters with this');
     cy.get('input[type="submit"]').click();
     cy.get('.commentList li').should('have.length', beforeLength + 1);
+    cy.get('input.commentBody').should('have.value', '');
   });
 });
