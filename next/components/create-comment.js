@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import ErrorMessage from './error-message';
+import { handleInputChange } from '../lib/form-utils';
 
 export const addCommentQuery = gql`
   mutation CreateDeckComment($deck_id: Int!, $body: String!) {
@@ -22,19 +23,9 @@ class CreateComment extends React.Component {
     super(props);
     this.state = { commentBody: '', deckId: props.deckId };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateCache = this.updateCache.bind(this);
-  }
-
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
   }
 
   handleSubmit(e, addCommentQuery) {
@@ -102,8 +93,9 @@ CreateComment.propTypes = {
   deckId: PropTypes.number,
   deckCommentsQuery: PropTypes.object,
   deck: PropTypes.shape({
-    id: PropTypes.number,
-    deckComments: PropTypes.array
+    deck: PropTypes.shape({
+      deckComments: PropTypes.array
+    })
   }).isRequired
 };
 
