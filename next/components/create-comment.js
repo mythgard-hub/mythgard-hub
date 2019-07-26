@@ -24,6 +24,7 @@ class CreateComment extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateCache = this.updateCache.bind(this);
   }
 
   handleInputChange(event) {
@@ -49,21 +50,22 @@ class CreateComment extends React.Component {
     });
   }
 
+  // prettier-ignore
+  updateCache( cache, { data: { createDeckComment } }) {
+    const deckQueryObj = this.props.deck;
+    const previousCommentNodes = deckQueryObj.deck.deckComments.nodes;
+    const { deckComment } = createDeckComment;
+
+    previousCommentNodes.push(deckComment);
+    cache.writeQuery({
+      query: this.props.deckCommentsQuery,
+      data: deckQueryObj
+    });
+  }
+
   render() {
     return (
-      <Mutation
-        mutation={addCommentQuery}
-        update={(cache, { data: newData }) => {
-          const data = this.props.deck;
-          data.deck.deckComments.nodes.push(
-            newData.createDeckComment.deckComment
-          );
-          cache.writeQuery({
-            query: this.props.deckCommentsQuery,
-            data: data
-          });
-        }}
-      >
+      <Mutation mutation={addCommentQuery} update={this.updateCache}>
         {(addComment, { loading, error }) => {
           if (error) return <ErrorMessage message="Error Saving comments." />;
           if (loading) return <div>Loading</div>;
