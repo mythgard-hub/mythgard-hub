@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { Query, Mutation } from 'react-apollo';
+import { Query } from 'react-apollo';
 import ErrorMessage from './error-message';
 import CommentList from './comment-list';
 import CreateCommentForm from './create-comment';
@@ -22,33 +22,6 @@ export const deckCommentsQuery = gql`
 class DeckComments extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { commentBody: '', deckId: props.deck.id };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
-  handleSubmit(e, addCommentQuery) {
-    e.preventDefault();
-    addCommentQuery({
-      variables: {
-        deck_id: this.state.deckId,
-        body: this.state.commentBody
-      }
-    });
-    this.setState({
-      commentBody: ''
-    });
   }
 
   render() {
