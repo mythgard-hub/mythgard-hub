@@ -69,6 +69,7 @@ class CreateComment extends React.Component {
                   value={this.state.commentBody}
                   name="commentBody"
                   className="commentBody"
+                  data-cy="commentBody"
                   onChange={this.handleInputChange}
                 />
               </label>
@@ -77,6 +78,7 @@ class CreateComment extends React.Component {
               <input
                 type="submit"
                 value="Submit"
+                data-cy="submit"
                 onClick={e => {
                   this.handleSubmit(e, addComment);
                 }}
@@ -94,7 +96,9 @@ CreateComment.propTypes = {
   deckCommentsQuery: PropTypes.object,
   deck: PropTypes.shape({
     deck: PropTypes.shape({
-      deckComments: PropTypes.array
+      deckComments: PropTypes.shape({
+        nodes: PropTypes.array
+      })
     })
   }).isRequired
 };

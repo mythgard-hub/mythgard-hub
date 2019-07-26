@@ -11,13 +11,16 @@ describe('Deck Page', function() {
     });
   });
   it('happy path comments', async function() {
-    cy.get('.commentList').should('have.length', 1);
-    const list = await cy.get('.commentList li');
+    cy.get('[data-cy=commentList]').should('have.length', 1);
+    const list = await cy.get('[data-cy=commentList] [data-cy=comment]');
     const beforeLength = list.length;
     assert.equal(true, true);
-    cy.get('input.commentBody').type('I made masters with this');
-    cy.get('input[type="submit"]').click();
-    cy.get('.commentList li').should('have.length', beforeLength + 1);
-    cy.get('input.commentBody').should('have.value', '');
+    cy.get('[data-cy=commentBody]').type('I made masters with this');
+    cy.get('[data-cy=submit]').click();
+    cy.get('.[data-cy=commentList] [data-cy=comment]').should(
+      'have.length',
+      beforeLength + 1
+    );
+    cy.get('[data-cy=commentBody]').should('have.value', '');
   });
 });

@@ -2,9 +2,11 @@ import PropTypes from 'prop-types';
 
 export default function CommentList({ comments }) {
   return (
-    <ul className="commentList">
+    <ul className="commentList" data-cy="commentList">
       {comments.map(comment => (
-        <li key={comment.id}>{comment.body}</li>
+        <li data-cy="comment" key={comment.id}>
+          {comment.body}
+        </li>
       ))}
     </ul>
   );
