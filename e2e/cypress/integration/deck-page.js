@@ -14,7 +14,6 @@ describe('Deck Page', function() {
     cy.get('[data-cy=commentList]').should('have.length', 1);
     const list = await cy.get('[data-cy=commentList] [data-cy=comment]');
     const beforeLength = list.length;
-    assert.equal(true, true);
     cy.get('[data-cy=commentBody]').type('I made masters with this');
     cy.get('[data-cy=submit]').click();
     cy.get('.[data-cy=commentList] [data-cy=comment]').should(

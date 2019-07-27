@@ -5,7 +5,7 @@ import { Mutation } from 'react-apollo';
 import ErrorMessage from './error-message';
 import { handleInputChange } from '../lib/form-utils';
 
-export const addCommentQuery = gql`
+const addCommentQuery = gql`
   mutation CreateDeckComment($deck_id: Int!, $body: String!) {
     createDeckComment(
       input: { deckComment: { deckId: $deck_id, body: $body } }
@@ -21,7 +21,7 @@ export const addCommentQuery = gql`
 class CreateComment extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { commentBody: '', deckId: props.deckId };
+    this.state = { commentBody: '' };
 
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,10 +29,10 @@ class CreateComment extends React.Component {
   }
 
   handleSubmit(e, addCommentQuery) {
-    e.preventDefault();
+    e && e.preventDefault();
     addCommentQuery({
       variables: {
-        deck_id: this.state.deckId,
+        deck_id: this.props.deckId,
         body: this.state.commentBody
       }
     });

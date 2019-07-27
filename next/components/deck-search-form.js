@@ -12,7 +12,7 @@ class DeckSearchForm extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
+    e && e.preventDefault();
     this.props.onSubmit(this.state);
   }
 

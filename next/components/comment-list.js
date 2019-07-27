@@ -12,5 +12,14 @@ export default function CommentList({ comments }) {
   );
 }
 CommentList.propTypes = {
-  comments: PropTypes.array
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      body: PropTypes.string.isRequired
+    })
+  )
+};
+
+CommentList.defaultProps = {
+  comments: []
 };
