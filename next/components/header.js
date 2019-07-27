@@ -16,22 +16,24 @@ const Header = () => (
     <div className="ad-placeholder">Ad placeholder</div>
     <div>
       <Link href="/">
-        <a className="home" style={linkStyle}>
+        <a data-cy="home" style={linkStyle}>
           Mythgard Hub
         </a>
       </Link>
       <Link href="/decks">
-        <a className="decks" style={linkStyle}>
+        <a data-cy="decks" style={linkStyle}>
           Decks
         </a>
       </Link>
       <Link href="/cards">
-        <a className="cards" style={linkStyle}>
+        <a data-cy="cards" style={linkStyle}>
           Cards
         </a>
       </Link>
-      <Link href="/deckbuilder">
-        <a style={linkStyle}>DeckBuilder</a>
+      <Link href="/deck-builder">
+        <a data-cy="deck-builder" style={linkStyle}>
+          DeckBuilder
+        </a>
       </Link>
       <Link href="/tournaments">
         <a style={linkStyle}>Tournaments</a>

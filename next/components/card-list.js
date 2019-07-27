@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function CardList({ cards }) {
   return (
-    <ul className="cardList">
+    <ul className="cardList" data-cy="cardList">
       {cards.map((card, index) => (
         <li key={card.id}>
           {card.quantity && <span>{card.quantity}</span>}&nbsp;
