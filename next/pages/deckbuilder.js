@@ -9,7 +9,7 @@ import {
 } from '../lib/import-utils';
 import { handleInputChange } from '../lib/form-utils';
 
-function initializeImportedDeck() {
+const initializeImportedDeck = () => {
   return {
     deckName: '',
     deckPath: '',
@@ -18,9 +18,9 @@ function initializeImportedDeck() {
     sideboard: [],
     errors: []
   };
-}
+};
 
-function convertImportToDeck(mainDeckText, sideboardText) {
+const convertImportToDeck = (mainDeckText, sideboardText) => {
   const importedDeck = initializeImportedDeck();
 
   importedDeck.errors = getImportErrors(mainDeckText, sideboardText);
@@ -39,7 +39,7 @@ function convertImportToDeck(mainDeckText, sideboardText) {
   importedDeck.sideboard = formatCardLines(sideboardLines);
 
   return importedDeck;
-}
+};
 
 class DeckbuilderPage extends React.Component {
   constructor(props) {
@@ -51,6 +51,14 @@ class DeckbuilderPage extends React.Component {
     };
 
     this.handleInputChange = handleInputChange.bind(this);
+    this.handleImport = this.handleImport.bind(this);
+  }
+
+  handleImport() {
+    const { mainDeckInput, sideboardInput } = this.state;
+    this.setState({
+      importedDeck: convertImportToDeck(mainDeckInput, sideboardInput)
+    });
   }
 
   render() {
@@ -78,16 +86,7 @@ class DeckbuilderPage extends React.Component {
         />
         <br />
         <br />
-        <button
-          onClick={e => {
-            e && e.preventDefault();
-            this.setState({
-              importedDeck: convertImportToDeck(mainDeckInput, sideboardInput)
-            });
-          }}
-        >
-          Import
-        </button>
+        <button onClick={this.handleImport}>Import</button>
         <ImportedDeck importedDeck={importedDeck} />
         <h2>All Cards</h2>
         <AllCards />
