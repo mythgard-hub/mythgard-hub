@@ -2,7 +2,14 @@ import PropTypes from 'prop-types';
 import CardList from './card-list';
 
 export default function ImportedDeck({ importedDeck }) {
-  const { deckName, deckPath, deckPower, mainDeck, sideboard } = importedDeck;
+  const {
+    deckName,
+    deckPath,
+    deckPower,
+    mainDeck,
+    sideboard,
+    errors
+  } = importedDeck;
 
   if ((!errors || !errors.length) && !deckName && !deckPath && !deckPower) {
     return null;
