@@ -1,0 +1,234 @@
+import {
+  metaLineInvalid,
+  formatCardLines,
+  cardLinesValid,
+  getImportErrors
+} from './import-utils';
+
+describe('Import utility methods', () => {
+  describe('Test metaLineInvalid', () => {
+    it('should return true if the meta line is invalid', function() {
+      expect(metaLineInvalid(null)).toBe(true);
+      expect(metaLineInvalid(1, null)).toBe(true);
+      expect(metaLineInvalid('abc', null)).toBe(true);
+      expect(metaLineInvalid([], null)).toBe(true);
+      expect(metaLineInvalid([1, 'abc'], null)).toBe(true);
+      expect(metaLineInvalid(null, 'name')).toBe(true);
+      expect(metaLineInvalid(1, 'name')).toBe(true);
+      expect(metaLineInvalid('', 'name')).toBe(true);
+      expect(metaLineInvalid('hi', 'name')).toBe(true);
+      expect(metaLineInvalid('name', 'name')).toBe(true);
+      expect(metaLineInvalid('path pathy path', 'name')).toBe(true);
+    });
+
+    it('should return false if the meta line is valid', function() {
+      expect(metaLineInvalid('name: decky', 'name')).toBe(false);
+      expect(metaLineInvalid('name: decky-deck', 'name')).toBe(false);
+      expect(metaLineInvalid('name: my deck name', 'name')).toBe(false);
+      expect(metaLineInvalid('name: my deck name', 'name')).toBe(false);
+      expect(metaLineInvalid('name:no space deck', 'name')).toBe(false);
+      expect(metaLineInvalid('path: my deck path', 'path')).toBe(false);
+    });
+  });
+
+  describe('Test formatCardLines', () => {
+    it('should format the line for each card - multiple valid lines', function() {
+      const input = ['1 card name', '2 other card name', '3 weird  card  name'];
+
+      const expected = [
+        { quantity: 1, name: 'card name' },
+        { quantity: 2, name: 'other card name' },
+        { quantity: 3, name: 'weird  card  name' }
+      ];
+      expect(formatCardLines(input)).toEqual(expected);
+    });
+
+    it('should format the line for each card - multiple valid lines with empty lines', function() {
+      const input = [
+        '1 card name',
+        '2 other card name',
+        '',
+        ' ',
+        '3 weird  card  name'
+      ];
+
+      const expected = [
+        { quantity: 1, name: 'card name' },
+        { quantity: 2, name: 'other card name' },
+        { quantity: 3, name: 'weird  card  name' }
+      ];
+      expect(formatCardLines(input)).toEqual(expected);
+    });
+
+    it('should format the line for each card - single valid line', function() {
+      const input = ['1 card name'];
+      const expected = [{ quantity: 1, name: 'card name' }];
+      expect(formatCardLines(input)).toEqual(expected);
+    });
+
+    it('should format the line for each card - all invalid lines', function() {
+      expect(formatCardLines([])).toEqual([]);
+      expect(formatCardLines(['wow', 'much', 1])).toEqual(['wow', 'much']);
+      expect(formatCardLines([1])).toEqual([]);
+      expect(formatCardLines(['wow'])).toEqual(['wow']);
+      expect(formatCardLines(['hellow world', 'hi universe'])).toEqual([
+        'hellow world',
+        'hi universe'
+      ]);
+    });
+
+    it('should format the line for each card - some invalid lines', function() {
+      const input = [
+        '1 card name',
+        3,
+        '2 other card name',
+        '',
+        '3 weird  card  name',
+        'wow'
+      ];
+
+      const expected = [
+        { quantity: 1, name: 'card name' },
+        { quantity: 2, name: 'other card name' },
+        { quantity: 3, name: 'weird  card  name' },
+        'wow'
+      ];
+
+      expect(formatCardLines(input)).toEqual(expected);
+    });
+  });
+
+  describe('Test cardLinesValid', () => {
+    it('should return true if all lines are valid cards', function() {
+      const multipleCards = [
+        { quantity: 1, name: 'card name' },
+        { quantity: 2, name: 'other card name' },
+        { quantity: 3, name: 'weird  card  name' }
+      ];
+      const singleCard = [{ quantity: 1, name: 'card name' }];
+
+      expect(cardLinesValid(multipleCards)).toEqual(true);
+      expect(cardLinesValid(singleCard)).toEqual(true);
+      expect(cardLinesValid([])).toEqual(true);
+    });
+
+    it('should return false if even one line is invalid - all invalid', function() {
+      expect(cardLinesValid(['wow', 'much', 1])).toEqual(false);
+      expect(cardLinesValid([1])).toEqual(false);
+      expect(cardLinesValid(['wow'])).toEqual(false);
+      expect(cardLinesValid(['hellow world', 'hi universe'])).toEqual(false);
+    });
+
+    it('should format the line for each card - some invalid lines', function() {
+      const input = [
+        { quantity: 1, name: 'card name' },
+        3,
+        { quantity: 2, name: 'other card name' },
+        '',
+        { quantity: 3, name: 'weird  card  name' },
+        'wow'
+      ];
+      expect(cardLinesValid(input)).toEqual(false);
+    });
+  });
+
+  describe('Test getImportErrors', () => {
+    it('Should return an empty list of errors', function() {
+      const multipleCards = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+      const singleCard = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        '1 card name'
+      ].join('\n');
+      const sideboardMultiple = [
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+      const sideboardSingle = ['1 card name'].join('\n');
+
+      expect(getImportErrors(multipleCards, sideboardSingle)).toEqual([]);
+      expect(getImportErrors(multipleCards, sideboardMultiple)).toEqual([]);
+      expect(getImportErrors(singleCard, sideboardMultiple)).toEqual([]);
+      expect(getImportErrors(singleCard, sideboardSingle)).toEqual([]);
+      expect(getImportErrors(singleCard, '')).toEqual([]);
+      expect(getImportErrors(multipleCards, '')).toEqual([]);
+    });
+
+    it('should show an empty list of errors - empty lines', function() {
+      const main = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        '1 card name',
+        '2 other card name',
+        '',
+        ' ',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const sidebar = [
+        '1 card name',
+        '2 other card name',
+        '',
+        ' ',
+        '3 weird  card  name'
+      ].join('\n');
+
+      expect(getImportErrors(main, sidebar)).toEqual([]);
+    });
+
+    it('should show a list of errors - missing meta lines', function() {
+      const input = [
+        '1 card name',
+        '2 other card name',
+        '',
+        ' ',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const expected = [
+        'Deck must have a name',
+        'Deck must have a path',
+        'Deck must have a power'
+      ];
+      expect(getImportErrors(input, input)).toEqual(expected);
+    });
+
+    it('should return a list of errors - all the errors', function() {
+      const input = [
+        '1 card name',
+        '2 other card name',
+        'bladiblah',
+        '3 weird  card  name',
+        'bladiblah'
+      ].join('\n');
+
+      const expected = [
+        'Deck must have a name',
+        'Deck must have a path',
+        'Deck must have a power',
+        'Invalid input for main deck',
+        'Invalid input for sideboard'
+      ];
+
+      expect(getImportErrors(input, input)).toEqual(expected);
+    });
+
+    it('should show a list of errors - not enough lines', function() {
+      const expected = ['Deck must have name, path, power and cards'];
+
+      expect(getImportErrors('', '')).toEqual(expected);
+      expect(getImportErrors('line 1', '')).toEqual(expected);
+      expect(getImportErrors('line 1\nline 2', '')).toEqual(expected);
+    });
+  });
+});
