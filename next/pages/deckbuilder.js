@@ -62,7 +62,7 @@ class DeckbuilderPage extends React.Component {
         <h2>Import Deck</h2>
         <h3>Main Deck</h3>
         <textarea
-          columns="20"
+          cols="40"
           rows="10"
           value={mainDeckInput}
           name="mainDeckInput"
@@ -70,7 +70,7 @@ class DeckbuilderPage extends React.Component {
         />
         <h3>Sideboard</h3>
         <textarea
-          columns="20"
+          cols="40"
           rows="5"
           value={sideboardInput}
           name="sideboardInput"
