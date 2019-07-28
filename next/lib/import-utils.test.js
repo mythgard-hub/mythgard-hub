@@ -36,9 +36,9 @@ describe('Import utility methods', () => {
       const input = ['1 card name', '2 other card name', '3 weird  card  name'];
 
       const expected = [
-        { quantity: 1, name: 'card name' },
-        { quantity: 2, name: 'other card name' },
-        { quantity: 3, name: 'weird  card  name' }
+        { id: 'TBD', quantity: 1, name: 'card name' },
+        { id: 'TBD', quantity: 2, name: 'other card name' },
+        { id: 'TBD', quantity: 3, name: 'weird  card  name' }
       ];
       expect(formatCardLines(input)).toEqual(expected);
     });
@@ -53,16 +53,16 @@ describe('Import utility methods', () => {
       ];
 
       const expected = [
-        { quantity: 1, name: 'card name' },
-        { quantity: 2, name: 'other card name' },
-        { quantity: 3, name: 'weird  card  name' }
+        { id: 'TBD', quantity: 1, name: 'card name' },
+        { id: 'TBD', quantity: 2, name: 'other card name' },
+        { id: 'TBD', quantity: 3, name: 'weird  card  name' }
       ];
       expect(formatCardLines(input)).toEqual(expected);
     });
 
     it('should format the line for each card - single valid line', function() {
       const input = ['1 card name'];
-      const expected = [{ quantity: 1, name: 'card name' }];
+      const expected = [{ id: 'TBD', quantity: 1, name: 'card name' }];
       expect(formatCardLines(input)).toEqual(expected);
     });
 
@@ -88,9 +88,9 @@ describe('Import utility methods', () => {
       ];
 
       const expected = [
-        { quantity: 1, name: 'card name' },
-        { quantity: 2, name: 'other card name' },
-        { quantity: 3, name: 'weird  card  name' },
+        { id: 'TBD', quantity: 1, name: 'card name' },
+        { id: 'TBD', quantity: 2, name: 'other card name' },
+        { id: 'TBD', quantity: 3, name: 'weird  card  name' },
         'wow'
       ];
 

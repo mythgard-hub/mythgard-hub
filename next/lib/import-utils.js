@@ -15,7 +15,7 @@ export const formatCardLines = cardLines => {
       }
 
       return {
-        id: `TBD ${Math.random()}`,
+        id: 'TBD',
         quantity: parseInt(split[0]),
         name: split.slice(1).join(' ')
       };
