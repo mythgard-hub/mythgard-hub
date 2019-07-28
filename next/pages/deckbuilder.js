@@ -2,7 +2,11 @@ import React from 'react';
 import AllCards from '../components/all-cards';
 import Layout from '../components/Layout';
 import ImportedDeck from '../components/imported-deck';
-import { getImportErrors, formatCardLines } from '../lib/import-utils';
+import {
+  getImportErrors,
+  formatCardLines,
+  extractMetaValue
+} from '../lib/import-utils';
 import { handleInputChange } from '../lib/form-utils';
 
 function initializeImportedDeck() {
@@ -28,9 +32,9 @@ function convertImportToDeck(mainDeckText, sideboardText) {
   const mainDeckLines = mainDeckText.split(/\n/g);
   const sideboardLines = sideboardText.split(/\n/g);
 
-  importedDeck.deckName = mainDeckLines[0][1];
-  importedDeck.deckPath = mainDeckLines[1][1];
-  importedDeck.deckPower = mainDeckLines[2][1];
+  importedDeck.deckName = extractMetaValue(mainDeckLines[0]);
+  importedDeck.deckPath = extractMetaValue(mainDeckLines[1]);
+  importedDeck.deckPower = extractMetaValue(mainDeckLines[2]);
   importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(3));
   importedDeck.sideboard = formatCardLines(sideboardLines);
 

@@ -2,10 +2,22 @@ import {
   metaLineInvalid,
   formatCardLines,
   cardLinesValid,
-  getImportErrors
+  getImportErrors,
+  extractMetaValue
 } from './import-utils';
+import { META_KEYS } from '../constants/deck';
 
 describe('Import utility methods', () => {
+  describe('Test extractMetaValue', () => {
+    it('should return the trimmed meta value of a line', function() {
+      expect(extractMetaValue('name: my deck')).toBe('my deck');
+      expect(extractMetaValue('name:my deck')).toBe('my deck');
+      expect(extractMetaValue('name: my deck ')).toBe('my deck');
+      expect(extractMetaValue('name:   my   deck  ')).toBe('my   deck');
+      expect(extractMetaValue('name:my:deck')).toBe('my:deck');
+    });
+  });
+
   describe('Test metaLineInvalid', () => {
     it('should return true if the meta line is invalid', function() {
       expect(metaLineInvalid(null)).toBe(true);
@@ -13,21 +25,24 @@ describe('Import utility methods', () => {
       expect(metaLineInvalid('abc', null)).toBe(true);
       expect(metaLineInvalid([], null)).toBe(true);
       expect(metaLineInvalid([1, 'abc'], null)).toBe(true);
-      expect(metaLineInvalid(null, 'name')).toBe(true);
-      expect(metaLineInvalid(1, 'name')).toBe(true);
-      expect(metaLineInvalid('', 'name')).toBe(true);
-      expect(metaLineInvalid('hi', 'name')).toBe(true);
-      expect(metaLineInvalid('name', 'name')).toBe(true);
-      expect(metaLineInvalid('path pathy path', 'name')).toBe(true);
+      expect(metaLineInvalid(null, META_KEYS.NAME)).toBe(true);
+      expect(metaLineInvalid(1, META_KEYS.NAME)).toBe(true);
+      expect(metaLineInvalid('', META_KEYS.NAME)).toBe(true);
+      expect(metaLineInvalid('hi', META_KEYS.NAME)).toBe(true);
+      expect(metaLineInvalid('name', META_KEYS.NAME)).toBe(true);
+      expect(metaLineInvalid('path pathy path', META_KEYS.NAME)).toBe(true);
     });
 
     it('should return false if the meta line is valid', function() {
-      expect(metaLineInvalid('name: decky', 'name')).toBe(false);
-      expect(metaLineInvalid('name: decky-deck', 'name')).toBe(false);
-      expect(metaLineInvalid('name: my deck name', 'name')).toBe(false);
-      expect(metaLineInvalid('name: my deck name', 'name')).toBe(false);
-      expect(metaLineInvalid('name:no space deck', 'name')).toBe(false);
-      expect(metaLineInvalid('path: my deck path', 'path')).toBe(false);
+      expect(metaLineInvalid('name: decky', META_KEYS.NAME)).toBe(false);
+      expect(metaLineInvalid('name: decky-deck', META_KEYS.NAME)).toBe(false);
+      expect(metaLineInvalid('name: my deck name', META_KEYS.NAME)).toBe(false);
+      expect(metaLineInvalid('name: my deck name', META_KEYS.NAME)).toBe(false);
+      expect(metaLineInvalid('name:no space deck', META_KEYS.NAME)).toBe(false);
+      expect(metaLineInvalid('path: my deck path', META_KEYS.PATH)).toBe(false);
+      expect(metaLineInvalid('power:    lots of spaces', META_KEYS.PATH)).toBe(
+        false
+      );
     });
   });
 

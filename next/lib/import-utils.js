@@ -1,3 +1,13 @@
+import { META_KEYS } from '../constants/deck';
+
+export const extractMetaValue = line => {
+  const split = line && line.split && line.split(':');
+  return split
+    .slice(1)
+    .join(':')
+    .trim();
+};
+
 export const formatCardLines = cardLines => {
   const formatted = cardLines
     .filter(line => line && line.trim && line.trim())
@@ -32,7 +42,7 @@ export const metaLineInvalid = (line, metaName) => {
       !line ||
       !split ||
       !split.length ||
-      split.length !== 2 ||
+      split.length < 2 ||
       !line[0] ||
       !line[0] === metaName ||
       !line[1]
@@ -58,15 +68,15 @@ export const getImportErrors = (mainDeckText, sideboardText) => {
     return errors;
   }
 
-  if (metaLineInvalid(mainDeckLines[0], 'name')) {
+  if (metaLineInvalid(mainDeckLines[0], META_KEYS.NAME)) {
     errors.push('Deck must have a name');
   }
 
-  if (metaLineInvalid(mainDeckLines[1], 'path')) {
+  if (metaLineInvalid(mainDeckLines[1], META_KEYS.PATH)) {
     errors.push('Deck must have a path');
   }
 
-  if (metaLineInvalid(mainDeckLines[2], 'power')) {
+  if (metaLineInvalid(mainDeckLines[2], META_KEYS.POWER)) {
     errors.push('Deck must have a power');
   }
 
