@@ -27,6 +27,14 @@ export default function ImportedDeck({ importedDeck }) {
     );
   }
 
+  const sideboardElement =
+    sideboard && sideboard.length ? (
+      <React.Fragment>
+        <h3>Sideboard</h3>
+        <CardList cards={sideboard} />
+      </React.Fragment>
+    ) : null;
+
   return (
     <div>
       <h2>Imported Deck</h2>
@@ -35,11 +43,29 @@ export default function ImportedDeck({ importedDeck }) {
       <div>Path: {deckPower}</div>
       <h3>Main Board</h3>
       <CardList cards={mainDeck} />
-      <h3>Sideboard</h3>
-      <CardList cards={sideboard} />
+      {sideboardElement}
     </div>
   );
 }
 ImportedDeck.propTypes = {
-  importedDeck: PropTypes.object
+  importedDeck: PropTypes.shape({
+    deckName: PropTypes.string,
+    deckPath: PropTypes.string,
+    deckPower: PropTypes.string,
+    mainDeck: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        quantity: PropTypes.number,
+        name: PropTypes.string
+      })
+    ),
+    sideboard: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        quantity: PropTypes.number,
+        name: PropTypes.string
+      })
+    ),
+    errors: PropTypes.arrayOf(PropTypes.string)
+  })
 };
