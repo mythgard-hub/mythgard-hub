@@ -66,7 +66,7 @@ class DeckbuilderPage extends React.Component {
   }
 
   render() {
-    const { importedDeck, mainDeckInput, sideboardInput, copied } = this.state;
+    const { importedDeck, mainDeckInput, sideboardInput } = this.state;
 
     return (
       <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
