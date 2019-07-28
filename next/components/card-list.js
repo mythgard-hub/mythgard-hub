@@ -6,6 +6,7 @@ export default function CardList({ cards }) {
     <ul className="cardList">
       {cards.map((card, index) => (
         <li key={card.id}>
+          {card.quantity && <span>{card.quantity}</span>}
           <Link href={`/card?id=${card.id}`} key={index}>
             <a>
               {card.id}. name: {card.name}
