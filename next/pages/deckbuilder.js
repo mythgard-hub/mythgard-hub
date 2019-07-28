@@ -50,7 +50,6 @@ class DeckbuilderPage extends React.Component {
     this.state = {
       mainDeckInput: '',
       sideboardInput: '',
-      copied: false,
       importedDeck: initializeImportedDeck()
     };
 
