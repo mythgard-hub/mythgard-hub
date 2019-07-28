@@ -4,12 +4,16 @@ import CardList from './card-list';
 export default function ImportedDeck({ importedDeck }) {
   const { deckName, deckPath, deckPower, mainDeck, sideboard } = importedDeck;
 
-  if (importedDeck.errors && importedDeck.errors.length) {
+  if ((!errors || !errors.length) && !deckName && !deckPath && !deckPower) {
+    return null;
+  }
+
+  if (errors && errors.length) {
     return (
       <div>
         <h2>Imported Deck</h2>
         <div>Some errors have occurred:</div>
-        {importedDeck.errors.map((error, i) => (
+        {errors.map((error, i) => (
           <div key={i}>{error}</div>
         ))}
       </div>
