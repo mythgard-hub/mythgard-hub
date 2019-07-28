@@ -47,6 +47,7 @@ export default function ImportedDeck({ importedDeck }) {
     </div>
   );
 }
+
 ImportedDeck.propTypes = {
   importedDeck: PropTypes.shape({
     deckName: PropTypes.string,
@@ -66,6 +67,7 @@ ImportedDeck.propTypes = {
         name: PropTypes.string
       })
     ),
+    asText: PropTypes.string,
     errors: PropTypes.arrayOf(PropTypes.string)
   })
 };
