@@ -1,5 +1,5 @@
 export const formatCardLines = cardLines => {
-  return cardLines
+  const formatted = cardLines
     .filter(line => line && line.trim && line.trim())
     .map(line => {
       const trimmed = line && line.trim && line.trim();
@@ -20,6 +20,8 @@ export const formatCardLines = cardLines => {
         name: split.slice(1).join(' ')
       };
     });
+
+  return formatted;
 };
 
 export const metaLineInvalid = (line, metaName) => {

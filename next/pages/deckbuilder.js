@@ -9,6 +9,7 @@ function initializeImportedDeck() {
   return {
     deckName: '',
     deckPath: '',
+    deckPower: '',
     mainDeck: [],
     sideboard: [],
     errors: []
@@ -18,23 +19,18 @@ function initializeImportedDeck() {
 function convertImportToDeck(mainDeckText, sideboardText) {
   const importedDeck = initializeImportedDeck();
 
-  if (!mainDeckText || !mainDeckText.split) {
-    return importedDeck;
-  }
-
-  const mainDeckLines = mainDeckText.split(/\n/g).map(line => line.split(' '));
-  const sideboardLines = sideboardText
-    .split(/\n/g)
-    .map(line => line.split(' '));
-
-  importedDeck.errors = getImportErrors(mainDeckLines, sideboardLines);
+  importedDeck.errors = getImportErrors(mainDeckText, sideboardText);
 
   if (importedDeck.errors.length) {
     return importedDeck;
   }
 
+  const mainDeckLines = mainDeckText.split(/\n/g);
+  const sideboardLines = sideboardText.split(/\n/g);
+
   importedDeck.deckName = mainDeckLines[0][1];
   importedDeck.deckPath = mainDeckLines[1][1];
+  importedDeck.deckPower = mainDeckLines[2][1];
   importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(3));
   importedDeck.sideboard = formatCardLines(sideboardLines);
 
