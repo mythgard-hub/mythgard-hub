@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { copyToClipboard } from '../lib/copy-to-clipboard';
 
 class DeckExport extends React.Component {
   constructor(props) {
@@ -17,13 +18,8 @@ class DeckExport extends React.Component {
       return;
     }
 
-    if (!navigator || !navigator.clipboard || !navigator.clipboard.writeText) {
-      this.setState({ message: 'Export not supported in this browser' });
-      return;
-    }
-
-    navigator.clipboard.writeText(textToExport);
-    this.setState({ message: 'Copied' });
+    const success = copyToClipboard(textToExport);
+    this.setState({ message: success ? 'Copied' : 'Failed to copy' });
 
     // Make message disappear
     window.setTimeout(() => {
