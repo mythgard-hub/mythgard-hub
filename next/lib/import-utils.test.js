@@ -163,6 +163,15 @@ describe('Import utility methods', () => {
         'power: my power',
         '1 card name'
       ].join('\n');
+      const noPathOrPower = [
+        'name: New Deck',
+        'path: ',
+        'power: ',
+        '1 dune courser',
+        '1 mirage',
+        '2 aimless vessel',
+        '1 cataphract'
+      ].join('\n');
       const sideboardMultiple = [
         '1 card name',
         '2 other card name',
@@ -176,6 +185,9 @@ describe('Import utility methods', () => {
       expect(getImportErrors(singleCard, sideboardSingle)).toEqual([]);
       expect(getImportErrors(singleCard, '')).toEqual([]);
       expect(getImportErrors(multipleCards, '')).toEqual([]);
+      expect(getImportErrors(noPathOrPower, '')).toEqual([]);
+      expect(getImportErrors(noPathOrPower, sideboardSingle)).toEqual([]);
+      expect(getImportErrors(noPathOrPower, sideboardMultiple)).toEqual([]);
     });
 
     it('should show an empty list of errors - empty lines', function() {
@@ -212,8 +224,8 @@ describe('Import utility methods', () => {
 
       const expected = [
         'Deck must have a name',
-        'Deck must have a path',
-        'Deck must have a power'
+        'Deck must have an entry for path (it can be empty)',
+        'Deck must have an entry for power (it can be empty)'
       ];
       expect(getImportErrors(input, input)).toEqual(expected);
     });
@@ -229,8 +241,8 @@ describe('Import utility methods', () => {
 
       const expected = [
         'Deck must have a name',
-        'Deck must have a path',
-        'Deck must have a power',
+        'Deck must have an entry for path (it can be empty)',
+        'Deck must have an entry for power (it can be empty)',
         'Invalid input for main deck',
         'Invalid input for sideboard'
       ];

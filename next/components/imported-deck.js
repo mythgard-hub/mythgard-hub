@@ -29,10 +29,10 @@ export default function ImportedDeck({ importedDeck }) {
 
   const sideboardElement =
     sideboard && sideboard.length ? (
-      <React.Fragment>
+      <>
         <h3>Sideboard</h3>
         <CardList cards={sideboard} />
-      </React.Fragment>
+      </>
     ) : null;
 
   return (
@@ -40,7 +40,7 @@ export default function ImportedDeck({ importedDeck }) {
       <h2>Imported Deck</h2>
       <div>Name: {deckName}</div>
       <div>Path: {deckPath}</div>
-      <div>Path: {deckPower}</div>
+      <div>Power: {deckPower}</div>
       <h3>Main Board</h3>
       <CardList cards={mainDeck} />
       {sideboardElement}
