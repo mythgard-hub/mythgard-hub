@@ -13,34 +13,43 @@ export const initializeImportedDeck = () => {
 };
 
 export const extractMetaValue = line => {
-  const split = line && line.split && line.split(':');
-  return split
-    .slice(1)
-    .join(':')
-    .trim();
+  try {
+    return line
+      .split(':')
+      .slice(1)
+      .join(':')
+      .trim();
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
 };
 
 export const formatCardLines = cardLines => {
   const formatted = cardLines
     .filter(line => line && line.trim && line.trim())
     .map(line => {
-      const trimmed = line && line.trim && line.trim();
-      const split = trimmed && trimmed.split && trimmed.split(' ');
+      try {
+        const split = line.trim().split(' ');
 
-      if (
-        !split ||
-        !split.length ||
-        split.length < 2 ||
-        isNaN(parseInt(split[0], 10))
-      ) {
+        if (
+          !split ||
+          !split.length ||
+          split.length < 2 ||
+          isNaN(parseInt(split[0], 10))
+        ) {
+          return line;
+        }
+
+        return {
+          id: 'TBD',
+          quantity: parseInt(split[0], 10),
+          name: split.slice(1).join(' ')
+        };
+      } catch (e) {
+        console.log(e);
         return line;
       }
-
-      return {
-        id: 'TBD',
-        quantity: parseInt(split[0], 10),
-        name: split.slice(1).join(' ')
-      };
     });
 
   return formatted;
@@ -85,11 +94,11 @@ export const getImportErrors = (mainDeckText, sideboardText) => {
   }
 
   if (metaLineInvalid(mainDeckLines[1], META_KEYS.PATH)) {
-    errors.push('Deck must have a path');
+    errors.push('Deck must have an entry for path (it can be empty)');
   }
 
   if (metaLineInvalid(mainDeckLines[2], META_KEYS.POWER)) {
-    errors.push('Deck must have a power');
+    errors.push('Deck must have an entry for power (it can be empty)');
   }
 
   const cardLines = formatCardLines(mainDeckLines.splice(3));
