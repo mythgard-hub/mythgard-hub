@@ -8,6 +8,7 @@ import {
   extractMetaValue
 } from '../lib/import-utils';
 import { handleInputChange } from '../lib/form-utils';
+import DeckExport from '../components/deck-export';
 
 const initializeImportedDeck = () => {
   return {
@@ -16,7 +17,8 @@ const initializeImportedDeck = () => {
     deckPower: '',
     mainDeck: [],
     sideboard: [],
-    errors: []
+    errors: [],
+    asText: ''
   };
 };
 
@@ -37,6 +39,7 @@ const convertImportToDeck = (mainDeckText, sideboardText) => {
   importedDeck.deckPower = extractMetaValue(mainDeckLines[2]);
   importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(3));
   importedDeck.sideboard = formatCardLines(sideboardLines);
+  importedDeck.asText = mainDeckText;
 
   return importedDeck;
 };
@@ -87,6 +90,8 @@ class DeckbuilderPage extends React.Component {
         <br />
         <br />
         <button onClick={this.handleImport}>Import</button>
+        &nbsp;
+        <DeckExport textToExport={importedDeck.asText} />
         <ImportedDeck importedDeck={importedDeck} />
         <h2>All Cards</h2>
         <AllCards />
