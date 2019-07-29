@@ -1,5 +1,17 @@
 import { META_KEYS } from '../constants/deck';
 
+export const initializeImportedDeck = () => {
+  return {
+    deckName: '',
+    deckPath: '',
+    deckPower: '',
+    mainDeck: [],
+    sideboard: [],
+    errors: [],
+    asText: ''
+  };
+};
+
 export const extractMetaValue = line => {
   const split = line && line.split && line.split(':');
   return split
@@ -96,4 +108,26 @@ export const getImportErrors = (mainDeckText, sideboardText) => {
   }
 
   return errors;
+};
+
+export const convertImportToDeck = (mainDeckText, sideboardText) => {
+  const importedDeck = initializeImportedDeck();
+
+  importedDeck.errors = getImportErrors(mainDeckText, sideboardText);
+
+  if (importedDeck.errors.length) {
+    return importedDeck;
+  }
+
+  const mainDeckLines = mainDeckText.split(/\n/g);
+  const sideboardLines = sideboardText.split(/\n/g);
+
+  importedDeck.deckName = extractMetaValue(mainDeckLines[0]);
+  importedDeck.deckPath = extractMetaValue(mainDeckLines[1]);
+  importedDeck.deckPower = extractMetaValue(mainDeckLines[2]);
+  importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(3));
+  importedDeck.sideboard = formatCardLines(sideboardLines);
+  importedDeck.asText = mainDeckText;
+
+  return importedDeck;
 };
