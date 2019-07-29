@@ -31,14 +31,14 @@ export const formatCardLines = cardLines => {
         !split ||
         !split.length ||
         split.length < 2 ||
-        isNaN(parseInt(split[0]))
+        isNaN(parseInt(split[0], 10))
       ) {
         return line;
       }
 
       return {
         id: 'TBD',
-        quantity: parseInt(split[0]),
+        quantity: parseInt(split[0], 10),
         name: split.slice(1).join(' ')
       };
     });
