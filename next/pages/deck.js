@@ -17,7 +17,7 @@ export const deckQuery = gql`
 
 export default withRouter(({ router }) => (
   <Layout>
-    <Query query={deckQuery} variables={{ id: parseInt(router.query.id) }}>
+    <Query query={deckQuery} variables={{ id: parseInt(router.query.id, 10) }}>
       {({ loading, error, data }) => {
         if (loading) return null;
         if (error) return <ErrorMessage message={`Error: ${error}`} />;

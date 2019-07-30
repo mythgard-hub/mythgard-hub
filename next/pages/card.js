@@ -18,7 +18,7 @@ export const cardQuery = gql`
 `;
 
 export default withRouter(({ router }) => (
-  <Query query={cardQuery} variables={{ id: parseInt(router.query.id) }}>
+  <Query query={cardQuery} variables={{ id: parseInt(router.query.id, 10) }}>
     {({ loading, error, data }) => {
       if (loading) return null;
       if (error) return <ErrorMessage message={`Error: ${error}`} />;
