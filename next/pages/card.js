@@ -1,5 +1,4 @@
 import { withRouter } from 'next/router';
-import Head from 'next/head';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';

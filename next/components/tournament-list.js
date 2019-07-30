@@ -19,7 +19,7 @@ export default function TournamentList({ tournaments }) {
           <Link href={`/tournament?id=${tourney.id}`} key={index}>
             <a>{tourney.name}</a>
           </Link>
-          {tourney.date}
+          {' Date: ' + tourney.date}
         </li>
       ))}
     </ul>
