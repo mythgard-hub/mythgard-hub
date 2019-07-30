@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 TournamentList.propTypes = {
   tournaments: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.required,
-      name: PropTypes.string.required
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
     })
   )
 };
