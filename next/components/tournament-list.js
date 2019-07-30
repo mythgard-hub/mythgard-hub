@@ -12,7 +12,7 @@ TournamentList.propTypes = {
 
 export default function TournamentList({ tournaments }) {
   return (
-    <ul>
+    <ul className="tournamentList">
       {tournaments.map((tourney, index) => (
         <li key={tourney.id}>
           {tourney.id + ' '}
