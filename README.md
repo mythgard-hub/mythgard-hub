@@ -50,10 +50,37 @@ Just a simple node app. The postgraphile-middleware does most of the work. See i
 
 ## Testing
 
+### End-to-end Tests
+
 End-to-end tests are written using cypress. Ignore example tests except for reference. They will be removed at some point.
 
 1. cd e2e
 1. npx cypress open
+
+### Unit Tests
+
+Unit tests are written using jest and enzyme.
+
+To test `example.js`, create a file called `example.test.js`. The contents of the file would be
+
+```
+import { functionToTest } from './example';
+
+describe('Test example.js', () => {
+  describe('Test functionToTest', () => {
+    it('should return the correct thing', function() {
+      expect(functionToTest(true)).toBe(true);
+      expect(functionToTest('hi')).toBe('hi');
+    });
+  });
+});
+
+```
+
+To run all tests:
+
+1. Open terminal in the `next` folder
+2. Run `npm run jest`
 
 ## Development Environment
 
