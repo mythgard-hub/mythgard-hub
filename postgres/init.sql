@@ -63,3 +63,27 @@ CREATE TABLE mythgard.deck_comment (
 );
 
 INSERT INTO mythgard.deck_comment("deck_id", "body") VALUES (1, 'I made masters with this last week');
+
+CREATE TABLE mythgard.tournament (
+  id SERIAL PRIMARY KEY,
+  name varchar(255),
+  date date
+);
+
+INSERT INTO mythgard.tournament("id", "name", "date")
+VALUES (1, 'The Battle of Deimos', '2019-07-26'),
+  (2, 'The Iron Rain', '3000-01-01');
+
+CREATE TABLE mythgard.tournament_deck (
+  id SERIAL PRIMARY KEY,
+  rank integer,
+  tournament_id integer,
+  deck_id integer,
+  FOREIGN KEY (tournament_id)
+    REFERENCES mythgard.tournament (id),
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+);
+
+INSERT INTO mythgard.tournament_deck("rank", "tournament_id", "deck_id")
+VALUES (1, 1, 1), (2, 1, 2)
