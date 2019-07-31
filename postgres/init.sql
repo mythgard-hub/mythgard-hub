@@ -63,3 +63,23 @@ CREATE TABLE mythgard.deck_comment (
 );
 
 INSERT INTO mythgard.deck_comment("deck_id", "body") VALUES (1, 'I made masters with this last week');
+
+-- In PostgreSQL, user is a keyword
+CREATE TABLE mythgard.account (
+  id SERIAL PRIMARY KEY,
+  google_id varchar(255) UNIQUE,
+  email varchar(255) UNIQUE
+);
+
+CREATE FUNCTION mythgard.find_account_or_create_by_google
+(
+  _google_id varchar(255),
+  _email varchar(255)
+)
+RETURNS mythgard.account as $$
+  INSERT INTO mythgard.account (google_id, email) VALUES (_google_id, _email)
+    ON CONFLICT (google_id) DO UPDATE SET email = _email;
+  SELECT *
+    FROM mythgard.account
+    WHERE google_id = _google_id
+$$ LANGUAGE sql VOLATILE;

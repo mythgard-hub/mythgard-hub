@@ -4,13 +4,16 @@ const PgSimplifyInflectorPlugin = require('@graphile-contrib/pg-simplify-inflect
 
 const app = express();
 
+/**
+ * Graph QL Goodness
+ */
 app.use(
   postgraphile(
     {
-      user: 'postgres',
-      database: 'postgres',
-      password: 'example',
-      host: 'db'
+      user: process.env.PGUSER,
+      database: process.env.PGDATABASE,
+      password: process.env.PGPASSWORD,
+      host: process.env.PGHOST
     },
     'mythgard',
     {
@@ -44,20 +47,3 @@ app.use(
 );
 
 app.listen(process.env.PORT || 3000);
-
-// http
-//   .createServer(
-//     postgraphile(
-//       {
-//         user: 'postgres',
-//         database: 'postgres',
-//         password: 'example',
-//         host: 'db'
-//       },
-//       'mythgard',
-//       {
-//         graphiql: true
-//       }
-//     )
-//   )
-//   .listen(process.env.PORT || 3000);

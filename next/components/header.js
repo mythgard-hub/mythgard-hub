@@ -39,6 +39,9 @@ const Header = () => (
       <Link href="/articles">
         <a style={linkStyle}>Articles</a>
       </Link>
+      <Link href="/privacy-policy">
+        <a style={linkStyle}>Privacy Policy</a>
+      </Link>
     </div>
   </div>
 );

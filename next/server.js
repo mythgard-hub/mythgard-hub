@@ -2,6 +2,9 @@ const express = require('express');
 const next = require('next');
 const proxy = require('express-http-proxy');
 
+const session = require('express-session');
+const passport = require('passport');
+
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -10,6 +13,15 @@ app
   .prepare()
   .then(() => {
     const server = express();
+
+    /**
+     * Necessary for auth
+     */
+    server.use(session({ secret: process.env.SESSION_SECRET }));
+    server.use(passport.initialize());
+    server.use(passport.session());
+
+    require('./server-routes/auth.js')(server);
 
     server.get('/card/:id', (req, res) => {
       const actualPage = '/card';
