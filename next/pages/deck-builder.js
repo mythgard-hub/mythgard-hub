@@ -6,12 +6,25 @@ import { handleInputChange } from '../lib/form-utils';
 import { ApolloConsumer } from 'react-apollo';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import Router from 'next/router';
 
 const addDeckQuery = gql`
   mutation AddDeck($name: String!) {
     createDeck(input: { deck: { name: $name } }) {
       deck {
         name
+        id
+      }
+    }
+  }
+`;
+
+const addCardDeck = gql`
+  mutation CreateCardDeck($deckId: Int!, $cardId: Int!) {
+    createCardDeck(input: { cardDeck: { deckId: $deckId, cardId: $cardId } }) {
+      cardDeck {
+        deckId
+        cardId
       }
     }
   }
@@ -36,10 +49,29 @@ class DeckBuilder extends React.Component {
     if (!this.state.deckName) {
       return;
     }
-    client.mutate({
-      mutation: addDeckQuery,
-      variables: { name: this.state.deckName }
-    });
+    const deckInProgress = this.state.deckInProgress;
+    let deckId;
+    client
+      .mutate({
+        mutation: addDeckQuery,
+        variables: { name: this.state.deckName }
+      })
+      .then(function({ data: { createDeck } }) {
+        deckId = createDeck.deck.id;
+        return Promise.all(
+          deckInProgress.map(card => {
+            client.mutate({
+              mutation: addCardDeck,
+              variables: {
+                cardId: card.id,
+                deckId
+              }
+            });
+          })
+        ).then(() => {
+          Router.push(`/deck?id=${deckId}`);
+        });
+      });
 
     this.setState({
       deckInProgress: [],
