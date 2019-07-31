@@ -12,9 +12,9 @@ TournamentList.propTypes = {
 
 export default function TournamentList({ tournaments }) {
   return (
-    <ul className="tournamentList">
+    <ul data-cy="tournamentList">
       {tournaments.map((tourney, index) => (
-        <li key={tourney.id}>
+        <li key={tourney.id} data-cy="tournamentListItem">
           {tourney.id + ' '}
           <Link href={`/tournament?id=${tourney.id}`} key={index}>
             <a>{tourney.name}</a>
