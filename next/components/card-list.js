@@ -11,7 +11,7 @@ export default function CardList({ onCardClick, cards }) {
             <a
               data-cy="cardListCard"
               onClick={e => {
-                onCardClick(e, card);
+                onCardClick && onCardClick(e, card);
               }}
             >
               {card.id}. name: {card.name}
