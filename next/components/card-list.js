@@ -8,12 +8,7 @@ export default function CardList({ onCardClick, cards }) {
         <li key={card.id}>
           {card.quantity && <span>{card.quantity}</span>}&nbsp;
           <Link href={`/card?id=${card.id}`} key={index}>
-            <a
-              data-cy="cardListCard"
-              onClick={e => {
-                onCardClick && onCardClick(e, card);
-              }}
-            >
+            <a data-cy="cardListCard" onClick={e => onCardClick(e, card)}>
               {card.id}. name: {card.name}
             </a>
           </Link>
@@ -22,6 +17,9 @@ export default function CardList({ onCardClick, cards }) {
     </ul>
   );
 }
+CardList.defaultProps = {
+  onCardClick: () => {}
+};
 CardList.propTypes = {
   cards: PropTypes.array,
   onCardClick: PropTypes.func
