@@ -1,11 +1,17 @@
 import React from 'react';
-import Layout from '../components/layout';
 import AllCards from '../components/all-cards';
+import Layout from '../components/layout';
+import ImportedDeck from '../components/imported-deck';
 import DeckCardList from '../components/deck-card-list';
 import { handleInputChange } from '../lib/form-utils';
 import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
+import DeckExport from '../components/deck-export';
+import {
+  convertImportToDeck,
+  initializeImportedDeck
+} from '../lib/import-utils';
 
 const addDeckQuery = gql`
   mutation AddDeck($name: String!) {
@@ -29,17 +35,21 @@ const addCardDeck = gql`
   }
 `;
 
-class DeckBuilder extends React.Component {
+class DeckBuilderPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       deckInProgress: [],
-      deckName: ''
+      mainDeckInput: '',
+      sideboardInput: '',
+      deckName: '',
+      importedDeck: initializeImportedDeck()
     };
 
     this.onCollectionClick = this.onCollectionClick.bind(this);
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImport = this.handleImport.bind(this);
   }
 
   handleSubmit(e, client) {
@@ -85,9 +95,18 @@ class DeckBuilder extends React.Component {
     });
   }
 
+  handleImport() {
+    const { mainDeckInput, sideboardInput } = this.state;
+    this.setState({
+      importedDeck: convertImportToDeck(mainDeckInput, sideboardInput)
+    });
+  }
+
   render() {
+    const { importedDeck, mainDeckInput, sideboardInput } = this.state;
+
     return (
-      <Layout>
+      <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
         <style jsx>{`
           .deck-builder-panels {
             display: flex;
@@ -98,7 +117,6 @@ class DeckBuilder extends React.Component {
           }
         `}</style>
         <h1 data-cy="header">Deck Builder</h1>
-
         <ApolloConsumer>
           {client => (
             <>
@@ -123,7 +141,6 @@ class DeckBuilder extends React.Component {
             </>
           )}
         </ApolloConsumer>
-
         <div className="deck-builder-panels">
           <div className="collection">
             <h2>Collection</h2>
@@ -134,9 +151,32 @@ class DeckBuilder extends React.Component {
             <DeckCardList cards={this.state.deckInProgress} />
           </div>
         </div>
+        <h2>Import Deck</h2>
+        <h3>Main Deck</h3>
+        <textarea
+          cols="40"
+          rows="10"
+          value={mainDeckInput}
+          name="mainDeckInput"
+          onChange={this.handleInputChange}
+        />
+        <h3>Sideboard</h3>
+        <textarea
+          cols="40"
+          rows="5"
+          value={sideboardInput}
+          name="sideboardInput"
+          onChange={this.handleInputChange}
+        />
+        <br />
+        <br />
+        <button onClick={this.handleImport}>Import</button>
+        &nbsp;
+        <DeckExport textToExport={importedDeck.asText} />
+        <ImportedDeck importedDeck={importedDeck} />
       </Layout>
     );
   }
 }
 
-export default DeckBuilder;
+export default DeckBuilderPage;
