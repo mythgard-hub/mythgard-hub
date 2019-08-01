@@ -14,7 +14,7 @@ const index = ({ user }) => (
     desc="The Mythgard Hub privacy policy"
   >
     <h1>Privacy Policy</h1>
-    Privacy Things for {user.email}
+    {user && `Privacy Things for ${user.email}`}
   </Layout>
 );
 

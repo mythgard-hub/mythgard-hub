@@ -7,9 +7,7 @@
 
 import React from 'react';
 
-let cachedUser = {
-  email: null
-};
+let cachedUser;
 
 export default WrappedPage => {
   return class extends React.Component {
