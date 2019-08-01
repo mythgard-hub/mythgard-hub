@@ -57,13 +57,6 @@ const insertDeckCards = (apolloClient, deckId, cards) => {
   );
 };
 
-const validateDeckBuilderState = function() {
-  if (!this.state.deckName) {
-    return false;
-  }
-  return true;
-};
-
 const insertDeck = (apolloClient, deckInProgress, deckName) => {
   let deckId;
   return insertNewEmptyDeck(apolloClient, deckName)
@@ -89,12 +82,13 @@ class DeckBuilderPage extends React.Component {
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImport = this.handleImport.bind(this);
+    this.validateState = this.validateState.bind(this);
   }
 
   handleSubmit(e, client) {
     e && e.preventDefault();
 
-    if (!validateDeckBuilderState.call(this)) {
+    if (!this.validateState()) {
       return;
     }
 
@@ -117,6 +111,13 @@ class DeckBuilderPage extends React.Component {
     this.setState({
       importedDeck: convertImportToDeck(mainDeckInput, sideboardInput)
     });
+  }
+
+  validateState() {
+    if (!this.state.deckName) {
+      return false;
+    }
+    return true;
   }
 
   render() {
