@@ -13,7 +13,7 @@ let cachedUser = {
 
 export default WrappedPage => {
   return class extends React.Component {
-    static displayName = 'withAccount(WrappedPage)';
+    static displayName = 'withAuth(WrappedPage)';
 
     static async getInitialProps(ctx) {
       const pageProps =
