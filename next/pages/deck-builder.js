@@ -35,7 +35,7 @@ const addCardDeck = gql`
   }
 `;
 
-const insertNewEmptyDeck = (apolloClient, deckName) => {
+const createDeckShell = (apolloClient, deckName) => {
   return apolloClient.mutate({
     mutation: addDeckQuery,
     variables: { name: deckName }
@@ -43,7 +43,7 @@ const insertNewEmptyDeck = (apolloClient, deckName) => {
 };
 
 // Graphql query batching is used to prevent request flurry
-const insertDeckCards = (apolloClient, deckId, cards) => {
+const addCardsToDeck = (apolloClient, deckId, cards) => {
   return Promise.all(
     cards.map(card => {
       apolloClient.mutate({
@@ -57,12 +57,12 @@ const insertDeckCards = (apolloClient, deckId, cards) => {
   );
 };
 
-const insertDeck = (apolloClient, deckInProgress, deckName) => {
+const saveDeck = (apolloClient, deckInProgress, deckName) => {
   let deckId;
-  return insertNewEmptyDeck(apolloClient, deckName)
-    .then(({ data: { createDeck } }) => {
-      deckId = createDeck.deck.id;
-      return insertDeckCards(apolloClient, deckId, deckInProgress);
+  return createDeckShell(apolloClient, deckName)
+    .then(({ data }) => {
+      deckId = data.createDeck.deck.id;
+      return addCardsToDeck(apolloClient, deckId, deckInProgress);
     })
     .then(() => deckId);
 };
@@ -94,7 +94,7 @@ class DeckBuilderPage extends React.Component {
 
     const { deckInProgress, deckName } = this.state;
 
-    insertDeck(client, deckInProgress, deckName).then(deckId => {
+    saveDeck(client, deckInProgress, deckName).then(deckId => {
       Router.push(`/deck?id=${deckId}`);
     });
   }
@@ -169,6 +169,7 @@ class DeckBuilderPage extends React.Component {
             <DeckCardList cards={this.state.deckInProgress} />
           </div>
         </div>
+        {/* TODO - wire up this part with code above */}
         <h2>Import Deck</h2>
         <h3>Main Deck</h3>
         <textarea
