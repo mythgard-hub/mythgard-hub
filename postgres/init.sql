@@ -71,15 +71,13 @@ CREATE TABLE mythgard.account (
   email varchar(255) UNIQUE
 );
 
-CREATE FUNCTION mythgard.find_account_or_create_by_google
+CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
   _google_id varchar(255),
   _email varchar(255)
 )
 RETURNS mythgard.account as $$
   INSERT INTO mythgard.account (google_id, email) VALUES (_google_id, _email)
-    ON CONFLICT (google_id) DO UPDATE SET email = _email;
-  SELECT *
-    FROM mythgard.account
-    WHERE google_id = _google_id
+    ON CONFLICT (google_id) DO UPDATE SET email = _email
+    RETURNING *
 $$ LANGUAGE sql VOLATILE;
