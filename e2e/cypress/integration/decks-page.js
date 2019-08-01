@@ -2,9 +2,6 @@ describe('Decks Page', function() {
   beforeEach(() => {
     cy.visit('/decks');
   });
-  it('has a list', function() {
-    cy.get('li').should('have.length', 2);
-  });
   it('should have working links', function() {
     cy.get('li a:first').click();
     cy.location().should(location => {

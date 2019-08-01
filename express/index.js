@@ -15,6 +15,7 @@ app.use(
     'mythgard',
     {
       graphiql: true,
+      enableQueryBatching: true,
       appendPlugins: [PgSimplifyInflectorPlugin],
       // Optional customisation
       graphileBuildOptions: {
