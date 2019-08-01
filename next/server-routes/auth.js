@@ -56,16 +56,12 @@ module.exports = server => {
     '/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     function(req, res) {
-      res.redirect('/booyah');
+      res.redirect('/');
     }
   );
 
   server.get('/login', (req, res) => {
     res.send('Login');
-  });
-
-  server.get('/booyah', (req, res) => {
-    res.send(`Hello, ${req.user.email}`);
   });
 
   server.get('/auth/logout', function(req, res) {
