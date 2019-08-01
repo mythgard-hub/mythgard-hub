@@ -18,8 +18,8 @@ CREATE TABLE mythgard.deck (
   name varchar(255),
   author_id integer
 );
-INSERT INTO mythgard.deck("id", "name") VALUES (1, 'dragons');
-INSERT INTO mythgard.deck("id", "name") VALUES (2, 'cats');
+INSERT INTO mythgard.deck("name") VALUES ('dragons');
+INSERT INTO mythgard.deck("name") VALUES ('cats');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,

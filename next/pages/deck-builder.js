@@ -4,7 +4,6 @@ import AllCards from '../components/all-cards';
 import DeckCardList from '../components/deck-card-list';
 import { handleInputChange } from '../lib/form-utils';
 import { ApolloConsumer } from 'react-apollo';
-import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 
