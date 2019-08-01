@@ -35,6 +35,45 @@ const addCardDeck = gql`
   }
 `;
 
+const insertNewEmptyDeck = (apolloClient, deckName) => {
+  return apolloClient.mutate({
+    mutation: addDeckQuery,
+    variables: { name: deckName }
+  });
+};
+
+// Graphql query batching is used to prevent request flurry
+const insertDeckCards = (apolloClient, deckId, cards) => {
+  return Promise.all(
+    cards.map(card => {
+      apolloClient.mutate({
+        mutation: addCardDeck,
+        variables: {
+          cardId: card.id,
+          deckId
+        }
+      });
+    })
+  );
+};
+
+const validateDeckBuilderState = function() {
+  if (!this.state.deckName) {
+    return false;
+  }
+  return true;
+};
+
+const insertDeck = (apolloClient, deckInProgress, deckName) => {
+  let deckId;
+  return insertNewEmptyDeck(apolloClient, deckName)
+    .then(({ data: { createDeck } }) => {
+      deckId = createDeck.deck.id;
+      return insertDeckCards(apolloClient, deckId, deckInProgress);
+    })
+    .then(() => deckId);
+};
+
 class DeckBuilderPage extends React.Component {
   constructor(props) {
     super(props);
@@ -55,36 +94,14 @@ class DeckBuilderPage extends React.Component {
   handleSubmit(e, client) {
     e && e.preventDefault();
 
-    if (!this.state.deckName) {
+    if (!validateDeckBuilderState.call(this)) {
       return;
     }
-    const deckInProgress = this.state.deckInProgress;
-    let deckId;
-    client
-      .mutate({
-        mutation: addDeckQuery,
-        variables: { name: this.state.deckName }
-      })
-      .then(function({ data: { createDeck } }) {
-        deckId = createDeck.deck.id;
-        return Promise.all(
-          deckInProgress.map(card => {
-            client.mutate({
-              mutation: addCardDeck,
-              variables: {
-                cardId: card.id,
-                deckId
-              }
-            });
-          })
-        ).then(() => {
-          Router.push(`/deck?id=${deckId}`);
-        });
-      });
 
-    this.setState({
-      deckInProgress: [],
-      deckName: ''
+    const { deckInProgress, deckName } = this.state;
+
+    insertDeck(client, deckInProgress, deckName).then(deckId => {
+      Router.push(`/deck?id=${deckId}`);
     });
   }
 
