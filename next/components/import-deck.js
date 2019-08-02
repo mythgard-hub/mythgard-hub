@@ -5,25 +5,21 @@ export default function ImportDeck({
   handleInputChange,
   handleImport
 }) {
-  if (errors && errors.length) {
-    return (
-      <>
-        <h2>Import Deck</h2>
-        <textarea
-          cols="40"
-          rows="10"
-          value={mainDeckInput}
-          name="mainDeckInput"
-          onChange={handleInputChange}
-        />
-        <br />
-        <br />
-        <button onClick={handleImport}>Import</button>
-      </>
-    );
-  }
-
-  return null;
+  return (
+    <>
+      <h2>Import Deck</h2>
+      <textarea
+        cols="40"
+        rows="10"
+        value={mainDeckInput}
+        name="mainDeckInput"
+        onChange={handleInputChange}
+      />
+      <br />
+      <br />
+      <button onClick={handleImport}>Import</button>
+    </>
+  );
 }
 
 ImportDeck.defaultProps = {
