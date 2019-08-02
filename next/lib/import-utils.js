@@ -1,17 +1,5 @@
 import { META_KEYS } from '../constants/deck';
-
-export const initializeDeckBuilder = () => {
-  return {
-    deckName: '',
-    deckPath: '',
-    deckPower: '',
-    deckCoverart: '',
-    mainDeck: [],
-    sideboard: [],
-    errors: [],
-    asText: ''
-  };
-};
+import { initializeDeckBuilder } from './deck-utils';
 
 export const extractMetaValue = line => {
   try {

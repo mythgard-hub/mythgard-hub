@@ -9,10 +9,8 @@ import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import DeckExport from '../components/deck-export';
-import {
-  convertImportToDeck,
-  initializeDeckBuilder
-} from '../lib/import-utils';
+import { convertImportToDeck } from '../lib/import-utils';
+import { initializeDeckBuilder } from '../lib/deck-utils';
 
 const addDeckQuery = gql`
   mutation AddDeck($name: String!) {
@@ -86,6 +84,7 @@ class DeckBuilderPage extends React.Component {
   }
 
   updateDeckName = e => {
+    const { deckInProgress } = this.state;
     this.setState({
       deckInProgress: {
         ...deckInProgress,
