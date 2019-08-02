@@ -82,7 +82,17 @@ class DeckBuilderPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImport = this.handleImport.bind(this);
     this.validateState = this.validateState.bind(this);
+    this.updateDeckName = this.updateDeckName.bind(this);
   }
+
+  updateDeckName = e => {
+    this.setState({
+      deckInProgress: {
+        ...deckInProgress,
+        deckName: e.target.value
+      }
+    });
+  };
 
   handleSubmit(e, client) {
     e && e.preventDefault();
@@ -151,14 +161,7 @@ class DeckBuilderPage extends React.Component {
                   data-cy="deckTitle"
                   type="text"
                   name="deckName"
-                  onChange={e => {
-                    this.setState({
-                      deckInProgress: {
-                        ...deckInProgress,
-                        deckName: e.target.value
-                      }
-                    });
-                  }}
+                  onChange={this.updateDeckName}
                   value={deckInProgress.deckName}
                 />
               </label>
