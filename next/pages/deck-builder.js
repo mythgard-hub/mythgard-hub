@@ -190,7 +190,6 @@ class DeckBuilderPage extends React.Component {
             <DeckCardList cards={deckInProgress.mainDeck} />
           </div>
         </div>
-        {/* TODO - wire up this part with code above */}
         <ImportDeck
           mainDeckInput={mainDeckInput}
           handleInputChange={this.handleInputChange}
