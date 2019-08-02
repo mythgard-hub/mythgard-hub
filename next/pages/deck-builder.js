@@ -1,7 +1,8 @@
 import React from 'react';
 import AllCards from '../components/all-cards';
 import Layout from '../components/layout';
-import ImportedDeck from '../components/imported-deck';
+import ImportedDeckErrors from '../components/imported-deck-errors';
+import ImportDeck from '../components/import-deck';
 import DeckCardList from '../components/deck-card-list';
 import { handleInputChange } from '../lib/form-utils';
 import { ApolloConsumer } from 'react-apollo';
@@ -10,7 +11,7 @@ import Router from 'next/router';
 import DeckExport from '../components/deck-export';
 import {
   convertImportToDeck,
-  initializeImportedDeck
+  initializeDeckBuilder
 } from '../lib/import-utils';
 
 const addDeckQuery = gql`
@@ -57,12 +58,12 @@ const addCardsToDeck = (apolloClient, deckId, cards) => {
   );
 };
 
-const saveDeck = (apolloClient, deckInProgress, deckName) => {
+const saveDeck = (apolloClient, deckInProgress) => {
   let deckId;
-  return createDeckShell(apolloClient, deckName)
+  return createDeckShell(apolloClient, deckInProgress.deckName)
     .then(({ data }) => {
       deckId = data.createDeck.deck.id;
-      return addCardsToDeck(apolloClient, deckId, deckInProgress);
+      return addCardsToDeck(apolloClient, deckId, deckInProgress.mainDeck);
     })
     .then(() => deckId);
 };
@@ -71,11 +72,9 @@ class DeckBuilderPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deckInProgress: [],
       mainDeckInput: '',
       sideboardInput: '',
-      deckName: '',
-      importedDeck: initializeImportedDeck()
+      deckInProgress: initializeDeckBuilder()
     };
 
     this.onCollectionClick = this.onCollectionClick.bind(this);
@@ -92,36 +91,44 @@ class DeckBuilderPage extends React.Component {
       return;
     }
 
-    const { deckInProgress, deckName } = this.state;
+    const { deckInProgress } = this.state;
 
-    saveDeck(client, deckInProgress, deckName).then(deckId => {
+    saveDeck(client, deckInProgress).then(deckId => {
       Router.push(`/deck?id=${deckId}`);
     });
   }
 
   onCollectionClick(e, card) {
+    const { deckInProgress } = this.state;
     e && e.preventDefault();
+
     this.setState({
-      deckInProgress: [...this.state.deckInProgress, card]
+      deckInProgress: {
+        ...deckInProgress,
+        mainDeck: [...deckInProgress.mainDeck, card]
+      }
     });
   }
 
   handleImport() {
-    const { mainDeckInput, sideboardInput } = this.state;
+    const { mainDeckInput, deckInProgress } = this.state;
+
+    const importedDeck = convertImportToDeck(mainDeckInput, '');
+    importedDeck.mainDeck = deckInProgress.mainDeck.concat(
+      importedDeck.mainDeck
+    );
+
     this.setState({
-      importedDeck: convertImportToDeck(mainDeckInput, sideboardInput)
+      deckInProgress: importedDeck
     });
   }
 
   validateState() {
-    if (!this.state.deckName) {
-      return false;
-    }
-    return true;
+    return Boolean(this.state.deckInProgress.deckName);
   }
 
   render() {
-    const { importedDeck, mainDeckInput, sideboardInput } = this.state;
+    const { deckInProgress, mainDeckInput } = this.state;
 
     return (
       <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
@@ -144,8 +151,15 @@ class DeckBuilderPage extends React.Component {
                   data-cy="deckTitle"
                   type="text"
                   name="deckName"
-                  onChange={this.handleInputChange}
-                  value={this.state.deckName}
+                  onChange={e => {
+                    this.setState({
+                      deckInProgress: {
+                        ...deckInProgress,
+                        deckName: e.target.value
+                      }
+                    });
+                  }}
+                  value={deckInProgress.deckName}
                 />
               </label>
               <input
@@ -159,6 +173,13 @@ class DeckBuilderPage extends React.Component {
             </>
           )}
         </ApolloConsumer>
+        <button
+          onClick={() =>
+            this.setState({ deckInProgress: initializeDeckBuilder() })
+          }
+        >
+          Clear All
+        </button>
         <div className="deck-builder-panels">
           <div className="collection">
             <h2>Collection</h2>
@@ -166,33 +187,18 @@ class DeckBuilderPage extends React.Component {
           </div>
           <div className="deck-in-progress" data-cy="deckInProgress">
             <h2>Current Deck</h2>
-            <DeckCardList cards={this.state.deckInProgress} />
+            <DeckCardList cards={deckInProgress.mainDeck} />
           </div>
         </div>
         {/* TODO - wire up this part with code above */}
-        <h2>Import Deck</h2>
-        <h3>Main Deck</h3>
-        <textarea
-          cols="40"
-          rows="10"
-          value={mainDeckInput}
-          name="mainDeckInput"
-          onChange={this.handleInputChange}
+        <ImportDeck
+          mainDeckInput={mainDeckInput}
+          handleInputChange={this.handleInputChange}
+          handleImport={this.handleImport}
         />
-        <h3>Sideboard</h3>
-        <textarea
-          cols="40"
-          rows="5"
-          value={sideboardInput}
-          name="sideboardInput"
-          onChange={this.handleInputChange}
-        />
-        <br />
-        <br />
-        <button onClick={this.handleImport}>Import</button>
         &nbsp;
-        <DeckExport textToExport={importedDeck.asText} />
-        <ImportedDeck importedDeck={importedDeck} />
+        <DeckExport textToExport={deckInProgress.asText} />
+        <ImportedDeckErrors importedDeck={deckInProgress} />
       </Layout>
     );
   }
