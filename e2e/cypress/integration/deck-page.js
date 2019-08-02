@@ -10,16 +10,14 @@ describe('Deck Page', function() {
       expect(location.pathname).to.contain('/card');
     });
   });
-  it('happy path comments', async function() {
+  it('happy path comments', function() {
+    const commentSelector = '[data-cy=commentList] [data-cy=comment]';
     cy.get('[data-cy=commentList]').should('have.length', 1);
-    const list = await cy.get('[data-cy=commentList] [data-cy=comment]');
-    const beforeLength = list.length;
-    cy.get('[data-cy=commentBody]').type('I made masters with this');
-    cy.get('[data-cy=submit]').click();
-    cy.get('.[data-cy=commentList] [data-cy=comment]').should(
-      'have.length',
-      beforeLength + 1
-    );
-    cy.get('[data-cy=commentBody]').should('have.value', '');
+    cy.get(commentSelector).then(list => {
+      cy.get('[data-cy=commentBody]').type('I made masters with this');
+      cy.get('[data-cy=submit]').click();
+      cy.get(commentSelector).should('have.length', list.length + 1);
+      cy.get('[data-cy=commentBody]').should('have.value', '');
+    });
   });
 });
