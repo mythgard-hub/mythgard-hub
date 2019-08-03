@@ -3,16 +3,25 @@ describe('Decks Page', function() {
     cy.visit('/decks');
   });
   it('should have working links', function() {
-    cy.get('li a:first').click();
+    cy.get('[data-cy="deckListItem"] a:first').click();
     cy.location().should(location => {
       expect(location.pathname).to.eq('/deck');
     });
     cy.get('h1').should('have.class', 'deckName');
   });
   it('should search for decks', function() {
-    cy.get('input.name').type('cat');
-    cy.get('input[type="submit"]').click();
-    cy.get('li').should('have.length', 1);
-    cy.get('li a').should('contain', 'cat');
+    cy.get('[data-cy="deckListItem"]').then(list => {
+      const initialListLength = list.length;
+      cy.get('[data-cy="deckSearchDeckName"]').type('cat');
+      cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
+      cy.get('[data-cy="deckSearchDeckName"]').clear();
+      cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.get('[data-cy="deckListItem"]').should(
+        'have.length',
+        initialListLength
+      );
+    });
   });
 });
