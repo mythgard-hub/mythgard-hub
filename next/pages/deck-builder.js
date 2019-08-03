@@ -3,7 +3,7 @@ import AllCards from '../components/all-cards';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
-import DeckCardList from '../components/deck-card-list';
+import CardList from '../components/card-list';
 import { handleInputChange } from '../lib/form-utils';
 import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -189,7 +189,7 @@ class DeckBuilderPage extends React.Component {
           </div>
           <div className="deck-in-progress" data-cy="deckInProgress">
             <h2>Current Deck</h2>
-            <DeckCardList cards={deckInProgress.mainDeck} />
+            <CardList cards={deckInProgress.mainDeck} />
           </div>
         </div>
         <ImportDeck
