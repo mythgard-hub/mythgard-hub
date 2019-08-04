@@ -9,18 +9,32 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="importDeckTitle"]').should('be.visible');
     cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
     cy.get('[data-cy="importDeckButton"]').should('be.visible');
-    cy.get('[data-cy="factionFilter"]').should('be.visible');
+    cy.get('[data-cy="factionFilters"]').should('be.visible');
     cy.get('[data-cy="cardListCard"]:first').click();
     cy.get('[data-cy="deckInProgress"]').should('be.visible');
     cy.get('[data-cy="deckInProgress"] [data-cy="cardListCard"]').should(
       'have.length',
       1
     );
-    cy.get('[data-cy="deckTitle"]').type('Floop the Pig');
-    cy.get('[data-cy="saveDeck"]').click();
-    cy.location().should(location => {
-      expect(location.pathname).to.eq('/deck');
-    });
+    let numCardsBeforeFilter;
+    cy.get('[data-cy="deckBuilderCollection"] [data-cy="cardListCard"]')
+      .then(cards => {
+        numCardsBeforeFilter = cards.length;
+        cy.get('[data-cy="factionFilter"]:first').click();
+        return cy.get(
+          '[data-cy="deckBuilderCollection"] [data-cy="cardListCard"]'
+        );
+      })
+      .then(cards => {
+        return expect(numCardsBeforeFilter).to.be.above(cards.length);
+      })
+      .then(() => {
+        cy.get('[data-cy="deckTitle"]').type('Floop the Pig');
+        cy.get('[data-cy="saveDeck"]').click();
+        return cy.location().should(location => {
+          expect(location.pathname).to.eq('/deck');
+        });
+      });
   });
 
   it('should import a deck', function() {

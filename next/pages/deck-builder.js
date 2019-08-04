@@ -9,7 +9,7 @@ import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import DeckExport from '../components/deck-export';
-import FactionFilter from '../components/faction-filter';
+import FactionFilters from '../components/faction-filters';
 import { convertImportToDeck } from '../lib/import-utils';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import DeckCardList from '../components/deck-card-list';
@@ -93,6 +93,7 @@ class DeckBuilderPage extends React.Component {
     this.handleImport = this.handleImport.bind(this);
     this.validateState = this.validateState.bind(this);
     this.updateDeckName = this.updateDeckName.bind(this);
+    this.onFactionClick = this.onFactionClick.bind(this);
   }
 
   updateDeckName = e => {
@@ -159,6 +160,10 @@ class DeckBuilderPage extends React.Component {
     return Boolean(this.state.deckInProgress.deckName);
   }
 
+  onFactionClick() {
+    console.log('got here');
+  }
+
   render() {
     const { deckInProgress, mainDeckInput } = this.state;
 
@@ -174,7 +179,7 @@ class DeckBuilderPage extends React.Component {
           }
         `}</style>
         <h1 data-cy="header">Deck Builder</h1>
-        <FactionFilter />
+        <FactionFilters onFactionClick={this.onFactionClick} />
         <ApolloConsumer>
           {client => (
             <>
@@ -207,7 +212,7 @@ class DeckBuilderPage extends React.Component {
           Clear All
         </button>
         <div className="deck-builder-panels">
-          <div className="collection">
+          <div className="collection" data-cy="deckBuilderCollection">
             <h2>Collection</h2>
             <AllCards onCardClick={this.onCollectionClick} />
           </div>

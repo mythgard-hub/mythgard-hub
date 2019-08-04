@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class FactionFilter extends React.Component {
   constructor(props) {
@@ -10,8 +11,21 @@ class FactionFilter extends React.Component {
   }
 
   render() {
-    return <div data-cy="factionFilter">Hello!</div>;
+    return (
+      <div
+        data-cy="factionFilter"
+        data-mgfaction={this.props.faction}
+        onClick={this.props.onFactionClick}
+      >
+        {this.props.faction}
+      </div>
+    );
   }
 }
+
+FactionFilter.propTypes = {
+  onFactionClick: PropTypes.func,
+  faction: PropTypes.string
+};
 
 export default FactionFilter;
