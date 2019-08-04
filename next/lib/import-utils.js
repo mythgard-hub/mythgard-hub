@@ -1,10 +1,6 @@
 import { META_KEYS } from '../constants/deck';
 import { initializeDeckBuilder } from './deck-utils';
 
-const hasCoverArt = line => {
-  return line.startsWith(`${META_KEYS.COVER_ART}:`);
-};
-
 // Get the line number where the meta information ends
 export const getSpliceIndex = lines => {
   let index = 0;
