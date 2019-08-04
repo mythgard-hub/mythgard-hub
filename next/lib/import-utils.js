@@ -6,9 +6,7 @@ export const getSpliceIndex = lines => {
   let index = 0;
 
   while (index < lines.length) {
-    const currSplit = lines[index].split(':');
-
-    if (currSplit.length === 1) {
+    if (lines[index].indexOf(':') === -1) {
       return index;
     }
 
@@ -78,14 +76,10 @@ export const metaLineInvalid = (line, metaName) => {
     return true;
   }
 
-  const split = line && line.split && line.split(':');
+  const split = line.split(':');
 
   // The first element of the line has to be the meta name
-  if (!split || !split.length || split[0] !== metaName || split[0] === line) {
-    return true;
-  }
-
-  return false;
+  return !split || !split.length || split[0] !== metaName || split[0] === line;
 };
 
 export const cardLinesValid = lines => {
