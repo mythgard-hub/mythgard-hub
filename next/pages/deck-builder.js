@@ -11,6 +11,7 @@ import Router from 'next/router';
 import DeckExport from '../components/deck-export';
 import { convertImportToDeck } from '../lib/import-utils';
 import { initializeDeckBuilder } from '../lib/deck-utils';
+import DeckCardList from '../components/deck-card-list';
 
 const addDeckQuery = gql`
   mutation AddDeck($name: String!) {
@@ -24,9 +25,14 @@ const addDeckQuery = gql`
 `;
 
 const addCardDeck = gql`
-  mutation CreateCardDeck($deckId: Int!, $cardId: Int!) {
-    createCardDeck(input: { cardDeck: { deckId: $deckId, cardId: $cardId } }) {
+  mutation CreateCardDeck($deckId: Int!, $cardId: Int!, $quantity: Int!) {
+    createCardDeck(
+      input: {
+        cardDeck: { deckId: $deckId, cardId: $cardId, quantity: $quantity }
+      }
+    ) {
       cardDeck {
+        quantity
         deckId
         cardId
       }
@@ -42,13 +48,14 @@ const createDeckShell = (apolloClient, deckName) => {
 };
 
 // Graphql query batching is used to prevent request flurry
-const addCardsToDeck = (apolloClient, deckId, cards) => {
+const addCardsToDeck = (apolloClient, deckId, deckCards) => {
   return Promise.all(
-    cards.map(card => {
+    deckCards.map(deckCard => {
       apolloClient.mutate({
         mutation: addCardDeck,
         variables: {
-          cardId: card.id,
+          quantity: deckCard.quantity,
+          cardId: deckCard.card.id,
           deckId
         }
       });
@@ -61,7 +68,11 @@ const saveDeck = (apolloClient, deckInProgress) => {
   return createDeckShell(apolloClient, deckInProgress.deckName)
     .then(({ data }) => {
       deckId = data.createDeck.deck.id;
-      return addCardsToDeck(apolloClient, deckId, deckInProgress.mainDeck);
+      return addCardsToDeck(
+        apolloClient,
+        deckId,
+        Object.values(deckInProgress.mainDeck)
+      );
     })
     .then(() => deckId);
 };
@@ -111,10 +122,20 @@ class DeckBuilderPage extends React.Component {
     const { deckInProgress } = this.state;
     e && e.preventDefault();
 
+    const nextMainDeck = { ...deckInProgress.mainDeck };
+    if (!nextMainDeck.hasOwnProperty(card.id)) {
+      nextMainDeck[card.id] = { quantity: 1, card };
+    } else {
+      nextMainDeck[card.id] = {
+        ...nextMainDeck[card.id],
+        quantity: nextMainDeck[card.id].quantity + 1
+      };
+    }
+
     this.setState({
       deckInProgress: {
         ...deckInProgress,
-        mainDeck: [...deckInProgress.mainDeck, card]
+        mainDeck: nextMainDeck
       }
     });
   }
@@ -123,9 +144,10 @@ class DeckBuilderPage extends React.Component {
     const { mainDeckInput, deckInProgress } = this.state;
 
     const importedDeck = convertImportToDeck(mainDeckInput, '');
-    importedDeck.mainDeck = deckInProgress.mainDeck.concat(
-      importedDeck.mainDeck
-    );
+    importedDeck.mainDeck = {
+      ...deckInProgress.mainDeck,
+      ...importedDeck.mainDeck
+    };
 
     this.setState({
       deckInProgress: importedDeck
@@ -189,7 +211,7 @@ class DeckBuilderPage extends React.Component {
           </div>
           <div className="deck-in-progress" data-cy="deckInProgress">
             <h2>Current Deck</h2>
-            <CardList cards={deckInProgress.mainDeck} />
+            <DeckCardList deckCards={Object.values(deckInProgress.mainDeck)} />
           </div>
         </div>
         <ImportDeck

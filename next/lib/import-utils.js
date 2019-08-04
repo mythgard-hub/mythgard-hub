@@ -123,7 +123,20 @@ export const convertImportToDeck = (mainDeckText, sideboardText) => {
   importedDeck.deckName = extractMetaValue(mainDeckLines[0]);
   importedDeck.deckPath = extractMetaValue(mainDeckLines[1]);
   importedDeck.deckPower = extractMetaValue(mainDeckLines[2]);
-  importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(3));
+  importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(3)).reduce(
+    (acc, curr, ix) => {
+      // TODO These need to get actual ID values from the card list
+      acc[`${curr.id}_${ix}`] = {
+        quantity: curr.quantity,
+        card: {
+          id: curr.id,
+          name: curr.name
+        }
+      };
+      return acc;
+    },
+    {}
+  );
   importedDeck.sideboard = formatCardLines(sideboardLines);
   importedDeck.asText = mainDeckText;
 
