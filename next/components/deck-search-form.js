@@ -25,13 +25,19 @@ class DeckSearchForm extends React.Component {
             type="text"
             value={this.state.name}
             name="name"
+            data-cy="deckSearchDeckName"
             className="name"
             onChange={this.handleInputChange}
           />
         </label>
         <br />
         <br />
-        <input type="submit" value="Search" onClick={this.handleSubmit} />
+        <input
+          data-cy="deckSearchSubmit"
+          type="submit"
+          value="Search"
+          onClick={this.handleSubmit}
+        />
       </form>
     );
   }

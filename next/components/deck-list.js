@@ -5,7 +5,7 @@ export default function DeckList({ decks }) {
   return (
     <ul>
       {decks.map((deck, index) => (
-        <li key={deck.id}>
+        <li data-cy="deckListItem" key={deck.id}>
           <Link href={`/deck?id=${deck.id}`} key={index}>
             <a>
               {index + 1}. name: {deck.name}

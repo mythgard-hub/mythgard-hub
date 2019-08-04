@@ -1,4 +1,5 @@
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
+import { ApolloClient, InMemoryCache } from 'apollo-boost';
+import { BatchHttpLink } from 'apollo-link-batch-http';
 import fetch from 'isomorphic-unfetch';
 
 let apolloClient = null;
@@ -20,7 +21,8 @@ function create(initialState) {
   return new ApolloClient({
     connectToDevTools: process.browser,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
-    link: new HttpLink({
+    link: new BatchHttpLink({
+      batchMax: 200,
       uri,
       // credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
       // Use fetch() polyfill on the server

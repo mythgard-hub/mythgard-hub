@@ -2,6 +2,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import CardList from './card-list';
+import PropTypes from 'prop-types';
 
 export const cardsQuery = gql`
   query cards {
@@ -14,15 +15,18 @@ export const cardsQuery = gql`
   }
 `;
 
-export default function AllCards() {
+export default function AllCards(props) {
   return (
     <Query query={cardsQuery}>
       {({ loading, error, data: { cards } }) => {
         if (error) return <ErrorMessage message={error} />;
         if (loading) return <div>Loading</div>;
 
-        return <CardList cards={cards.nodes} />;
+        return <CardList onCardClick={props.onCardClick} cards={cards.nodes} />;
       }}
     </Query>
   );
 }
+AllCards.propTypes = {
+  onCardClick: PropTypes.func
+};

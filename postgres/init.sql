@@ -18,8 +18,8 @@ CREATE TABLE mythgard.deck (
   name varchar(255),
   author_id integer
 );
-INSERT INTO mythgard.deck("id", "name") VALUES (1, 'dragons');
-INSERT INTO mythgard.deck("id", "name") VALUES (2, 'cats');
+INSERT INTO mythgard.deck("name") VALUES ('dragons');
+INSERT INTO mythgard.deck("name") VALUES ('cats');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
@@ -78,9 +78,30 @@ CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 )
 RETURNS mythgard.account as $$
   INSERT INTO mythgard.account (google_id, email) VALUES (_google_id, _email)
-    ON CONFLICT (google_id) DO UPDATE SET email = _email;
-    -- RETURNING *;
-  SELECT *
-    FROM mythgard.account
-    WHERE google_id = _google_id
+    ON CONFLICT (google_id) DO UPDATE SET email = _email
+    RETURNING *
 $$ LANGUAGE sql VOLATILE;
+
+CREATE TABLE mythgard.tournament (
+  id SERIAL PRIMARY KEY,
+  name varchar(255),
+  date date
+);
+
+INSERT INTO mythgard.tournament("id", "name", "date")
+VALUES (1, 'The Battle of Deimos', '2019-07-26'),
+  (2, 'The Iron Rain', '3000-01-01');
+
+CREATE TABLE mythgard.tournament_deck (
+  id SERIAL PRIMARY KEY,
+  rank integer,
+  tournament_id integer,
+  deck_id integer,
+  FOREIGN KEY (tournament_id)
+    REFERENCES mythgard.tournament (id),
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+);
+
+INSERT INTO mythgard.tournament_deck("rank", "tournament_id", "deck_id")
+VALUES (1, 1, 1), (2, 1, 2)
