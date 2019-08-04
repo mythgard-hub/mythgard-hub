@@ -3,18 +3,50 @@ import {
   formatCardLines,
   cardLinesValid,
   getImportErrors,
-  extractMetaValue
+  extractMetaValue,
+  convertImportToDeck
 } from './import-utils';
 import { META_KEYS } from '../constants/deck';
+import { initializeDeckBuilder } from './deck-utils';
 
 describe('Import utility methods', () => {
   describe('Test extractMetaValue', () => {
-    it('should return the trimmed meta value of a line', function() {
-      expect(extractMetaValue('name: my deck')).toBe('my deck');
-      expect(extractMetaValue('name:my deck')).toBe('my deck');
-      expect(extractMetaValue('name: my deck ')).toBe('my deck');
-      expect(extractMetaValue('name:   my   deck  ')).toBe('my   deck');
-      expect(extractMetaValue('name:my:deck')).toBe('my:deck');
+    it('should return the trimmed meta value of a line - all present', function() {
+      const input = [
+        'name: my deck',
+        'power:  my power',
+        'path: ',
+        'coverart: my  coverart  ',
+        '1 card',
+        '2 cards'
+      ];
+
+      expect(extractMetaValue(input, META_KEYS.NAME)).toBe('my deck');
+      expect(extractMetaValue(input, META_KEYS.POWER)).toBe('my power');
+      expect(extractMetaValue(input, META_KEYS.PATH)).toBe('');
+      expect(extractMetaValue(input, META_KEYS.COVER_ART)).toBe('my  coverart');
+    });
+
+    it('should return the trimmed meta value of a line - partial', function() {
+      const input = [
+        'name: my deck',
+        'power:  my power',
+        'path: ',
+        '1 card',
+        '2 cards'
+      ];
+
+      expect(extractMetaValue(input, META_KEYS.NAME)).toBe('my deck');
+      expect(extractMetaValue(input, META_KEYS.POWER)).toBe('my power');
+      expect(extractMetaValue(input, META_KEYS.PATH)).toBe('');
+      expect(extractMetaValue(input, META_KEYS.COVER_ART)).toBe('');
+    });
+
+    it('should return the trimmed meta value of a line - invalid input', function() {
+      expect(extractMetaValue(null, META_KEYS.NAME)).toBe(null);
+      expect(extractMetaValue(1, META_KEYS.POWER)).toBe(null);
+      expect(extractMetaValue([1, 2, 'a'], META_KEYS.PATH)).toBe(null);
+      expect(extractMetaValue({ a: 'a' }, META_KEYS.COVER_ART)).toBe(null);
     });
   });
 
@@ -33,16 +65,28 @@ describe('Import utility methods', () => {
       expect(metaLineInvalid('path pathy path', META_KEYS.NAME)).toBe(true);
     });
 
-    it('should return false if the meta line is valid', function() {
+    it('should return false if the meta line is valid - name', function() {
       expect(metaLineInvalid('name: decky', META_KEYS.NAME)).toBe(false);
       expect(metaLineInvalid('name: decky-deck', META_KEYS.NAME)).toBe(false);
       expect(metaLineInvalid('name: my deck name', META_KEYS.NAME)).toBe(false);
       expect(metaLineInvalid('name: my deck name', META_KEYS.NAME)).toBe(false);
       expect(metaLineInvalid('name:no space deck', META_KEYS.NAME)).toBe(false);
+    });
+
+    it('should return false if the meta line is valid - path, power, coverart', function() {
       expect(metaLineInvalid('path: my deck path', META_KEYS.PATH)).toBe(false);
-      expect(metaLineInvalid('power:    lots of spaces', META_KEYS.PATH)).toBe(
+      expect(metaLineInvalid('path: ', META_KEYS.PATH)).toBe(false);
+      expect(metaLineInvalid('path:', META_KEYS.PATH)).toBe(false);
+      expect(metaLineInvalid('power:    lots of spaces', META_KEYS.POWER)).toBe(
         false
       );
+      expect(metaLineInvalid('power: ', META_KEYS.POWER)).toBe(false);
+      expect(metaLineInvalid('power:', META_KEYS.POWER)).toBe(false);
+      expect(metaLineInvalid('coverart: myself', META_KEYS.COVER_ART)).toBe(
+        false
+      );
+      expect(metaLineInvalid('coverart: ', META_KEYS.COVER_ART)).toBe(false);
+      expect(metaLineInvalid('coverart:', META_KEYS.COVER_ART)).toBe(false);
     });
   });
 
@@ -153,6 +197,7 @@ describe('Import utility methods', () => {
         'name: my deck',
         'path: my path',
         'power: my power',
+        'coverart: myself',
         '1 card name',
         '2 other card name',
         '3 weird  card  name'
@@ -161,6 +206,7 @@ describe('Import utility methods', () => {
         'name: my deck',
         'path: my path',
         'power: my power',
+        'coverart: ',
         '1 card name'
       ].join('\n');
       const noPathOrPower = [
@@ -213,7 +259,7 @@ describe('Import utility methods', () => {
       expect(getImportErrors(main, sidebar)).toEqual([]);
     });
 
-    it('should show a list of errors - missing meta lines', function() {
+    it('should show a list of errors - import with no metalines', function() {
       const input = [
         '1 card name',
         '2 other card name',
@@ -222,15 +268,10 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ].join('\n');
 
-      const expected = [
-        'Deck must have a name',
-        'Deck must have an entry for path (it can be empty)',
-        'Deck must have an entry for power (it can be empty)'
-      ];
-      expect(getImportErrors(input, input)).toEqual(expected);
+      expect(getImportErrors(input, input)).toEqual([]);
     });
 
-    it('should return a list of errors - all the errors', function() {
+    it('should return a list of errors - invalid cards', function() {
       const input = [
         '1 card name',
         '2 other card name',
@@ -240,9 +281,6 @@ describe('Import utility methods', () => {
       ].join('\n');
 
       const expected = [
-        'Deck must have a name',
-        'Deck must have an entry for path (it can be empty)',
-        'Deck must have an entry for power (it can be empty)',
         'Invalid input for main deck',
         'Invalid input for sideboard'
       ];
@@ -250,12 +288,132 @@ describe('Import utility methods', () => {
       expect(getImportErrors(input, input)).toEqual(expected);
     });
 
-    it('should show a list of errors - not enough lines', function() {
-      const expected = ['Deck must have name, path, power and cards'];
+    it('should show a list of errors - empty input', function() {
+      expect(getImportErrors('', '')).toEqual(['Deck must have cards']);
+      expect(getImportErrors(null, '')).toEqual([
+        'Invalid input for main deck'
+      ]);
+    });
+  });
 
-      expect(getImportErrors('', '')).toEqual(expected);
-      expect(getImportErrors('line 1', '')).toEqual(expected);
-      expect(getImportErrors('line 1\nline 2', '')).toEqual(expected);
+  describe('Test convertImportToDeck', () => {
+    it('Should convert an import to a deck in progress - single card', function() {
+      const input = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        'coverart: ',
+        '1 card name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '');
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(result.mainDeck.length).toEqual(1);
+    });
+
+    it('Should convert an import to a deck in progress - multiple cards', function() {
+      const input = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        'coverart: myself',
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '');
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('myself');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(result.mainDeck.length).toEqual(3);
+    });
+
+    it('Should convert an import to a deck in progress - partial meta information', function() {
+      const input = [
+        'name: my deck',
+        'power: my power',
+        'coverart: myself',
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '');
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('myself');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('');
+      expect(result.deckPower).toEqual('my power');
+      expect(result.mainDeck.length).toEqual(3);
+    });
+
+    it('Should convert an import to a deck in progress - no meta information', function() {
+      const input = [
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '');
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('');
+      expect(result.deckPath).toEqual('');
+      expect(result.deckPower).toEqual('');
+      expect(result.mainDeck.length).toEqual(3);
+    });
+
+    it('Should convert an import to a deck in progress - empty lines', function() {
+      const input = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        'coverart: ',
+        '1 card name',
+        '2 other card name',
+        '',
+        ' ',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '');
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(result.mainDeck.length).toEqual(3);
+    });
+
+    it('Should not do anything besides populate errors - invalid cards', function() {
+      const input = [
+        '1 card name',
+        '2 other card name',
+        'bladiblah',
+        '3 weird  card  name',
+        'bladiblah'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '');
+
+      expect(result.errors.length).toEqual(1);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('');
+      expect(result.deckPath).toEqual('');
+      expect(result.deckPower).toEqual('');
+      expect(result.mainDeck.length).toEqual(0);
     });
   });
 });

@@ -1,15 +1,42 @@
 import { META_KEYS } from '../constants/deck';
 import { initializeDeckBuilder } from './deck-utils';
 
-export const extractMetaValue = line => {
+// Get the line number where the meta information ends
+export const getSpliceIndex = lines => {
+  let index = 0;
+
+  while (index < lines.length) {
+    if (lines[index].indexOf(':') === -1) {
+      return index;
+    }
+
+    index++;
+  }
+
+  return index;
+};
+
+// Try to find a meta value. There could be 0-4 meta values
+export const extractMetaValue = (lines, metaname) => {
+  if (!Array.isArray(lines)) {
+    return null;
+  }
+
   try {
-    return line
-      .split(':')
-      .slice(1)
-      .join(':')
-      .trim();
+    let index = 0;
+
+    while (index < lines.length) {
+      const currSplit = lines[index].split(':');
+
+      if (currSplit[0] === metaname && currSplit[1]) {
+        return currSplit[1].trim();
+      }
+
+      index++;
+    }
+
+    return '';
   } catch (e) {
-    console.log(e);
     return null;
   }
 };
@@ -36,7 +63,6 @@ export const formatCardLines = cardLines => {
           name: split.slice(1).join(' ')
         };
       } catch (e) {
-        console.log(e);
         return line;
       }
     });
@@ -45,18 +71,15 @@ export const formatCardLines = cardLines => {
 };
 
 export const metaLineInvalid = (line, metaName) => {
-  const split = line && line.split && line.split(':');
+  // Gotta have the basics
+  if (!metaName || !line || !line.split) {
+    return true;
+  }
 
-  return Boolean(
-    !metaName ||
-      !line ||
-      !split ||
-      !split.length ||
-      split.length < 2 ||
-      !line[0] ||
-      !line[0] === metaName ||
-      !line[1]
-  );
+  const split = line.split(':');
+
+  // The first element of the line has to be the meta name
+  return !split || !split.length || split[0] !== metaName || split[0] === line;
 };
 
 export const cardLinesValid = lines => {
@@ -67,45 +90,40 @@ export const cardLinesValid = lines => {
 };
 
 export const getImportErrors = (mainDeckText, sideboardText) => {
-  const errors = [];
+  try {
+    const errors = [];
 
-  const mainDeckLines = mainDeckText.split(/\n/);
-  const sideboardLines = formatCardLines(sideboardText.split(/\n/));
+    const mainDeckLines = mainDeckText.split(/\n/);
+    const sideboardLines = formatCardLines(sideboardText.split(/\n/));
 
-  // If we don't even have the first 3 lines, go home
-  if (mainDeckLines.length < 4) {
-    errors.push('Deck must have name, path, power and cards');
+    // We need at least a card
+    if (mainDeckLines.length < 1) {
+      errors.push('Deck must have some cards');
+      return errors;
+    }
+
+    // the export can have a bunch of meta lines.
+    // We need to figre out where to start splicing to get the actual cards
+    const spliceIndex = getSpliceIndex(mainDeckLines);
+    const cardLines = formatCardLines(mainDeckLines.splice(spliceIndex));
+
+    if (cardLines.length <= 0) {
+      errors.push('Deck must have cards');
+    }
+
+    if (!cardLinesValid(cardLines)) {
+      errors.push('Invalid input for main deck');
+    }
+
+    // If sideboard is not empty, it's gotta have good lines too
+    if (!cardLinesValid(sideboardLines)) {
+      errors.push('Invalid input for sideboard');
+    }
+
     return errors;
+  } catch (e) {
+    return ['Invalid input for main deck'];
   }
-
-  if (metaLineInvalid(mainDeckLines[0], META_KEYS.NAME)) {
-    errors.push('Deck must have a name');
-  }
-
-  if (metaLineInvalid(mainDeckLines[1], META_KEYS.PATH)) {
-    errors.push('Deck must have an entry for path (it can be empty)');
-  }
-
-  if (metaLineInvalid(mainDeckLines[2], META_KEYS.POWER)) {
-    errors.push('Deck must have an entry for power (it can be empty)');
-  }
-
-  const cardLines = formatCardLines(mainDeckLines.splice(3));
-
-  if (cardLines.length <= 0) {
-    errors.push('Deck must have cards');
-  }
-
-  if (!cardLinesValid(cardLines)) {
-    errors.push('Invalid input for main deck');
-  }
-
-  // If sideboard is not empty, it's gotta have good lines too
-  if (!cardLinesValid(sideboardLines)) {
-    errors.push('Invalid input for sideboard');
-  }
-
-  return errors;
 };
 
 export const convertImportToDeck = (mainDeckText, sideboardText) => {
@@ -119,13 +137,18 @@ export const convertImportToDeck = (mainDeckText, sideboardText) => {
 
   const mainDeckLines = mainDeckText.split(/\n/g);
   const sideboardLines = sideboardText.split(/\n/g);
+  const spliceIndex = getSpliceIndex(mainDeckLines);
 
-  importedDeck.deckName = extractMetaValue(mainDeckLines[0]);
-  importedDeck.deckPath = extractMetaValue(mainDeckLines[1]);
-  importedDeck.deckPower = extractMetaValue(mainDeckLines[2]);
-  importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(3));
+  importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(spliceIndex));
   importedDeck.sideboard = formatCardLines(sideboardLines);
-  importedDeck.asText = mainDeckText;
+
+  importedDeck.deckName = extractMetaValue(mainDeckLines, META_KEYS.NAME);
+  importedDeck.deckPath = extractMetaValue(mainDeckLines, META_KEYS.PATH);
+  importedDeck.deckPower = extractMetaValue(mainDeckLines, META_KEYS.POWER);
+  importedDeck.deckCoverArt = extractMetaValue(
+    mainDeckLines,
+    META_KEYS.COVER_ART
+  );
 
   return importedDeck;
 };
