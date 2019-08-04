@@ -80,7 +80,7 @@ describe('Test example.js', () => {
 To run all tests:
 
 1. Open terminal in the `next` folder
-2. Run `npm run jest`
+2. Run `npm run test`
 
 ## Development Environment
 
