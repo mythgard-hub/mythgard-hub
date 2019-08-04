@@ -78,6 +78,9 @@ CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 )
 RETURNS mythgard.account as $$
   INSERT INTO mythgard.account (google_id, email) VALUES (_google_id, _email)
-    ON CONFLICT (google_id) DO UPDATE SET email = _email
-    RETURNING *
+    ON CONFLICT (google_id) DO UPDATE SET email = _email;
+    -- RETURNING *;
+  SELECT *
+    FROM mythgard.account
+    WHERE google_id = _google_id
 $$ LANGUAGE sql VOLATILE;

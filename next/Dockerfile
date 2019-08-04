@@ -10,6 +10,7 @@ COPY server.js .
 COPY pages .
 COPY components .
 COPY lib .
+COPY server-routes .
 COPY next.config.js .
 
 CMD ["npm", "run", "dev"]

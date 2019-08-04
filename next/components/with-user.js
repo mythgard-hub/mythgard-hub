@@ -17,7 +17,25 @@ export default WrappedPage => {
       const pageProps =
         WrappedPage.getInitialProps && (await WrappedPage.getInitialProps(ctx));
       const isSSR = !!ctx.req;
-      const user = ctx.req && ctx.req.user ? ctx.req.user : cachedUser;
+      let user;
+
+      if (isSSR) {
+        /**
+         * In SSR mode we won't be able to rely on sending the cookie
+         *
+         * Be sure Webpack is instructed to not include isomorphic-fetch in
+         * bundles. Thre should be a "browser" section in our package.json.
+         */
+        require('isomorphic-fetch');
+        const { JWT_COOKIE_NAME, SSR_HOST } = process.env;
+        const token = ctx.req.cookies[JWT_COOKIE_NAME];
+        const resp = await fetch(`${SSR_HOST}/auth/user/${token}`);
+        user = await resp.json();
+      } else {
+        const resp = await fetch('/auth/user');
+        user = await resp.json();
+      }
+
       return {
         ...pageProps,
         isSSR,
