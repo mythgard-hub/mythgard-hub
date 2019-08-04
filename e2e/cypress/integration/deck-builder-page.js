@@ -9,7 +9,7 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="importDeckTitle"]').should('be.visible');
     cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
     cy.get('[data-cy="importDeckButton"]').should('be.visible');
-
+    cy.get('[data-cy="factionFilter"]').should('be.visible');
     cy.get('[data-cy="cardListCard"]:first').click();
     cy.get('[data-cy="deckInProgress"]').should('be.visible');
     cy.get('[data-cy="deckInProgress"] [data-cy="cardListCard"]').should(

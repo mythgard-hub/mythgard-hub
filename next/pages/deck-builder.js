@@ -9,6 +9,7 @@ import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import DeckExport from '../components/deck-export';
+import FactionFilter from '../components/faction-filter';
 import { convertImportToDeck } from '../lib/import-utils';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import DeckCardList from '../components/deck-card-list';
@@ -173,6 +174,7 @@ class DeckBuilderPage extends React.Component {
           }
         `}</style>
         <h1 data-cy="header">Deck Builder</h1>
+        <FactionFilter />
         <ApolloConsumer>
           {client => (
             <>
