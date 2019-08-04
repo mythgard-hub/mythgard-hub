@@ -23,6 +23,7 @@ INSERT INTO mythgard.deck("name") VALUES ('cats');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
+  quantity integer,
   deck_id integer,
   card_id integer,
   FOREIGN KEY (deck_id)
@@ -31,8 +32,8 @@ CREATE TABLE mythgard.card_deck (
     REFERENCES mythgard.card (id)
 );
 
-INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (1, 4);
-INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1);
 
 -- Create the function named `search_decks` with a text argument named `title`.
 -- This will expose `Query.searchDecks(name: String!, ...)` to GraphQL.

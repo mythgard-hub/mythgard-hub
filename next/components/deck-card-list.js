@@ -1,21 +1,27 @@
-import Link from 'next/link';
 import PropTypes from 'prop-types';
+import CardListItem from './card-list-item';
 
-export default function DeckCardList({ cards }) {
+export default function DeckCardList({ deckCards }) {
   return (
     <ul className="deckCardList" data-cy="deckCardList">
-      {cards.map((card, index) => (
+      {deckCards.map((deckCard, index) => (
         <li key={index}>
-          <Link href={`/card?id=${card.id}`} key={index}>
-            <a data-cy="deckCardListCard">
-              {card.id}. name: {card.name}
-            </a>
-          </Link>
+          <CardListItem card={deckCard.card} />
+          <span> X {deckCard.quantity}</span>
         </li>
       ))}
     </ul>
   );
 }
+
 DeckCardList.propTypes = {
-  cards: PropTypes.array
+  deckCards: PropTypes.arrayOf(
+    PropTypes.shape({
+      quantity: PropTypes.number.isRequired,
+      card: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired
+      }).isRequired
+    })
+  ).isRequired
 };
