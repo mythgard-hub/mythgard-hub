@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
 import Card from '../components/card';
-import Layout from '../components/Layout';
+import Layout from '../components/layout';
 
 export const cardQuery = gql`
   query card($id: Int!) {
