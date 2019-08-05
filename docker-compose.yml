@@ -4,16 +4,20 @@ services:
   db:
     image: mg-postgres
     build: ./postgres
-    environment:
-      POSTGRES_PASSWORD: example
   adminer:
     image: adminer
+    depends_on:
+      - db
     ports:
       - "8080:8080"
   express:
     image: mg-server
     build: ./express
     restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
     environment:
       DEBUG: express:*
     volumes:
@@ -26,6 +30,11 @@ services:
   next:
     image: mg-next
     build: ./next
+    depends_on:
+      - db
+      - express
+    env_file:
+      - .env
     volumes:
       - type: bind
         source: ./next

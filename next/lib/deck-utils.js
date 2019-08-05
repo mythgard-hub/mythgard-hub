@@ -6,7 +6,6 @@ export const initializeDeckBuilder = () => {
     deckCoverart: '',
     mainDeck: {},
     sideboard: [],
-    errors: [],
-    asText: ''
+    errors: []
   };
 };
