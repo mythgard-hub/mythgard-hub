@@ -41,6 +41,15 @@ const Header = () => (
       <Link href="/articles">
         <a style={linkStyle}>Articles</a>
       </Link>
+      <a href="/privacy-policy" style={linkStyle}>
+        Privacy Policy
+      </a>
+      <Link href="/auth/google">
+        <a style={linkStyle}>Log In (Google)</a>
+      </Link>
+      <Link href="/auth/logout">
+        <a style={linkStyle}>Log Out</a>
+      </Link>
     </div>
   </div>
 );

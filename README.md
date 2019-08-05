@@ -48,6 +48,10 @@ The next service is a simple next.js app. The source files are bound using docke
 
 Just a simple node app. The postgraphile-middleware does most of the work. See instructions for Next on how to update add new node modules.
 
+## Authentication
+
+Authentication is handled by [Passport](http://www.passportjs.org/), we currently support a [Google OAuth 2.0](http://www.passportjs.org/docs/google/) strategy. Your logged in status is maintained via cookie based [JSON Web Tokens](https://github.com/auth0/node-jsonwebtoken).
+
 ## Testing
 
 ### End-to-end Tests
