@@ -29,7 +29,8 @@ CREATE TABLE mythgard.card_deck (
   FOREIGN KEY (deck_id)
     REFERENCES mythgard.deck (id),
   FOREIGN KEY (card_id)
-    REFERENCES mythgard.card (id)
+    REFERENCES mythgard.card (id),
+  UNIQUE(deck_id, card_id)
 );
 
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2);
