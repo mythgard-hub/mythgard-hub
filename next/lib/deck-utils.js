@@ -3,7 +3,7 @@ export const initializeDeckBuilder = () => {
     deckName: '',
     deckPath: '',
     deckPower: '',
-    deckCoverart: '',
+    deckCoverArt: '',
     mainDeck: {},
     sideboard: [],
     errors: []
