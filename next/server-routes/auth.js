@@ -46,11 +46,7 @@ router.get(
   passport.authenticate('google', {
     scope: process.env.GOOGLE_AUTH_SCOPE,
     session: false
-  }),
-  (req, res, next) => {
-    console.log('WAT?!');
-    next();
-  }
+  })
 );
 
 router.get(
