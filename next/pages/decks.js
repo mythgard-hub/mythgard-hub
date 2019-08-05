@@ -2,7 +2,7 @@ import React from 'react';
 import AllDecks from '../components/all-decks';
 import DeckSearchForm from '../components/deck-search-form';
 import SomeDecks from '../components/some-decks';
-import Layout from '../components/Layout';
+import Layout from '../components/layout';
 
 const hasSearch = function(searchQuery) {
   return searchQuery && searchQuery.name;
