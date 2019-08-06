@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import ErrorMessage from './error-message';
+import DeckCardList from './deck-card-list';
 import CardList from './card-list';
 import DeckExport from './deck-export';
 
@@ -12,6 +13,7 @@ export const deckCardsQuery = gql`
       name
       cardDecks {
         nodes {
+          quantity
           card {
             name
             id
@@ -22,8 +24,10 @@ export const deckCardsQuery = gql`
   }
 `;
 
-const deckToExportText = cards => {
-  const cardsText = cards.map(card => `1 ${card.name}`.toLowerCase());
+const deckToExportText = deckCards => {
+  const cardsText = deckCards.map(deckCard =>
+    `${deckCard.quantity} ${deckCard.card.name}`.toLowerCase()
+  );
   const metaLines = [
     'name: PLACEHOLDER NAME',
     "path: rainbow's end",
@@ -40,13 +44,13 @@ export default function Deck({ deck }) {
         if (error) return <ErrorMessage message="Error loading decks." />;
         if (loading) return <div>Loading</div>;
 
-        const cards = deck.cardDecks.nodes.map(({ card }) => card);
+        const cards = deck.cardDecks.nodes;
         const asText = deckToExportText(cards);
 
         return (
           <>
             <h1 className="deckName">{deck.name}</h1>
-            <CardList cards={cards} />
+            <DeckCardList deckCards={cards} />
             <DeckExport textToExport={asText} />
           </>
         );

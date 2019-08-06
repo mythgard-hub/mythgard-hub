@@ -313,7 +313,7 @@ describe('Import utility methods', () => {
       expect(result.deckName).toEqual('my deck');
       expect(result.deckPath).toEqual('my path');
       expect(result.deckPower).toEqual('my power');
-      expect(result.mainDeck.length).toEqual(1);
+      expect(Object.values(result.mainDeck).length).toEqual(1);
     });
 
     it('Should convert an import to a deck in progress - multiple cards', function() {
@@ -334,7 +334,7 @@ describe('Import utility methods', () => {
       expect(result.deckName).toEqual('my deck');
       expect(result.deckPath).toEqual('my path');
       expect(result.deckPower).toEqual('my power');
-      expect(result.mainDeck.length).toEqual(3);
+      expect(Object.values(result.mainDeck).length).toEqual(3);
     });
 
     it('Should convert an import to a deck in progress - partial meta information', function() {
@@ -354,7 +354,7 @@ describe('Import utility methods', () => {
       expect(result.deckName).toEqual('my deck');
       expect(result.deckPath).toEqual('');
       expect(result.deckPower).toEqual('my power');
-      expect(result.mainDeck.length).toEqual(3);
+      expect(Object.values(result.mainDeck).length).toEqual(3);
     });
 
     it('Should convert an import to a deck in progress - no meta information', function() {
@@ -371,7 +371,7 @@ describe('Import utility methods', () => {
       expect(result.deckName).toEqual('');
       expect(result.deckPath).toEqual('');
       expect(result.deckPower).toEqual('');
-      expect(result.mainDeck.length).toEqual(3);
+      expect(Object.values(result.mainDeck).length).toEqual(3);
     });
 
     it('Should convert an import to a deck in progress - empty lines', function() {
@@ -394,7 +394,7 @@ describe('Import utility methods', () => {
       expect(result.deckName).toEqual('my deck');
       expect(result.deckPath).toEqual('my path');
       expect(result.deckPower).toEqual('my power');
-      expect(result.mainDeck.length).toEqual(3);
+      expect(Object.values(result.mainDeck).length).toEqual(3);
     });
 
     it('Should not do anything besides populate errors - invalid cards', function() {
@@ -413,7 +413,7 @@ describe('Import utility methods', () => {
       expect(result.deckName).toEqual('');
       expect(result.deckPath).toEqual('');
       expect(result.deckPower).toEqual('');
-      expect(result.mainDeck.length).toEqual(0);
+      expect(Object.values(result.mainDeck).length).toEqual(0);
     });
   });
 });

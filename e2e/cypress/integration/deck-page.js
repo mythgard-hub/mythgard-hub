@@ -4,8 +4,8 @@ describe('Deck Page', function() {
   });
   it('happy path card click', function() {
     cy.get('h1').should('have.class', 'deckName');
-    cy.get('.cardList').should('have.length', 1);
-    cy.get('.cardList a:first').click();
+    cy.get('[data-cy=deckCardList]').should('have.length', 1);
+    cy.get('[data-cy=deckCardList] a:first').click();
     cy.location().should(location => {
       expect(location.pathname).to.contain('/card');
     });

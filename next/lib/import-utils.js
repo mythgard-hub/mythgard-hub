@@ -139,7 +139,19 @@ export const convertImportToDeck = (mainDeckText, sideboardText) => {
   const sideboardLines = sideboardText.split(/\n/g);
   const spliceIndex = getSpliceIndex(mainDeckLines);
 
-  importedDeck.mainDeck = formatCardLines(mainDeckLines.slice(spliceIndex));
+  importedDeck.mainDeck = formatCardLines(
+    mainDeckLines.slice(spliceIndex)
+  ).reduce((acc, curr, ix) => {
+    // TODO These need to get actual ID values from the card list
+    acc[`${curr.id}_${ix}`] = {
+      quantity: curr.quantity,
+      card: {
+        id: curr.id,
+        name: curr.name
+      }
+    };
+    return acc;
+  }, {});
   importedDeck.sideboard = formatCardLines(sideboardLines);
 
   importedDeck.deckName = extractMetaValue(mainDeckLines, META_KEYS.NAME);
