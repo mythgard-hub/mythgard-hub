@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { copyToClipboard } from '../lib/copy-to-clipboard';
+import { exportDeck } from '../lib/export-utils';
 
 class DeckExport extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class DeckExport extends React.Component {
   }
 
   handleExport() {
-    const { textToExport } = this.props;
+    const { deckInProgress } = this.props;
+    const textToExport = exportDeck(deckInProgress);
 
     if (!textToExport.trim()) {
       this.setState({ message: 'No imported deck to export' });
@@ -43,7 +45,18 @@ class DeckExport extends React.Component {
 }
 
 DeckExport.propTypes = {
-  textToExport: PropTypes.string
+  deckInProgress: PropTypes.shape({
+    deckName: PropTypes.string,
+    deckPath: PropTypes.string,
+    deckPower: PropTypes.string,
+    deckCoverArt: PropTypes.string,
+    mainDeck: PropTypes.shape({
+      id: PropTypes.number,
+      quantity: PropTypes.number,
+      name: PropTypes.string
+    }),
+    errors: PropTypes.arrayOf(PropTypes.string)
+  })
 };
 
 export default DeckExport;
