@@ -23,16 +23,18 @@ INSERT INTO mythgard.deck("name") VALUES ('cats');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
+  quantity integer,
   deck_id integer,
   card_id integer,
   FOREIGN KEY (deck_id)
     REFERENCES mythgard.deck (id),
   FOREIGN KEY (card_id)
-    REFERENCES mythgard.card (id)
+    REFERENCES mythgard.card (id),
+  UNIQUE(deck_id, card_id)
 );
 
-INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (1, 4);
-INSERT INTO mythgard.card_deck("deck_id", "card_id") VALUES (2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1);
 
 -- Create the function named `search_decks` with a text argument named `title`.
 -- This will expose `Query.searchDecks(name: String!, ...)` to GraphQL.
@@ -63,6 +65,24 @@ CREATE TABLE mythgard.deck_comment (
 );
 
 INSERT INTO mythgard.deck_comment("deck_id", "body") VALUES (1, 'I made masters with this last week');
+
+-- In PostgreSQL, user is a keyword
+CREATE TABLE mythgard.account (
+  id SERIAL PRIMARY KEY,
+  google_id varchar(255) UNIQUE,
+  email varchar(255) UNIQUE
+);
+
+CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
+(
+  _google_id varchar(255),
+  _email varchar(255)
+)
+RETURNS mythgard.account as $$
+  INSERT INTO mythgard.account (google_id, email) VALUES (_google_id, _email)
+    ON CONFLICT (google_id) DO UPDATE SET email = _email
+    RETURNING *
+$$ LANGUAGE sql VOLATILE;
 
 CREATE TABLE mythgard.tournament (
   id SERIAL PRIMARY KEY,

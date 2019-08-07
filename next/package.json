@@ -17,11 +17,17 @@
   "dependencies": {
     "apollo-boost": "^0.1.28",
     "apollo-link-batch-http": "^1.2.12",
+    "cookie-parser": "^1.4.4",
     "express": "4.17.x",
     "express-http-proxy": "^1.5.1",
     "graphql": "^14.0.2",
     "isomorphic-unfetch": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "8.1.x",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.0",
+    "pg": "^7.12.0",
     "prop-types": "^15.6.2",
     "react": "16.8.x",
     "react-apollo": "^2.1.11",
@@ -40,5 +46,8 @@
     "eslint-plugin-react": "^7.14.2",
     "jest": "^24.8.0",
     "prettier": "1.18.2"
+  },
+  "browser": {
+    "isomorphic-unfetch": false
   }
 }

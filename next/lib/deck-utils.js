@@ -4,7 +4,7 @@ export const initializeDeckBuilder = () => {
     deckPath: '',
     deckPower: '',
     deckCoverArt: '',
-    mainDeck: [],
+    mainDeck: {},
     sideboard: [],
     errors: []
   };
