@@ -6,9 +6,9 @@ describe('Import utility methods', () => {
     it('No meta values', function() {
       const deckInProgress = initializeDeckBuilder();
       deckInProgress.mainDeck = [
-        { quantity: 1, name: 'card 1' },
-        { quantity: 2, name: 'card 2' },
-        { quantity: 4, name: 'card 4' }
+        { quantity: 1, card: { id: 'TBD', name: 'card 1' } },
+        { quantity: 2, card: { id: 'TBD', name: 'card 2' } },
+        { quantity: 4, card: { id: 'TBD', name: 'card 4' } }
       ];
 
       const result = exportDeck(deckInProgress);
@@ -30,9 +30,9 @@ describe('Import utility methods', () => {
       deckInProgress.deckName = 'my deck';
       deckInProgress.deckCoverArt = 'myself';
       deckInProgress.mainDeck = [
-        { quantity: 1, name: 'card 1' },
-        { quantity: 2, name: 'card 2' },
-        { quantity: 4, name: 'card 4' }
+        { quantity: 1, card: { id: 'TBD', name: 'card 1' } },
+        { quantity: 2, card: { id: 'TBD', name: 'card 2' } },
+        { quantity: 4, card: { id: 'TBD', name: 'card 4' } }
       ];
 
       const result = exportDeck(deckInProgress);
@@ -56,9 +56,9 @@ describe('Import utility methods', () => {
       deckInProgress.deckPath = 'my path';
       deckInProgress.deckPower = 'power rangers';
       deckInProgress.mainDeck = [
-        { quantity: 1, name: 'card 1' },
-        { quantity: 2, name: 'card 2' },
-        { quantity: 4, name: 'card 4' }
+        { quantity: 1, card: { id: 'TBD', name: 'card 1' } },
+        { quantity: 2, card: { id: 'TBD', name: 'card 2' } },
+        { quantity: 4, card: { id: 'TBD', name: 'card 4' } }
       ];
 
       const result = exportDeck(deckInProgress);
@@ -81,7 +81,9 @@ describe('Import utility methods', () => {
       deckInProgress.deckCoverArt = 'myself';
       deckInProgress.deckPath = 'my path';
       deckInProgress.deckPower = 'power rangers';
-      deckInProgress.mainDeck = [{ quantity: 1, name: 'card 1' }];
+      deckInProgress.mainDeck = [
+        { quantity: 1, card: { id: 'TBD', name: 'card 1' } }
+      ];
 
       const result = exportDeck(deckInProgress);
       const expected = [

@@ -220,7 +220,7 @@ class DeckBuilderPage extends React.Component {
           handleImport={this.handleImport}
         />
         &nbsp;
-        <DeckExport deckInProgress={deckInProgresss} />
+        <DeckExport deckInProgress={deckInProgress} />
         <ImportedDeckErrors importedDeck={deckInProgress} />
       </Layout>
     );

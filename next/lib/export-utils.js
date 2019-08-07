@@ -10,7 +10,8 @@ export const exportDeck = deckInProgress => {
     const cards = Object.values(deckInProgress.mainDeck)
       .map(c => {
         const quantity = c.quantity || '1';
-        return `${quantity} ${c.name}`;
+        const name = (c && c.card && c.card.name) || '';
+        return `${quantity} ${name}`;
       })
       .join('\n');
 
