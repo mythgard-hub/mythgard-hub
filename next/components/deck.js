@@ -3,8 +3,10 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import ErrorMessage from './error-message';
 import DeckCardList from './deck-card-list';
-import CardList from './card-list';
 import DeckExport from './deck-export';
+
+import { exportDeck } from '../lib/export-utils';
+import { initializeDeckBuilder } from '../lib/deck-utils';
 
 export const deckCardsQuery = gql`
   query($id: Int!) {
@@ -24,17 +26,14 @@ export const deckCardsQuery = gql`
   }
 `;
 
-const deckToExportText = deckCards => {
-  const cardsText = deckCards.map(deckCard =>
-    `${deckCard.quantity} ${deckCard.card.name}`.toLowerCase()
-  );
-  const metaLines = [
-    'name: PLACEHOLDER NAME',
-    "path: rainbow's end",
-    'power: reanimate'
-  ];
+const deckToExportText = (deckCards, deckName) => {
+  const deckToExport = initializeDeckBuilder();
+  deckToExport.deckName = deckName;
+  deckToExport.mainDeck = {
+    ...deckCards
+  };
 
-  return metaLines.concat(cardsText).join('\n');
+  return deckToExport;
 };
 
 export default function Deck({ deck }) {
@@ -45,13 +44,13 @@ export default function Deck({ deck }) {
         if (loading) return <div>Loading</div>;
 
         const cards = deck.cardDecks.nodes;
-        const asText = deckToExportText(cards);
+        const deckToExport = deckToExportText(cards, deck.name);
 
         return (
           <>
             <h1 className="deckName">{deck.name}</h1>
             <DeckCardList deckCards={cards} />
-            <DeckExport textToExport={asText} />
+            <DeckExport deckInProgress={deckToExport} />
           </>
         );
       }}
