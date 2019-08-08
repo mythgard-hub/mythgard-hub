@@ -7,8 +7,9 @@ export default function ImportDeck({
 }) {
   return (
     <>
-      <h2>Import Deck</h2>
+      <h2 data-cy="importDeckTitle">Import Deck</h2>
       <textarea
+        data-cy="importDeckTextarea"
         cols="40"
         rows="10"
         value={mainDeckInput}
@@ -17,7 +18,9 @@ export default function ImportDeck({
       />
       <br />
       <br />
-      <button onClick={handleImport}>Import</button>
+      <button onClick={handleImport} data-cy="importDeckButton">
+        Import
+      </button>
     </>
   );
 }

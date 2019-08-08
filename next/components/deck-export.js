@@ -36,9 +36,11 @@ class DeckExport extends React.Component {
 
     return (
       <React.Fragment>
-        <button onClick={this.handleExport}>Export</button>
+        <button onClick={this.handleExport} data-cy="exportDeckButton">
+          Export
+        </button>
         &nbsp;
-        {message && <span>{message}</span>}
+        {message && <span data-cy="exportDeckSuccess">{message}</span>}
       </React.Fragment>
     );
   }
