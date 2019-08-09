@@ -6,9 +6,9 @@ describe('Import utility methods', () => {
     it('No meta values', function() {
       const deckInProgress = initializeDeckBuilder();
       deckInProgress.mainDeck = {
-        1: { quantity: 1, card: { name: 'card 1' } },
-        2: { quantity: 2, card: { name: 'card 2' } },
-        4: { quantity: 4, card: { name: 'card 4' } }
+        1: { quantity: 1, card: { id: 1, name: 'card 1' } },
+        2: { quantity: 2, card: { id: 2, name: 'card 2' } },
+        4: { quantity: 4, card: { id: 4, name: 'card 4' } }
       };
 
       const result = exportDeck(deckInProgress);
@@ -30,9 +30,9 @@ describe('Import utility methods', () => {
       deckInProgress.deckName = 'my deck';
       deckInProgress.deckCoverArt = 'myself';
       deckInProgress.mainDeck = {
-        1: { quantity: 1, card: { name: 'card 1' } },
-        2: { quantity: 2, card: { name: 'card 2' } },
-        4: { quantity: 4, card: { name: 'card 4' } }
+        1: { quantity: 1, card: { id: 1, name: 'card 1' } },
+        2: { quantity: 2, card: { id: 2, name: 'card 2' } },
+        4: { quantity: 4, card: { id: 4, name: 'card 4' } }
       };
 
       const result = exportDeck(deckInProgress);
@@ -56,9 +56,9 @@ describe('Import utility methods', () => {
       deckInProgress.deckPath = 'my path';
       deckInProgress.deckPower = 'power rangers';
       deckInProgress.mainDeck = {
-        1: { quantity: 1, card: { name: 'card 1' } },
-        2: { quantity: 2, card: { name: 'card 2' } },
-        4: { quantity: 4, card: { name: 'card 4' } }
+        1: { quantity: 1, card: { id: 1, name: 'card 1' } },
+        2: { quantity: 2, card: { id: 2, name: 'card 2' } },
+        4: { quantity: 4, card: { id: 4, name: 'card 4' } }
       };
 
       const result = exportDeck(deckInProgress);
@@ -82,7 +82,7 @@ describe('Import utility methods', () => {
       deckInProgress.deckPath = 'my path';
       deckInProgress.deckPower = 'power rangers';
       deckInProgress.mainDeck = {
-        TBD: { quantity: 1, card: { name: 'card 1' } }
+        1: { quantity: 1, card: { id: 1, name: 'card 1' } }
       };
 
       const result = exportDeck(deckInProgress);

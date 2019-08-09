@@ -55,6 +55,7 @@ DeckExport.propTypes = {
     mainDeck: PropTypes.shape({
       quantity: PropTypes.number,
       card: PropTypes.shape({
+        id: PropTypes.number,
         name: PropTypes.string
       })
     }),
