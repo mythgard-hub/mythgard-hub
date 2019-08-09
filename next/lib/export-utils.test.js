@@ -5,11 +5,11 @@ describe('Import utility methods', () => {
   describe('Test exportDeck', () => {
     it('No meta values', function() {
       const deckInProgress = initializeDeckBuilder();
-      deckInProgress.mainDeck = [
-        { quantity: 1, card: { id: 'TBD', name: 'card 1' } },
-        { quantity: 2, card: { id: 'TBD', name: 'card 2' } },
-        { quantity: 4, card: { id: 'TBD', name: 'card 4' } }
-      ];
+      deckInProgress.mainDeck = {
+        1: { quantity: 1, card: { name: 'card 1' } },
+        2: { quantity: 2, card: { name: 'card 2' } },
+        4: { quantity: 4, card: { name: 'card 4' } }
+      };
 
       const result = exportDeck(deckInProgress);
       const expected = [
@@ -29,11 +29,11 @@ describe('Import utility methods', () => {
       const deckInProgress = initializeDeckBuilder();
       deckInProgress.deckName = 'my deck';
       deckInProgress.deckCoverArt = 'myself';
-      deckInProgress.mainDeck = [
-        { quantity: 1, card: { id: 'TBD', name: 'card 1' } },
-        { quantity: 2, card: { id: 'TBD', name: 'card 2' } },
-        { quantity: 4, card: { id: 'TBD', name: 'card 4' } }
-      ];
+      deckInProgress.mainDeck = {
+        1: { quantity: 1, card: { name: 'card 1' } },
+        2: { quantity: 2, card: { name: 'card 2' } },
+        4: { quantity: 4, card: { name: 'card 4' } }
+      };
 
       const result = exportDeck(deckInProgress);
       const expected = [
@@ -55,11 +55,11 @@ describe('Import utility methods', () => {
       deckInProgress.deckCoverArt = 'myself';
       deckInProgress.deckPath = 'my path';
       deckInProgress.deckPower = 'power rangers';
-      deckInProgress.mainDeck = [
-        { quantity: 1, card: { id: 'TBD', name: 'card 1' } },
-        { quantity: 2, card: { id: 'TBD', name: 'card 2' } },
-        { quantity: 4, card: { id: 'TBD', name: 'card 4' } }
-      ];
+      deckInProgress.mainDeck = {
+        1: { quantity: 1, card: { name: 'card 1' } },
+        2: { quantity: 2, card: { name: 'card 2' } },
+        4: { quantity: 4, card: { name: 'card 4' } }
+      };
 
       const result = exportDeck(deckInProgress);
       const expected = [
@@ -81,9 +81,9 @@ describe('Import utility methods', () => {
       deckInProgress.deckCoverArt = 'myself';
       deckInProgress.deckPath = 'my path';
       deckInProgress.deckPower = 'power rangers';
-      deckInProgress.mainDeck = [
-        { quantity: 1, card: { id: 'TBD', name: 'card 1' } }
-      ];
+      deckInProgress.mainDeck = {
+        TBD: { quantity: 1, card: { name: 'card 1' } }
+      };
 
       const result = exportDeck(deckInProgress);
       const expected = [

@@ -53,9 +53,10 @@ DeckExport.propTypes = {
     deckPower: PropTypes.string,
     deckCoverArt: PropTypes.string,
     mainDeck: PropTypes.shape({
-      id: PropTypes.number,
       quantity: PropTypes.number,
-      name: PropTypes.string
+      card: PropTypes.shape({
+        name: PropTypes.string
+      })
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
   })
