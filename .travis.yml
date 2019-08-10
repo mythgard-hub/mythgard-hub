@@ -22,6 +22,12 @@ before_install:
   - cp .env.template .env
 
 install:
+  - cd next
+  - npm install
+  - cd ..
+  - cd e2e
+  - npm install
+  - cd ..
   - docker-compose up --build -d
 
 script:
