@@ -4,6 +4,13 @@ node_js:
 
 sudo: required
 
+# Cypress seems to think this is needed :shrug:
+# https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.travis.yml
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
+
 env:
   global:
     - DOCKER_COMPOSE_VERSION: 1.24.1
@@ -36,3 +43,10 @@ script:
   # Run unit tests
   - cd next
   - npm run test
+  # Run e2e tests
+  - cd e2e
+  - npx cypress verify
+  - npx cypress run -- --record
+
+post_script:
+  - docker-compose stop
