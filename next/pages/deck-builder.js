@@ -1,5 +1,6 @@
 import React from 'react';
 import AllCards from '../components/all-cards';
+import SomeCards from '../components/some-cards';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
@@ -84,6 +85,7 @@ class DeckBuilderPage extends React.Component {
     this.state = {
       mainDeckInput: '',
       sideboardInput: '',
+      cardFilters: false,
       deckInProgress: initializeDeckBuilder()
     };
 
@@ -94,6 +96,7 @@ class DeckBuilderPage extends React.Component {
     this.validateState = this.validateState.bind(this);
     this.updateDeckName = this.updateDeckName.bind(this);
     this.onFactionClick = this.onFactionClick.bind(this);
+    this.updateCardFilters = this.updateCardFilters.bind(this);
   }
 
   updateDeckName = e => {
@@ -160,8 +163,16 @@ class DeckBuilderPage extends React.Component {
     return Boolean(this.state.deckInProgress.deckName);
   }
 
-  onFactionClick() {
-    console.log('got here');
+  onFactionClick(newFactions) {
+    this.updateCardFilters('factions', newFactions);
+  }
+
+  updateCardFilters(prop, value) {
+    const cardFilters = { ...this.state.cardFilters };
+    cardFilters[prop] = value;
+    this.setState({
+      cardFilters
+    });
   }
 
   render() {
@@ -214,7 +225,12 @@ class DeckBuilderPage extends React.Component {
         <div className="deck-builder-panels">
           <div className="collection" data-cy="deckBuilderCollection">
             <h2>Collection</h2>
-            <AllCards onCardClick={this.onCollectionClick} />
+            {(this.state.cardFilters && (
+              <SomeCards
+                filters={this.state.cardFilters}
+                onCardClick={this.onCollectionClick}
+              />
+            )) || <AllCards onCardClick={this.onCollectionClick} />}
           </div>
           <div className="deck-in-progress" data-cy="deckInProgress">
             <h2>Current Deck</h2>

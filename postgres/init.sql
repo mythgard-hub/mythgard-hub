@@ -108,4 +108,23 @@ CREATE TABLE mythgard.tournament_deck (
 );
 
 INSERT INTO mythgard.tournament_deck("rank", "tournament_id", "deck_id")
-VALUES (1, 1, 1), (2, 1, 2)
+VALUES (1, 1, 1), (2, 1, 2);
+
+CREATE TABLE mythgard.faction (
+  id SERIAL PRIMARY KEY,
+  name varchar(255)
+);
+
+INSERT INTO mythgard.faction("name") VALUES ('norden'), ('aztlan'), ('oberos'), ('dreni'), ('parsa'), ('harmony');
+
+CREATE TABLE mythgard.card_faction (
+  id SERIAL PRIMARY KEY,
+  card_id integer,
+  faction_id integer,
+  FOREIGN KEY (card_id)
+    REFERENCES mythgard.card (id),
+  FOREIGN KEY (faction_id)
+    REFERENCES mythgard.faction (id)
+);
+
+INSERT INTO mythgard.card_faction("card_id","faction_id") VALUES (1, 1), (2, 2), (3, 3), (4, 4);

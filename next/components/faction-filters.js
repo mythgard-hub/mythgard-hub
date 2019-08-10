@@ -7,10 +7,28 @@ const factions = ['norden', 'aztlan', 'orboros', 'dreni', 'parsa', 'triusan'];
 class FactionFilters extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {value: ''};
+    this.state = { factions: [] };
 
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFactionClick = this.handleFactionClick.bind(this);
+  }
+
+  handleFactionClick(e) {
+    const faction = e.target.getAttribute('data-mgfaction');
+    const factions = [...this.state.factions];
+    const i = factions.indexOf(faction);
+    if (i > -1) {
+      factions.splice(i, 1);
+    } else {
+      factions.push(faction);
+    }
+    this.setState(
+      {
+        factions
+      },
+      () => {
+        this.props.onFactionClick(this.state.factions);
+      }
+    );
   }
 
   render() {
@@ -21,7 +39,7 @@ class FactionFilters extends React.Component {
             <li key={f}>
               <FactionFilter
                 faction={f}
-                onFactionClick={this.props.onFactionClick}
+                onFactionClick={this.handleFactionClick}
               ></FactionFilter>
             </li>
           ))}
