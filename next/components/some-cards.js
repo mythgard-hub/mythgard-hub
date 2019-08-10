@@ -16,23 +16,16 @@ export const cardsQuery = gql`
   }
 `;
 
-const factionsToIds = {
-  norden: 1,
-  aztlan: 2,
-  orboros: 3,
-  dreni: 4,
-  parsa: 5,
-  triusan: 6
-};
-
 const getFactionsFilter = factionNames => {
   return !factionNames.length
     ? 'cardFactions: null,'
     : `
     cardFactions: {
       some: {
-        factionId: {
-          in: [${factionNames.map(name => factionsToIds[name]).join(',')}]
+        faction: {
+          name: {
+            in: ["${factionNames.join('","')}"]
+          }
         }
       }
     },
