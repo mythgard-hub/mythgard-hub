@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const cdn = `${process.env.MG_CDN}collection-icons/`;
-
 class FactionFilter extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +27,7 @@ class FactionFilter extends React.Component {
             border: 1px solid black;
           }
         `}</style>
-        <img src={`${cdn}${this.props.factionIcon}`} alt="" />
+        <img src={this.props.factionIcon} alt="" />
       </div>
     );
   }

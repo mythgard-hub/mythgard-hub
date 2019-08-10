@@ -2,6 +2,8 @@ import React from 'react';
 import FactionFilter from './faction-filter';
 import PropTypes from 'prop-types';
 
+const cdn = `${process.env.MG_CDN}collection-icons/`;
+
 const factions = ['norden', 'aztlan', 'oberos', 'dreni', 'parsa', 'harmony'];
 const factionImages = [
   'Filter-Icons_0000s_0003s_0000_blue.png',
@@ -10,7 +12,7 @@ const factionImages = [
   'Filter-Icons_0000s_0003s_0003_green.png',
   'Filter-Icons_0000s_0003s_0004_orange.png',
   'Filter-Icons_0000s_0003s_0005_purple.png'
-];
+].map(img => `${cdn}${img}`);
 
 class FactionFilters extends React.Component {
   constructor(props) {
@@ -46,9 +48,13 @@ class FactionFilters extends React.Component {
           ul {
             list-style: none;
             display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
           }
           ul * + * {
             margin-left: 10px;
+            margin-bottom: 10px;
           }
         `}</style>
         <ul>
