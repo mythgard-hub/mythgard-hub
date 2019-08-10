@@ -1,19 +1,30 @@
 import React from 'react';
+import { Query } from 'react-apollo';
+import ErrorMessage from './error-message';
 import PropTypes from 'prop-types';
 import { handleInputChange } from '../lib/form-utils';
+import CardSearch from './card-search';
+import { cardsQuery } from './all-cards.js';
 
 class DeckSearchForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '' };
+    this.state = { name: '', cards: [] };
 
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onCardSearchChange = this.onCardSearchChange.bind(this);
   }
 
   handleSubmit(e) {
     e && e.preventDefault();
     this.props.onSubmit(this.state);
+  }
+
+  onCardSearchChange(cardSearchState) {
+    this.setState({
+      cards: [cardSearchState.value]
+    });
   }
 
   render() {
@@ -30,6 +41,19 @@ class DeckSearchForm extends React.Component {
             onChange={this.handleInputChange}
           />
         </label>
+        <br />
+        <br />
+        <Query query={cardsQuery}>
+          {({ error, data: { cards } }) => {
+            if (error) return <ErrorMessage message={error} />;
+            return (
+              <CardSearch
+                cards={cards.nodes}
+                onChange={this.onCardSearchChange}
+              />
+            );
+          }}
+        </Query>
         <br />
         <br />
         <input
