@@ -1,3 +1,5 @@
+DROP SCHEMA IF EXISTS mythgard CASCADE;
+
 CREATE SCHEMA mythgard;
 CREATE TABLE mythgard.card (
   id SERIAL PRIMARY KEY,
