@@ -9,11 +9,11 @@ import { cardsQuery } from './all-cards.js';
 class DeckSearchForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', cards: [] };
+    this.state = { name: '', cardIds: [] };
 
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onCardSearchChange = this.onCardSearchChange.bind(this);
+    this.onCardSearchSelect = this.onCardSearchSelect.bind(this);
   }
 
   handleSubmit(e) {
@@ -21,9 +21,10 @@ class DeckSearchForm extends React.Component {
     this.props.onSubmit(this.state);
   }
 
-  onCardSearchChange(cardSearchState) {
+  onCardSearchSelect(card) {
+    const cardIds = [...this.state.cardIds, card.id];
     this.setState({
-      cards: [cardSearchState.value]
+      cardIds
     });
   }
 
@@ -49,7 +50,7 @@ class DeckSearchForm extends React.Component {
             return (
               <CardSearch
                 cards={cards.nodes}
-                onChange={this.onCardSearchChange}
+                onSelect={this.onCardSearchSelect}
               />
             );
           }}

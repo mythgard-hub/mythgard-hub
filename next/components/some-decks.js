@@ -5,12 +5,17 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 
-export const decksSearchQuery = gql`
-  query decks($name: String!) {
-    searchDecks(title: $name) {
+const decksSearchQuery = gql`
+  query decks($name: String!, $cardIds: [Int!]) {
+    decks(
+      filter: {
+        name: { includesInsensitive: $name }
+        cardDecks: { some: { cardId: { in: $cardIds } } }
+      }
+    ) {
       nodes {
-        id
         name
+        id
       }
     }
   }
@@ -24,11 +29,11 @@ class SomeDecks extends React.Component {
   render() {
     return (
       <Query query={decksSearchQuery} variables={this.props.search}>
-        {({ loading, error, data: { searchDecks } }) => {
+        {({ loading, error, data }) => {
           if (error) return <ErrorMessage message="Error loading decks." />;
           if (loading) return <div>Loading</div>;
 
-          return <DeckList decks={searchDecks.nodes} />;
+          return <DeckList decks={data.decks.nodes} />;
         }}
       </Query>
     );

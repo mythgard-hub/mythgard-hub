@@ -25,11 +25,11 @@ class CardSearch extends Component {
         name: PropTypes.string
       })
     ),
-    onChange: PropTypes.func
+    onSelect: PropTypes.func
   };
   static defaultProps = {
     cards: [],
-    onChange: () => true
+    onSelect: () => true
   };
 
   constructor(props) {
@@ -41,17 +41,17 @@ class CardSearch extends Component {
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
       this
     );
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.state = {
       value: '',
       suggestions: []
     };
   }
 
-  onChange = async (event, { newValue }) => {
-    await this.setState({
+  onChange = (event, { newValue }) => {
+    this.setState({
       value: newValue
     });
-    this.props.onChange(this.state);
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
@@ -64,6 +64,10 @@ class CardSearch extends Component {
     this.setState({
       suggestions: []
     });
+  };
+
+  onSuggestionSelected = (e, { suggestion }) => {
+    this.props.onSelect(suggestion);
   };
 
   render() {
@@ -80,9 +84,11 @@ class CardSearch extends Component {
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
+          highlightFirstSuggestion={true}
         />
       </div>
     );

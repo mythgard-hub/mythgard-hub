@@ -5,7 +5,7 @@ import SomeDecks from '../components/some-decks';
 import Layout from '../components/layout';
 
 const hasSearch = function(searchQuery) {
-  return searchQuery && searchQuery.name;
+  return searchQuery && (searchQuery.name || searchQuery.cardIds);
 };
 
 class DecksPage extends React.Component {
