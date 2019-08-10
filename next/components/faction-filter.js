@@ -6,10 +6,6 @@ const cdn = 'https://mythgardhub.s3-us-west-2.amazonaws.com/collection-icons/';
 class FactionFilter extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {value: ''};
-
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   render() {
