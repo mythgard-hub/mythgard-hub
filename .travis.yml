@@ -22,7 +22,7 @@ before_install:
   - cp .env.template .env
 
 install:
-  - docker-compose up
+  - docker-compose up --build -d
 
 script:
   # Run unit tests
