@@ -44,7 +44,11 @@ class SomeCards extends Component {
     onCardClick: PropTypes.func,
     filters: PropTypes.shape({
       factions: PropTypes.array
-    })
+    }).isRequired
+  };
+
+  static defaultProps = {
+    onCardClick: () => true
   };
 
   constructor(props) {

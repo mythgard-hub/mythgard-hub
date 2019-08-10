@@ -34,9 +34,9 @@ class FactionFilter extends React.Component {
 }
 
 FactionFilter.propTypes = {
-  onFactionClick: PropTypes.func,
-  faction: PropTypes.string,
-  factionIcon: PropTypes.string,
+  onFactionClick: PropTypes.func.isRequired,
+  faction: PropTypes.string.isRequired,
+  factionIcon: PropTypes.string.isRequired,
   selected: PropTypes.bool
 };
 

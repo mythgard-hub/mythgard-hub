@@ -74,12 +74,8 @@ class FactionFilters extends React.Component {
   }
 }
 
-FactionFilters.defaultProps = {
-  onFactionClick: () => true
-};
-
 FactionFilters.propTypes = {
-  onFactionClick: PropTypes.func
+  onFactionClick: PropTypes.func.isRequired
 };
 
 export default FactionFilters;
