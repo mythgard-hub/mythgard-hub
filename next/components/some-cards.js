@@ -5,21 +5,13 @@ import CardList from './card-list';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-export const cardsQuery = gql`
-  query {
-    cards {
-      nodes {
-        name
-        id
-      }
-    }
-  }
-`;
-
 const getFactionsFilter = factionNames => {
-  return !factionNames.length
-    ? 'cardFactions: null,'
-    : `
+  if (!factionNames.length) {
+    // null means ignore this filter.
+    // Comma allows chaining.
+    return 'cardFactions: null,';
+  }
+  return `
     cardFactions: {
       some: {
         faction: {
@@ -29,21 +21,21 @@ const getFactionsFilter = factionNames => {
         }
       }
     },
-    `;
+  `;
 };
 
-const getCardsQuery = factionsFilter => {
+const getCardsQuery = filters => {
   return gql`
-  query {
-    cards(filter: {
-      ${factionsFilter}
-    }){
-      nodes {
-        name
-        id
+    query {
+      cards(filter: {
+        ${filters}
+      }){
+        nodes {
+          name
+          id
+        }
       }
     }
-  }
   `;
 };
 
@@ -52,8 +44,7 @@ class SomeCards extends Component {
     onCardClick: PropTypes.func,
     filters: PropTypes.shape({
       factions: PropTypes.array
-    }),
-    cardsQuery: PropTypes.func
+    })
   };
 
   constructor(props) {
@@ -62,8 +53,14 @@ class SomeCards extends Component {
   }
 
   getCardsQuery() {
-    const factionsFilter = getFactionsFilter(this.props.filters.factions);
-    return getCardsQuery(factionsFilter);
+    const {
+      filters: { factions }
+    } = this.props;
+    const queryFilters = [];
+    if (factions) {
+      queryFilters.push(getFactionsFilter(factions));
+    }
+    return getCardsQuery(queryFilters);
   }
 
   render() {

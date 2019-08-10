@@ -10,10 +10,12 @@ CREATE TABLE mythgard.card (
   def integer
 );
 
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (1, 'Furball', 'rules', 'cat', '1', '2');
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (2, 'Imp', 'rules', 'devil', '2', '1');
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (3, 'Grizzly Bear', 'rules', 'bear', '2', '2');
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (4, 'Dragon', 'flying', 'dragon', '5', '5');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Furball', 'rules', 'cat', '1', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Imp', 'rules', 'devil', '2', '1');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Dragon', 'flying', 'dragon', '5', '5');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Vampire', 'lifelink', 'vampire', '2', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3');
 
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,
@@ -127,4 +129,4 @@ CREATE TABLE mythgard.card_faction (
     REFERENCES mythgard.faction (id)
 );
 
-INSERT INTO mythgard.card_faction("card_id","faction_id") VALUES (1, 1), (2, 2), (3, 3), (4, 4);
+INSERT INTO mythgard.card_faction("card_id","faction_id") VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6);

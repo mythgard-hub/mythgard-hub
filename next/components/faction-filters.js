@@ -2,7 +2,7 @@ import React from 'react';
 import FactionFilter from './faction-filter';
 import PropTypes from 'prop-types';
 
-const factions = ['norden', 'aztlan', 'orboros', 'dreni', 'parsa', 'triusan'];
+const factions = ['norden', 'aztlan', 'oberos', 'dreni', 'parsa', 'harmony'];
 
 class FactionFilters extends React.Component {
   constructor(props) {
