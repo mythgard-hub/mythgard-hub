@@ -4,7 +4,7 @@ node_js:
 
 sudo: required
 
-# Cypress seems to think this is needed :shrug:
+# Supposedly this is needed for Cypress to work in Ubuntu 16
 # https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.travis.yml
 addons:
   apt:
@@ -44,7 +44,7 @@ script:
   - cd next
   - npm run test
   # Run e2e tests
-  - cd e2e
+  - cd ../e2e
   - npx cypress verify
   - npx cypress run -- --record
 
