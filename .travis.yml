@@ -18,6 +18,8 @@ before_install:
   # Upgrade docker
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  # Put the .env file in place
+  - cp .env.template .env
 
 install:
   - docker-compose up
