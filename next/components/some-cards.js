@@ -65,15 +65,17 @@ class SomeCards extends Component {
 
   constructor(props) {
     super(props);
+    this.getCardsQuery = this.getCardsQuery.bind(this);
+  }
+
+  getCardsQuery() {
     const factionsFilter = getFactionsFilter(this.props.filters.factions);
-    this.state = {
-      cardsQuery: getCardsQuery(factionsFilter)
-    };
+    return getCardsQuery(factionsFilter);
   }
 
   render() {
     return (
-      <Query query={this.state.cardsQuery}>
+      <Query query={this.getCardsQuery()}>
         {({ loading, error, data: { cards } }) => {
           if (error) return <ErrorMessage message={error} />;
           if (loading) return <div>Loading</div>;
