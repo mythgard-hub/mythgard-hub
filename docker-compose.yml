@@ -41,4 +41,4 @@ services:
         target: /app
       - /app/node_modules
     ports:
-      - "3001:3000"
+      - "3001:3001"
