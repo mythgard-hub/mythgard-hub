@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const cdn = 'https://mythgardhub.s3-us-west-2.amazonaws.com/collection-icons/';
+const cdn = `${process.env.MG_CDN}collection-icons/`;
 
 class FactionFilter extends React.Component {
   constructor(props) {
