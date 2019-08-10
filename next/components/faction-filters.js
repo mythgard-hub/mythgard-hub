@@ -3,6 +3,14 @@ import FactionFilter from './faction-filter';
 import PropTypes from 'prop-types';
 
 const factions = ['norden', 'aztlan', 'oberos', 'dreni', 'parsa', 'harmony'];
+const factionImages = [
+  'Filter-Icons_0000s_0003s_0000_blue.png',
+  'Filter-Icons_0000s_0003s_0001_yellow.png',
+  'Filter-Icons_0000s_0003s_0002_red.png',
+  'Filter-Icons_0000s_0003s_0003_green.png',
+  'Filter-Icons_0000s_0003s_0004_orange.png',
+  'Filter-Icons_0000s_0003s_0005_purple.png'
+];
 
 class FactionFilters extends React.Component {
   constructor(props) {
@@ -13,7 +21,7 @@ class FactionFilters extends React.Component {
   }
 
   handleFactionClick(e) {
-    const faction = e.target.getAttribute('data-mgfaction');
+    const faction = e.currentTarget.getAttribute('data-mgfaction');
     const factions = [...this.state.factions];
     const i = factions.indexOf(faction);
     if (i > -1) {
@@ -34,12 +42,23 @@ class FactionFilters extends React.Component {
   render() {
     return (
       <div data-cy="factionFilters">
+        <style jsx>{`
+          ul {
+            list-style: none;
+            display: flex;
+          }
+          ul * + * {
+            margin-left: 10px;
+          }
+        `}</style>
         <ul>
-          {factions.map(f => (
+          {factions.map((f, index) => (
             <li key={f}>
               <FactionFilter
                 faction={f}
+                selected={this.state.factions.indexOf(f) > -1}
                 onFactionClick={this.handleFactionClick}
+                factionIcon={factionImages[index]}
               ></FactionFilter>
             </li>
           ))}

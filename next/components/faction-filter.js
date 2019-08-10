@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const cdn = 'https://mythgardhub.s3-us-west-2.amazonaws.com/collection-icons/';
+
 class FactionFilter extends React.Component {
   constructor(props) {
     super(props);
@@ -16,8 +18,22 @@ class FactionFilter extends React.Component {
         data-cy="factionFilter"
         data-mgfaction={this.props.faction}
         onClick={this.props.onFactionClick}
+        className={this.props.selected && 'selected'}
       >
-        {this.props.faction}
+        <style jsx>{`
+          div {
+            padding: 5px;
+          }
+          img {
+            max-height: 50px;
+            vertical-align: top;
+          }
+          border: 1px solid transparent;
+          .selected {
+            border: 1px solid black;
+          }
+        `}</style>
+        <img src={`${cdn}${this.props.factionIcon}`} alt="" />
       </div>
     );
   }
@@ -25,7 +41,9 @@ class FactionFilter extends React.Component {
 
 FactionFilter.propTypes = {
   onFactionClick: PropTypes.func,
-  faction: PropTypes.string
+  faction: PropTypes.string,
+  factionIcon: PropTypes.string,
+  selected: PropTypes.bool
 };
 
 export default FactionFilter;
