@@ -4,8 +4,6 @@ import { Query } from 'react-apollo';
 import ErrorMessage from './error-message';
 import DeckCardList from './deck-card-list';
 import DeckExport from './deck-export';
-
-import { exportDeck } from '../lib/export-utils';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 
 export const deckCardsQuery = gql`
@@ -26,7 +24,7 @@ export const deckCardsQuery = gql`
   }
 `;
 
-const deckToExportText = (deckCards, deckName, path = null, power = null) => {
+const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
   deckToExport.deckName = deckName;
   deckToExport.deckPath = path ? path.name : '';
@@ -47,7 +45,7 @@ export default function Deck({ deck }) {
 
         const cards = data.deck.cardDecks.nodes;
         const { power, path } = deck;
-        const deckToExport = deckToExportText(cards, deck.name, path, power);
+        const deckToExport = getDeckToExport(cards, deck.name, path, power);
 
         return (
           <>
