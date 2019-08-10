@@ -58,7 +58,7 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="importDeckButton"]').click();
 
     cy.get('[data-cy="deckTitle"]').should('have.value', 'my deck');
-    cy.get('[data-cy="cardListCard"').should('have.length', 6);
+    cy.get(`${deckInProgress} ${cardListCard}`).should('have.length', 2);
   });
 
   it('should export a deck', function() {
