@@ -5,21 +5,38 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 
-const decksSearchQuery = gql`
-  query decks($name: String!, $cardIds: [Int!]) {
-    decks(
-      filter: {
-        name: { includesInsensitive: $name }
-        cardDecks: { some: { cardId: { in: $cardIds } } }
-      }
-    ) {
-      nodes {
-        name
-        id
+const getCardsFilter = cardIds => {
+  if (!cardIds.length) {
+    // null means ignore this filter.
+    // Comma allows chaining.
+    return 'cardDecks: null,';
+  }
+  const cardIdFilters = cardIds.map(cardId => {
+    return `{cardDecks: {some: {cardId: {equalTo: ${cardId}}}}}`;
+  });
+  return `
+    and: [${cardIdFilters.join(',')}]
+  `;
+};
+
+const getDeckSearchQuery = cardIds => {
+  const cardsFilter = getCardsFilter(cardIds);
+  return gql`
+    query decks($name: String!) {
+      decks(
+        filter: {
+          name: { includesInsensitive: $name },
+          ${cardsFilter}
+        }
+      ) {
+        nodes {
+          name
+          id
+        }
       }
     }
-  }
-`;
+  `;
+};
 
 class SomeDecks extends React.Component {
   constructor(props) {
@@ -27,6 +44,7 @@ class SomeDecks extends React.Component {
   }
 
   render() {
+    const decksSearchQuery = getDeckSearchQuery(this.props.search.cardIds);
     return (
       <Query query={decksSearchQuery} variables={this.props.search}>
         {({ loading, error, data }) => {
