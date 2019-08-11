@@ -11,19 +11,19 @@ export const initializeDeckBuilder = () => {
 };
 
 export const addCardToDeck = (deck, card) => {
-  const nextDeck = { ...deck };
+  const newDeck = { ...deck };
 
-  if (!nextDeck.hasOwnProperty(card.card.id)) {
-    nextDeck[card.card.id] = card;
-    return nextDeck;
+  if (!newDeck.hasOwnProperty(card.card.id)) {
+    newDeck[card.card.id] = card;
+    return newDeck;
   }
 
-  const oldQuantity = nextDeck[card.card.id].quantity;
+  const oldQuantity = newDeck[card.card.id].quantity;
 
-  nextDeck[card.card.id] = {
-    ...nextDeck[card.card.id],
+  newDeck[card.card.id] = {
+    ...newDeck[card.card.id],
     quantity: oldQuantity + card.quantity
   };
 
-  return nextDeck;
+  return newDeck;
 };

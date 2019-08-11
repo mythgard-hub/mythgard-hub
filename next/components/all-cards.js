@@ -3,11 +3,11 @@ import ErrorMessage from './error-message';
 import CardList from './card-list';
 import PropTypes from 'prop-types';
 
-import cardsQuery from '../graphql/cardsQuery';
+import allCardsQuery from '../lib/queries/all-cards-query';
 
 export default function AllCards(props) {
   return (
-    <Query query={cardsQuery}>
+    <Query query={allCardsQuery}>
       {({ loading, error, data: { cards } }) => {
         if (error) return <ErrorMessage message={error} />;
         if (loading) return <div>Loading</div>;
