@@ -45,8 +45,9 @@ class DeckSearchForm extends React.Component {
         <br />
         <div>Includes cards:</div>
         <Query query={cardsQuery}>
-          {({ error, data: { cards } }) => {
+          {({ loading, error, data: { cards } }) => {
             if (error) return <ErrorMessage message={error} />;
+            if (loading) return null;
             return (
               <CardSearch
                 cards={cards.nodes}

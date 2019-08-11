@@ -17,20 +17,6 @@ const getSuggestionValue = suggestion => suggestion.name;
 const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
 
 class CardSearch extends Component {
-  static propTypes = {
-    cards: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string
-      })
-    ),
-    onSelect: PropTypes.func
-  };
-  static defaultProps = {
-    cards: [],
-    onSelect: () => true
-  };
-
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -124,5 +110,20 @@ class CardSearch extends Component {
     );
   }
 }
+
+CardSearch.propTypes = {
+  cards: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    })
+  ),
+  onSelect: PropTypes.func
+};
+
+CardSearch.defaultProps = {
+  cards: [],
+  onSelect: () => true
+};
 
 export default CardSearch;
