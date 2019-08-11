@@ -13,7 +13,8 @@ app.use(
       user: process.env.PGUSER,
       database: process.env.PGDATABASE,
       password: process.env.PGPASSWORD,
-      host: process.env.PGHOST
+      host: process.env.PGHOST,
+      ssl: process.env.PGSSL === 'yes'
     },
     'mythgard',
     {
