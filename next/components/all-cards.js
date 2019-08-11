@@ -1,19 +1,9 @@
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import CardList from './card-list';
 import PropTypes from 'prop-types';
 
-export const cardsQuery = gql`
-  query cards {
-    cards {
-      nodes {
-        id
-        name
-      }
-    }
-  }
-`;
+import cardsQuery from '../graphql/cardsQuery';
 
 export default function AllCards(props) {
   return (
