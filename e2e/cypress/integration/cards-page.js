@@ -1,11 +1,9 @@
-describe('Card Page', function() {
+describe('Cards Page', function() {
   beforeEach(() => {
     cy.visit('/cards');
   });
-  it('has a list', function() {
-    cy.get('ul.cardList li').should('have.length', 4);
-  });
-  it('should have working links', function() {
+  it('works', function() {
+    cy.get('ul.cardList li').should('be.visible');
     cy.get('ul.cardList a:first').click();
     cy.location().should(location => {
       expect(location.pathname).to.eq('/card');

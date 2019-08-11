@@ -1,5 +1,6 @@
 import React from 'react';
 import AllCards from '../components/all-cards';
+import SomeCards from '../components/some-cards';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
@@ -9,7 +10,7 @@ import gql from 'graphql-tag';
 import Router from 'next/router';
 import DeckExport from '../components/deck-export';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
-import DeckCardList from '../components/deck-card-list';
+import FactionFilters from '../components/faction-filters';import DeckCardList from '../components/deck-card-list';
 
 const addDeckQuery = gql`
   mutation AddDeck($name: String!) {
@@ -81,6 +82,7 @@ class DeckBuilderPage extends React.Component {
     this.state = {
       mainDeckInput: '',
       sideboardInput: '',
+      cardFilters: false,
       deckInProgress: initializeDeckBuilder()
     };
 
@@ -90,6 +92,8 @@ class DeckBuilderPage extends React.Component {
     this.updateImportedDeck = this.updateImportedDeck.bind(this);
     this.validateState = this.validateState.bind(this);
     this.updateDeckName = this.updateDeckName.bind(this);
+    this.onFactionClick = this.onFactionClick.bind(this);
+    this.updateCardFilters = this.updateCardFilters.bind(this);
   }
 
   updateDeckName = e => {
@@ -142,6 +146,18 @@ class DeckBuilderPage extends React.Component {
     return Boolean(this.state.deckInProgress.deckName);
   }
 
+  onFactionClick(newFactions) {
+    this.updateCardFilters('factions', newFactions);
+  }
+
+  updateCardFilters(prop, value) {
+    const cardFilters = { ...this.state.cardFilters };
+    cardFilters[prop] = value;
+    this.setState({
+      cardFilters
+    });
+  }
+
   render() {
     const { deckInProgress, mainDeckInput } = this.state;
 
@@ -157,6 +173,7 @@ class DeckBuilderPage extends React.Component {
           }
         `}</style>
         <h1 data-cy="header">Deck Builder</h1>
+        <FactionFilters onFactionClick={this.onFactionClick} />
         <ApolloConsumer>
           {client => (
             <>
@@ -189,9 +206,14 @@ class DeckBuilderPage extends React.Component {
           Clear All
         </button>
         <div className="deck-builder-panels">
-          <div className="collection">
+          <div className="collection" data-cy="deckBuilderCollection">
             <h2>Collection</h2>
-            <AllCards onCardClick={this.onCollectionClick} />
+            {(this.state.cardFilters && (
+              <SomeCards
+                filters={this.state.cardFilters}
+                onCardClick={this.onCollectionClick}
+              />
+            )) || <AllCards onCardClick={this.onCollectionClick} />}
           </div>
           <div className="deck-in-progress" data-cy="deckInProgress">
             <h2>Current Deck</h2>
