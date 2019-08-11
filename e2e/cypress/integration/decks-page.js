@@ -1,3 +1,7 @@
+import { cardListCard, cardSearch } from '../page-objects/all';
+
+const cardSeachSelections = `${cardSearch} ${cardListCard}`;
+
 describe('Decks Page', function() {
   beforeEach(() => {
     cy.visit('/decks');
@@ -13,14 +17,15 @@ describe('Decks Page', function() {
   it('should search for decks', function() {
     cy.get('[data-cy="deckListItem"]').then(list => {
       const initialListLength = list.length;
-      cy.get('[data-cy="cardSearch"] input').type('Fur');
-      cy.get('[data-cy="cardSearch"] input').type('{downarrow}');
-      cy.get('[data-cy="cardSearch"] input').should('have.value', 'Furball');
+      cy.get(`${cardSearch} input`).type('fur');
+      cy.get(`${cardSearch} input`).type('{enter}');
+      cy.get(cardSeachSelections).should('have.length', 1);
       cy.get('[data-cy="deckSearchDeckName"]').type('cat');
       cy.get('[data-cy="deckSearchSubmit"]').click();
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
       cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
       cy.get('[data-cy="deckSearchDeckName"]').clear();
+      cy.get(cardSeachSelections).click();
       cy.get('[data-cy="deckSearchSubmit"]').click();
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
