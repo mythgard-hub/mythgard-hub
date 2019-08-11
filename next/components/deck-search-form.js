@@ -21,10 +21,9 @@ class DeckSearchForm extends React.Component {
     this.props.onSubmit(this.state);
   }
 
-  onCardSearchSelect(card) {
-    const cardIds = [...this.state.cardIds, card.id];
+  onCardSearchSelect(selectedCardIds) {
     this.setState({
-      cardIds
+      cardIds: selectedCardIds
     });
   }
 
@@ -44,6 +43,7 @@ class DeckSearchForm extends React.Component {
         </label>
         <br />
         <br />
+        <div>Includes cards:</div>
         <Query query={cardsQuery}>
           {({ error, data: { cards } }) => {
             if (error) return <ErrorMessage message={error} />;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
+import CardList from './card-list.js';
 
 const getSuggestions = (value, cards) => {
   const inputValue = value.trim().toLowerCase();
@@ -42,9 +43,11 @@ class CardSearch extends Component {
       this
     );
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.onCardClick = this.onCardClick.bind(this);
     this.state = {
       value: '',
-      suggestions: []
+      suggestions: [],
+      selections: []
     };
   }
 
@@ -67,7 +70,32 @@ class CardSearch extends Component {
   };
 
   onSuggestionSelected = (e, { suggestion }) => {
-    this.props.onSelect(suggestion);
+    e && e.preventDefault();
+    const newSelections = [...this.state.selections, suggestion];
+    this.setState(
+      {
+        selections: newSelections,
+        value: ''
+      },
+      () => {
+        this.props.onSelect(this.state.selections.map(card => card.id));
+      }
+    );
+  };
+
+  onCardClick = (e, c) => {
+    e && e.preventDefault();
+    const newSelections = this.state.selections.filter(card => {
+      return c.id !== card.id;
+    });
+    this.setState(
+      {
+        selections: newSelections
+      },
+      () => {
+        this.props.onSelect(this.state.selections.map(card => card.id));
+      }
+    );
   };
 
   render() {
@@ -90,6 +118,10 @@ class CardSearch extends Component {
           inputProps={inputProps}
           highlightFirstSuggestion={true}
         />
+        <CardList
+          cards={this.state.selections}
+          onCardClick={this.onCardClick}
+        ></CardList>
       </div>
     );
   }
