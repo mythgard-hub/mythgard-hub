@@ -9,9 +9,7 @@ const getSuggestions = (value, cards) => {
 
   return inputLength === 0
     ? []
-    : cards.filter(
-        card => card.name.toLowerCase().slice(0, inputLength) === inputValue
-      );
+    : cards.filter(card => card.name.toLowerCase().indexOf(inputValue) > -1);
 };
 
 const getSuggestionValue = suggestion => suggestion.name;
