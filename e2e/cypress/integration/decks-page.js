@@ -16,21 +16,47 @@ describe('Decks Page', function() {
 
   it('should search for decks', function() {
     cy.get('[data-cy="deckListItem"]').then(list => {
+      // test deck name search
       const initialListLength = list.length;
-      cy.get(`${cardSearch} input`).type('fur');
-      cy.get(`${cardSearch} input`).type('{enter}');
-      cy.get(cardSeachSelections).should('have.length', 1);
       cy.get('[data-cy="deckSearchDeckName"]').type('cat');
       cy.get('[data-cy="deckSearchSubmit"]').click();
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
       cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
+
       cy.get('[data-cy="deckSearchDeckName"]').clear();
-      cy.get(cardSeachSelections).click();
       cy.get('[data-cy="deckSearchSubmit"]').click();
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
       );
+
+      // test search by card name included
+      let lengthAfterOneFilter;
+      cy.get(`${cardSearch} input`).type('drag');
+      cy.get(`${cardSearch} input`).type('{enter}');
+      cy.get(cardSeachSelections).should('have.length', 1);
+      cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.get('[data-cy="deckListItem"]')
+        .then(cards => {
+          lengthAfterOneFilter = cards.length;
+          expect(lengthAfterOneFilter).to.be.lessThan(initialListLength);
+          cy.get(`${cardSearch} input`).type('harm');
+          cy.get(`${cardSearch} input`).type('{enter}');
+          cy.get(cardSeachSelections).should('have.length', 2);
+          cy.get('[data-cy="deckSearchSubmit"]').click();
+          return cy.get('[data-cy="deckListItem"]');
+        })
+        .then(cards => {
+          expect(cards.length).to.be.lessThan(lengthAfterOneFilter);
+        })
+        .then(() => {
+          cy.get(cardSeachSelections).click({ multiple: true });
+          cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.get('[data-cy="deckListItem"]').should(
+            'have.length',
+            initialListLength
+          );
+        });
     });
   });
 });
