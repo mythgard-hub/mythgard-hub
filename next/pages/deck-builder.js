@@ -3,14 +3,12 @@ import AllCards from '../components/all-cards';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
-import CardList from '../components/card-list';
 import { handleInputChange } from '../lib/form-utils';
 import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import DeckExport from '../components/deck-export';
-import { convertImportToDeck } from '../lib/import-utils';
-import { initializeDeckBuilder } from '../lib/deck-utils';
+import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
 import DeckCardList from '../components/deck-card-list';
 
 const addDeckQuery = gql`
@@ -48,7 +46,7 @@ const createDeckShell = (apolloClient, deckName) => {
 };
 
 // Graphql query batching is used to prevent request flurry
-const addCardsToDeck = (apolloClient, deckId, deckCards) => {
+const addCardsToDBDeck = (apolloClient, deckId, deckCards) => {
   return Promise.all(
     deckCards.map(deckCard => {
       apolloClient.mutate({
@@ -68,7 +66,7 @@ const saveDeck = (apolloClient, deckInProgress) => {
   return createDeckShell(apolloClient, deckInProgress.deckName)
     .then(({ data }) => {
       deckId = data.createDeck.deck.id;
-      return addCardsToDeck(
+      return addCardsToDBDeck(
         apolloClient,
         deckId,
         Object.values(deckInProgress.mainDeck)
@@ -89,7 +87,7 @@ class DeckBuilderPage extends React.Component {
     this.onCollectionClick = this.onCollectionClick.bind(this);
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleImport = this.handleImport.bind(this);
+    this.updateImportedDeck = this.updateImportedDeck.bind(this);
     this.validateState = this.validateState.bind(this);
     this.updateDeckName = this.updateDeckName.bind(this);
   }
@@ -122,16 +120,10 @@ class DeckBuilderPage extends React.Component {
     const { deckInProgress } = this.state;
     e && e.preventDefault();
 
-    const nextMainDeck = { ...deckInProgress.mainDeck };
-    if (!nextMainDeck.hasOwnProperty(card.id)) {
-      nextMainDeck[card.id] = { quantity: 1, card };
-    } else {
-      nextMainDeck[card.id] = {
-        ...nextMainDeck[card.id],
-        quantity: nextMainDeck[card.id].quantity + 1
-      };
-    }
-
+    const nextMainDeck = addCardToDeck(deckInProgress.mainDeck, {
+      quantity: 1,
+      card
+    });
     this.setState({
       deckInProgress: {
         ...deckInProgress,
@@ -140,15 +132,7 @@ class DeckBuilderPage extends React.Component {
     });
   }
 
-  handleImport() {
-    const { mainDeckInput, deckInProgress } = this.state;
-
-    const importedDeck = convertImportToDeck(mainDeckInput, '');
-    importedDeck.mainDeck = {
-      ...deckInProgress.mainDeck,
-      ...importedDeck.mainDeck
-    };
-
+  updateImportedDeck(importedDeck) {
     this.setState({
       deckInProgress: importedDeck
     });
@@ -216,8 +200,9 @@ class DeckBuilderPage extends React.Component {
         </div>
         <ImportDeck
           mainDeckInput={mainDeckInput}
+          currentMainDeck={deckInProgress.mainDeck}
           handleInputChange={this.handleInputChange}
-          handleImport={this.handleImport}
+          updateImportedDeck={this.updateImportedDeck}
         />
         &nbsp;
         <DeckExport deckInProgress={deckInProgress} />
