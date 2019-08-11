@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 
-import cardsQuery from '../graphql/cardsQuery';
+import allCardsQuery from '../lib/queries/all-cards-query';
 import { convertImportToDeck } from '../lib/import-utils';
 import { addCardToDeck } from '../lib/deck-utils';
 
@@ -28,7 +28,7 @@ export default function ImportDeck({
   updateImportedDeck
 }) {
   return (
-    <Query query={cardsQuery}>
+    <Query query={allCardsQuery}>
       {({ loading, error, data: { cards } }) => {
         if (error) return <ErrorMessage message={error} />;
         if (loading) return <div>Loading</div>;
