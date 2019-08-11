@@ -7,7 +7,14 @@ import {
   convertImportToDeck
 } from './import-utils';
 import { META_KEYS } from '../constants/deck';
-import { initializeDeckBuilder } from './deck-utils';
+
+const allCards = [
+  { id: 1, name: 'card' },
+  { id: 2, name: 'cards' },
+  { id: 3, name: 'card name' },
+  { id: 4, name: 'other card name' },
+  { id: 5, name: 'weird  card  name' }
+];
 
 describe('Import utility methods', () => {
   describe('Test extractMetaValue', () => {
@@ -91,15 +98,16 @@ describe('Import utility methods', () => {
   });
 
   describe('Test formatCardLines', () => {
+    const expected = [
+      { id: 3, quantity: 1, name: 'card name' },
+      { id: 4, quantity: 2, name: 'other card name' },
+      { id: 5, quantity: 3, name: 'weird  card  name' }
+    ];
+
     it('should format the line for each card - multiple valid lines', function() {
       const input = ['1 card name', '2 other card name', '3 weird  card  name'];
 
-      const expected = [
-        { id: 'TBD', quantity: 1, name: 'card name' },
-        { id: 'TBD', quantity: 2, name: 'other card name' },
-        { id: 'TBD', quantity: 3, name: 'weird  card  name' }
-      ];
-      expect(formatCardLines(input)).toEqual(expected);
+      expect(formatCardLines(input, allCards)).toEqual(expected);
     });
 
     it('should format the line for each card - multiple valid lines with empty lines', function() {
@@ -111,29 +119,27 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ];
 
-      const expected = [
-        { id: 'TBD', quantity: 1, name: 'card name' },
-        { id: 'TBD', quantity: 2, name: 'other card name' },
-        { id: 'TBD', quantity: 3, name: 'weird  card  name' }
-      ];
-      expect(formatCardLines(input)).toEqual(expected);
+      expect(formatCardLines(input, allCards)).toEqual(expected);
     });
 
     it('should format the line for each card - single valid line', function() {
       const input = ['1 card name'];
-      const expected = [{ id: 'TBD', quantity: 1, name: 'card name' }];
-      expect(formatCardLines(input)).toEqual(expected);
+      const expectedSmaller = [expected[0]];
+
+      expect(formatCardLines(input, allCards)).toEqual(expectedSmaller);
     });
 
     it('should format the line for each card - all invalid lines', function() {
-      expect(formatCardLines([])).toEqual([]);
-      expect(formatCardLines(['wow', 'much', 1])).toEqual(['wow', 'much']);
-      expect(formatCardLines([1])).toEqual([]);
-      expect(formatCardLines(['wow'])).toEqual(['wow']);
-      expect(formatCardLines(['hellow world', 'hi universe'])).toEqual([
-        'hellow world',
-        'hi universe'
+      expect(formatCardLines([], allCards)).toEqual([]);
+      expect(formatCardLines(['wow', 'much', 1], allCards)).toEqual([
+        'wow',
+        'much'
       ]);
+      expect(formatCardLines([1], allCards)).toEqual([]);
+      expect(formatCardLines(['wow'], allCards)).toEqual(['wow']);
+      expect(
+        formatCardLines(['hellow world', 'hi universe'], allCards)
+      ).toEqual(['hellow world', 'hi universe']);
     });
 
     it('should format the line for each card - some invalid lines', function() {
@@ -146,14 +152,9 @@ describe('Import utility methods', () => {
         'wow'
       ];
 
-      const expected = [
-        { id: 'TBD', quantity: 1, name: 'card name' },
-        { id: 'TBD', quantity: 2, name: 'other card name' },
-        { id: 'TBD', quantity: 3, name: 'weird  card  name' },
-        'wow'
-      ];
+      const expectedInvalid = [...expected, 'wow'];
 
-      expect(formatCardLines(input)).toEqual(expected);
+      expect(formatCardLines(input, allCards)).toEqual(expectedInvalid);
     });
   });
 
@@ -213,27 +214,13 @@ describe('Import utility methods', () => {
         'name: New Deck',
         'path: ',
         'power: ',
-        '1 dune courser',
-        '1 mirage',
-        '2 aimless vessel',
-        '1 cataphract'
-      ].join('\n');
-      const sideboardMultiple = [
         '1 card name',
-        '2 other card name',
-        '3 weird  card  name'
+        '2 other card name'
       ].join('\n');
-      const sideboardSingle = ['1 card name'].join('\n');
 
-      expect(getImportErrors(multipleCards, sideboardSingle)).toEqual([]);
-      expect(getImportErrors(multipleCards, sideboardMultiple)).toEqual([]);
-      expect(getImportErrors(singleCard, sideboardMultiple)).toEqual([]);
-      expect(getImportErrors(singleCard, sideboardSingle)).toEqual([]);
-      expect(getImportErrors(singleCard, '')).toEqual([]);
-      expect(getImportErrors(multipleCards, '')).toEqual([]);
-      expect(getImportErrors(noPathOrPower, '')).toEqual([]);
-      expect(getImportErrors(noPathOrPower, sideboardSingle)).toEqual([]);
-      expect(getImportErrors(noPathOrPower, sideboardMultiple)).toEqual([]);
+      expect(getImportErrors(multipleCards, '', allCards)).toEqual([]);
+      expect(getImportErrors(singleCard, '', allCards)).toEqual([]);
+      expect(getImportErrors(noPathOrPower, '', allCards)).toEqual([]);
     });
 
     it('should show an empty list of errors - empty lines', function() {
@@ -248,15 +235,7 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ].join('\n');
 
-      const sidebar = [
-        '1 card name',
-        '2 other card name',
-        '',
-        ' ',
-        '3 weird  card  name'
-      ].join('\n');
-
-      expect(getImportErrors(main, sidebar)).toEqual([]);
+      expect(getImportErrors(main, '', allCards)).toEqual([]);
     });
 
     it('should show a list of errors - import with no metalines', function() {
@@ -268,7 +247,7 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ].join('\n');
 
-      expect(getImportErrors(input, input)).toEqual([]);
+      expect(getImportErrors(input, '', allCards)).toEqual([]);
     });
 
     it('should return a list of errors - invalid cards', function() {
@@ -285,12 +264,14 @@ describe('Import utility methods', () => {
         'Invalid input for sideboard'
       ];
 
-      expect(getImportErrors(input, input)).toEqual(expected);
+      expect(getImportErrors(input, input, allCards)).toEqual(expected);
     });
 
     it('should show a list of errors - empty input', function() {
-      expect(getImportErrors('', '')).toEqual(['Deck must have cards']);
-      expect(getImportErrors(null, '')).toEqual([
+      expect(getImportErrors('', '', allCards)).toEqual([
+        'Deck must have cards'
+      ]);
+      expect(getImportErrors(null, '', allCards)).toEqual([
         'Invalid input for main deck'
       ]);
     });
@@ -306,7 +287,7 @@ describe('Import utility methods', () => {
         '1 card name'
       ].join('\n');
 
-      const result = convertImportToDeck(input, '');
+      const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(0);
       expect(result.deckCoverArt).toEqual('');
@@ -327,7 +308,7 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ].join('\n');
 
-      const result = convertImportToDeck(input, '');
+      const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(0);
       expect(result.deckCoverArt).toEqual('myself');
@@ -347,7 +328,7 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ].join('\n');
 
-      const result = convertImportToDeck(input, '');
+      const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(0);
       expect(result.deckCoverArt).toEqual('myself');
@@ -364,7 +345,7 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ].join('\n');
 
-      const result = convertImportToDeck(input, '');
+      const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(0);
       expect(result.deckCoverArt).toEqual('');
@@ -387,7 +368,7 @@ describe('Import utility methods', () => {
         '3 weird  card  name'
       ].join('\n');
 
-      const result = convertImportToDeck(input, '');
+      const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(0);
       expect(result.deckCoverArt).toEqual('');
@@ -406,7 +387,7 @@ describe('Import utility methods', () => {
         'bladiblah'
       ].join('\n');
 
-      const result = convertImportToDeck(input, '');
+      const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(1);
       expect(result.deckCoverArt).toEqual('');
