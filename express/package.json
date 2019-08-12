@@ -12,7 +12,8 @@
   "dependencies": {
     "@graphile-contrib/pg-simplify-inflector": "^5.0.0-beta.1",
     "express": "4.17.x",
-    "postgraphile": "4.4.x"
+    "postgraphile": "4.4.x",
+    "postgraphile-plugin-connection-filter": "^1.1.2"
   },
   "devDependencies": {
     "eslint": "^6.0.1",
