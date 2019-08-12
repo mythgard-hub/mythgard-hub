@@ -1,7 +1,7 @@
 import { exportDeck } from './export-utils';
 import { initializeDeckBuilder } from './deck-utils';
 
-describe('Import utility methods', () => {
+describe('Export utility methods', () => {
   describe('Test exportDeck', () => {
     it('No meta values', function() {
       const deckInProgress = initializeDeckBuilder();
