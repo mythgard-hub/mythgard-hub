@@ -17,7 +17,6 @@ INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Drago
 INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Vampire', 'lifelink', 'vampire', '2', '2');
 INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3');
 
-DROP TABLE IF EXISTS mythgard.path;
 CREATE TABLE mythgard.path (
   id SERIAL PRIMARY KEY,
   name varchar(255)
@@ -25,7 +24,6 @@ CREATE TABLE mythgard.path (
 
 INSERT INTO mythgard.path ("id", "name") VALUES (1, 'Way of the Black Lotus');
 
-DROP TABLE IF EXISTS mythgard.power;
 CREATE TABLE mythgard.power (
   id SERIAL PRIMARY KEY,
   name varchar(255)
