@@ -43,7 +43,7 @@ export default function Deck({ deck }) {
         if (error) return <ErrorMessage message="Error loading decks." />;
         if (loading) return <div>Loading</div>;
 
-        const cards = data.deck.cardDecks.nodes;
+        const cards = data.deck ? data.deck.cardDecks.nodes : [];
         const { power, path } = deck;
         const deckToExport = getDeckToExport(cards, deck.name, path, power);
 
