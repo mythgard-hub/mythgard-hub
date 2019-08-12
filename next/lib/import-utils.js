@@ -41,33 +41,52 @@ export const extractMetaValue = (lines, metaname) => {
   }
 };
 
-export const formatCardLines = cardLines => {
+export const formatCardLines = (cardLines, allCards) => {
   const formatted = cardLines
     .filter(line => line && line.trim && line.trim())
     .map(line => {
       try {
         const split = line.trim().split(' ');
+        const lineCardName = split
+          .slice(1)
+          .join(' ')
+          .toLowerCase()
+          .trim();
+        const lineCardQuantity = parseInt(split[0], 10);
 
+        // Make sure the line has a valid format
         if (
           !split ||
           !split.length ||
           split.length < 2 ||
-          isNaN(parseInt(split[0], 10))
+          isNaN(lineCardQuantity)
         ) {
           return line;
         }
 
+        // make sure this card exists in our database and get its ID
+        const existingCard = allCards.find(c => {
+          return c.name.toLowerCase() === lineCardName;
+        });
+
+        // If the card doesn't exist, we'll just get rid of it
+        // but won't destroy the rest of the import,
+        // unless told otherwise
+        if (!existingCard) {
+          return null;
+        }
+
         return {
-          id: 'TBD',
-          quantity: parseInt(split[0], 10),
-          name: split.slice(1).join(' ')
+          id: existingCard.id,
+          quantity: lineCardQuantity,
+          name: lineCardName
         };
       } catch (e) {
         return line;
       }
     });
 
-  return formatted;
+  return formatted.filter(f => f);
 };
 
 export const metaLineInvalid = (line, metaName) => {
@@ -89,12 +108,12 @@ export const cardLinesValid = lines => {
   );
 };
 
-export const getImportErrors = (mainDeckText, sideboardText) => {
+export const getImportErrors = (mainDeckText, sideboardText, allCards) => {
   try {
     const errors = [];
 
     const mainDeckLines = mainDeckText.split(/\n/);
-    const sideboardLines = formatCardLines(sideboardText.split(/\n/));
+    const sideboardLines = formatCardLines(sideboardText.split(/\n/), allCards);
 
     // We need at least a card
     if (mainDeckLines.length < 1) {
@@ -105,7 +124,10 @@ export const getImportErrors = (mainDeckText, sideboardText) => {
     // the export can have a bunch of meta lines.
     // We need to figre out where to start splicing to get the actual cards
     const spliceIndex = getSpliceIndex(mainDeckLines);
-    const cardLines = formatCardLines(mainDeckLines.splice(spliceIndex));
+    const cardLines = formatCardLines(
+      mainDeckLines.splice(spliceIndex),
+      allCards
+    );
 
     if (cardLines.length <= 0) {
       errors.push('Deck must have cards');
@@ -126,10 +148,10 @@ export const getImportErrors = (mainDeckText, sideboardText) => {
   }
 };
 
-export const convertImportToDeck = (mainDeckText, sideboardText) => {
+export const convertImportToDeck = (mainDeckText, sideboardText, allCards) => {
   const importedDeck = initializeDeckBuilder();
 
-  importedDeck.errors = getImportErrors(mainDeckText, sideboardText);
+  importedDeck.errors = getImportErrors(mainDeckText, sideboardText, allCards);
 
   if (importedDeck.errors.length) {
     return importedDeck;
@@ -140,10 +162,10 @@ export const convertImportToDeck = (mainDeckText, sideboardText) => {
   const spliceIndex = getSpliceIndex(mainDeckLines);
 
   importedDeck.mainDeck = formatCardLines(
-    mainDeckLines.slice(spliceIndex)
-  ).reduce((acc, curr, ix) => {
-    // TODO These need to get actual ID values from the card list
-    acc[`${curr.id}_${ix}`] = {
+    mainDeckLines.slice(spliceIndex),
+    allCards
+  ).reduce((acc, curr) => {
+    acc[`${curr.id}`] = {
       quantity: curr.quantity,
       card: {
         id: curr.id,
@@ -152,7 +174,7 @@ export const convertImportToDeck = (mainDeckText, sideboardText) => {
     };
     return acc;
   }, {});
-  importedDeck.sideboard = formatCardLines(sideboardLines);
+  importedDeck.sideboard = formatCardLines(sideboardLines, allCards);
 
   importedDeck.deckName = extractMetaValue(mainDeckLines, META_KEYS.NAME);
   importedDeck.deckPath = extractMetaValue(mainDeckLines, META_KEYS.PATH);

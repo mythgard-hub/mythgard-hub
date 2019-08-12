@@ -11,6 +11,12 @@ export const deckQuery = gql`
     deck(id: $id) {
       id
       name
+      power {
+        name
+      }
+      path {
+        name
+      }
     }
   }
 `;

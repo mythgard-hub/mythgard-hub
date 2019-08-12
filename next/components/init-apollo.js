@@ -8,9 +8,9 @@ let apolloClient = null;
 // currently proxies requests for the graphql server.
 // This will need to be removed in production.
 // TODO https://trello.com/c/EwDfaRIo/28
-const serverUri = 'express:3000/graphql'; // docker-compose url
-const browserUri = 'localhost:3001/graphql'; // proxied through next
-const uri = `http://${process.browser ? browserUri : serverUri}`;
+const serverUri = `${process.env.API_HOST}/graphql`; // docker-compose url
+const browserUri = '/graphql'; // proxied through next
+const uri = process.browser ? browserUri : serverUri;
 
 const makeCache = initialState =>
   new InMemoryCache({
