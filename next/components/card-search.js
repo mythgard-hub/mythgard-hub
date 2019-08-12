@@ -123,7 +123,7 @@ CardSearch.propTypes = {
 
 CardSearch.defaultProps = {
   cards: [],
-  onSelect: () => true
+  onSelect: () => {}
 };
 
 export default CardSearch;
