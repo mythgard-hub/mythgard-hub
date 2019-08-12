@@ -17,13 +17,29 @@ INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Drago
 INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Vampire', 'lifelink', 'vampire', '2', '2');
 INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3');
 
+CREATE TABLE mythgard.path (
+  id SERIAL PRIMARY KEY,
+  name varchar(255)
+);
+
+INSERT INTO mythgard.path ("id", "name") VALUES (1, 'Way of the Black Lotus');
+
+CREATE TABLE mythgard.power (
+  id SERIAL PRIMARY KEY,
+  name varchar(255)
+);
+
+INSERT INTO mythgard.power ("id", "name") VALUES (1, 'It''s over 9000!!');
+
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,
   name varchar(255),
-  author_id integer
+  author_id integer,
+  path_id integer REFERENCES mythgard.path (id),
+  power_id integer REFERENCES mythgard.power (id)
 );
 INSERT INTO mythgard.deck("name") VALUES ('dragons');
-INSERT INTO mythgard.deck("name") VALUES ('cats');
+INSERT INTO mythgard.deck("name", "path_id", "power_id") VALUES ('cats', 1, 1);
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
