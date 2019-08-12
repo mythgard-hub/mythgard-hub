@@ -4,7 +4,7 @@ import ErrorMessage from './error-message';
 import PropTypes from 'prop-types';
 import { handleInputChange } from '../lib/form-utils';
 import CardSearch from './card-search';
-import { cardsQuery } from './all-cards.js';
+import allCardsQuery from '../lib/queries/all-cards-query';
 
 class DeckSearchForm extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class DeckSearchForm extends React.Component {
         <br />
         <br />
         <div>Includes cards:</div>
-        <Query query={cardsQuery}>
+        <Query query={allCardsQuery}>
           {({ loading, error, data: { cards } }) => {
             if (error) return <ErrorMessage message={error} />;
             if (loading) return null;
