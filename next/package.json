@@ -1,7 +1,8 @@
 {
   "name": "nextjs",
   "version": "1.0.0",
-  "description": "",
+  "description": "The Mythard Hub front-end server",
+  "repository": "https://github.com/mythgard-hub/mythgard-hub",
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",

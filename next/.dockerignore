@@ -1,5 +1,8 @@
-node_modules/*
-.eslintrc
-.prettierrc.yml
+.babelrc
+.dockerignore
+.eslintrc.json
 .gitignore
+.prettierrc.yml
+.next
 build.sh
+node_modules/*

@@ -1,7 +1,8 @@
 {
   "name": "mythgard-express",
   "version": "1.0.0",
-  "description": "",
+  "description": "The Mythard Hub back-end server",
+  "repository": "https://github.com/mythgard-hub/mythgard-hub",
   "main": "index.js",
   "scripts": {
     "test": "jest"

@@ -34,7 +34,7 @@ app
 
     server.use(
       '/graphql',
-      proxy('http://express:3000', {
+      proxy(process.env.API_HOST, {
         proxyReqPathResolver: () => {
           return `/graphql`;
         }
