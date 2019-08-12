@@ -10,10 +10,12 @@ CREATE TABLE mythgard.card (
   def integer
 );
 
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (1, 'Furball', 'rules', 'cat', '1', '2');
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (2, 'Imp', 'rules', 'devil', '2', '1');
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (3, 'Grizzly Bear', 'rules', 'bear', '2', '2');
-INSERT INTO mythgard.card ("id", "name", "rules", "type", "atk", "def") VALUES (4, 'Dragon', 'flying', 'dragon', '5', '5');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Furball', 'rules', 'cat', '1', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Imp', 'rules', 'devil', '2', '1');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Dragon', 'flying', 'dragon', '5', '5');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Vampire', 'lifelink', 'vampire', '2', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3');
 
 DROP TABLE IF EXISTS mythgard.path;
 CREATE TABLE mythgard.path (
@@ -126,4 +128,23 @@ CREATE TABLE mythgard.tournament_deck (
 );
 
 INSERT INTO mythgard.tournament_deck("rank", "tournament_id", "deck_id")
-VALUES (1, 1, 1), (2, 1, 2)
+VALUES (1, 1, 1), (2, 1, 2);
+
+CREATE TABLE mythgard.faction (
+  id SERIAL PRIMARY KEY,
+  name varchar(255)
+);
+
+INSERT INTO mythgard.faction("name") VALUES ('norden'), ('aztlan'), ('oberos'), ('dreni'), ('parsa'), ('harmony');
+
+CREATE TABLE mythgard.card_faction (
+  id SERIAL PRIMARY KEY,
+  card_id integer,
+  faction_id integer,
+  FOREIGN KEY (card_id)
+    REFERENCES mythgard.card (id),
+  FOREIGN KEY (faction_id)
+    REFERENCES mythgard.faction (id)
+);
+
+INSERT INTO mythgard.card_faction("card_id","faction_id") VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6);
