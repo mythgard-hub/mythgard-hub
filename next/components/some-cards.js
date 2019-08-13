@@ -40,17 +40,6 @@ const getCardsQuery = filters => {
 };
 
 class SomeCards extends Component {
-  static propTypes = {
-    onCardClick: PropTypes.func,
-    filters: PropTypes.shape({
-      factions: PropTypes.array
-    }).isRequired
-  };
-
-  static defaultProps = {
-    onCardClick: () => true
-  };
-
   constructor(props) {
     super(props);
     this.getCardsQuery = this.getCardsQuery.bind(this);
@@ -85,5 +74,16 @@ class SomeCards extends Component {
     );
   }
 }
+
+SomeCards.propTypes = {
+  onCardClick: PropTypes.func,
+  filters: PropTypes.shape({
+    factions: PropTypes.array
+  }).isRequired
+};
+
+SomeCards.defaultProps = {
+  onCardClick: () => true
+};
 
 export default SomeCards;

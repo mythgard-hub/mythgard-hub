@@ -3,6 +3,8 @@ export default {
   cardList: '[data-cy="cardList"]',
   header: '[data-cy="header"]',
   factionFilter: '[data-cy="factionFilter"]',
+  cardSearch: '[data-cy="cardSearch"]',
+  cardSelectionItem: '[data-cy="cardSelectionItem"]',
 
   // deck builder page
   deckBuilderCollection: '[data-cy="deckBuilderCollection"]',

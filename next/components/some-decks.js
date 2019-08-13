@@ -5,16 +5,38 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 
-export const decksSearchQuery = gql`
-  query decks($name: String!) {
-    searchDecks(title: $name) {
-      nodes {
-        id
-        name
+const getCardsFilter = cardIds => {
+  if (!cardIds.length) {
+    // null means ignore this filter.
+    // Comma allows chaining.
+    return 'cardDecks: null,';
+  }
+  const cardIdFilters = cardIds.map(cardId => {
+    return `{cardDecks: {some: {cardId: {equalTo: ${cardId}}}}}`;
+  });
+  return `
+    and: [${cardIdFilters.join(',')}]
+  `;
+};
+
+const getDeckSearchQuery = cardIds => {
+  const cardsFilter = getCardsFilter(cardIds);
+  return gql`
+    query decks($name: String!) {
+      decks(
+        filter: {
+          name: { includesInsensitive: $name },
+          ${cardsFilter}
+        }
+      ) {
+        nodes {
+          name
+          id
+        }
       }
     }
-  }
-`;
+  `;
+};
 
 class SomeDecks extends React.Component {
   constructor(props) {
@@ -22,13 +44,14 @@ class SomeDecks extends React.Component {
   }
 
   render() {
+    const decksSearchQuery = getDeckSearchQuery(this.props.search.cardIds);
     return (
       <Query query={decksSearchQuery} variables={this.props.search}>
-        {({ loading, error, data: { searchDecks } }) => {
+        {({ loading, error, data }) => {
           if (error) return <ErrorMessage message="Error loading decks." />;
           if (loading) return <div>Loading</div>;
 
-          return <DeckList decks={searchDecks.nodes} />;
+          return <DeckList decks={data.decks.nodes} />;
         }}
       </Query>
     );
