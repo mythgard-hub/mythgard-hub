@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import CardSearchSelections from './card-search-selections.js';
 
-const getSuggestions = (value, cards) => {
+export const getSuggestions = (value, cards) => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
 

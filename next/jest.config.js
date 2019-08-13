@@ -2,7 +2,7 @@ module.exports = {
   moduleFileExtensions: ['js'],
   testMatch: ['**/*.(test|spec).js'],
   coveragePathIgnorePatterns: ['/node_modules/', 'enzyme.js'],
-  setupTestFrameworkScriptFile: '<rootDir>/enzyme.js',
+  setupFilesAfterEnv: ['<rootDir>/enzyme.js'],
   coverageReporters: ['json', 'lcov', 'text', 'text-summary'],
   transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest'
