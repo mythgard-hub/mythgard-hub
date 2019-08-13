@@ -1,29 +1,52 @@
 import Header from './header';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { ThemeContext } from './theme-context';
 
-const layoutStyle = {
-  margin: 20,
-  padding: 20,
-  border: '1px solid #DDD'
-};
+class Layout extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-/* eslint-disable react/prop-types */
-const Layout = props => (
-  <div style={layoutStyle}>
-    <Head>
-      <title>{props.title}</title>
-      <meta name="description" key="desc" content={props.desc} />
-    </Head>
-    <Header />
-    {props.children}
-    <style jsx global>{`
-      .header + * {
-        margin-top: 50px;
-      }
-    `}</style>
-  </div>
-);
+  render() {
+    let theme = this.context;
+    return (
+      <div>
+        <style jsx>{`
+          padding: 50px 50px 100px 50px;
+          border: ${theme.border};
+          max-width: 1040px;
+          margin: auto;
+        `}</style>
+        <Head>
+          <title>{this.props.title}</title>
+          <meta name="description" key="desc" content={this.props.desc} />
+        </Head>
+        <Header />
+        {this.props.children}
+        <style jsx global>{`
+          .header + * {
+            margin-top: 50px;
+          }
+
+          body {
+            background: ${theme.background};
+            color: ${theme.fontColor};
+            padding: 0;
+            margin: 0;
+          }
+
+          a {
+            color: ${theme.fontColor};
+          }
+        `}</style>
+      </div>
+    );
+  }
+}
+
+Layout.contextType = ThemeContext;
 
 Layout.defaultProps = {
   title: 'Mythgard Hub',
@@ -32,7 +55,8 @@ Layout.defaultProps = {
 
 Layout.propTypes = {
   title: PropTypes.string,
-  desc: PropTypes.string
-}
+  desc: PropTypes.string,
+  children: PropTypes.array
+};
 
 export default Layout;

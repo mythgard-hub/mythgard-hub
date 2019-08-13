@@ -13,7 +13,6 @@ const headerStyle = {
 
 const Header = () => (
   <div className="header" style={headerStyle}>
-    <div className="ad-placeholder">Ad placeholder</div>
     <div>
       <Link href="/">
         <a data-cy="home" style={linkStyle}>
