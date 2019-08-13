@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "10"
+  - "lts/*"
 
 sudo: required
 
@@ -31,6 +31,7 @@ before_install:
   - cp .env.template .env
 
 install:
+  # Install node modules and start up the docker containers
   - cd next
   - npm install
   - cd ..
