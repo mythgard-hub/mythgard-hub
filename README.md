@@ -1,4 +1,4 @@
-# Mythgard
+# Mythgard [![Build Status](https://travis-ci.com/mythgard-hub/mythgard-hub.svg?branch=master)](https://travis-ci.com/mythgard-hub/mythgard-hub)
 
 This card database + fansite is built on Postgres, Postgraphile, Next.js, and Express.js. Postgres is the sql database. Postgraphile is a GraphQL server that provides api access to Postgres. Express.js proxies requests from the front-end and Next.js, and is the only node that communicates with Postgraphile. Nest.js handles the front-end javascript and server-side rendering.
 
