@@ -1,6 +1,6 @@
-import { cardListCard, cardSearch } from '../page-objects/all';
+import { cardSearch, cardSelectionItem } from '../page-objects/all';
 
-const cardSeachSelections = `${cardSearch} ${cardListCard}`;
+const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('Decks Page', function() {
       let lengthAfterOneFilter;
       cy.get(`${cardSearch} input`).type('drag');
       cy.get(`${cardSearch} input`).type('{enter}');
-      cy.get(cardSeachSelections).should('have.length', 1);
+      cy.get(cardSearchSelections).should('have.length', 1);
       cy.get('[data-cy="deckSearchSubmit"]').click();
       cy.get('[data-cy="deckListItem"]')
         .then(cards => {
@@ -42,7 +42,7 @@ describe('Decks Page', function() {
           expect(lengthAfterOneFilter).to.be.lessThan(initialListLength);
           cy.get(`${cardSearch} input`).type('harm');
           cy.get(`${cardSearch} input`).type('{enter}');
-          cy.get(cardSeachSelections).should('have.length', 2);
+          cy.get(cardSearchSelections).should('have.length', 2);
           cy.get('[data-cy="deckSearchSubmit"]').click();
           return cy.get('[data-cy="deckListItem"]');
         })
@@ -50,7 +50,7 @@ describe('Decks Page', function() {
           expect(cards.length).to.be.lessThan(lengthAfterOneFilter);
         })
         .then(() => {
-          cy.get(cardSeachSelections).click({ multiple: true });
+          cy.get(`${cardSearchSelections} button`).click({ multiple: true });
           cy.get('[data-cy="deckSearchSubmit"]').click();
           cy.get('[data-cy="deckListItem"]').should(
             'have.length',

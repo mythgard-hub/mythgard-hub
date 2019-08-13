@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
-import CardList from './card-list.js';
+import CardSearchSelections from './card-search-selections.js';
 
 const getSuggestions = (value, cards) => {
   const inputValue = value.trim().toLowerCase();
@@ -27,7 +27,7 @@ class CardSearch extends Component {
       this
     );
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
-    this.onCardClick = this.onCardClick.bind(this);
+    this.onSelectionDismiss = this.onSelectionDismiss.bind(this);
     this.state = {
       value: '',
       suggestions: [],
@@ -67,7 +67,7 @@ class CardSearch extends Component {
     );
   };
 
-  onCardClick = (e, c) => {
+  onSelectionDismiss = (e, c) => {
     e && e.preventDefault();
     const newSelections = this.state.selections.filter(card => {
       return c.id !== card.id;
@@ -102,10 +102,10 @@ class CardSearch extends Component {
           inputProps={inputProps}
           highlightFirstSuggestion={true}
         />
-        <CardList
+        <CardSearchSelections
           cards={this.state.selections}
-          onCardClick={this.onCardClick}
-        ></CardList>
+          onDismissClick={this.onSelectionDismiss}
+        ></CardSearchSelections>
       </div>
     );
   }
