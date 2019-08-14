@@ -5,3 +5,7 @@ export const mgColors = {
   white: '#FFF',
   lightGray: '#D1D1D1'
 };
+
+export const mgFonts = {
+  exo2: `'Exo 2', sans-serif`
+};
