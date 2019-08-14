@@ -3,7 +3,7 @@ import CardSelectionItem from './card-selection-item';
 
 export default function CardSearchSelections({ onDismissClick, cards }) {
   return (
-    <ul className="cardSearchSelections" data-cy="CardSearchSelections">
+    <ul className="cardSearchSelections" data-cy="cardSearchSelections">
       {cards.map((card, index) => (
         <li key={card.id ? card.id : index}>
           <CardSelectionItem card={card} onDismissClick={onDismissClick} />

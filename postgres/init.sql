@@ -40,6 +40,7 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name") VALUES ('dragons');
 INSERT INTO mythgard.deck("name", "path_id", "power_id") VALUES ('cats', 1, 1);
+INSERT INTO mythgard.deck("name") VALUES ('all_factions');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
@@ -55,6 +56,7 @@ CREATE TABLE mythgard.card_deck (
 
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 
 CREATE TABLE mythgard.deck_comment (
   id SERIAL PRIMARY KEY,

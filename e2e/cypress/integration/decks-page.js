@@ -50,7 +50,9 @@ describe('Decks Page', function() {
           expect(cards.length).to.be.lessThan(lengthAfterOneFilter);
         })
         .then(() => {
+          cy.get(`${cardSearchSelections} button`).should('have.length', 2);
           cy.get(`${cardSearchSelections} button`).click({ multiple: true });
+          cy.get(cardSearchSelections).should('have.length', 0);
           cy.get('[data-cy="deckSearchSubmit"]').click();
           cy.get('[data-cy="deckListItem"]').should(
             'have.length',

@@ -56,7 +56,7 @@ Layout.defaultProps = {
 Layout.propTypes = {
   title: PropTypes.string,
   desc: PropTypes.string,
-  children: PropTypes.array
+  children: PropTypes.any
 };
 
 export default Layout;
