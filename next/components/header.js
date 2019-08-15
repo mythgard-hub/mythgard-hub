@@ -45,7 +45,7 @@ class Header extends React.Component {
             text-decoration: none;
           }
           .header a:before {
-            content: '▶';
+            content: '\u25b6';
             font-size: 80%;
             margin-right: 5px;
           }
