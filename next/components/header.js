@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 
-const cdn = `${process.env.MG_CDN}mgh/`;
+const cdn = `${process.env.MG_CDN}`;
 
 const linkStyle = {
   marginRight: 15
@@ -63,10 +63,14 @@ class Header extends React.Component {
             >
               <img
                 className="crownIcon"
-                src={`${cdn}MGH_CrownLogo.png`}
+                src={`${cdn}/mgh/MGH_CrownLogo.png`}
                 alt=""
               />
-              <img className="wordmark" src={`${cdn}MGH_wordmark.svg`} alt="" />
+              <img
+                className="wordmark"
+                src={`${cdn}/mgh/MGH_wordmark.svg`}
+                alt=""
+              />
             </a>
           </Link>
           <Link href="/decks">
