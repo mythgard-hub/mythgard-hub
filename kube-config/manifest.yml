@@ -1,0 +1,204 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mg-load-balancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: mg-app
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 3001
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3001
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mg-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mg-app
+    spec:
+      containers:
+        - name: next
+          image: gsdf/mg-next:$VERSION
+          ports:
+            - containerPort: 3001
+              protocol: TCP
+          env:
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_CLIENT_ID
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_CLIENT_SECRET
+            - name: GOOGLE_CALLBACK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_CALLBACK_URL
+            - name: GOOGLE_AUTH_SCOPE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_AUTH_SCOPE
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGUSER
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGHOST
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGPASSWORD
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGDATABASE
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGPORT
+            - name: PGSSL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGSSL
+            - name: JWT_COOKIE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_COOKIE_NAME
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET
+            - name: JWT_ISSUER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_AUDIENCE
+            - name: SSR_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SSR_HOST
+            - name: API_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: API_HOST
+        - name: express
+          image: gsdf/mg-server:$VERSION
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_CLIENT_ID
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_CLIENT_SECRET
+            - name: GOOGLE_CALLBACK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_CALLBACK_URL
+            - name: GOOGLE_AUTH_SCOPE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GOOGLE_AUTH_SCOPE
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGUSER
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGHOST
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGPASSWORD
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGDATABASE
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGPORT
+            - name: PGSSL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PGSSL
+            - name: JWT_COOKIE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_COOKIE_NAME
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET
+            - name: JWT_ISSUER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_AUDIENCE
+            - name: SSR_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SSR_HOST
+            - name: API_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: API_HOST
+
