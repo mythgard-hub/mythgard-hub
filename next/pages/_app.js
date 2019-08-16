@@ -36,10 +36,7 @@ class MyApp extends App {
             />
             <meta property="og:url" content="https://mythgardhub.com/" />
             <meta property="og:type" content="article" />
-            <meta
-              property="og:image"
-              content={`${cdn}/mgh/MythgardHubOG.png`}
-            />
+            <meta property="og:image" content={`${cdn}/mgh/og-image.jpg`} />
             <meta property="og:image:type" content="image/png" />
           </Head>
           <Component {...pageProps} />
