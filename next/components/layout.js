@@ -14,20 +14,29 @@ class Layout extends React.Component {
     return (
       <div>
         <style jsx>{`
-          padding: 50px 50px 100px 50px;
+          padding: 0 50px 100px 50px;
           border: ${theme.border};
+          font-family: ${theme.fontFamily};
           max-width: 1040px;
           margin: auto;
         `}</style>
         <Head>
           <title>{this.props.title}</title>
           <meta name="description" key="desc" content={this.props.desc} />
+          <link
+            href="https://fonts.googleapis.com/css?family=Exo+2&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <Header />
         {this.props.children}
         <style jsx global>{`
           .header + * {
-            margin-top: 50px;
+            margin-top: 90px;
+          }
+
+          * {
+            box-sizing: border-box;
           }
 
           body {

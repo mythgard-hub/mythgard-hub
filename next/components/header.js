@@ -1,56 +1,110 @@
 import Link from 'next/link';
+import { ThemeContext } from './theme-context';
+
+const cdn = `${process.env.MG_CDN}mgh/`;
 
 const linkStyle = {
   marginRight: 15
 };
 
-const headerStyle = {
-  maxHeight: '50px',
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-  position: 'fixed'
-};
+class Header extends React.Component {
+  render() {
+    let theme = this.context;
+    return (
+      <div className="header">
+        <style jsx>{`
+          .header {
+            background: ${theme.background};
+            border-bottom: ${theme.border};
+          }
+        `}</style>
+        <style jsx>{`
+          .header {
+            padding-top: 10px;
+            max-height: 100px;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            font-weight: bold;
+            max-width: 940px;
+          }
+          .header .home {
+            display: inline-block;
+            line-height: 50px;
+            position: relative;
+          }
+          .header .home .wordmark {
+            width: 150px;
+            vertical-align: middle;
+          }
+          .header .home .crownIcon {
+            height: 50px;
+            vertical-align: top;
+          }
+          .header a {
+            text-decoration: none;
+          }
+          .header a:before {
+            content: '\u25b6';
+            font-size: 80%;
+            margin-right: 5px;
+          }
+          .header a.home:before {
+            content: '';
+          }
+        `}</style>
+        <div>
+          <Link href="/">
+            <a
+              data-cy="home"
+              className="home"
+              aria-label="home link"
+              style={linkStyle}
+            >
+              <img
+                className="crownIcon"
+                src={`${cdn}MGH_CrownLogo.png`}
+                alt=""
+              />
+              <img className="wordmark" src={`${cdn}MGH_wordmark.svg`} alt="" />
+            </a>
+          </Link>
+          <Link href="/decks">
+            <a data-cy="decks" style={linkStyle}>
+              DECKS
+            </a>
+          </Link>
+          <Link href="/cards">
+            <a data-cy="cards" style={linkStyle}>
+              CARDS
+            </a>
+          </Link>
+          <Link href="/deck-builder">
+            <a data-cy="deck-builder" style={linkStyle}>
+              DECK BUILDER
+            </a>
+          </Link>
+          <Link href="/tournaments">
+            <a style={linkStyle}>TOURNAMENTS</a>
+          </Link>
+          <Link href="/articles">
+            <a style={linkStyle}>ARTICLES</a>
+          </Link>
+          <a href="/privacy-policy" style={linkStyle}>
+            PRIVACY POLICY
+          </a>
+          <Link href="/auth/google">
+            <a style={linkStyle}>LOG IN (GOOGLE)</a>
+          </Link>
+          <Link href="/auth/logout">
+            <a style={linkStyle}>LOG OUT</a>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+}
 
-const Header = () => (
-  <div className="header" style={headerStyle}>
-    <div>
-      <Link href="/">
-        <a data-cy="home" style={linkStyle}>
-          Mythgard Hub
-        </a>
-      </Link>
-      <Link href="/decks">
-        <a data-cy="decks" style={linkStyle}>
-          Decks
-        </a>
-      </Link>
-      <Link href="/cards">
-        <a data-cy="cards" style={linkStyle}>
-          Cards
-        </a>
-      </Link>
-      <Link href="/deck-builder">
-        <a data-cy="deck-builder" style={linkStyle}>
-          DeckBuilder
-        </a>
-      </Link>
-      <Link href="/tournaments">
-        <a style={linkStyle}>Tournaments</a>
-      </Link>
-      <Link href="/articles">
-        <a style={linkStyle}>Articles</a>
-      </Link>
-      <a href="/privacy-policy" style={linkStyle}>
-        Privacy Policy
-      </a>
-      <Link href="/auth/google">
-        <a style={linkStyle}>Log In (Google)</a>
-      </Link>
-      <Link href="/auth/logout">
-        <a style={linkStyle}>Log Out</a>
-      </Link>
-    </div>
-  </div>
-);
+Header.contextType = ThemeContext;
 
 export default Header;

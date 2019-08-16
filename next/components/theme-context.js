@@ -1,11 +1,12 @@
 import React from 'react';
-import { mgColors } from '../lib/theme.js';
+import { mgColors, mgFonts } from '../lib/theme.js';
 
 export const themes = {
   dark: {
     background: mgColors.blackPearl,
     fontColor: mgColors.white,
-    border: `1px solid ${mgColors.orange}`
+    border: `2px solid ${mgColors.orange}`,
+    fontFamily: mgFonts.exo2
   }
 };
 
