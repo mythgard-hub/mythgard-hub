@@ -64,12 +64,12 @@ class Header extends React.Component {
               <img
                 className="crownIcon"
                 src={`${cdn}/mgh/MGH_CrownLogo.png`}
-                alt=""
+                alt="mythgard logo"
               />
               <img
                 className="wordmark"
                 src={`${cdn}/mgh/MGH_wordmark.svg`}
-                alt=""
+                alt="mythgard wordmark"
               />
             </a>
           </Link>
