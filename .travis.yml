@@ -48,3 +48,7 @@ script:
 
 post_script:
   - docker-compose stop
+
+env:
+  global:
+    - PGPORT=5432
