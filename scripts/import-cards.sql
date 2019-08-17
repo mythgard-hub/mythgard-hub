@@ -1,3 +1,9 @@
+--  See import-cards.sh for usage of this script
+--
+-- Imports all cards in mgcards.csv into the mythgard.cards table.
+
+-- to keep things sane, please keep this table's column names
+-- the same as they are in the mythgard.cards table
 CREATE TEMPORARY TABLE t (
   id INTEGER,
   name VARCHAR(255),
@@ -15,8 +21,13 @@ CREATE TEMPORARY TABLE t (
   set INTEGER,
   owned BOOLEAN);
 
+-- postgres only cares about index, so these names don't need
+-- to match the actual csv file's headers
 \copy t(id, name, facOne, facTwo, type, subtype, manaCost, gemCost, rarity, atk, def, rules, flavor, set, owned) FROM 'mgcards.csv' WITH CSV HEADER;
 
+-- We use -1 to denote dynamic attack and defense values.
+-- However, the csv uses X or * to denote this. A regex is
+-- used to convert these to -1.
 insert into mythgard.card (name, rules, type, atk, def)
 select
   name,
