@@ -6,7 +6,7 @@ export default function CardListItem({ card, onClick }) {
   return (
     <>
       {onClick && (
-        <span data-cy="cardListCard" onClick={e => onClick(e, card)}>
+        <span role="button" data-cy="cardListCard" onClick={e => onClick(e, card)}>
           {card.id}. name: {card.name}
         </span>
       )}
