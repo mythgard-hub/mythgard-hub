@@ -112,6 +112,10 @@ The deploy script instructs the cluster to use images tagged with the given vers
 
 Note that in order to run this script you will have to create the file `kube-config/secrets.sh` that creates/updates a k8s secrets object for use in our deployed containers. This file will not be tracked by version control.
 
+## Importing Data
+
+See comments for import-\* scripts in /scripts
+
 ## Misc Notes
 
 - To remove all containers: `docker container rm $(docker container ps -aq)`
