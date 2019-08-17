@@ -90,7 +90,6 @@ To run all tests:
 
 Please use prettier and eslint. Configs are located in next, express, and e2e, but you will need to `npm install` the necessary eslint plugins.
 
-
 ## Deploying
 
 Ensure that the `docker` and `kubectl` commands are installed and in you path.  Docker will need to be configured to push to the `gsdf` organization in the public registry and `kubectl` must be pointed at your target cluster.
@@ -112,3 +111,7 @@ scripts/deploy.sh v1.2.3
 The deploy script instructs the cluster to use images tagged with the given version.
 
 Note that in order to run this script you will have to create the file `kube-config/secrets.sh` that creates/updates a k8s secrets object for use in our deployed containers. This file will not be tracked by version control.
+
+## Importing Data
+
+See comments for import-\* scripts in /scripts
