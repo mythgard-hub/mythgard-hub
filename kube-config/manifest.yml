@@ -116,6 +116,11 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: API_HOST
+            - name: MG_CDN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MG_CDN
         - name: express
           image: gsdf/mg-server:$VERSION
           ports:
