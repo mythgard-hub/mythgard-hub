@@ -1,3 +1,4 @@
 .env
 /next/coverage
 non-code resources
+scripts/mgcards.csv
