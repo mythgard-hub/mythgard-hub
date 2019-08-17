@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 
-const cdn = `${process.env.MG_CDN}`;
+const cdn = process.env.MG_CDN;
 
 const linkStyle = {
   marginRight: 15
