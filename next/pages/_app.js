@@ -32,7 +32,7 @@ class MyApp extends App {
             <meta property="og:site_name" content="Mythgard Hub" />
             <meta
               property="og:description"
-              content="A fan-built site for Mythgard including Decklists, Card Database and more."
+              content="A fan-built site for Mythgard including decklists, a card database and more."
             />
             <meta property="og:url" content="https://mythgardhub.com/" />
             <meta property="og:type" content="article" />
