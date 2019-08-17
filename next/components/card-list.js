@@ -12,9 +12,6 @@ export default function CardList({ onCardClick, cards }) {
     </ul>
   );
 }
-CardList.defaultProps = {
-  onCardClick: () => {}
-};
 CardList.propTypes = {
   cards: PropTypes.array,
   onCardClick: PropTypes.func
