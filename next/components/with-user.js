@@ -27,7 +27,8 @@ export default WrappedPage => {
          * bundles. Thre should be a "browser" section in our package.json.
          */
         const fetch = require('isomorphic-unfetch');
-        const { JWT_COOKIE_NAME, SSR_HOST } = process.env;
+        const JWT_COOKIE_NAME = process.env.JWT_COOKIE_NAME;
+        const SSR_HOST = process.env.SSR_HOST;
         const token = ctx.req.cookies[JWT_COOKIE_NAME];
         const resp = await fetch(`${SSR_HOST}/auth/user/${token}`);
         user = await resp.json();

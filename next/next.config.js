@@ -1,8 +1,10 @@
 module.exports = {
   env: {
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID,
-    USE_GOOGLE_ANALYTICS: process.env.NODE_ENV === 'production',
-    MG_CDN: process.env.MG_CDN
+    API_HOST: process.env.API_HOST,
+    JWT_COOKIE_NAME: process.env.JWT_COOKIE_NAME,
+    MG_CDN: process.env.MG_CDN,
+    SSR_HOST: process.env.SSR_HOST,
+    USE_GOOGLE_ANALYTICS: process.env.NODE_ENV === 'production'
   },
   webpackDevMiddleware: config => {
     config.watchOptions = Object.assign({}, config.watchOptions, {
