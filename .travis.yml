@@ -30,9 +30,6 @@ before_install:
   # Put the .env file in place
   - cp .env.template .env
 
-before_script:
-  - sudo /etc/init.d/postgresql stop
-
 install:
   # Install node modules and start up the docker containers
   - cd next

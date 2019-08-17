@@ -5,7 +5,7 @@ services:
     image: mg-postgres
     build: ./postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
   adminer:
     image: adminer
     depends_on:
