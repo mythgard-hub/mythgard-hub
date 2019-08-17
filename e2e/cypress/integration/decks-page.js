@@ -1,4 +1,8 @@
-import { cardSearch, cardSelectionItem } from '../page-objects/all';
+import {
+  cardSearch,
+  cardSelectionItem,
+  factionFilter
+} from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
 
@@ -29,6 +33,9 @@ describe('Decks Page', function() {
         'have.length',
         initialListLength
       );
+
+      // test deck faction search
+      cy.get(`${factionFilter}:first`).click();
 
       // test search by card name included
       let lengthAfterOneFilter;
