@@ -2,7 +2,7 @@ import React from 'react';
 import FactionFilter from './faction-filter';
 import PropTypes from 'prop-types';
 
-const cdn = `${process.env.MG_CDN}collection-icons/`;
+const cdn = `${process.env.MG_CDN}/collection-icons/`;
 
 const factions = ['norden', 'aztlan', 'oberos', 'dreni', 'parsa', 'harmony'];
 const factionImages = [
