@@ -23,6 +23,7 @@ metadata:
   name: mg-app
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   template:
     metadata:
       labels:
