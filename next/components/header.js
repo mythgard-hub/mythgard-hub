@@ -63,7 +63,7 @@ class Header extends React.Component {
             >
               <img
                 className="crownIcon"
-                src={`${cdn}/mgh/MGH_CrownLogo.png`}
+                src={`${cdn}/mgh/MGH_CrownLogo_150.png`}
                 alt="mythgard logo"
               />
               <img

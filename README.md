@@ -92,7 +92,7 @@ Please use prettier and eslint. Configs are located in next, express, and e2e, b
 
 ## Deploying
 
-Ensure that the `docker` and `kubectl` commands are installed and in you path.  Docker will need to be configured to push to the `gsdf` organization in the public registry and `kubectl` must be pointed at your target cluster.
+Ensure that the `docker` and `kubectl` commands are installed and in you path. Docker will need to be configured to push to the `gsdf` organization in the public registry and `kubectl` must be pointed at your target cluster.
 
 First, create a release. E.g.:
 
