@@ -21,8 +21,7 @@ export default function EditDeckName(props) {
 }
 
 EditDeckName.defaultProps = {
-  deckName: '[new deck]',
-  onChange: () => {}
+  deckName: '[new deck]'
 };
 
 EditDeckName.propTypes = {

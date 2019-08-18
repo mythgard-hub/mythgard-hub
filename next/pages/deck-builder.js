@@ -10,13 +10,13 @@ import DeckExport from '../components/deck-export';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
 import FactionFilters from '../components/faction-filters';
 import DeckCardList from '../components/deck-card-list';
-import createDeckShell from '../lib/mutations/add-deck';
+import createNewEmptyDeck from '../lib/mutations/add-deck';
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 import EditDeckName from '../components/edit-deck-name';
 
 const saveDeck = (apolloClient, deckInProgress) => {
   let deckId;
-  return createDeckShell(apolloClient, deckInProgress.deckName)
+  return createNewEmptyDeck(apolloClient, deckInProgress.deckName)
     .then(({ data }) => {
       deckId = data.createDeck.deck.id;
       return addCardsToDBDeck(
@@ -52,14 +52,14 @@ function DeckBuilderPage() {
   const onCollectionClick = (e, card) => {
     e && e.preventDefault();
 
-    const nextMainDeck = addCardToDeck(deckInProgress.mainDeck, {
+    const newMainDeck = addCardToDeck(deckInProgress.mainDeck, {
       quantity: 1,
       card
     });
 
     setDeckInProgress({
       ...deckInProgress,
-      mainDeck: nextMainDeck
+      mainDeck: newMainDeck
     });
   };
 

@@ -11,11 +11,11 @@ const addDeckMutation = gql`
   }
 `;
 
-const createDeckShell = (apolloClient, deckName) => {
+const createNewEmptyDeck = (apolloClient, deckName) => {
   return apolloClient.mutate({
     mutation: addDeckMutation,
     variables: { name: deckName }
   });
 };
 
-export default createDeckShell;
+export default createNewEmptyDeck;
