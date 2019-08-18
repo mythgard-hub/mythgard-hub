@@ -16,6 +16,10 @@ const getCardFilters = cardIds => {
   });
 };
 
+// Basically says, "you must have *a* card with this faction in
+// your deck. Same with these other factions.  If isOnlyFactions,
+// then additionally, no cards in your deck can contain *other*
+// factions."
 const getFactionFilters = (factionNames, isOnlyFactions) => {
   if (!factionNames.length) {
     // null means ignore this filter.
@@ -90,8 +94,12 @@ class SomeDecks extends React.Component {
   }
 
   render() {
-    const { cardIds, factionNames } = this.props.search;
-    const decksSearchQuery = getDeckSearchQuery(cardIds, factionNames);
+    const { cardIds, factionNames, isOnlyFactions } = this.props.search;
+    const decksSearchQuery = getDeckSearchQuery(
+      cardIds,
+      factionNames,
+      isOnlyFactions
+    );
     return (
       <Query query={decksSearchQuery} variables={this.props.search}>
         {({ loading, error, data }) => {

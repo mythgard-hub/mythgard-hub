@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ThemeContext } from './theme-context';
 
 class FactionFilter extends React.Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class FactionFilter extends React.Component {
   }
 
   render() {
+    let theme = this.context;
     return (
       <div
         data-cy="factionFilter"
@@ -24,7 +26,7 @@ class FactionFilter extends React.Component {
           }
           border: 1px solid transparent;
           .selected {
-            border: 1px solid black;
+            border: ${theme.border};
           }
         `}</style>
         <img src={this.props.factionIcon} alt={`${this.props.faction}-icon`} />
@@ -39,5 +41,7 @@ FactionFilter.propTypes = {
   factionIcon: PropTypes.string.isRequired,
   selected: PropTypes.bool
 };
+
+FactionFilter.contextType = ThemeContext;
 
 export default FactionFilter;

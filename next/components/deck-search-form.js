@@ -10,7 +10,12 @@ import allCardsQuery from '../lib/queries/all-cards-query';
 class DeckSearchForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', cardIds: [], factionNames: [] };
+    this.state = {
+      name: '',
+      cardIds: [],
+      factionNames: [],
+      isOnlyFactions: true
+    };
 
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,6 +42,18 @@ class DeckSearchForm extends React.Component {
     return (
       <form>
         <FactionFilters onFactionClick={this.onFactionClick} />
+        <label>
+          Only Selected
+          <input
+            onChange={this.handleInputChange}
+            type="checkbox"
+            name="isOnlyFactions"
+            value={this.state.isOnlyFactions}
+            checked={this.state.isOnlyFactions}
+          />
+          <br />
+          <br />
+        </label>
         <label>
           Deck Name:
           <input
