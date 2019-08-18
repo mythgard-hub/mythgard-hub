@@ -34,6 +34,35 @@ describe('Import utility methods', () => {
       expect(extractMetaValue(input, META_KEYS.COVER_ART)).toBe('my  coverart');
     });
 
+    it('should return the trimmed meta value of a line - validated against possible values', function() {
+      const input = [
+        'power:  my power',
+        'path: my path',
+        'coverart: my  coverart  ',
+        '1 card',
+        '2 cards'
+      ];
+
+      expect(
+        extractMetaValue(input, META_KEYS.POWER, [
+          'power 1',
+          'my power',
+          'other power'
+        ])
+      ).toBe('my power');
+      expect(
+        extractMetaValue(input, META_KEYS.PATH, [
+          'path 1',
+          'my path',
+          'other path'
+        ])
+      ).toBe('my path');
+      expect(extractMetaValue(input, META_KEYS.PATH, [])).toBe('');
+      expect(
+        extractMetaValue(input, META_KEYS.PATH, ['nothing', 'applicable'])
+      ).toBe('');
+    });
+
     it('should return the trimmed meta value of a line - partial', function() {
       const input = [
         'name: my deck',
