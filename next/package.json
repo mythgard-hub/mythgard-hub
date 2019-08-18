@@ -16,7 +16,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/react-hooks": "^3.0.1",
     "apollo-boost": "^0.1.28",
     "apollo-link-batch-http": "^1.2.12",
     "cookie-parser": "^1.4.4",
@@ -33,6 +32,7 @@
     "prop-types": "^15.6.2",
     "react": "16.8.x",
     "react-apollo": "^2.1.11",
+    "react-apollo-hooks": "^0.5.0",
     "react-autosuggest": "^9.4.3",
     "react-dom": "16.8.x",
     "react-markdown": "^4.1.0"
