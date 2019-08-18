@@ -76,7 +76,7 @@ class DeckSearchForm extends React.Component {
             value={this.state.updatedTime}
             onChange={this.handleInputChange}
           >
-            <option value="1000000">Beginning of time</option>
+            <option value="100000">Beginning of time</option>
             <option value="15">Last 15 days</option>
             <option value="30">Last 30 days</option>
           </select>
