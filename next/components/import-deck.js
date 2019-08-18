@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
+import { useQuery } from 'react-apollo-hooks';
 
+import pathsAndPowersQuery from '../lib/queries/paths-powers-query';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import { convertImportToDeck } from '../lib/import-utils';
 import { addCardToDeck } from '../lib/deck-utils';
@@ -9,9 +10,17 @@ const handleImport = (
   mainDeckInput,
   currentMainDeck,
   updateImportedDeck,
-  allCards
+  allCards,
+  allPaths,
+  allPowers
 ) => {
-  const importedDeck = convertImportToDeck(mainDeckInput, '', allCards);
+  const importedDeck = convertImportToDeck(
+    mainDeckInput,
+    '',
+    allCards,
+    allPaths,
+    allPowers
+  );
 
   // Upsert the previous cards to deck
   Object.values(currentMainDeck).forEach(card => {
@@ -27,43 +36,53 @@ export default function ImportDeck({
   handleInputChange,
   updateImportedDeck
 }) {
-  return (
-    <Query query={allCardsQuery}>
-      {({ loading, error, data: { cards } }) => {
-        if (error) return <ErrorMessage message={error} />;
-        if (loading) return <div>Loading</div>;
-        if (!cards.nodes) return <div>No cards in our database</div>;
+  const { loading: cLoading, error: cError, data: cData } = useQuery(
+    allCardsQuery
+  );
+  const { loading: pLoading, error: pError, data: pData } = useQuery(
+    pathsAndPowersQuery
+  );
 
-        return (
-          <>
-            <h2 data-cy="importDeckTitle">Import Deck</h2>
-            <textarea
-              data-cy="importDeckTextarea"
-              cols="40"
-              rows="10"
-              value={mainDeckInput}
-              name="mainDeckInput"
-              onChange={handleInputChange}
-            />
-            <br />
-            <br />
-            <button
-              onClick={() =>
-                handleImport(
-                  mainDeckInput,
-                  currentMainDeck,
-                  updateImportedDeck,
-                  cards.nodes
-                )
-              }
-              data-cy="importDeckButton"
-            >
-              Import
-            </button>
-          </>
-        );
-      }}
-    </Query>
+  if (cError || pError) return <ErrorMessage message={error} />;
+  if (cLoading || pLoading) return <div>Loading</div>;
+
+  const cards = cData && cData.cards && cData.cards.nodes;
+  const paths = pData && pData.paths && pData.paths.nodes;
+  const powers = pData && pData.powers && pData.powers.nodes;
+
+  if (!cards) return <div>No cards in our database</div>;
+  if (!paths) return <div>No paths in our database</div>;
+  if (!powers) return <div>No powers in our database</div>;
+
+  return (
+    <>
+      <h2 data-cy="importDeckTitle">Import Deck</h2>
+      <textarea
+        data-cy="importDeckTextarea"
+        cols="40"
+        rows="10"
+        value={mainDeckInput}
+        name="mainDeckInput"
+        onChange={handleInputChange}
+      />
+      <br />
+      <br />
+      <button
+        onClick={() =>
+          handleImport(
+            mainDeckInput,
+            currentMainDeck,
+            updateImportedDeck,
+            cards,
+            paths,
+            powers
+          )
+        }
+        data-cy="importDeckButton"
+      >
+        Import
+      </button>
+    </>
   );
 }
 
