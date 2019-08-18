@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-export default function CommentList({ comments }) {
+export default function CommentList({ deck }) {
   return (
     <ul className="commentList" data-cy="commentList">
-      {comments.map(comment => (
+      {deck.deckComments.nodes.map(comment => (
         <li data-cy="comment" key={comment.id}>
           {comment.body}
         </li>
@@ -12,12 +12,13 @@ export default function CommentList({ comments }) {
   );
 }
 CommentList.propTypes = {
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      body: PropTypes.string.isRequired
+  deck: PropTypes.shape({
+    deck: PropTypes.shape({
+      deckComments: PropTypes.shape({
+        nodes: PropTypes.array
+      })
     })
-  )
+  }).isRequired
 };
 
 CommentList.defaultProps = {

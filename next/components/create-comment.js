@@ -48,9 +48,15 @@ class CreateComment extends React.Component {
 
     const data = cache.readQuery({ query, variables });
 
-    data.deck.deckComments.nodes = [ createDeckComment.deckComment, ...data.deck.deckComments.nodes];
-
-    cache.writeQuery({ query, data, variables });
+    cache.writeQuery({ query, variables, data: {
+      deck: {
+        __typename: "Deck",
+        deckComments: {
+          __typename: "DeckCommentsConnection",
+          nodes: [ ...data.deck.deckComments.nodes, {...createDeckComment.deckComment, __typename: 'DeckComment' }]
+        }
+      }
+    }});
   }
 
   render() {
