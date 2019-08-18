@@ -27,19 +27,18 @@ class DeckComments extends React.Component {
   render() {
     return (
       <Query query={deckCommentsQuery} variables={{ id: this.props.deck.id }}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data: { deck } }) => {
           if (error) return <ErrorMessage message="Error loading comments." />;
           if (loading) return <div>Loading</div>;
 
           return (
             <>
               <h2 className="deckCommentsHeader">Comments</h2>
-              <CommentList comments={data.deck.deckComments.nodes} />
+              <CommentList comments={deck.deckComments.nodes} />
               <CreateCommentForm
-                deck={data.deck}
+                deck={{ deck }}
                 deckId={this.props.deck.id}
                 deckCommentsQuery={deckCommentsQuery}
-                queryData={data}
               />
             </>
           );

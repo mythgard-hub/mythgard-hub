@@ -99,8 +99,7 @@ CreateComment.propTypes = {
         nodes: PropTypes.array
       })
     })
-  }).isRequired,
-  queryData: PropTypes.object.isRequired
+  }).isRequired
 };
 
 export default CreateComment;
