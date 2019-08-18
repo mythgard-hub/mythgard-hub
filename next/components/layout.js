@@ -49,6 +49,18 @@ class Layout extends React.Component {
           a {
             color: ${theme.fontColor};
           }
+
+          button,
+          input[type='submit'] {
+            background-color: ${theme.buttonBackground};
+            border: ${theme.sectionBorder};
+            color: ${theme.fontColor};
+            font-family: ${theme.fontFamily};
+            font-size: 20px;
+            padding: 5px 10px;
+            width: 100%;
+            border-radius: 10px;
+          }
         `}</style>
       </div>
     );

@@ -1,70 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AllCards from '../components/all-cards';
 import SomeCards from '../components/some-cards';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
-import { handleInputChange } from '../lib/form-utils';
 import { ApolloConsumer } from 'react-apollo';
-import gql from 'graphql-tag';
 import Router from 'next/router';
 import DeckExport from '../components/deck-export';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
-import FactionFilters from '../components/faction-filters';import DeckCardList from '../components/deck-card-list';
-
-const addDeckQuery = gql`
-  mutation AddDeck($name: String!) {
-    createDeck(input: { deck: { name: $name } }) {
-      deck {
-        name
-        id
-      }
-    }
-  }
-`;
-
-const addCardDeck = gql`
-  mutation CreateCardDeck($deckId: Int!, $cardId: Int!, $quantity: Int!) {
-    createCardDeck(
-      input: {
-        cardDeck: { deckId: $deckId, cardId: $cardId, quantity: $quantity }
-      }
-    ) {
-      cardDeck {
-        quantity
-        deckId
-        cardId
-      }
-    }
-  }
-`;
-
-const createDeckShell = (apolloClient, deckName) => {
-  return apolloClient.mutate({
-    mutation: addDeckQuery,
-    variables: { name: deckName }
-  });
-};
-
-// Graphql query batching is used to prevent request flurry
-const addCardsToDBDeck = (apolloClient, deckId, deckCards) => {
-  return Promise.all(
-    deckCards.map(deckCard => {
-      apolloClient.mutate({
-        mutation: addCardDeck,
-        variables: {
-          quantity: deckCard.quantity,
-          cardId: deckCard.card.id,
-          deckId
-        }
-      });
-    })
-  );
-};
+import FactionFilters from '../components/faction-filters';
+import DeckCardList from '../components/deck-card-list';
+import createNewEmptyDeck from '../lib/mutations/add-deck';
+import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
+import EditDeckName from '../components/edit-deck-name';
 
 const saveDeck = (apolloClient, deckInProgress) => {
   let deckId;
-  return createDeckShell(apolloClient, deckInProgress.deckName)
+  return createNewEmptyDeck(apolloClient, deckInProgress.deckName)
     .then(({ data }) => {
       deckId = data.createDeck.deck.id;
       return addCardsToDBDeck(
@@ -76,162 +28,127 @@ const saveDeck = (apolloClient, deckInProgress) => {
     .then(() => deckId);
 };
 
-class DeckBuilderPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mainDeckInput: '',
-      sideboardInput: '',
-      cardFilters: false,
-      deckInProgress: initializeDeckBuilder()
-    };
+function DeckBuilderPage() {
+  const [mainDeckInput, setMainDeckInput] = useState('');
+  const [cardFilters, setCardFilters] = useState(false);
+  const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
 
-    this.onCollectionClick = this.onCollectionClick.bind(this);
-    this.handleInputChange = handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.updateImportedDeck = this.updateImportedDeck.bind(this);
-    this.validateState = this.validateState.bind(this);
-    this.updateDeckName = this.updateDeckName.bind(this);
-    this.onFactionClick = this.onFactionClick.bind(this);
-    this.updateCardFilters = this.updateCardFilters.bind(this);
-  }
-
-  updateDeckName = e => {
-    const { deckInProgress } = this.state;
-    this.setState({
-      deckInProgress: {
-        ...deckInProgress,
-        deckName: e.target.value
-      }
+  const updateDeckName = e => {
+    setDeckInProgress({
+      ...deckInProgress,
+      deckName: e.target.value
     });
   };
 
-  handleSubmit(e, client) {
+  const handleSubmit = (e, client) => {
     e && e.preventDefault();
-
-    if (!this.validateState()) {
-      return;
-    }
-
-    const { deckInProgress } = this.state;
+    if (!validateState()) return;
 
     saveDeck(client, deckInProgress).then(deckId => {
       Router.push(`/deck?id=${deckId}`);
     });
-  }
+  };
 
-  onCollectionClick(e, card) {
-    const { deckInProgress } = this.state;
+  const onCollectionClick = (e, card) => {
     e && e.preventDefault();
 
-    const nextMainDeck = addCardToDeck(deckInProgress.mainDeck, {
+    const newMainDeck = addCardToDeck(deckInProgress.mainDeck, {
       quantity: 1,
       card
     });
-    this.setState({
-      deckInProgress: {
-        ...deckInProgress,
-        mainDeck: nextMainDeck
-      }
+
+    setDeckInProgress({
+      ...deckInProgress,
+      mainDeck: newMainDeck
     });
-  }
+  };
 
-  updateImportedDeck(importedDeck) {
-    this.setState({
-      deckInProgress: importedDeck
+  const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
+
+  const validateState = () => {
+    return Boolean(deckInProgress.deckName);
+  };
+
+  const onFactionClick = newFactions => {
+    updateCardFilters('factions', newFactions);
+  };
+
+  const updateCardFilters = (prop, value) => {
+    setCardFilters({
+      ...cardFilters,
+      [prop]: value
     });
-  }
+  };
 
-  validateState() {
-    return Boolean(this.state.deckInProgress.deckName);
-  }
-
-  onFactionClick(newFactions) {
-    this.updateCardFilters('factions', newFactions);
-  }
-
-  updateCardFilters(prop, value) {
-    const cardFilters = { ...this.state.cardFilters };
-    cardFilters[prop] = value;
-    this.setState({
-      cardFilters
-    });
-  }
-
-  render() {
-    const { deckInProgress, mainDeckInput } = this.state;
-
-    return (
-      <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
-        <style jsx>{`
-          .deck-builder-panels {
-            display: flex;
-            align-items: flex-start;
-          }
-          .collection {
-            flex-grow: 1;
-          }
-        `}</style>
-        <h1 data-cy="header">Deck Builder</h1>
-        <FactionFilters onFactionClick={this.onFactionClick} />
-        <ApolloConsumer>
-          {client => (
-            <>
-              <label>
-                Deck Name:{' '}
-                <input
-                  data-cy="deckTitle"
-                  type="text"
-                  name="deckName"
-                  onChange={this.updateDeckName}
-                  value={deckInProgress.deckName}
-                />
-              </label>
-              <input
-                type="submit"
-                value="Save Deck"
-                data-cy="saveDeck"
-                onClick={e => {
-                  this.handleSubmit(e, client);
-                }}
-              />
-            </>
-          )}
-        </ApolloConsumer>
-        <button
-          onClick={() =>
-            this.setState({ deckInProgress: initializeDeckBuilder() })
-          }
-        >
-          Clear All
-        </button>
-        <div className="deck-builder-panels">
+  return (
+    <Layout title="Mythgard Hub | Deck Builder" desc="Build Mythgard Decks">
+      <style jsx>{`
+        .deck-builder-panels {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+        }
+        .collection {
+          flex-grow: 1;
+        }
+        .deck-builder-container {
+          display: flex;
+        }
+      `}</style>
+      <h1 data-cy="header">Deck Builder</h1>
+      <div className="deck-builder-panels">
+        <div>
+          <FactionFilters onFactionClick={onFactionClick} />
           <div className="collection" data-cy="deckBuilderCollection">
             <h2>Collection</h2>
-            {(this.state.cardFilters && (
+            {(cardFilters && (
               <SomeCards
-                filters={this.state.cardFilters}
-                onCardClick={this.onCollectionClick}
+                filters={cardFilters}
+                onCardClick={onCollectionClick}
               />
-            )) || <AllCards onCardClick={this.onCollectionClick} />}
+            )) || <AllCards onCardClick={onCollectionClick} />}
           </div>
+          <ImportedDeckErrors importedDeck={deckInProgress} />
+        </div>
+        <div>
+          <ImportDeck
+            mainDeckInput={mainDeckInput}
+            currentMainDeck={deckInProgress.mainDeck}
+            handleInputChange={e => {
+              setMainDeckInput(e.target.value);
+            }}
+            updateImportedDeck={updateImportedDeck}
+          />
+          <DeckExport deckInProgress={deckInProgress} />
+          <ApolloConsumer>
+            {client => (
+              <>
+                <input
+                  type="submit"
+                  value="Save Deck"
+                  data-cy="saveDeck"
+                  onClick={e => {
+                    handleSubmit(e, client);
+                  }}
+                />
+              </>
+            )}
+          </ApolloConsumer>
+          <br />
+          <button onClick={() => setDeckInProgress(initializeDeckBuilder())}>
+            Clear All
+          </button>
           <div className="deck-in-progress" data-cy="deckInProgress">
-            <h2>Current Deck</h2>
+            <EditDeckName
+              deckName={deckInProgress.deckName}
+              onChange={updateDeckName}
+            />
             <DeckCardList deckCards={Object.values(deckInProgress.mainDeck)} />
           </div>
         </div>
-        <ImportDeck
-          mainDeckInput={mainDeckInput}
-          currentMainDeck={deckInProgress.mainDeck}
-          handleInputChange={this.handleInputChange}
-          updateImportedDeck={this.updateImportedDeck}
-        />
-        &nbsp;
-        <DeckExport deckInProgress={deckInProgress} />
-        <ImportedDeckErrors importedDeck={deckInProgress} />
-      </Layout>
-    );
-  }
+      </div>
+    </Layout>
+  );
 }
 
 export default DeckBuilderPage;
