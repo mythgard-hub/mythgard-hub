@@ -48,7 +48,8 @@ CREATE TABLE mythgard.deck (
   name varchar(255),
   author_id integer,
   path_id integer REFERENCES mythgard.path (id),
-  power_id integer REFERENCES mythgard.power (id)
+  power_id integer REFERENCES mythgard.power (id),
+  modified timestamp default current_timestamp
 );
 INSERT INTO mythgard.deck("name") VALUES ('dragons');
 INSERT INTO mythgard.deck("name", "path_id", "power_id") VALUES ('cats', 1, 1);
@@ -142,3 +143,17 @@ CREATE TABLE mythgard.card_faction (
 );
 
 INSERT INTO mythgard.card_faction("card_id","faction_id") VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6);
+
+-- Save deck modification time so decks can be searched by last update time
+CREATE OR REPLACE FUNCTION update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.modified = now();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+
+CREATE TRIGGER update_deck_modtime
+  BEFORE UPDATE ON mythgard.deck
+  FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
