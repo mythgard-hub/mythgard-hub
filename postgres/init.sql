@@ -136,8 +136,12 @@ INSERT INTO mythgard.card_faction("card_id","faction_id") VALUES (1, 1), (2, 2),
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.modified = now();
-    RETURN NEW;
+   IF row(NEW.*) IS DISTINCT FROM row(OLD.*) THEN
+      NEW.modified = now();
+      RETURN NEW;
+   ELSE
+      RETURN OLD;
+   END IF;
 END;
 $$ language 'plpgsql';
 
