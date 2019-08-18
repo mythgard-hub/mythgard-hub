@@ -5,17 +5,26 @@ CREATE TABLE mythgard.card (
   id SERIAL PRIMARY KEY,
   name varchar(255),
   rules TEXT,
-  type varchar (255),
+  type varchar(255),
   atk integer,
-  def integer
+  def integer,
+  mana integer,
+  gem integer,
+  color varchar(10)
 );
 
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Furball', 'rules', 'cat', '1', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Imp', 'rules', 'devil', '2', '1');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Dragon', 'flying', 'dragon', '5', '5');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Vampire', 'lifelink', 'vampire', '2', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
+  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1', 'yellow');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
+  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2', 'orange');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
+  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6', 'orange');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
+  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2', 'green');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
+  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2', 'red');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
+  VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', '0', 'blue');
 
 CREATE TABLE mythgard.path (
   id SERIAL PRIMARY KEY,
