@@ -5,28 +5,54 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 
-const getCardsFilter = cardIds => {
+const getCardFilters = cardIds => {
   if (!cardIds.length) {
     // null means ignore this filter.
     // Comma allows chaining.
-    return 'cardDecks: null,';
+    return ['{cardDecks: null}'];
   }
-  const cardIdFilters = cardIds.map(cardId => {
+  return cardIds.map(cardId => {
     return `{cardDecks: {some: {cardId: {equalTo: ${cardId}}}}}`;
   });
-  return `
-    and: [${cardIdFilters.join(',')}]
-  `;
 };
 
-const getDeckSearchQuery = cardIds => {
-  const cardsFilter = getCardsFilter(cardIds);
+const getFactionFilters = (factionNames, isOnlyFactions) => {
+  if (!factionNames.length) {
+    // null means ignore this filter.
+    // Comma allows chaining.
+    return ['{cardDecks: null}'];
+  }
+  return factionNames.map(factionName => {
+    return `{
+				cardDecks: {
+          some: {
+            card: {
+              cardFactions: {
+                some: {
+                  faction: {
+                    name: {
+                      in: ["${factionName}"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+    }`;
+  });
+};
+
+const getDeckSearchQuery = (cardIds, factionNames, isOnlyFactions = true) => {
+  const cardFilters = getCardFilters(cardIds);
+  const factionFilters = getFactionFilters(factionNames, isOnlyFactions);
+  const allAndQueries = [...cardFilters, ...factionFilters];
   return gql`
     query decks($name: String!) {
       decks(
         filter: {
           name: { includesInsensitive: $name },
-          ${cardsFilter}
+          and: [${allAndQueries.join(',')}]
         }
       ) {
         nodes {
@@ -44,7 +70,8 @@ class SomeDecks extends React.Component {
   }
 
   render() {
-    const decksSearchQuery = getDeckSearchQuery(this.props.search.cardIds);
+    const { cardIds, factionNames } = this.props.search;
+    const decksSearchQuery = getDeckSearchQuery(cardIds, factionNames);
     return (
       <Query query={decksSearchQuery} variables={this.props.search}>
         {({ loading, error, data }) => {

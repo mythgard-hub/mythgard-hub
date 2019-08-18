@@ -10,7 +10,7 @@ import allCardsQuery from '../lib/queries/all-cards-query';
 class DeckSearchForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', cardIds: [], factions: [] };
+    this.state = { name: '', cardIds: [], factionNames: [] };
 
     this.handleInputChange = handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,8 +29,8 @@ class DeckSearchForm extends React.Component {
     });
   }
 
-  onFactionClick(factions) {
-    this.setState({ factions });
+  onFactionClick(factionNames) {
+    this.setState({ factionNames });
   }
 
   render() {
