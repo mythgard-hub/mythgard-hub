@@ -22,9 +22,9 @@ const getFactionFilters = (factionNames, isOnlyFactions) => {
     // Comma allows chaining.
     return ['{cardDecks: null}'];
   }
-  return factionNames.map(factionName => {
+  const factionFilters = factionNames.map(factionName => {
     return `{
-				cardDecks: {
+      cardDecks: {
           some: {
             card: {
               cardFactions: {
@@ -41,6 +41,26 @@ const getFactionFilters = (factionNames, isOnlyFactions) => {
         }
     }`;
   });
+  if (isOnlyFactions) {
+    factionFilters.push(`{
+      cardDecks: {
+          every: {
+            card: {
+              cardFactions: {
+                every: {
+                  faction: {
+                    name: {
+                      in: ["${factionNames.join('","')}"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`);
+  }
+  return factionFilters;
 };
 
 const getDeckSearchQuery = (cardIds, factionNames, isOnlyFactions = true) => {
