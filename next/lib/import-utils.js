@@ -77,9 +77,8 @@ export const formatCardLines = (cardLines, allCards) => {
         }
 
         return {
-          id: existingCard.id,
           quantity: lineCardQuantity,
-          name: lineCardName
+          ...existingCard
         };
       } catch (e) {
         return line;
