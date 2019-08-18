@@ -4,8 +4,8 @@ export const mgColors = {
   blue: '#4EB8E7',
   white: '#FFF',
   lightGray: '#D1D1D1',
-  buttonBackground: '#333333',
-  sectionBorderColor: '#458A9E'
+  mediumGray: '#333333',
+  lightBlue: '#458A9E'
 };
 
 export const mgFonts = {
