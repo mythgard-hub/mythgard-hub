@@ -20,7 +20,7 @@ export default function EditDeckName(props) {
   );
 }
 
-EditDeckName.defaultPros = {
+EditDeckName.defaultProps = {
   deckName: '[new deck]',
   onChange: () => {}
 };
