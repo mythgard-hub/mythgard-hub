@@ -17,7 +17,7 @@ export const getSpliceIndex = lines => {
 };
 
 // Try to find a meta value. There could be 0-4 meta values
-export const extractMetaValue = (lines, metaname) => {
+export const extractMetaValue = (lines, metaname, metaValues) => {
   if (!Array.isArray(lines)) {
     return null;
   }
@@ -29,7 +29,14 @@ export const extractMetaValue = (lines, metaname) => {
       const currSplit = lines[index].split(':');
 
       if (currSplit[0] === metaname && currSplit[1]) {
-        return currSplit[1].trim();
+        const metaValue = currSplit[1].trim();
+
+        if (
+          !metaValues ||
+          metaValues.find(m => m.toLowerCase() === metaValue.toLowerCase())
+        ) {
+          return metaValue;
+        }
       }
 
       index++;
@@ -148,7 +155,13 @@ export const getImportErrors = (mainDeckText, sideboardText, allCards) => {
   }
 };
 
-export const convertImportToDeck = (mainDeckText, sideboardText, allCards) => {
+export const convertImportToDeck = (
+  mainDeckText,
+  sideboardText,
+  allCards,
+  allPaths,
+  allPowers
+) => {
   const importedDeck = initializeDeckBuilder();
 
   importedDeck.errors = getImportErrors(mainDeckText, sideboardText, allCards);
@@ -177,8 +190,16 @@ export const convertImportToDeck = (mainDeckText, sideboardText, allCards) => {
   importedDeck.sideboard = formatCardLines(sideboardLines, allCards);
 
   importedDeck.deckName = extractMetaValue(mainDeckLines, META_KEYS.NAME);
-  importedDeck.deckPath = extractMetaValue(mainDeckLines, META_KEYS.PATH);
-  importedDeck.deckPower = extractMetaValue(mainDeckLines, META_KEYS.POWER);
+  importedDeck.deckPath = extractMetaValue(
+    mainDeckLines,
+    META_KEYS.PATH,
+    allPaths
+  );
+  importedDeck.deckPower = extractMetaValue(
+    mainDeckLines,
+    META_KEYS.POWER,
+    allPowers
+  );
   importedDeck.deckCoverArt = extractMetaValue(
     mainDeckLines,
     META_KEYS.COVER_ART
