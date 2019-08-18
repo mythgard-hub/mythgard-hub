@@ -15,7 +15,7 @@ class DeckSearchForm extends React.Component {
       cardIds: [],
       factionNames: [],
       isOnlyFactions: true,
-      updatedTime: '30'
+      updatedTime: '150'
     };
 
     this.handleInputChange = handleInputChange.bind(this);
@@ -79,6 +79,11 @@ class DeckSearchForm extends React.Component {
             <option value="100000">Beginning of time</option>
             <option value="15">Last 15 days</option>
             <option value="30">Last 30 days</option>
+            <option value="45">Last 45 days</option>
+            <option value="60">Last 60 days</option>
+            <option value="75">Last 75 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="150">Last 150 days</option>
           </select>
         </label>
         <br />
