@@ -9,7 +9,7 @@ import Router from 'next/router';
 import DeckExport from '../components/deck-export';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
 import FactionFilters from '../components/faction-filters';
-import DeckCardList from '../components/deck-card-list';
+import DeckCardTable from '../components/deck-card-table';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 import EditDeckName from '../components/edit-deck-name';
@@ -143,7 +143,9 @@ function DeckBuilderPage() {
               deckName={deckInProgress.deckName}
               onChange={updateDeckName}
             />
-            <DeckCardList deckCards={Object.values(deckInProgress.mainDeck)} />
+            <div>Path: {deckInProgress.deckPath}</div>
+            <div>Power: {deckInProgress.deckPower}</div>
+            <DeckCardTable deckCards={Object.values(deckInProgress.mainDeck)} />
           </div>
         </div>
       </div>
