@@ -43,15 +43,14 @@ class CreateComment extends React.Component {
 
   // prettier-ignore
   updateCache( cache, { data: { createDeckComment } }) {
-    const deckQueryObj = this.props.deck;
-    const previousCommentNodes = deckQueryObj.deck.deckComments.nodes;
-    const { deckComment } = createDeckComment;
+    const variables = { id: this.props.deckId };
+    const query = this.props.deckCommentsQuery;
 
-    previousCommentNodes.push(deckComment);
-    cache.writeQuery({
-      query: this.props.deckCommentsQuery,
-      data: deckQueryObj
-    });
+    const data = cache.readQuery({ query, variables });
+
+    data.deck.deckComments.nodes = [ createDeckComment, ...data.deck.deckComments.nodes];
+
+    cache.writeQuery({ query, data, variables });
   }
 
   render() {
@@ -100,7 +99,8 @@ CreateComment.propTypes = {
         nodes: PropTypes.array
       })
     })
-  }).isRequired
+  }).isRequired,
+  queryData: PropTypes.object.isRequired
 };
 
 export default CreateComment;
