@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import ErrorMessage from './error-message';
 import { handleInputChange } from '../lib/form-utils';
+import _ from 'lodash';
 
 const addCommentQuery = gql`
   mutation CreateDeckComment($deck_id: Int!, $body: String!) {
@@ -48,15 +49,9 @@ class CreateComment extends React.Component {
 
     const data = cache.readQuery({ query, variables });
 
-    cache.writeQuery({ query, variables, data: {
-      deck: {
-        __typename: "Deck",
-        deckComments: {
-          __typename: "DeckCommentsConnection",
-          nodes: [ ...data.deck.deckComments.nodes, {...createDeckComment.deckComment, __typename: 'DeckComment' }]
-        }
-      }
-    }});
+    const newData = _.cloneDeep(data);
+    newData.deck.deckComments.nodes = [ ...newData.deck.deckComments.nodes, {...createDeckComment.deckComment }];
+    cache.writeQuery({query, variables, data: newData});
   }
 
   render() {
