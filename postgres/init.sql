@@ -41,8 +41,8 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name") VALUES ('dragons');
 INSERT INTO mythgard.deck("name", "path_id", "power_id") VALUES ('cats', 1, 1);
-INSERT INTO mythgard.deck("name") VALUES ('all_factions');
-INSERT INTO mythgard.deck("name") VALUES ('norden aztlan');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', '2019-05-1 00:00:00');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', '2019-01-1 00:00:00');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
