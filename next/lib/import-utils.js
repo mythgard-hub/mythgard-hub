@@ -87,7 +87,7 @@ export const formatCardLines = (cardLines, allCards) => {
 
         return {
           quantity: lineCardQuantity,
-          ...existingCard
+          card: { ...existingCard }
         };
       } catch (e) {
         return line;
@@ -111,7 +111,7 @@ export const metaLineInvalid = (line, metaName) => {
 
 export const cardLinesValid = lines => {
   return lines.reduce(
-    (acc, curr) => Boolean(acc && curr.quantity && curr.name),
+    (acc, curr) => Boolean(acc && curr.quantity && curr.card),
     true
   );
 };
@@ -179,12 +179,9 @@ export const convertImportToDeck = (
     mainDeckLines.slice(spliceIndex),
     allCards
   ).reduce((acc, curr) => {
-    acc[`${curr.id}`] = {
+    acc[`${curr.card.id}`] = {
       quantity: curr.quantity,
-      card: {
-        id: curr.id,
-        name: curr.name
-      }
+      card: curr.card
     };
     return acc;
   }, {});
