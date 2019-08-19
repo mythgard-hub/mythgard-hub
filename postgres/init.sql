@@ -32,6 +32,8 @@ CREATE TABLE mythgard.path (
 );
 
 INSERT INTO mythgard.path ("id", "name") VALUES (1, 'Way of the Black Lotus');
+INSERT INTO mythgard.path ("id", "name") VALUES (2, 'Path to Redemption');
+INSERT INTO mythgard.path ("id", "name") VALUES (1, 'Path Variable');
 
 CREATE TABLE mythgard.power (
   id SERIAL PRIMARY KEY,
@@ -39,6 +41,8 @@ CREATE TABLE mythgard.power (
 );
 
 INSERT INTO mythgard.power ("id", "name") VALUES (1, 'It''s over 9000!!');
+INSERT INTO mythgard.power ("id", "name") VALUES (1, 'Power Rangers');
+INSERT INTO mythgard.power ("id", "name") VALUES (1, 'Powerpuff Girls');
 
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,
