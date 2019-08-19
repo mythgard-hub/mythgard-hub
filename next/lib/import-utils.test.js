@@ -137,9 +137,9 @@ describe('Import utility methods', () => {
 
   describe('Test formatCardLines', () => {
     const expected = [
-      { id: 3, quantity: 1, name: 'card name' },
-      { id: 4, quantity: 2, name: 'other card name' },
-      { id: 5, quantity: 3, name: 'weird  card  name' }
+      { quantity: 1, card: { id: 3, name: 'card name' } },
+      { quantity: 2, card: { id: 4, name: 'other card name' } },
+      { quantity: 3, card: { id: 5, name: 'weird  card  name' } }
     ];
 
     it('should format the line for each card - multiple valid lines', function() {
@@ -199,11 +199,11 @@ describe('Import utility methods', () => {
   describe('Test cardLinesValid', () => {
     it('should return true if all lines are valid cards', function() {
       const multipleCards = [
-        { quantity: 1, name: 'card name' },
-        { quantity: 2, name: 'other card name' },
-        { quantity: 3, name: 'weird  card  name' }
+        { quantity: 1, card: { name: 'card name' } },
+        { quantity: 2, card: { name: 'other card name' } },
+        { quantity: 3, card: { name: 'weird  card  name' } }
       ];
-      const singleCard = [{ quantity: 1, name: 'card name' }];
+      const singleCard = [{ quantity: 1, card: { name: 'card name' } }];
 
       expect(cardLinesValid(multipleCards)).toEqual(true);
       expect(cardLinesValid(singleCard)).toEqual(true);
