@@ -6,13 +6,14 @@ import PropTypes from 'prop-types';
 import allCardsQuery from '../lib/queries/all-cards-query';
 
 export default function AllCards(props) {
-  const [loading, error, data] = useQuery(allCardsQuery);
+  const { onCardClick } = props;
+  const { loading, error, data } = useQuery(allCardsQuery);
 
   if (error) return <ErrorMessage message={error} />;
   if (loading) return <div>Loading cards...</div>;
 
   const cards = data.cards;
-  return <CardList onCardClick={props.onCardClick} cards={cards.nodes} />;
+  return <CardList onCardClick={onCardClick} cards={cards.nodes} />;
 }
 
 AllCards.propTypes = {
