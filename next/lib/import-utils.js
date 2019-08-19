@@ -33,7 +33,7 @@ export const extractMetaValue = (lines, metaname, metaValues) => {
 
         if (
           !metaValues ||
-          metaValues.find(m => m.toLowerCase() === metaValue.toLowerCase())
+          metaValues.find(m => m.name.toLowerCase() === metaValue.toLowerCase())
         ) {
           return metaValue;
         }

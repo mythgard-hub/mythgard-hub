@@ -45,21 +45,24 @@ describe('Import utility methods', () => {
 
       expect(
         extractMetaValue(input, META_KEYS.POWER, [
-          'power 1',
-          'my power',
-          'other power'
+          { id: 1, name: 'power 1' },
+          { id: 2, name: 'my power' },
+          { id: 3, name: 'other power' }
         ])
       ).toBe('my power');
       expect(
         extractMetaValue(input, META_KEYS.PATH, [
-          'path 1',
-          'my path',
-          'other path'
+          { id: 1, name: 'path 1' },
+          { id: 2, name: 'my path' },
+          { id: 3, name: 'other path' }
         ])
       ).toBe('my path');
       expect(extractMetaValue(input, META_KEYS.PATH, [])).toBe('');
       expect(
-        extractMetaValue(input, META_KEYS.PATH, ['nothing', 'applicable'])
+        extractMetaValue(input, META_KEYS.PATH, [
+          { id: 1, name: 'nothing' },
+          { id: 2, name: 'applicable' }
+        ])
       ).toBe('');
     });
 
