@@ -41,7 +41,7 @@ export default function DeckCardsTable({ deck }) {
             <td colSpan={3}>{deck.deckPower || '[no powerh]'}</td>
           </tr>
           {deckCards.map(deckCard => (
-            <tr key={deckCard.card.id}>
+            <tr key={deckCard.card.id} data-cy="deckCardRow">
               <td>{deckCard.card.mana}</td>
               <td>{drawGems(deckCard.card.gem)}</td>
               <td>{deckCard.card.color}</td>
