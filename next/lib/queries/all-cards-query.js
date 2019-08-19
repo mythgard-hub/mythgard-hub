@@ -8,7 +8,6 @@ const cardsQuery = gql`
         name
         mana
         gem
-        color
       }
     }
   }

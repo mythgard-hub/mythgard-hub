@@ -9,22 +9,21 @@ CREATE TABLE mythgard.card (
   atk integer,
   def integer,
   mana integer,
-  gem integer,
-  color varchar(10)
+  gem integer
 );
 
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
-  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1', 'yellow');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
-  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2', 'orange');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
-  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6', 'orange');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
-  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2', 'green');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
-  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2', 'red');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "color")
-  VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', '0', 'blue');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', '0');
 
 CREATE TABLE mythgard.path (
   id SERIAL PRIMARY KEY,

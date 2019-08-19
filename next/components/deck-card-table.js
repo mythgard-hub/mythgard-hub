@@ -34,17 +34,16 @@ export default function DeckCardsTable({ deck }) {
         <tbody>
           <tr>
             <td colSpan={2}>Path</td>
-            <td colSpan={3}>{deck.deckPath || '[no path]'}</td>
+            <td colSpan={2}>{deck.deckPath || '[no path]'}</td>
           </tr>
           <tr>
             <td colSpan={2}>Power</td>
-            <td colSpan={3}>{deck.deckPower || '[no powerh]'}</td>
+            <td colSpan={2}>{deck.deckPower || '[no powerh]'}</td>
           </tr>
           {deckCards.map(deckCard => (
             <tr key={deckCard.card.id} data-cy="deckCardRow">
               <td>{deckCard.card.mana}</td>
               <td>{drawGems(deckCard.card.gem)}</td>
-              <td>{deckCard.card.color}</td>
               <td>{deckCard.card.name}</td>
               <td>x{deckCard.quantity}</td>
             </tr>
@@ -67,8 +66,7 @@ DeckCardsTable.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         mana: PropTypes.number,
-        gem: PropTypes.number,
-        color: PropTypes.string
+        gem: PropTypes.number
       })
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
