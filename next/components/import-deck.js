@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 
@@ -65,7 +66,12 @@ export default function ImportDeck({
   if (!powers) return <div>No powers in our database</div>;
 
   return (
-    <>
+    <div className="import-deck-container">
+      <style jsx>{`
+        .import-deck-container {
+          margin-bottom: 10px;
+        }
+      `}</style>
       <h2 data-cy="importDeckTitle">Import Deck</h2>
       <textarea
         data-cy="importDeckTextarea"
@@ -92,7 +98,7 @@ export default function ImportDeck({
       >
         Import
       </button>
-    </>
+    </div>
   );
 }
 
