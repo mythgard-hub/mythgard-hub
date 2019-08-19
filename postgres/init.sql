@@ -72,7 +72,8 @@ INSERT INTO mythgard.deck_comment("deck_id", "body") VALUES (1, 'I made masters 
 CREATE TABLE mythgard.account (
   id SERIAL PRIMARY KEY,
   google_id varchar(255) UNIQUE,
-  email varchar(255) UNIQUE
+  email varchar(255) UNIQUE,
+  username varchar(255) UNIQUE
 );
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google

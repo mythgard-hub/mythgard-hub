@@ -1,58 +1,27 @@
 /*
- * A HOC for providing user account info to a page.
- *
- * This will only work with pages. If you wrap a regular (non-page) component,
- * you will lose.
+ * A HOC for providing user account info to a component.
+ * This consumes the user context in order to provide `user`
+ * as an additional prop.
  */
 
 import React from 'react';
+import UserContext from './user-context';
 
 let cachedUser;
 
-export default WrappedPage => {
+export default WrappedComponent => {
   return class extends React.Component {
-    static displayName = 'withUser(WrappedPage)';
-
-    static async getInitialProps(ctx) {
-      const pageProps =
-        WrappedPage.getInitialProps && (await WrappedPage.getInitialProps(ctx));
-      const isSSR = !!ctx.req;
-      let user;
-
-      if (isSSR) {
-        /**
-         * In SSR mode we won't be able to rely on sending the cookie
-         *
-         * Be sure Webpack is instructed to not include isomorphic-unfetch in
-         * bundles. Thre should be a "browser" section in our package.json.
-         */
-        const fetch = require('isomorphic-unfetch');
-        const { JWT_COOKIE_NAME, SSR_HOST } = process.env;
-        const token = ctx.req.cookies[JWT_COOKIE_NAME];
-        const resp = await fetch(`${SSR_HOST}/auth/user/${token}`);
-        user = await resp.json();
-      } else {
-        const resp = await fetch('/auth/user');
-        user = await resp.json();
-      }
-
-      return {
-        ...pageProps,
-        isSSR,
-        user
-      };
-    }
-
-    componentDidMount() {
-      const { isSSR, user } = this.props;
-      if (isSSR) {
-        cachedUser = user;
-      }
-    }
+    static displayName = 'withUser(WrappedComponent)';
 
     render() {
-      const { isSSR, ...props } = this.props;
-      return <WrappedPage {...props} />;
+      return (
+        <UserContext.Consumer>
+          {({ user }) => {
+            const newProps = {...this.props, user}
+            return <WrappedComponent {...newProps} />;
+          }}
+        </UserContext.Consumer>
+      )
     }
   };
 };
