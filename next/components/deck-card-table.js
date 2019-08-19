@@ -4,10 +4,11 @@ export default function DeckCardsTable({ deck }) {
   const deckCards = deck && Object.values(deck.mainDeck);
 
   const drawGems = gem => {
-    return Array(gem)
-      .fill(0)
-      .map((_, i) => <span key={i} className="gem-circle" />);
+    return Array(gem).fill(String.fromCharCode(8226));
   };
+
+  const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
+  const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
 
   return (
     <div className="deck-card-table-container">
@@ -34,11 +35,11 @@ export default function DeckCardsTable({ deck }) {
         <tbody>
           <tr>
             <td colSpan={2}>Path</td>
-            <td colSpan={2}>{deck.deckPath || '[no path]'}</td>
+            <td colSpan={2}>{path}</td>
           </tr>
           <tr>
             <td colSpan={2}>Power</td>
-            <td colSpan={2}>{deck.deckPower || '[no powerh]'}</td>
+            <td colSpan={2}>{power}</td>
           </tr>
           {deckCards.map(deckCard => (
             <tr key={deckCard.card.id} data-cy="deckCardRow">
