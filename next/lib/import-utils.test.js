@@ -16,6 +16,18 @@ const allCards = [
   { id: 5, name: 'weird  card  name' }
 ];
 
+const allPowers = [
+  { id: 1, name: 'power 1' },
+  { id: 2, name: 'my power' },
+  { id: 3, name: 'other power' }
+];
+
+const allPaths = [
+  { id: 1, name: 'path 1' },
+  { id: 2, name: 'my path' },
+  { id: 3, name: 'other path' }
+];
+
 describe('Import utility methods', () => {
   describe('Test extractMetaValue', () => {
     it('should return the trimmed meta value of a line - all present', function() {
@@ -43,27 +55,21 @@ describe('Import utility methods', () => {
         '2 cards'
       ];
 
-      expect(
-        extractMetaValue(input, META_KEYS.POWER, [
-          { id: 1, name: 'power 1' },
-          { id: 2, name: 'my power' },
-          { id: 3, name: 'other power' }
-        ])
-      ).toBe('my power');
-      expect(
-        extractMetaValue(input, META_KEYS.PATH, [
-          { id: 1, name: 'path 1' },
-          { id: 2, name: 'my path' },
-          { id: 3, name: 'other path' }
-        ])
-      ).toBe('my path');
+      expect(extractMetaValue(input, META_KEYS.POWER, allPowers)).toEqual({
+        id: 2,
+        name: 'my power'
+      });
+      expect(extractMetaValue(input, META_KEYS.PATH, allPaths)).toEqual({
+        id: 2,
+        name: 'my path'
+      });
       expect(extractMetaValue(input, META_KEYS.PATH, [])).toBe('');
       expect(
         extractMetaValue(input, META_KEYS.PATH, [
           { id: 1, name: 'nothing' },
           { id: 2, name: 'applicable' }
         ])
-      ).toBe('');
+      ).toEqual('');
     });
 
     it('should return the trimmed meta value of a line - partial', function() {

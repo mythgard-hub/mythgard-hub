@@ -31,12 +31,14 @@ export const extractMetaValue = (lines, metaname, metaValues) => {
       if (currSplit[0] === metaname && currSplit[1]) {
         const metaValue = currSplit[1].trim();
 
-        if (
-          !metaValues ||
-          metaValues.find(m => m.name.toLowerCase() === metaValue.toLowerCase())
-        ) {
-          return metaValue;
+        if (metaValues) {
+          const dbMetaValue = metaValues.find(
+            m => m.name.toLowerCase() === metaValue.toLowerCase()
+          );
+          return dbMetaValue || '';
         }
+
+        return metaValue;
       }
 
       index++;
