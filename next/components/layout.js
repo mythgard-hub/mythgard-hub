@@ -52,7 +52,7 @@ class Layout extends React.Component {
 
           button,
           input[type='submit'] {
-            background-color: ${theme.buttonBackground};
+            background-color: ${theme.sectionBackground};
             border: ${theme.sectionBorder};
             color: ${theme.fontColor};
             font-family: ${theme.fontFamily};
@@ -70,6 +70,12 @@ class Layout extends React.Component {
             border-radius: 50%;
             display: inline-block;
             margin-right: 2px;
+          }
+
+          .deck-card-table-container {
+            background-color: ${theme.sectionBackground};
+            border: ${theme.sectionBorder};
+            border-radius: 10px;
           }
         `}</style>
       </div>

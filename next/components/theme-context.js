@@ -5,7 +5,7 @@ export const themes = {
   dark: {
     background: mgColors.blackPearl,
     fontColor: mgColors.white,
-    buttonBackground: mgColors.mediumGray,
+    sectionBackground: mgColors.mediumGray,
     sectionBorder: `2px solid ${mgColors.lightBlue}`,
     border: `2px solid ${mgColors.orange}`,
     fontFamily: mgFonts.exo2
