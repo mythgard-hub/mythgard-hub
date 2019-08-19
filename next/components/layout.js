@@ -61,6 +61,16 @@ class Layout extends React.Component {
             width: 100%;
             border-radius: 10px;
           }
+
+          .gem-circle {
+            content: ' ';
+            height: 5px;
+            width: 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 2px;
+          }
         `}</style>
       </div>
     );
