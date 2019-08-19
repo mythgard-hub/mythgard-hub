@@ -6,7 +6,7 @@ import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 
 const saveDeckWithCards = (apolloClient, deckInProgress) => {
   let deckId;
-  return createNewEmptyDeck(apolloClient, deckInProgress.deckName)
+  return createNewEmptyDeck(apolloClient, deckInProgress)
     .then(({ data }) => {
       deckId = data.createDeck.deck.id;
       return addCardsToDBDeck(
