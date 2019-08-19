@@ -29,16 +29,16 @@ export default function DeckCardsTable({ deck }) {
           margin: 0 0 20px 5px;
         }
       `}</style>
-      <div className="deck-title">{deck.deckName}</div>
+      <div className="deck-title">{deck.deckName || '[untitled]'}</div>
       <table className="deck-card-table">
         <tbody>
           <tr>
             <td colSpan={2}>Path</td>
-            <td colSpan={3}>{deck.deckPath}</td>
+            <td colSpan={3}>{deck.deckPath || '[no path]'}</td>
           </tr>
           <tr>
             <td colSpan={2}>Power</td>
-            <td colSpan={3}>{deck.deckPower}</td>
+            <td colSpan={3}>{deck.deckPower || '[no powerh]'}</td>
           </tr>
           {deckCards.map(deckCard => (
             <tr key={deckCard.card.id}>

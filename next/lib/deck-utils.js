@@ -1,8 +1,8 @@
 export const initializeDeckBuilder = () => {
   return {
-    deckName: '[no name]',
-    deckPath: '[no path]',
-    deckPower: '[no power]',
+    deckName: '',
+    deckPath: '',
+    deckPower: '',
     deckCoverArt: '',
     mainDeck: {},
     sideboard: [],
