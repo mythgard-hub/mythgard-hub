@@ -3,6 +3,7 @@ import SomeCards from '../components/some-cards.js';
 import Layout from '../components/layout';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import CardSearchForm from '../components/card-search-form';
 
 const hasSearch = () => true;
 
@@ -19,6 +20,7 @@ class CardsPage extends Component {
         desc="Browse and search for Mythgard cards"
       >
         <h1>Cards</h1>
+        <CardSearchForm />
         {hasSearch(this.state.searchQuery) ? (
           <div>some cards</div>
         ) : (
