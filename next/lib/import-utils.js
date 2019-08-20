@@ -17,7 +17,7 @@ export const getSpliceIndex = lines => {
 };
 
 // Try to find a meta value. There could be 0-4 meta values
-export const extractMetaValue = (lines, metaname) => {
+export const extractMetaValue = (lines, metaname, metaValues) => {
   if (!Array.isArray(lines)) {
     return null;
   }
@@ -29,7 +29,16 @@ export const extractMetaValue = (lines, metaname) => {
       const currSplit = lines[index].split(':');
 
       if (currSplit[0] === metaname && currSplit[1]) {
-        return currSplit[1].trim();
+        const metaValue = currSplit[1].trim();
+
+        if (metaValues) {
+          const dbMetaValue = metaValues.find(
+            m => m.name.toLowerCase() === metaValue.toLowerCase()
+          );
+          return dbMetaValue || '';
+        }
+
+        return metaValue;
       }
 
       index++;
@@ -77,9 +86,8 @@ export const formatCardLines = (cardLines, allCards) => {
         }
 
         return {
-          id: existingCard.id,
           quantity: lineCardQuantity,
-          name: lineCardName
+          card: { ...existingCard }
         };
       } catch (e) {
         return line;
@@ -103,7 +111,7 @@ export const metaLineInvalid = (line, metaName) => {
 
 export const cardLinesValid = lines => {
   return lines.reduce(
-    (acc, curr) => Boolean(acc && curr.quantity && curr.name),
+    (acc, curr) => Boolean(acc && curr.quantity && curr.card),
     true
   );
 };
@@ -148,7 +156,13 @@ export const getImportErrors = (mainDeckText, sideboardText, allCards) => {
   }
 };
 
-export const convertImportToDeck = (mainDeckText, sideboardText, allCards) => {
+export const convertImportToDeck = (
+  mainDeckText,
+  sideboardText,
+  allCards,
+  allPaths,
+  allPowers
+) => {
   const importedDeck = initializeDeckBuilder();
 
   importedDeck.errors = getImportErrors(mainDeckText, sideboardText, allCards);
@@ -165,20 +179,25 @@ export const convertImportToDeck = (mainDeckText, sideboardText, allCards) => {
     mainDeckLines.slice(spliceIndex),
     allCards
   ).reduce((acc, curr) => {
-    acc[`${curr.id}`] = {
+    acc[`${curr.card.id}`] = {
       quantity: curr.quantity,
-      card: {
-        id: curr.id,
-        name: curr.name
-      }
+      card: curr.card
     };
     return acc;
   }, {});
   importedDeck.sideboard = formatCardLines(sideboardLines, allCards);
 
   importedDeck.deckName = extractMetaValue(mainDeckLines, META_KEYS.NAME);
-  importedDeck.deckPath = extractMetaValue(mainDeckLines, META_KEYS.PATH);
-  importedDeck.deckPower = extractMetaValue(mainDeckLines, META_KEYS.POWER);
+  importedDeck.deckPath = extractMetaValue(
+    mainDeckLines,
+    META_KEYS.PATH,
+    allPaths
+  );
+  importedDeck.deckPower = extractMetaValue(
+    mainDeckLines,
+    META_KEYS.POWER,
+    allPowers
+  );
   importedDeck.deckCoverArt = extractMetaValue(
     mainDeckLines,
     META_KEYS.COVER_ART

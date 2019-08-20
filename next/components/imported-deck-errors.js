@@ -6,7 +6,7 @@ export default function ImportedDeckErrors({ importedDeck }) {
   if (errors && errors.length) {
     return (
       <div>
-        <h2>Imported Deck</h2>
+        <h2>Import Errors</h2>
         <div>Some errors have occurred:</div>
         {errors.map((error, i) => (
           <div key={i}>{error}</div>

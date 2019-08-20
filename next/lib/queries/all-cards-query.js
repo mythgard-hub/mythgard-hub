@@ -6,6 +6,8 @@ const cardsQuery = gql`
       nodes {
         id
         name
+        mana
+        gem
       }
     }
   }

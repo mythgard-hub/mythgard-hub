@@ -16,6 +16,18 @@ const allCards = [
   { id: 5, name: 'weird  card  name' }
 ];
 
+const allPowers = [
+  { id: 1, name: 'power 1' },
+  { id: 2, name: 'my power' },
+  { id: 3, name: 'other power' }
+];
+
+const allPaths = [
+  { id: 1, name: 'path 1' },
+  { id: 2, name: 'my path' },
+  { id: 3, name: 'other path' }
+];
+
 describe('Import utility methods', () => {
   describe('Test extractMetaValue', () => {
     it('should return the trimmed meta value of a line - all present', function() {
@@ -32,6 +44,32 @@ describe('Import utility methods', () => {
       expect(extractMetaValue(input, META_KEYS.POWER)).toBe('my power');
       expect(extractMetaValue(input, META_KEYS.PATH)).toBe('');
       expect(extractMetaValue(input, META_KEYS.COVER_ART)).toBe('my  coverart');
+    });
+
+    it('should return the trimmed meta value of a line - validated against possible values', function() {
+      const input = [
+        'power:  my power',
+        'path: my path',
+        'coverart: my  coverart  ',
+        '1 card',
+        '2 cards'
+      ];
+
+      expect(extractMetaValue(input, META_KEYS.POWER, allPowers)).toEqual({
+        id: 2,
+        name: 'my power'
+      });
+      expect(extractMetaValue(input, META_KEYS.PATH, allPaths)).toEqual({
+        id: 2,
+        name: 'my path'
+      });
+      expect(extractMetaValue(input, META_KEYS.PATH, [])).toBe('');
+      expect(
+        extractMetaValue(input, META_KEYS.PATH, [
+          { id: 1, name: 'nothing' },
+          { id: 2, name: 'applicable' }
+        ])
+      ).toEqual('');
     });
 
     it('should return the trimmed meta value of a line - partial', function() {
@@ -99,9 +137,9 @@ describe('Import utility methods', () => {
 
   describe('Test formatCardLines', () => {
     const expected = [
-      { id: 3, quantity: 1, name: 'card name' },
-      { id: 4, quantity: 2, name: 'other card name' },
-      { id: 5, quantity: 3, name: 'weird  card  name' }
+      { quantity: 1, card: { id: 3, name: 'card name' } },
+      { quantity: 2, card: { id: 4, name: 'other card name' } },
+      { quantity: 3, card: { id: 5, name: 'weird  card  name' } }
     ];
 
     it('should format the line for each card - multiple valid lines', function() {
@@ -161,11 +199,11 @@ describe('Import utility methods', () => {
   describe('Test cardLinesValid', () => {
     it('should return true if all lines are valid cards', function() {
       const multipleCards = [
-        { quantity: 1, name: 'card name' },
-        { quantity: 2, name: 'other card name' },
-        { quantity: 3, name: 'weird  card  name' }
+        { quantity: 1, card: { name: 'card name' } },
+        { quantity: 2, card: { name: 'other card name' } },
+        { quantity: 3, card: { name: 'weird  card  name' } }
       ];
-      const singleCard = [{ quantity: 1, name: 'card name' }];
+      const singleCard = [{ quantity: 1, card: { name: 'card name' } }];
 
       expect(cardLinesValid(multipleCards)).toEqual(true);
       expect(cardLinesValid(singleCard)).toEqual(true);
