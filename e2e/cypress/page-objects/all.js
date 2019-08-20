@@ -8,5 +8,6 @@ export default {
 
   // deck builder page
   deckBuilderCollection: '[data-cy="deckBuilderCollection"]',
-  deckInProgress: '[data-cy="deckInProgress"]'
+  deckInProgress: '[data-cy="deckInProgress"]',
+  deckCardRow: '[data-cy="deckCardRow"]'
 };

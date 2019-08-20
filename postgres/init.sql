@@ -5,17 +5,25 @@ CREATE TABLE mythgard.card (
   id SERIAL PRIMARY KEY,
   name varchar(255),
   rules TEXT,
-  type varchar (255),
+  type varchar(255),
   atk integer,
-  def integer
+  def integer,
+  mana integer,
+  gem integer
 );
 
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Furball', 'rules', 'cat', '1', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Imp', 'rules', 'devil', '2', '1');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Dragon', 'flying', 'dragon', '5', '5');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Vampire', 'lifelink', 'vampire', '2', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def") VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+  VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', '0');
 
 CREATE TABLE mythgard.path (
   id SERIAL PRIMARY KEY,
@@ -23,6 +31,8 @@ CREATE TABLE mythgard.path (
 );
 
 INSERT INTO mythgard.path ("id", "name") VALUES (1, 'Way of the Black Lotus');
+INSERT INTO mythgard.path ("id", "name") VALUES (2, 'Path to Redemption');
+INSERT INTO mythgard.path ("id", "name") VALUES (3, 'Path Variable');
 
 CREATE TABLE mythgard.power (
   id SERIAL PRIMARY KEY,
@@ -30,6 +40,8 @@ CREATE TABLE mythgard.power (
 );
 
 INSERT INTO mythgard.power ("id", "name") VALUES (1, 'It''s over 9000!!');
+INSERT INTO mythgard.power ("id", "name") VALUES (2, 'Power Rangers');
+INSERT INTO mythgard.power ("id", "name") VALUES (3, 'Powerpuff Girls');
 
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,

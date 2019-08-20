@@ -35,13 +35,17 @@ class DeckExport extends React.Component {
     const { message } = this.state;
 
     return (
-      <React.Fragment>
+      <div className="deck-export-container">
+        <style jsx>{`
+          .deck-export-container {
+            margin-bottom: 10px;
+          }
+        `}</style>
         <button onClick={this.handleExport} data-cy="exportDeckButton">
           Export
         </button>
-        &nbsp;
         {message && <span data-cy="exportDeckSuccess">{message}</span>}
-      </React.Fragment>
+      </div>
     );
   }
 }

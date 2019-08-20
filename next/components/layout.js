@@ -52,13 +52,19 @@ class Layout extends React.Component {
 
           button,
           input[type='submit'] {
-            background-color: ${theme.buttonBackground};
+            background-color: ${theme.sectionBackground};
             border: ${theme.sectionBorder};
             color: ${theme.fontColor};
             font-family: ${theme.fontFamily};
             font-size: 20px;
             padding: 5px 10px;
             width: 100%;
+            border-radius: 10px;
+          }
+
+          .deck-card-table-container {
+            background-color: ${theme.sectionBackground};
+            border: ${theme.sectionBorder};
             border-radius: 10px;
           }
         `}</style>

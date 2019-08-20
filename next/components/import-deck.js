@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 
-import pathsAndPowersQuery from '../lib/queries/paths-powers-query';
+import allPathsQuery from '../lib/queries/paths-query';
+import allPowersQuery from '../lib/queries/powers-query';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import { convertImportToDeck } from '../lib/import-utils';
 import { addCardToDeck } from '../lib/deck-utils';
@@ -36,26 +38,40 @@ export default function ImportDeck({
   handleInputChange,
   updateImportedDeck
 }) {
-  const { loading: cLoading, error: cError, data: cData } = useQuery(
-    allCardsQuery
+  const {
+    loading: cardsLoading,
+    error: cardsError,
+    data: cardsData
+  } = useQuery(allCardsQuery);
+  const { loading: pathLoading, error: pathError, data: pathData } = useQuery(
+    allPathsQuery
   );
-  const { loading: pLoading, error: pError, data: pData } = useQuery(
-    pathsAndPowersQuery
-  );
+  const {
+    loading: powerLoading,
+    error: powerError,
+    data: powerData
+  } = useQuery(allPowersQuery);
 
-  if (cError || pError) return <ErrorMessage message={error} />;
-  if (cLoading || pLoading) return <div>Loading</div>;
+  if (cardsError || pathError || powerError)
+    return <ErrorMessage message={error} />;
 
-  const cards = cData && cData.cards && cData.cards.nodes;
-  const paths = pData && pData.paths && pData.paths.nodes;
-  const powers = pData && pData.powers && pData.powers.nodes;
+  if (cardsLoading || pathLoading || powerLoading) return <div>Loading</div>;
+
+  const cards = cardsData && cardsData.cards && cardsData.cards.nodes;
+  const paths = pathData && pathData.paths && pathData.paths.nodes;
+  const powers = powerData && powerData.powers && powerData.powers.nodes;
 
   if (!cards) return <div>No cards in our database</div>;
   if (!paths) return <div>No paths in our database</div>;
   if (!powers) return <div>No powers in our database</div>;
 
   return (
-    <>
+    <div className="import-deck-container">
+      <style jsx>{`
+        .import-deck-container {
+          margin-bottom: 10px;
+        }
+      `}</style>
       <h2 data-cy="importDeckTitle">Import Deck</h2>
       <textarea
         data-cy="importDeckTextarea"
@@ -82,7 +98,7 @@ export default function ImportDeck({
       >
         Import
       </button>
-    </>
+    </div>
   );
 }
 

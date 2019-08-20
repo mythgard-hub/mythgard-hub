@@ -2,9 +2,9 @@ import {
   cardListCard,
   deckBuilderCollection,
   deckInProgress,
-  header,
   cardList,
-  factionFilter
+  factionFilter,
+  deckCardRow
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -21,7 +21,7 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="factionFilters"]').should('be.visible');
     cy.get(`${cardListCard}:first`).click();
     cy.get(deckInProgress).should('be.visible');
-    cy.get(`${deckInProgress} ${cardListCard}`).should('have.length', 1);
+    cy.get(deckCardRow).should('have.length', 1);
     let numCardsBeforeFilter;
     cy.get(`${deckBuilderCollection} ${cardListCard}`)
       .then(cards => {
@@ -58,12 +58,12 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="importDeckButton"]').click();
 
     cy.get('[data-cy="deckTitle"]').should('have.value', 'my deck');
-    cy.get(`${deckInProgress} ${cardListCard}`).should('have.length', 2);
+    cy.get(deckCardRow).should('have.length', 2);
 
     cy.get('[data-cy="importDeckButton"]').click();
 
     cy.get('[data-cy="deckTitle"]').should('have.value', 'my deck');
-    cy.get('[data-cy="cardListCard"').should('have.length', 8);
+    cy.get(deckCardRow).should('have.length', 2);
   });
 
   it('should export a deck', function() {

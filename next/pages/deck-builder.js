@@ -1,51 +1,24 @@
 import React, { useState } from 'react';
-import AllCards from '../components/all-cards';
 import SomeCards from '../components/some-cards';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
-import { ApolloConsumer } from 'react-apollo';
-import Router from 'next/router';
 import DeckExport from '../components/deck-export';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
 import FactionFilters from '../components/faction-filters';
-import DeckCardList from '../components/deck-card-list';
-import createNewEmptyDeck from '../lib/mutations/add-deck';
-import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
+import DeckCardTable from '../components/deck-card-table';
 import EditDeckName from '../components/edit-deck-name';
-
-const saveDeck = (apolloClient, deckInProgress) => {
-  let deckId;
-  return createNewEmptyDeck(apolloClient, deckInProgress.deckName)
-    .then(({ data }) => {
-      deckId = data.createDeck.deck.id;
-      return addCardsToDBDeck(
-        apolloClient,
-        deckId,
-        Object.values(deckInProgress.mainDeck)
-      );
-    })
-    .then(() => deckId);
-};
+import SaveDeck from '../components/save-deck';
 
 function DeckBuilderPage() {
   const [mainDeckInput, setMainDeckInput] = useState('');
-  const [cardFilters, setCardFilters] = useState(false);
+  const [cardFilters, setCardFilters] = useState(null);
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
 
   const updateDeckName = e => {
     setDeckInProgress({
       ...deckInProgress,
       deckName: e.target.value
-    });
-  };
-
-  const handleSubmit = (e, client) => {
-    e && e.preventDefault();
-    if (!validateState()) return;
-
-    saveDeck(client, deckInProgress).then(deckId => {
-      Router.push(`/deck?id=${deckId}`);
     });
   };
 
@@ -64,10 +37,6 @@ function DeckBuilderPage() {
   };
 
   const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
-
-  const validateState = () => {
-    return Boolean(deckInProgress.deckName);
-  };
 
   const onFactionClick = newFactions => {
     updateCardFilters('factions', newFactions);
@@ -91,26 +60,21 @@ function DeckBuilderPage() {
         .collection {
           flex-grow: 1;
         }
-        .deck-builder-container {
-          display: flex;
+        .deck-builder-actions {
+          width: 35%;
+        }
+        .deck-builder-actions button {
+          margin-bottom: 10px;
         }
       `}</style>
       <h1 data-cy="header">Deck Builder</h1>
       <div className="deck-builder-panels">
-        <div>
+        <div className="deck-builder-card-selection">
           <FactionFilters onFactionClick={onFactionClick} />
-          <div className="collection" data-cy="deckBuilderCollection">
-            <h2>Collection</h2>
-            {(cardFilters && (
-              <SomeCards
-                filters={cardFilters}
-                onCardClick={onCollectionClick}
-              />
-            )) || <AllCards onCardClick={onCollectionClick} />}
-          </div>
+          <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />
           <ImportedDeckErrors importedDeck={deckInProgress} />
         </div>
-        <div>
+        <div className="deck-builder-actions">
           <ImportDeck
             mainDeckInput={mainDeckInput}
             currentMainDeck={deckInProgress.mainDeck}
@@ -120,30 +84,16 @@ function DeckBuilderPage() {
             updateImportedDeck={updateImportedDeck}
           />
           <DeckExport deckInProgress={deckInProgress} />
-          <ApolloConsumer>
-            {client => (
-              <>
-                <input
-                  type="submit"
-                  value="Save Deck"
-                  data-cy="saveDeck"
-                  onClick={e => {
-                    handleSubmit(e, client);
-                  }}
-                />
-              </>
-            )}
-          </ApolloConsumer>
-          <br />
+          <SaveDeck deckInProgress={deckInProgress} />
           <button onClick={() => setDeckInProgress(initializeDeckBuilder())}>
-            Clear All
+            Clear
           </button>
           <div className="deck-in-progress" data-cy="deckInProgress">
             <EditDeckName
               deckName={deckInProgress.deckName}
               onChange={updateDeckName}
             />
-            <DeckCardList deckCards={Object.values(deckInProgress.mainDeck)} />
+            <DeckCardTable deck={deckInProgress} />
           </div>
         </div>
       </div>
