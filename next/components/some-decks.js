@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
-import { getDeckSearchQuery } from '../lib/deck-queries';
+import {
+  getDeckSearchQuery,
+  daysAgoToGraphQLTimestamp
+} from '../lib/deck-queries';
 
 class SomeDecks extends React.Component {
   constructor(props) {
@@ -17,8 +20,12 @@ class SomeDecks extends React.Component {
       factionNames,
       isOnlyFactions
     );
+    const variables = this.props.search;
+    variables.modifiedOnOrAfter = daysAgoToGraphQLTimestamp(
+      variables.updatedTime
+    );
     return (
-      <Query query={decksSearchQuery} variables={this.props.search}>
+      <Query query={decksSearchQuery} variables={variables}>
         {({ loading, error, data }) => {
           if (error) return <ErrorMessage message="Error loading decks." />;
           if (loading) return <div>Loading</div>;
@@ -30,7 +37,13 @@ class SomeDecks extends React.Component {
   }
 }
 SomeDecks.propTypes = {
-  search: PropTypes.object.isRequired
+  search: PropTypes.shape({
+    name: PropTypes.string,
+    cardIds: PropTypes.array,
+    factionNames: PropTypes.array,
+    isOnlyFactions: PropTypes.bool,
+    updatedTime: PropTypes.string
+  }).isRequired
 };
 
 export default SomeDecks;

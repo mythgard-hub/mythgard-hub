@@ -19,6 +19,7 @@ describe('Decks Page', function() {
   });
 
   it('should search for decks', function() {
+    cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckListItem"]').then(list => {
       // test deck name search
       const initialListLength = list.length;

@@ -14,7 +14,8 @@ class DeckSearchForm extends React.Component {
       name: '',
       cardIds: [],
       factionNames: [],
-      isOnlyFactions: true
+      isOnlyFactions: true,
+      updatedTime: '150'
     };
 
     this.handleInputChange = handleInputChange.bind(this);
@@ -51,9 +52,9 @@ class DeckSearchForm extends React.Component {
             value={this.state.isOnlyFactions}
             checked={this.state.isOnlyFactions}
           />
-          <br />
-          <br />
         </label>
+        <br />
+        <br />
         <label>
           Deck Name:
           <input
@@ -64,6 +65,26 @@ class DeckSearchForm extends React.Component {
             className="name"
             onChange={this.handleInputChange}
           />
+        </label>
+        <br />
+        <br />
+        <label>
+          Updated:
+          <select
+            data-cy="deckSearchUpdatedTime"
+            name="updatedTime"
+            value={this.state.updatedTime}
+            onChange={this.handleInputChange}
+          >
+            <option value="100000">Beginning of time</option>
+            <option value="15">Last 15 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="45">Last 45 days</option>
+            <option value="60">Last 60 days</option>
+            <option value="75">Last 75 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="150">Last 150 days</option>
+          </select>
         </label>
         <br />
         <br />

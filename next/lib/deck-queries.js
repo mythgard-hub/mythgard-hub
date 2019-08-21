@@ -71,6 +71,15 @@ export const getFactionFilters = (factionNames, isOnlyFactions) => {
   return factionFilters;
 };
 
+// Takes "30" and converts it to an iso string 30 days ago,
+// with the time removed. Happens to be a valid database timestamp.
+export const daysAgoToGraphQLTimestamp = daysAgoString => {
+  const daysAgoInt = parseInt(daysAgoString, 10);
+  const daysAgoDate = new Date(Date.now() - daysAgoInt * 1000 * 60 * 60 * 24);
+  const isoDate = daysAgoDate.toISOString();
+  return isoDate.slice(0, isoDate.indexOf('T'));
+};
+
 // big query for decks advanced search
 export const getDeckSearchQuery = (
   cardIds,
@@ -81,10 +90,13 @@ export const getDeckSearchQuery = (
   const factionFilters = getFactionFilters(factionNames, isOnlyFactions);
   const allAndQueries = [...cardFilters, ...factionFilters];
   return gql`
-    query decks($name: String!) {
+    query decks($name: String!, $modifiedOnOrAfter: Datetime!) {
       decks(
         filter: {
           name: { includesInsensitive: $name },
+          modified: {
+            greaterThanOrEqualTo: $modifiedOnOrAfter
+          },
           and: [${allAndQueries.join(',')}]
         }
       ) {
