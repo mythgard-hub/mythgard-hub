@@ -29,9 +29,8 @@ class CardsPage extends Component {
         <h1>Cards</h1>
         <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
         {hasSearch(this.state.searchQuery) ? (
-          <div>some cards</div>
+          <SomeCards filters={this.state.searchQuery} />
         ) : (
-          // <SomeCards search={this.state.searchQuery} />
           <AllCards />
         )}
       </Layout>

@@ -1,37 +1,43 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CardSearch from './card-search.js';
+import { handleInputChange } from '../lib/form-utils.js';
 import { Query } from 'react-apollo';
 import allCardsQuery from '../lib/queries/all-cards-query';
 
 class CardSearchForm extends Component {
   constructor(props) {
     super(props);
-    this.onCardSearchSelect = this.onCardSearchSelect.bind(this);
+    this.state = { text: '' };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = handleInputChange.bind(this);
   }
 
-  onCardSearchSelect(selectedCardIds) {
-    this.setState({
-      cardIds: selectedCardIds
-    });
+  handleSubmit(e) {
+    e && e.preventDefault();
+    this.props.onSubmit(this.state);
   }
 
   render() {
     return (
-      <div>
-        <Query query={allCardsQuery}>
-          {({ loading, error, data: { cards } }) => {
-            if (error) return <ErrorMessage message={error} />;
-            if (loading) return null;
-            return (
-              <CardSearch
-                cards={cards.nodes}
-                onSelect={this.onCardSearchSelect}
-              />
-            );
-          }}
-        </Query>
-      </div>
+      <>
+        <input
+          type="text"
+          value={this.state.text}
+          name="text"
+          placeholder="Name or Rules Text"
+          maxLength="100"
+          onChange={this.handleInputChange}
+        />
+        <br />
+        <br />
+        <input
+          data-cy="deckSearchSubmit"
+          type="submit"
+          value="Search"
+          onClick={this.handleSubmit}
+        />
+      </>
     );
   }
 }
