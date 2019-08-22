@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import ErrorMessage from './error-message';
 import { handleInputChange } from '../lib/form-utils';
+// If this code is ever resurrected, TODO import only cloneDeep to leverage tree shaking
 import _ from 'lodash';
 
 const addCommentQuery = gql`
