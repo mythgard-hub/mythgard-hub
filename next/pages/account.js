@@ -1,8 +1,6 @@
 import React from 'react';
 import Layout from '../components/layout';
-import withUser from '../components/with-user';
 import UserContext from '../components/user-context'
-import redirect from '../lib/redirect';
 
 class Account extends React.Component {
   static get requiresAuth() {

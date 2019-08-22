@@ -13,6 +13,19 @@ const client = new PgClient({
   ssl: process.env.PGSSL === 'yes'
 });
 
+/**
+ * Fetches an account (user) record by email. 
+ */
+const getUserByEmail = async email => {
+  const query = `SELECT id, email, username FROM mythgard.account WHERE email = $1`;
+  try {
+    const res = await client.query(query, [email]);
+    return res.rows[0];
+  } catch (err) {
+    return null;
+  }
+};
+
 client.connect();
 
 passport.use(
@@ -31,7 +44,9 @@ passport.use(
       const values = [id, email];
       client.query(text, values, (err, res) => {
         if (err) return cb(err);
-        cb(null, { email: res.rows[0].email });
+        cb(null, {
+          email: res.rows[0].email
+        });
       });
     }
   )
@@ -85,24 +100,24 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/user', (req, res) => {
+router.get('/user', async (req, res) => {
   const signedToken = req.cookies[process.env.JWT_COOKIE_NAME];
   let user;
   try {
     const token = jwt.verify(signedToken, process.env.JWT_SECRET);
-    user = token.data;
+    user = await getUserByEmail(token.data.email);
   } catch (err) {
     res.json(null);
   }
   res.json(user);
 });
 
-router.get('/user/:token', (req, res) => {
+router.get('/user/:token', async (req, res) => {
   const signedToken = req.params.token;
   let user;
   try {
     const token = jwt.verify(signedToken, process.env.JWT_SECRET);
-    user = token.data;
+    user = await getUserByEmail(token.data.email);
   } catch (err) {
     res.json(null);
   }
