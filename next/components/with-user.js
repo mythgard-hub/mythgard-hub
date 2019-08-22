@@ -13,6 +13,12 @@ export default WrappedComponent => {
   return class extends React.Component {
     static displayName = 'withUser(WrappedComponent)';
 
+    static async getInitialProps(ctx) {
+      const pageProps =
+        WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx));
+      return {...pageProps}
+    }
+
     render() {
       return (
         <UserContext.Consumer>

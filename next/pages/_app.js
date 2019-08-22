@@ -7,6 +7,7 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as HooksApolloProvider } from 'react-apollo-hooks';
 import { pageview, USE_GOOGLE_ANALYTICS } from '../lib/gtag';
 import UserContext from '../components/user-context';
+import redirect from '../lib/redirect';
 
 const cdn = process.env.MG_CDN;
 
@@ -17,14 +18,13 @@ if (USE_GOOGLE_ANALYTICS) {
 let cachedUser;
 
 class MyApp extends App {
-  static async getInitialProps({ Component, ctx }) {
+  static async getInitialProps({ ctx, Component }) {
     const isSSR = !!ctx.req;
     let user;
-    let pageProps = {};
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
+    const pageProps = Component.getInitialProps
+      ? await Component.getInitialProps(ctx)
+      : {};
 
     if (isSSR) {
       /**
@@ -41,6 +41,9 @@ class MyApp extends App {
     } else {
       const resp = await fetch('/auth/user');
       user = await resp.json();
+    }
+    if (!user && Component.requiresAuth) {
+      redirect(ctx, '/');
     }
 
     return {
