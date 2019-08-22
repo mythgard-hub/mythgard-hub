@@ -77,6 +77,4 @@ SomeCards.propTypes = {
   })
 };
 
-SomeCards.defaultProps = {
-  onCardClick: () => true
-};
+export default SomeCards;
