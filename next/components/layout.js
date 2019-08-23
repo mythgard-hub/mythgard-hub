@@ -31,14 +31,6 @@ class Layout extends React.Component {
         <Header />
         {this.props.children}
         <style jsx global>{`
-          .header + * {
-            margin-top: 90px;
-          }
-
-          * {
-            box-sizing: border-box;
-          }
-
           body {
             background: ${theme.background};
             color: ${theme.fontColor};
@@ -66,6 +58,29 @@ class Layout extends React.Component {
             background-color: ${theme.sectionBackground};
             border: ${theme.sectionBorder};
             border-radius: 10px;
+          }
+        `}</style>
+        <style jsx global>{`
+          .header + * {
+            margin-top: 90px;
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          // Every Layout styles
+          .stack {
+            --space: 1.5rem;
+          }
+
+          .stack > * {
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+
+          .stack > * + * {
+            margin-top: var(--space);
           }
         `}</style>
       </div>

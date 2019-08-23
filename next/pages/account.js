@@ -23,20 +23,6 @@ class Account extends React.Component {
         title="Mythgard Hub | Account Settings"
         desc="The Mythgard Hub privacy policy"
       >
-        <style jsx>{`
-          .stack {
-            --space: 1.5rem;
-          }
-
-          .stack > * {
-            margin-top: 0;
-            margin-bottom: 0;
-          }
-
-          .stack > * + * {
-            margin-top: var(--space);
-          }
-        `}</style>
         <h1>My Profile</h1>
 
         <h2>Settings</h2>
