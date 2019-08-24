@@ -27,12 +27,13 @@ class CardSearchForm extends Component {
           name="text"
           placeholder="Name or Rules Text"
           maxLength="100"
+          data-cy="cardSearchText"
           onChange={this.handleInputChange}
         />
         <br />
         <br />
         <input
-          data-cy="deckSearchSubmit"
+          data-cy="cardSearchSubmit"
           type="submit"
           value="Search"
           onClick={this.handleSubmit}
