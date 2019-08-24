@@ -73,16 +73,6 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
-CREATE TABLE mythgard.deck_comment (
-  id SERIAL PRIMARY KEY,
-  body text,
-  deck_id integer,
-  FOREIGN KEY (deck_id)
-    REFERENCES mythgard.deck (id)
-);
-
-INSERT INTO mythgard.deck_comment("deck_id", "body") VALUES (1, 'I made masters with this last week');
-
 -- In PostgreSQL, user is a keyword
 CREATE TABLE mythgard.account (
   id SERIAL PRIMARY KEY,
