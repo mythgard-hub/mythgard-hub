@@ -3,6 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import CardList from './card-list';
+import AllCards from './all-cards';
 
 const getFactionsFilter = factionNames => {
   if (!factionNames.length) {
@@ -42,6 +43,13 @@ export default function SomeCards(props) {
   const { filters, onCardClick } = props;
   const factions = filters && filters.factions;
 
+  if (!filters)
+    return (
+      <div className="collection" data-cy="deckBuilderCollection">
+        <AllCards onCardClick={onCardClick} />
+      </div>
+    );
+
   const callGetCardsQuery = () => {
     const queryFilters = [];
     if (factions) {
@@ -57,14 +65,18 @@ export default function SomeCards(props) {
 
   const cards = data && data.cards && data.cards.nodes;
 
-  return <CardList onCardClick={onCardClick} cards={cards} />;
+  return (
+    <div className="collection" data-cy="deckBuilderCollection">
+      <CardList onCardClick={onCardClick} cards={cards} />
+    </div>
+  );
 }
 
 SomeCards.propTypes = {
   onCardClick: PropTypes.func,
   filters: PropTypes.shape({
     factions: PropTypes.array
-  }).isRequired
+  })
 };
 
 SomeCards.defaultProps = {
