@@ -21,6 +21,9 @@ class CardsPage extends Component {
   }
 
   render() {
+    const filters = hasSearch(this.state.searchQuery)
+      ? this.state.searchQuery
+      : null;
     return (
       <Layout
         title="Mythgard Hub | Cards"
@@ -28,11 +31,7 @@ class CardsPage extends Component {
       >
         <h1>Cards</h1>
         <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
-        {hasSearch(this.state.searchQuery) ? (
-          <SomeCards filters={this.state.searchQuery} />
-        ) : (
-          <AllCards />
-        )}
+        <SomeCards filters={this.state.searchQuery} />
       </Layout>
     );
   }

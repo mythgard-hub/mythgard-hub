@@ -19,10 +19,7 @@ export const getFactionsFilter = factionNames => {
   `;
 };
 
-export const getTextContainsFilter = s => {
-  if (!s) {
-    return `name: null`;
-  }
+export const getTextContainsFilter = () => {
   return `
     or: [{
       name: {
@@ -37,9 +34,8 @@ export const getTextContainsFilter = s => {
 };
 
 export const getCardsQuery = filters => {
-  debugger;
   return gql`
-    query cards($searchText: String!){
+    query cards($searchText: String){
       cards(filter: {
         ${filters}
       }){

@@ -4,53 +4,30 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import CardList from './card-list';
 import AllCards from './all-cards';
+import {
+  getFactionsFilter,
+  getTextContainsFilter,
+  getCardsQuery
+} from '../lib/card-queries.js';
 
-const getFactionsFilter = factionNames => {
-  if (!factionNames.length) {
-    // null means ignore this filter.
-    // Comma allows chaining.
-    return 'cardFactions: null,';
+const getFilters = factions => {
+  const queryFilters = [];
+  if (factions) {
+    queryFilters.push(getFactionsFilter(factions));
   }
-  return `
-    cardFactions: {
-      some: {
-        faction: {
-          name: {
-            in: ["${factionNames.join('","')}"]
-          }
-        }
-      }
-    },
-  `;
-};
-
-const getCardsQuery = filters => {
-  return gql`
-    query {
-      cards(filter: {
-        ${filters}
-      }){
-        nodes {
-          name
-          id
-        }
-      }
-    }
-  `;
+  queryFilters.push(getTextContainsFilter());
+  return queryFilters;
 };
 
 const filteredCards = (onCardClick, filters) => {
-  const factions = filters && filters.factions;
+  const { factions, text } = filters;
 
-  const callGetCardsQuery = () => {
-    const queryFilters = [];
-    if (factions) {
-      queryFilters.push(getFactionsFilter(factions));
+  const query = getCardsQuery(getFilters(factions));
+  const { loading, error, data } = useQuery(query, {
+    variables: {
+      searchText: text || null
     }
-    return getCardsQuery(queryFilters);
-  };
-
-  const { loading, error, data } = useQuery(callGetCardsQuery());
+  });
 
   if (error) return <ErrorMessage message={error} />;
   if (loading) return null;
@@ -73,8 +50,7 @@ export default function SomeCards(props) {
 SomeCards.propTypes = {
   onCardClick: PropTypes.func,
   filters: PropTypes.shape({
-    factions: PropTypes.array
+    factions: PropTypes.array,
+    text: PropTypes.string
   })
 };
-
-export default SomeCards;
