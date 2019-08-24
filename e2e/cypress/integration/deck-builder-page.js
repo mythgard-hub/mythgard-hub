@@ -4,7 +4,8 @@ import {
   deckInProgress,
   cardList,
   factionFilter,
-  deckCardRow
+  deckCardRow,
+  cardSearchText
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -22,6 +23,8 @@ describe('Deck builder page', () => {
     cy.get(`${cardListCard}:first`).click();
     cy.get(deckInProgress).should('be.visible');
     cy.get(deckCardRow).should('have.length', 1);
+
+    // basic test - faction filter
     let numCardsBeforeFilter;
     cy.get(`${deckBuilderCollection} ${cardListCard}`)
       .then(cards => {
@@ -36,6 +39,20 @@ describe('Deck builder page', () => {
       })
       .then(cards => {
         expect(numCardsBeforeFilter).to.equal(cards.length);
+
+        // basic test - text filter
+        cy.get(cardSearchText).type('fur');
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.be.above(cards.length);
+        cy.get(cardSearchText).clear();
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.equal(cards.length);
+
+        // finally save the deck
         cy.get('[data-cy="deckTitle"]').type('Floop the Pig');
         cy.get('[data-cy="saveDeck"]').click();
         return cy.location().should(location => {
