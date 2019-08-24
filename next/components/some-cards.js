@@ -43,12 +43,7 @@ export default function SomeCards(props) {
   const { filters, onCardClick } = props;
   const factions = filters && filters.factions;
 
-  if (!filters)
-    return (
-      <div className="collection" data-cy="deckBuilderCollection">
-        <AllCards onCardClick={onCardClick} />
-      </div>
-    );
+  if (!filters) return <AllCards onCardClick={onCardClick} />;
 
   const callGetCardsQuery = () => {
     const queryFilters = [];
@@ -65,11 +60,7 @@ export default function SomeCards(props) {
 
   const cards = data && data.cards && data.cards.nodes;
 
-  return (
-    <div className="collection" data-cy="deckBuilderCollection">
-      <CardList onCardClick={onCardClick} cards={cards} />
-    </div>
-  );
+  return <CardList onCardClick={onCardClick} cards={cards} />;
 }
 
 SomeCards.propTypes = {
