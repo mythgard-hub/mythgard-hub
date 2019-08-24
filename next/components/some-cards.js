@@ -39,11 +39,8 @@ const getCardsQuery = filters => {
   `;
 };
 
-export default function SomeCards(props) {
-  const { filters, onCardClick } = props;
+const filteredCards = (onCardClick, filters) => {
   const factions = filters && filters.factions;
-
-  if (!filters) return <AllCards onCardClick={onCardClick} />;
 
   const callGetCardsQuery = () => {
     const queryFilters = [];
@@ -61,6 +58,16 @@ export default function SomeCards(props) {
   const cards = data && data.cards && data.cards.nodes;
 
   return <CardList onCardClick={onCardClick} cards={cards} />;
+};
+
+export default function SomeCards(props) {
+  const { filters, onCardClick } = props;
+
+  if (!filters) {
+    return <AllCards onCardClick={onCardClick} />;
+  } else {
+    return filteredCards(onCardClick, filters);
+  }
 }
 
 SomeCards.propTypes = {
