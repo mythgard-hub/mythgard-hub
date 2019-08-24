@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SomeCards from '../components/some-cards';
+import AllCards from '../components/all-cards';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
@@ -67,13 +68,24 @@ function DeckBuilderPage() {
           margin-bottom: 10px;
         }
       `}</style>
+
       <h1 data-cy="header">Deck Builder</h1>
       <div className="deck-builder-panels">
         <div className="deck-builder-card-selection">
           <FactionFilters onFactionClick={onFactionClick} />
-          <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />
+          <div className="collection" data-cy="deckBuilderCollection">
+            {cardFilters ? (
+              <SomeCards
+                filters={cardFilters}
+                onCardClick={onCollectionClick}
+              />
+            ) : (
+              <AllCards onCardClick={onCollectionClick} />
+            )}
+          </div>
           <ImportedDeckErrors importedDeck={deckInProgress} />
         </div>
+
         <div className="deck-builder-actions">
           <ImportDeck
             mainDeckInput={mainDeckInput}
@@ -88,6 +100,7 @@ function DeckBuilderPage() {
           <button onClick={() => setDeckInProgress(initializeDeckBuilder())}>
             Clear
           </button>
+
           <div className="deck-in-progress" data-cy="deckInProgress">
             <EditDeckName
               deckName={deckInProgress.deckName}
