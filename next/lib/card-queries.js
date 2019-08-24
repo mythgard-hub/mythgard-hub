@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo-hooks';
 
 export const getFactionsFilter = factionNames => {
   if (!factionNames.length) {
@@ -46,4 +47,22 @@ export const getCardsQuery = filters => {
       }
     }
   `;
+};
+
+const getFilters = factions => {
+  const queryFilters = [];
+  if (factions) {
+    queryFilters.push(getFactionsFilter(factions));
+  }
+  queryFilters.push(getTextContainsFilter());
+  return queryFilters;
+};
+
+export const executeCardQuery = (factions, text) => {
+  const query = getCardsQuery(getFilters(factions));
+  return useQuery(query, {
+    variables: {
+      searchText: text || null
+    }
+  });
 };
