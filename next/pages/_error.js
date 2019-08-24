@@ -28,6 +28,11 @@ class Error extends React.Component {
           </Link>
           .
         </p>
+        <p>
+          Contact{' '}
+          <a href="mailto:support@mythgardhub.com">support@mythgardhub.com</a>
+          with any questions or concerns.
+        </p>
       </Layout>
     );
   }
