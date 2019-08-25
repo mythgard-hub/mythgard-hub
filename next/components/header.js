@@ -98,17 +98,22 @@ class Header extends React.Component {
           <a href="/privacy-policy" style={linkStyle}>
             PRIVACY POLICY
           </a>
-          <Link href="/auth/google">
-            <a style={linkStyle}>LOG IN (GOOGLE)</a>
-          </Link>
-          {user && (
-            <Link href="/auth/logout">
-              <a style={linkStyle}>LOG OUT</a>
+          {!user && (
+            <Link href="/auth/google">
+              <a style={linkStyle}>LOG IN (GOOGLE)</a>
             </Link>
           )}
-          <Link href="/account">
-            <a style={linkStyle}>ACCOUNT</a>
-          </Link>
+          {user && (
+            <>
+              <Link href="/account">
+                <a style={linkStyle}>ACCOUNT</a>
+              </Link>
+              <Link href="/auth/logout">
+                <a style={linkStyle}>LOG OUT</a>
+              </Link>
+              <span>Howdy, {user.username || 'Mystery User'}</span>
+            </>
+          )}
         </div>
       </div>
     );
