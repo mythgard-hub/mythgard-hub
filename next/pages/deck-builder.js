@@ -9,6 +9,7 @@ import FactionFilters from '../components/faction-filters';
 import DeckCardTable from '../components/deck-card-table';
 import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
+import PageBanner from '../components/page-banner';
 
 function DeckBuilderPage() {
   const [mainDeckInput, setMainDeckInput] = useState('');
@@ -67,7 +68,7 @@ function DeckBuilderPage() {
           margin-bottom: 10px;
         }
       `}</style>
-      <h1 data-cy="header">Deck Builder</h1>
+      <PageBanner image={PageBanner.IMG_DECK_BUILDER}>Deck Builder</PageBanner>
       <div className="deck-builder-panels">
         <div className="deck-builder-card-selection">
           <FactionFilters onFactionClick={onFactionClick} />
