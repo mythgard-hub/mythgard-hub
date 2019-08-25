@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CardSearch from './card-search.js';
 import { handleInputChangeStateless } from '../lib/form-utils.js';
