@@ -34,9 +34,17 @@ export const getTextContainsFilter = () => {
   `;
 };
 
+export const getRarityFilter = () => {
+  return `
+    rarity: {
+      equalTo: $rarity
+    }
+  `;
+};
+
 export const getCardsQuery = filters => {
   return gql`
-    query cards($searchText: String){
+    query cards($searchText: String, $rarity: Rarity){
       cards(filter: {
         ${filters}
       }){
@@ -55,6 +63,7 @@ const getFilters = factions => {
     queryFilters.push(getFactionsFilter(factions));
   }
   queryFilters.push(getTextContainsFilter());
+  queryFilters.push(getRarityFilter());
   return queryFilters;
 };
 
@@ -62,7 +71,8 @@ export const executeCardQuery = (factions, text, rarity) => {
   const query = getCardsQuery(getFilters(factions));
   return useQuery(query, {
     variables: {
-      searchText: text || null
+      searchText: text || null,
+      rarity: rarity || null
     }
   });
 };

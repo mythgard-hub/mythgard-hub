@@ -6,24 +6,24 @@ function RarityFilter({ onChange }) {
     <div data-cy="cardSearchRarity">
       <label>
         Common
-        <input type="radio" name="rarity" value="Common" onChange={onChange} />
+        <input type="radio" name="rarity" value="COMMON" onChange={onChange} />
       </label>
       <label>
         Uncommon
         <input
           type="radio"
           name="rarity"
-          value="Uncommon"
+          value="UNCOMMON"
           onChange={onChange}
         />
       </label>
       <label>
         Rare
-        <input type="radio" name="rarity" value="Rare" onChange={onChange} />
+        <input type="radio" name="rarity" value="RARE" onChange={onChange} />
       </label>
       <label>
         Mythic
-        <input type="radio" name="rarity" value="Mythic" onChange={onChange} />
+        <input type="radio" name="rarity" value="MYTHIC" onChange={onChange} />
       </label>
     </div>
   );

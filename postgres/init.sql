@@ -1,6 +1,9 @@
 DROP SCHEMA IF EXISTS mythgard CASCADE;
 
 CREATE SCHEMA mythgard;
+
+CREATE TYPE mythgard.rarity AS ENUM ('common', 'uncommon', 'rare', 'mythic');
+
 CREATE TABLE mythgard.card (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -9,17 +12,18 @@ CREATE TABLE mythgard.card (
   atk integer,
   def integer,
   mana integer,
-  gem integer
+  gem integer,
+  rarity mythgard.rarity default 'common'
 );
 
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
-  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
-  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
-  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
-  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
+  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1', 'common');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
+  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2', 'uncommon');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
+  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6', 'rare');
+INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
+  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2', 'mythic');
 INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
   VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2');
 INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
