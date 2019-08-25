@@ -17,6 +17,7 @@ function DeckBuilderPage() {
   const [factions, setFactions] = useState([]);
   const cardFilters = {
     text: cardSearchText,
+    rarity: cardRarity,
     factions
   };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());

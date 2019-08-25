@@ -16,6 +16,7 @@ SomeCards.propTypes = {
   onCardClick: PropTypes.func,
   filters: PropTypes.shape({
     factions: PropTypes.array,
-    text: PropTypes.string
+    text: PropTypes.string,
+    rarity: PropTypes.string
   })
 };

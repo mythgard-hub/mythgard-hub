@@ -58,7 +58,7 @@ const getFilters = factions => {
   return queryFilters;
 };
 
-export const executeCardQuery = (factions, text) => {
+export const executeCardQuery = (factions, text, rarity) => {
   const query = getCardsQuery(getFilters(factions));
   return useQuery(query, {
     variables: {

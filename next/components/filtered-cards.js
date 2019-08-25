@@ -4,9 +4,9 @@ import CardList from './card-list';
 import ErrorMessage from './error-message';
 
 function filteredCards({ filters, onCardClick }) {
-  const { factions, text } = filters;
+  const { factions, text, rarity } = filters;
 
-  const { loading, error, data } = executeCardQuery(factions, text);
+  const { loading, error, data } = executeCardQuery(factions, text, rarity);
 
   if (error) return <ErrorMessage message={error} />;
   if (loading) return null;
@@ -20,7 +20,8 @@ filteredCards.propTypes = {
   onCardClick: PropTypes.func,
   filters: PropTypes.shape({
     factions: PropTypes.array,
-    text: PropTypes.string
+    text: PropTypes.string,
+    rarity: PropTypes.string
   }).isRequired
 };
 
