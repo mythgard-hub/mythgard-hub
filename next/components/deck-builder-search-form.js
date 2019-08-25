@@ -20,6 +20,24 @@ function DeckBuilderSearchForm({ text, setText, onFactionClick }) {
         data-cy="cardSearchText"
         onChange={onTextChange}
       />
+      <div>
+        <label>
+          Common
+          <input type="radio" name="rarity" value="Common" />
+        </label>
+        <label>
+          Uncommon
+          <input type="radio" name="rarity" value="Uncommon" />
+        </label>
+        <label>
+          Rare
+          <input type="radio" name="rarity" value="Rare" />
+        </label>
+        <label>
+          Mythic
+          <input type="radio" name="rarity" value="Mythic" />
+        </label>
+      </div>
       <FactionFilters onFactionClick={onFactionClick} />
     </>
   );
