@@ -6,9 +6,8 @@ import { Query } from 'react-apollo';
 import FactionFilters from '../components/faction-filters';
 import RarityFilter from '../components/rarity-filter.js';
 
-function DeckBuilderSearchForm({ text, setText, setRarity, onFactionClick }) {
+function DeckBuilderSearchForm({ text, setText, setRarities, onFactionClick }) {
   const onTextChange = handleInputChangeStateless(setText);
-  const onRarityChange = handleInputChangeStateless(setRarity);
 
   return (
     <>
@@ -22,7 +21,7 @@ function DeckBuilderSearchForm({ text, setText, setRarity, onFactionClick }) {
         data-cy="cardSearchText"
         onChange={onTextChange}
       />
-      <RarityFilter onChange={onRarityChange}></RarityFilter>
+      <RarityFilter onChange={setRarities}></RarityFilter>
       <FactionFilters onFactionClick={onFactionClick} />
     </>
   );
