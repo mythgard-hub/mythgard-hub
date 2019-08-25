@@ -5,14 +5,19 @@ import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
 import DeckExport from '../components/deck-export';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
-import FactionFilters from '../components/faction-filters';
+import DeckBuilderSearchForm from '../components/deck-builder-search-form.js';
 import DeckCardTable from '../components/deck-card-table';
 import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
 
 function DeckBuilderPage() {
   const [mainDeckInput, setMainDeckInput] = useState('');
-  const [cardFilters, setCardFilters] = useState(null);
+  const [cardSearchText, setCardSearchText] = useState('');
+  const [factions, setFactions] = useState([]);
+  const cardFilters = {
+    text: cardSearchText,
+    factions
+  };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
 
   const updateDeckName = e => {
@@ -38,17 +43,6 @@ function DeckBuilderPage() {
 
   const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
 
-  const onFactionClick = newFactions => {
-    updateCardFilters('factions', newFactions);
-  };
-
-  const updateCardFilters = (prop, value) => {
-    setCardFilters({
-      ...cardFilters,
-      [prop]: value
-    });
-  };
-
   return (
     <Layout title="Mythgard Hub | Deck Builder" desc="Build Mythgard Decks">
       <style jsx>{`
@@ -70,7 +64,11 @@ function DeckBuilderPage() {
       <h1 data-cy="header">Deck Builder</h1>
       <div className="deck-builder-panels">
         <div className="deck-builder-card-selection">
-          <FactionFilters onFactionClick={onFactionClick} />
+          <DeckBuilderSearchForm
+            text={cardSearchText}
+            setText={setCardSearchText}
+            onFactionClick={setFactions}
+          />
           <div className="collection" data-cy="deckBuilderCollection">
             <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />
           </div>
