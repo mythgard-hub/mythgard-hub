@@ -3,7 +3,6 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
 import Deck from '../components/deck';
-import DeckComments from '../components/deck-comments';
 import Layout from '../components/layout';
 
 export const deckQuery = gql`
@@ -28,12 +27,7 @@ export default withRouter(({ router }) => (
         if (loading) return null;
         if (error) return <ErrorMessage message={`Error: ${error}`} />;
 
-        return (
-          <>
-            <Deck deck={data.deck} />
-            <DeckComments deck={data.deck} />
-          </>
-        );
+        return <Deck deck={data.deck} />;
       }}
     </Query>
   </Layout>

@@ -1,42 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
-
-const getCardsFilter = cardIds => {
-  if (!cardIds.length) {
-    // null means ignore this filter.
-    // Comma allows chaining.
-    return 'cardDecks: null,';
-  }
-  const cardIdFilters = cardIds.map(cardId => {
-    return `{cardDecks: {some: {cardId: {equalTo: ${cardId}}}}}`;
-  });
-  return `
-    and: [${cardIdFilters.join(',')}]
-  `;
-};
-
-const getDeckSearchQuery = cardIds => {
-  const cardsFilter = getCardsFilter(cardIds);
-  return gql`
-    query decks($name: String!) {
-      decks(
-        filter: {
-          name: { includesInsensitive: $name },
-          ${cardsFilter}
-        }
-      ) {
-        nodes {
-          name
-          id
-        }
-      }
-    }
-  `;
-};
+import {
+  getDeckSearchQuery,
+  daysAgoToGraphQLTimestamp
+} from '../lib/deck-queries';
 
 class SomeDecks extends React.Component {
   constructor(props) {
@@ -44,9 +14,18 @@ class SomeDecks extends React.Component {
   }
 
   render() {
-    const decksSearchQuery = getDeckSearchQuery(this.props.search.cardIds);
+    const { cardIds, factionNames, isOnlyFactions } = this.props.search;
+    const decksSearchQuery = getDeckSearchQuery(
+      cardIds,
+      factionNames,
+      isOnlyFactions
+    );
+    const variables = this.props.search;
+    variables.modifiedOnOrAfter = daysAgoToGraphQLTimestamp(
+      variables.updatedTime
+    );
     return (
-      <Query query={decksSearchQuery} variables={this.props.search}>
+      <Query query={decksSearchQuery} variables={variables}>
         {({ loading, error, data }) => {
           if (error) return <ErrorMessage message="Error loading decks." />;
           if (loading) return <div>Loading</div>;
@@ -58,7 +37,13 @@ class SomeDecks extends React.Component {
   }
 }
 SomeDecks.propTypes = {
-  search: PropTypes.object.isRequired
+  search: PropTypes.shape({
+    name: PropTypes.string,
+    cardIds: PropTypes.array,
+    factionNames: PropTypes.array,
+    isOnlyFactions: PropTypes.bool,
+    updatedTime: PropTypes.string
+  }).isRequired
 };
 
 export default SomeDecks;

@@ -48,11 +48,13 @@ CREATE TABLE mythgard.deck (
   name varchar(255),
   author_id integer,
   path_id integer REFERENCES mythgard.path (id),
-  power_id integer REFERENCES mythgard.power (id)
+  power_id integer REFERENCES mythgard.power (id),
+  modified timestamp default current_timestamp
 );
 INSERT INTO mythgard.deck("name") VALUES ('dragons');
 INSERT INTO mythgard.deck("name", "path_id", "power_id") VALUES ('cats', 1, 1);
-INSERT INTO mythgard.deck("name") VALUES ('all_factions');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', '2019-05-1 00:00:00');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', '2019-01-1 00:00:00');
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
@@ -69,16 +71,7 @@ CREATE TABLE mythgard.card_deck (
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
-
-CREATE TABLE mythgard.deck_comment (
-  id SERIAL PRIMARY KEY,
-  body text,
-  deck_id integer,
-  FOREIGN KEY (deck_id)
-    REFERENCES mythgard.deck (id)
-);
-
-INSERT INTO mythgard.deck_comment("deck_id", "body") VALUES (1, 'I made masters with this last week');
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
 -- In PostgreSQL, user is a keyword
 CREATE TABLE mythgard.account (
@@ -141,3 +134,21 @@ CREATE TABLE mythgard.card_faction (
 );
 
 INSERT INTO mythgard.card_faction("card_id","faction_id") VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6);
+
+-- Save deck modification time so decks can be searched by last update time
+CREATE OR REPLACE FUNCTION update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+   IF row(NEW.*) IS DISTINCT FROM row(OLD.*) THEN
+      NEW.modified = now();
+      RETURN NEW;
+   ELSE
+      RETURN OLD;
+   END IF;
+END;
+$$ language 'plpgsql';
+
+
+CREATE TRIGGER update_deck_modtime
+  BEFORE UPDATE ON mythgard.deck
+  FOR EACH ROW EXECUTE PROCEDURE update_modified_column();

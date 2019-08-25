@@ -1,4 +1,8 @@
-import { cardSearch, cardSelectionItem } from '../page-objects/all';
+import {
+  cardSearch,
+  cardSelectionItem,
+  factionFilter
+} from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
 
@@ -15,6 +19,7 @@ describe('Decks Page', function() {
   });
 
   it('should search for decks', function() {
+    cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckListItem"]').then(list => {
       // test deck name search
       const initialListLength = list.length;
@@ -53,6 +58,20 @@ describe('Decks Page', function() {
           cy.get(`${cardSearchSelections} button`).should('have.length', 2);
           cy.get(`${cardSearchSelections} button`).click({ multiple: true });
           cy.get(cardSearchSelections).should('have.length', 0);
+          cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.get('[data-cy="deckListItem"]').should(
+            'have.length',
+            initialListLength
+          );
+
+          // test deck faction search
+          cy.get(`${factionFilter}:first`).click();
+          cy.get('[data-cy="deckSearchSubmit"]').click();
+          return cy.get('[data-cy="deckListItem"]');
+        })
+        .then(cards => {
+          expect(cards.length).to.be.lessThan(initialListLength);
+          cy.get(`${factionFilter}:first`).click();
           cy.get('[data-cy="deckSearchSubmit"]').click();
           cy.get('[data-cy="deckListItem"]').should(
             'have.length',
