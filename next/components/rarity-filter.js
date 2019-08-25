@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeStateless } from '../lib/form-utils.js';
 
-const rarities = ['COMMON', 'UNCOMMON', 'RARE', 'MYTHIC'];
+const RARITY_ENUM = ['COMMON', 'UNCOMMON', 'RARE', 'MYTHIC'];
+const flagsToEnums = flags =>
+  flags.reduce((acc, isChecked, i) => {
+    if (isChecked) {
+      acc.push(RARITY_ENUM[i]);
+    }
+    return acc;
+  }, []);
+
 let previousRarities = [false, false, false, false];
 
 function RarityFilter({ onChange }) {
@@ -11,20 +19,13 @@ function RarityFilter({ onChange }) {
   const [isRare, setIsRare] = useState(false);
   const [isMythic, setIsMythic] = useState(false);
 
-  const set = [isCommon, isUncommon, isRare, isMythic];
+  const flags = [isCommon, isUncommon, isRare, isMythic];
 
-  if (previousRarities.join() !== set.join()) {
-    onChange(
-      set.reduce((acc, isChecked, i) => {
-        if (isChecked) {
-          acc.push(rarities[i]);
-        }
-        return acc;
-      }, [])
-    );
+  if (previousRarities.join() !== flags.join()) {
+    onChange(flagsToEnums(flags));
   }
 
-  previousRarities = [...set];
+  previousRarities = [...flags];
 
   return (
     <div data-cy="cardSearchRarity">
