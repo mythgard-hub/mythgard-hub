@@ -72,7 +72,7 @@ export const executeCardQuery = (factions, text, rarities) => {
   return useQuery(query, {
     variables: {
       searchText: text || null,
-      rarities: rarities || null
+      rarities: rarities && rarities.length ? rarities : null
     }
   });
 };
