@@ -13,6 +13,7 @@ import SaveDeck from '../components/save-deck';
 function DeckBuilderPage() {
   const [mainDeckInput, setMainDeckInput] = useState('');
   const [cardSearchText, setCardSearchText] = useState('');
+  const [cardRarity, setCardRarity] = useState('');
   const [factions, setFactions] = useState([]);
   const cardFilters = {
     text: cardSearchText,
@@ -67,6 +68,7 @@ function DeckBuilderPage() {
           <DeckBuilderSearchForm
             text={cardSearchText}
             setText={setCardSearchText}
+            setRarity={setCardRarity}
             onFactionClick={setFactions}
           />
           <div className="collection" data-cy="deckBuilderCollection">

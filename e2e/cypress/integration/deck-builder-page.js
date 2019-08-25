@@ -24,6 +24,9 @@ describe('Deck builder page', () => {
     cy.get(deckInProgress).should('be.visible');
     cy.get(deckCardRow).should('have.length', 1);
 
+    // basic test - rarity filter
+    cy.get('[data-cy="cardSearchRarity"]:first').click();
+
     // basic test - faction filter
     let numCardsBeforeFilter;
     cy.get(`${deckBuilderCollection} ${cardListCard}`)
