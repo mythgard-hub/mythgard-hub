@@ -1,6 +1,8 @@
 import React from 'react';
 import Layout from '../components/layout';
 import UserContext from '../components/user-context';
+import { ApolloConsumer } from 'react-apollo';
+import updateUsername from '../lib/mutations/update-username';
 
 class Account extends React.Component {
   constructor(props, context) {
@@ -14,6 +16,17 @@ class Account extends React.Component {
   static get requiresAuth() {
     return true;
   }
+
+  areSettingsValid = () => {
+    return !!this.state.username;
+  };
+
+  handleSubmit = (apolloClient) => {
+    if (!this.areSettingsValid()) return;
+    const { user } = this.context;
+    const { username } = this.state;
+    updateUsername(apolloClient, user.id, username);
+  };
 
   render() {
     const { user } = this.context;
@@ -44,6 +57,20 @@ class Account extends React.Component {
               value={username}
             />
           </div>
+          <ApolloConsumer>
+            {client => (
+              <button
+                type="submit"
+                value="Save"
+                style={{ width: '25%' }}
+                onClick={() => {
+                  this.handleSubmit(client);
+                }}
+              >
+                Save
+              </button>
+            )}
+          </ApolloConsumer>
         </div>
       </Layout>
     );
