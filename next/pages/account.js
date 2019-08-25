@@ -23,9 +23,11 @@ class Account extends React.Component {
 
   handleSubmit = (apolloClient) => {
     if (!this.areSettingsValid()) return;
-    const { user } = this.context;
+    const { user, updateUser } = this.context;
     const { username } = this.state;
-    updateUsername(apolloClient, user.id, username);
+    updateUsername(apolloClient, user.id, username).then(({ data }) => {
+      updateUser(data.updateAccount.account);
+    });
   };
 
   render() {

@@ -15,8 +15,6 @@ if (USE_GOOGLE_ANALYTICS) {
   Router.events.on('routeChangeComplete', url => pageview(url));
 }
 
-let cachedUser;
-
 class MyApp extends App {
   static async getInitialProps({ ctx, Component }) {
     const isSSR = !!ctx.req;
@@ -48,20 +46,25 @@ class MyApp extends App {
 
     return {
       ...pageProps,
-      isSSR,
       user
     };
   }
 
-  componentDidMount() {
-    const { isSSR, user } = this.props;
-    if (isSSR) {
-      cachedUser = user;
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      user: props.user
     }
   }
 
+  updateUser = (user) => {
+    this.setState({ user })
+  }
+
   render() {
-    const { Component, pageProps, apolloClient, user } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
+    const { user } = this.state;
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
@@ -88,7 +91,7 @@ class MyApp extends App {
               <meta property="og:image" content={`${cdn}/mgh/og-image.jpg`} />
               <meta property="og:image:type" content="image/png" />
             </Head>
-            <UserContext.Provider value={{ user }}>
+            <UserContext.Provider value={{ user, updateUser: this.updateUser }}>
               <Component {...pageProps} />
             </UserContext.Provider>
           </HooksApolloProvider>

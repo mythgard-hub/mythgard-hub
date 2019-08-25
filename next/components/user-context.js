@@ -1,3 +1,3 @@
 import React from 'react';
 
-export default React.createContext({ user : null });
+export default React.createContext({ user: null, updateUser: () => {} });
