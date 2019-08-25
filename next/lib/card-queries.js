@@ -30,7 +30,7 @@ export const getTextContainsFilter = () => {
       rules: {
         includesInsensitive: $searchText
       }
-		}]
+    }]
   `;
 };
 

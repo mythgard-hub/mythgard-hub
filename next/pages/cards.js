@@ -37,9 +37,4 @@ class CardsPage extends Component {
   }
 }
 
-CardsPage.propTypes = {
-  // children: PropTypes.node,
-  // className: PropTypes.string,
-};
-
 export default CardsPage;
