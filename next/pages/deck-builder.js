@@ -71,7 +71,9 @@ function DeckBuilderPage() {
       <div className="deck-builder-panels">
         <div className="deck-builder-card-selection">
           <FactionFilters onFactionClick={onFactionClick} />
-          <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />
+          <div className="collection" data-cy="deckBuilderCollection">
+            <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />
+          </div>
           <ImportedDeckErrors importedDeck={deckInProgress} />
         </div>
         <div className="deck-builder-actions">

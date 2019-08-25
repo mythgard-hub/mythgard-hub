@@ -1,14 +1,40 @@
 import AllCards from '../components/all-cards';
+import SomeCards from '../components/some-cards.js';
 import Layout from '../components/layout';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import CardSearchForm from '../components/card-search-form';
 
-const index = () => (
-  <Layout
-    title="Mythgard Hub | Cards"
-    desc="Browse and search for Mythgard cards"
-  >
-    <h1>Cards</h1>
-    <AllCards />
-  </Layout>
-);
+const hasSearch = function(searchQuery) {
+  return searchQuery && searchQuery.text;
+};
 
-export default index;
+class CardsPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.handlSearchSubmit = this.handleSearchSubmit.bind(this);
+  }
+
+  handleSearchSubmit(searchQuery) {
+    this.setState({ searchQuery });
+  }
+
+  render() {
+    const filters = hasSearch(this.state.searchQuery)
+      ? this.state.searchQuery
+      : null;
+    return (
+      <Layout
+        title="Mythgard Hub | Cards"
+        desc="Browse and search for Mythgard cards"
+      >
+        <h1>Cards</h1>
+        <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
+        <SomeCards filters={this.state.searchQuery} />
+      </Layout>
+    );
+  }
+}
+
+export default CardsPage;
