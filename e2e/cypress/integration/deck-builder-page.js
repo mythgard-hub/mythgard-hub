@@ -13,7 +13,7 @@ describe('Deck builder page', () => {
     cy.visit('/deck-builder');
   });
   it('should have a happy path', function() {
-    cy.get('h1').should('be.visible');
+    cy.get('[data-cy="header"]').should('be.visible');
     cy.get('[data-cy="importDeckTitle"]').should('be.visible');
     cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
     cy.get('[data-cy="importDeckButton"]').should('be.visible');

@@ -23,7 +23,7 @@ function PageBanner({ children, image }) {
           text-transform: uppercase;
         }
       `}</style>
-      <h1>{children}</h1>
+      <h1 data-cy="header">{children}</h1>
     </div>
   );
 }
