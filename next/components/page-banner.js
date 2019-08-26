@@ -1,37 +1,32 @@
-import { Component } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 import PropTypes from 'prop-types';
 
-class PageBanner extends Component {
-  render() {
-    const { children, image } = this.props;
-    const theme = this.context;
-    return (
-      <div className="page-banner">
-        <style jsx>{`
-          .page-banner {
-            border-top: ${theme.border};
-            border-bottom: ${theme.border};
-            background: url(${image}) left no-repeat, ${theme.background};
-            height: 70px;
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
-          }
-          .page-banner h1 {
-            color: ${theme.fontColorSelected};
-            margin: 0;
-            padding-right: 0.5em;
-            text-transform: uppercase;
-          }
-        `}</style>
-        <h1>{children}</h1>
-      </div>
-    );
-  }
+function PageBanner({ children, image }) {
+  const theme = useContext(ThemeContext);
+  return (
+    <div className="page-banner">
+      <style jsx>{`
+        .page-banner {
+          border-top: ${theme.border};
+          border-bottom: ${theme.border};
+          background: url(${image}) left no-repeat, ${theme.background};
+          height: 70px;
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+        }
+        .page-banner h1 {
+          color: ${theme.fontColorSelected};
+          margin: 0;
+          padding-right: 0.5em;
+          text-transform: uppercase;
+        }
+      `}</style>
+      <h1>{children}</h1>
+    </div>
+  );
 }
-
-PageBanner.contextType = ThemeContext;
 
 PageBanner.IMG_ARTICLES = `${process.env.MG_CDN}/banner/Banner_Decks.jpg`;
 PageBanner.IMG_CARDS = `${process.env.MG_CDN}/banner/Banner_Cards.jpg`;
