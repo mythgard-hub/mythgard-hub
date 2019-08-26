@@ -30,7 +30,7 @@ class Error extends React.Component {
         </p>
         <p>
           Contact{' '}
-          <a href="mailto:support@mythgardhub.com">support@mythgardhub.com</a>
+          <a href="mailto:support@mythgardhub.com">support@mythgardhub.com</a>{' '}
           with any questions or concerns.
         </p>
       </Layout>
