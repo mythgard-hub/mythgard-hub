@@ -81,7 +81,8 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1
 CREATE TABLE mythgard.account (
   id SERIAL PRIMARY KEY,
   google_id varchar(255) UNIQUE,
-  email varchar(255) UNIQUE
+  email varchar(255) UNIQUE,
+  username varchar(255) UNIQUE
 );
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
