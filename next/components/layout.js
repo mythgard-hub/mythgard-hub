@@ -1,79 +1,76 @@
 import Header from './header';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 
-class Layout extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+function Layout({ title, desc, children }) {
+  const theme = useContext(ThemeContext);
+  return (
+    <div>
+      <style jsx>{`
+        padding: 0 43px 100px 43px;
+        border: ${theme.border};
+        font-family: ${theme.fontFamily};
+        max-width: 960px;
+        margin: auto;
+      `}</style>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" key="desc" content={desc} />
+        <link
+          href="https://fonts.googleapis.com/css?family=Exo+2:400,700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <Header />
+      {children}
+      <style jsx global>{`
+        .header + * {
+          margin-top: 62px;
+        }
 
-  render() {
-    let theme = this.context;
-    return (
-      <div>
-        <style jsx>{`
-          padding: 0 43px 100px 43px;
-          border: ${theme.border};
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          background: ${theme.background};
+          color: ${theme.fontColor};
+          padding: 0;
+          margin: 0;
+        }
+
+        a {
+          color: ${theme.fontColor};
+        }
+
+        hr {
+          border: none;
+          border-top: ${theme.border};
+        }
+
+        button,
+        input[type='submit'] {
+          background-color: ${theme.sectionBackground};
+          border: ${theme.sectionBorder};
+          color: ${theme.fontColor};
           font-family: ${theme.fontFamily};
-          max-width: 960px;
-          margin: auto;
-        `}</style>
-        <Head>
-          <title>{this.props.title}</title>
-          <meta name="description" key="desc" content={this.props.desc} />
-          <link
-            href="https://fonts.googleapis.com/css?family=Exo+2:400,700&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
-        <Header />
-        {this.props.children}
-        <style jsx global>{`
-          .header + * {
-            margin-top: 62px;
-          }
+          font-size: 20px;
+          padding: 5px 10px;
+          width: 100%;
+          border-radius: 10px;
+        }
 
-          * {
-            box-sizing: border-box;
-          }
-
-          body {
-            background: ${theme.background};
-            color: ${theme.fontColor};
-            padding: 0;
-            margin: 0;
-          }
-
-          a {
-            color: ${theme.fontColor};
-          }
-
-          button,
-          input[type='submit'] {
-            background-color: ${theme.sectionBackground};
-            border: ${theme.sectionBorder};
-            color: ${theme.fontColor};
-            font-family: ${theme.fontFamily};
-            font-size: 20px;
-            padding: 5px 10px;
-            width: 100%;
-            border-radius: 10px;
-          }
-
-          .deck-card-table-container {
-            background-color: ${theme.sectionBackground};
-            border: ${theme.sectionBorder};
-            border-radius: 10px;
-          }
-        `}</style>
-      </div>
-    );
-  }
+        .deck-card-table-container {
+          background-color: ${theme.sectionBackground};
+          border: ${theme.sectionBorder};
+          border-radius: 10px;
+        }
+      `}</style>
+    </div>
+  );
 }
-
-Layout.contextType = ThemeContext;
 
 Layout.defaultProps = {
   title: 'Mythgard Hub',
