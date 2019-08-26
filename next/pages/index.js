@@ -2,6 +2,7 @@ import Layout from '../components/layout';
 
 const index = () => (
   <Layout>
+    <hr />
     <div>
       <span>
         <b>Top Articles</b>

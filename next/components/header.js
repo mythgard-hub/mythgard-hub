@@ -17,7 +17,6 @@ class Header extends React.Component {
         <style jsx>{`
           .header {
             background: ${theme.background};
-            border-bottom: ${theme.border};
           }
         `}</style>
         <style jsx>{`
@@ -45,13 +44,10 @@ class Header extends React.Component {
           .header a {
             text-decoration: none;
           }
-          .header a:before {
+          .header a:not(.home):before {
             content: '\u25b6';
             font-size: 80%;
             margin-right: 5px;
-          }
-          .header a.home:before {
-            content: '';
           }
         `}</style>
         <div>

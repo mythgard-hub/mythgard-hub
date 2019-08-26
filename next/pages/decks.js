@@ -2,6 +2,7 @@ import React from 'react';
 import AllDecks from '../components/all-decks';
 import DeckSearchForm from '../components/deck-search-form';
 import SomeDecks from '../components/some-decks';
+import PageBanner from '../components/page-banner';
 import Layout from '../components/layout';
 
 const hasSearch = function(searchQuery) {
@@ -28,7 +29,7 @@ class DecksPage extends React.Component {
   render() {
     return (
       <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
-        <h1>Decks</h1>
+        <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
         <DeckSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
         {hasSearch(this.state.searchQuery) ? (
           <SomeDecks search={this.state.searchQuery} />

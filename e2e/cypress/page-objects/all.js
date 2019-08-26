@@ -9,5 +9,8 @@ export default {
   // deck builder page
   deckBuilderCollection: '[data-cy="deckBuilderCollection"]',
   deckInProgress: '[data-cy="deckInProgress"]',
-  deckCardRow: '[data-cy="deckCardRow"]'
+  deckCardRow: '[data-cy="deckCardRow"]',
+
+  cardSearchText: '[data-cy="cardSearchText"]',
+  cardSearchSubmit: '[data-cy="cardSearchSubmit"]'
 };
