@@ -5,11 +5,11 @@
     "node": true,
     "es6": true
   },
+  "plugins": ["jest"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "plugin:jest"
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "react/react-in-jsx-scope": 0
