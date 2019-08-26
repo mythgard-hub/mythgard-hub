@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeStateless } from '../lib/form-utils.js';
 
@@ -10,18 +10,11 @@ const flagsToValues = (flags, values) =>
     return acc;
   }, []);
 
-let previousFlags;
-
 function CheckboxesInputGroup({ onChange, name, labels, values }) {
-  previousFlags = previousFlags || values.map(() => false);
   const flagStateProps = values.map(() => useState(false));
   const flags = flagStateProps.map(a => a[0]);
 
-  if (previousFlags.join() !== flags.join()) {
-    onChange(flagsToValues(flags, values));
-  }
-
-  previousFlags = [...flags];
+  useEffect(() => onChange(flagsToValues(flags, values)), flags);
 
   return (
     <div data-cy={`cardSearch_${name}`}>

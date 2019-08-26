@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeStateless } from '../lib/form-utils.js';
 import CheckboxesInputGroup from './checkboxes-input-group.js';
