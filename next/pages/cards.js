@@ -1,7 +1,8 @@
 import AllCards from '../components/all-cards';
 import SomeCards from '../components/some-cards.js';
 import Layout from '../components/layout';
-import React, { Component } from 'react';
+import PageBanner from '../components/page-banner';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import CardSearchForm from '../components/card-search-form';
 
@@ -29,7 +30,7 @@ class CardsPage extends Component {
         title="Mythgard Hub | Cards"
         desc="Browse and search for Mythgard cards"
       >
-        <h1>Cards</h1>
+        <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
         <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
         <SomeCards filters={this.state.searchQuery} />
       </Layout>
