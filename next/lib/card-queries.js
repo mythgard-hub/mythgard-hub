@@ -1,18 +1,13 @@
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
 
-export const getFactionsFilter = factionNames => {
-  if (!factionNames.length) {
-    // null means ignore this filter.
-    // Comma allows chaining.
-    return 'cardFactions: null,';
-  }
+export const getFactionsFilter = () => {
   return `
     cardFactions: {
       some: {
         faction: {
           name: {
-            in: ["${factionNames.join('","')}"]
+            in: $factionIds
           }
         }
       }
@@ -44,7 +39,7 @@ export const getRarityFilter = () => {
 
 export const getCardsQuery = filters => {
   return gql`
-    query cards($searchText: String, $rarities: [Rarity!]){
+    query cards($searchText: String, $rarities: [Rarity!], $factionIds: [String!]){
       cards(filter: {
         ${filters}
       }){
@@ -57,21 +52,20 @@ export const getCardsQuery = filters => {
   `;
 };
 
-const getFilters = factions => {
+const getFilters = () => {
   const queryFilters = [];
-  if (factions) {
-    queryFilters.push(getFactionsFilter(factions));
-  }
+  queryFilters.push(getFactionsFilter());
   queryFilters.push(getTextContainsFilter());
   queryFilters.push(getRarityFilter());
   return queryFilters;
 };
 
 export const executeCardQuery = (factions, text, rarities) => {
-  const query = getCardsQuery(getFilters(factions));
+  const query = getCardsQuery(getFilters());
   return useQuery(query, {
     variables: {
       searchText: text || null,
+      factionIds: factions && factions.length ? factions : null,
       rarities: rarities && rarities.length ? rarities : null
     }
   });
