@@ -14,9 +14,11 @@ import PageBanner from '../components/page-banner';
 function DeckBuilderPage() {
   const [mainDeckInput, setMainDeckInput] = useState('');
   const [cardSearchText, setCardSearchText] = useState('');
+  const [cardRarities, setCardRarities] = useState([]);
   const [factions, setFactions] = useState([]);
   const cardFilters = {
     text: cardSearchText,
+    rarities: cardRarities,
     factions
   };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
@@ -68,6 +70,7 @@ function DeckBuilderPage() {
           <DeckBuilderSearchForm
             text={cardSearchText}
             setText={setCardSearchText}
+            setRarities={setCardRarities}
             onFactionClick={setFactions}
           />
           <div className="collection" data-cy="deckBuilderCollection">

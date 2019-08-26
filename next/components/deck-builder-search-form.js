@@ -4,8 +4,9 @@ import CardSearch from './card-search.js';
 import { handleInputChangeStateless } from '../lib/form-utils.js';
 import { Query } from 'react-apollo';
 import FactionFilters from '../components/faction-filters';
+import RarityFilter from '../components/rarity-filter.js';
 
-function DeckBuilderSearchForm({ text, setText, onFactionClick }) {
+function DeckBuilderSearchForm({ text, setText, setRarities, onFactionClick }) {
   const onTextChange = handleInputChangeStateless(setText);
 
   return (
@@ -20,6 +21,7 @@ function DeckBuilderSearchForm({ text, setText, onFactionClick }) {
         data-cy="cardSearchText"
         onChange={onTextChange}
       />
+      <RarityFilter onChange={setRarities}></RarityFilter>
       <FactionFilters onFactionClick={onFactionClick} />
     </>
   );
