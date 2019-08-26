@@ -17,14 +17,13 @@ if (USE_GOOGLE_ANALYTICS) {
 
 class MyApp extends App {
   static async getInitialProps({ ctx, Component }) {
-    const isSSR = !!ctx.req;
     let user;
 
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {};
 
-    if (isSSR) {
+    if (ctx.req) {
       /**
        * In SSR mode we won't be able to rely on sending the cookie
        *

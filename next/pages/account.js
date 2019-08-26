@@ -21,13 +21,17 @@ class Account extends React.Component {
     return !!this.state.username;
   };
 
-  handleSubmit = (apolloClient) => {
+  handleSubmit = apolloClient => {
     if (!this.areSettingsValid()) return;
     const { user, updateUser } = this.context;
     const { username } = this.state;
-    updateUsername(apolloClient, user.id, username).then(({ data }) => {
-      updateUser(data.updateAccount.account);
-    });
+    updateUsername(apolloClient, user.id, username)
+      .then(({ data }) => {
+        updateUser(data.updateAccount.account);
+      })
+      .catch(err => {
+        console.error('Something went wrong while updating user name', err);
+      });
   };
 
   render() {
@@ -36,7 +40,7 @@ class Account extends React.Component {
     return (
       <Layout
         title="Mythgard Hub | Account Settings"
-        desc="The Mythgard Hub privacy policy"
+        desc="Account settings for Mythgard Hub"
       >
         <h1>My Profile</h1>
 
@@ -50,9 +54,9 @@ class Account extends React.Component {
           <div>
             <label>User Name: </label>
             <input
-              data-cy="deckTitle"
+              data-cy="username"
               type="text"
-              name="deckName"
+              name="username"
               onChange={e => {
                 this.setState({ username: e.target.value });
               }}
