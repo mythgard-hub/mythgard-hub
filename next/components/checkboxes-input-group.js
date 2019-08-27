@@ -18,7 +18,7 @@ function CheckboxesInputGroup({ onChange, name, labels, values }) {
 
   return (
     <div data-cy={`cardSearch_${name}`}>
-      {flagStateProps.map((a, i) => {
+      {flagStateProps.map(([value, setter], i) => {
         const label = labels[i];
         return (
           <label key={i}>
@@ -26,8 +26,8 @@ function CheckboxesInputGroup({ onChange, name, labels, values }) {
             <input
               type="checkbox"
               name={`${name}_${label}`}
-              value={a[0]}
-              onChange={handleInputChangeStateless(a[1])}
+              value={value}
+              onChange={handleInputChangeStateless(setter)}
             />
           </label>
         );
