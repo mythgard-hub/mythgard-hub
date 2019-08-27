@@ -53,12 +53,28 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.equal(cards.length);
 
         // basic test - rarity filter
-        cy.get('[data-cy="cardSearchRarity"] input:first').click();
+        cy.get('[data-cy="cardSearch_rarity"] input:first').click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
       })
       .then(cards => {
         expect(numCardsBeforeFilter).to.be.above(cards.length);
-        cy.get('[data-cy="cardSearchRarity"] input:first').click();
+        cy.get('[data-cy="cardSearch_rarity"] input:first').click();
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.equal(cards.length);
+
+        // basic test - mana cost filter
+        cy.get('[data-cy="cardSearch_manaCost"] input')
+          .eq(2)
+          .click();
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.be.above(cards.length);
+        cy.get('[data-cy="cardSearch_manaCost"] input')
+          .eq(2)
+          .click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
       })
       .then(cards => {

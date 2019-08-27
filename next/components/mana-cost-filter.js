@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { handleInputChangeStateless } from '../lib/form-utils.js';
 import CheckboxesInputGroup from './checkboxes-input-group.js';
 
-const values = ['COMMON', 'UNCOMMON', 'RARE', 'MYTHIC'];
-const labels = values.map(s => s.toLowerCase());
-const name = 'rarity';
+const values = ['0', '1', '2', '3', '4', '5', '6+'];
+const labels = [...values];
+const name = 'manaCost';
 
-function RarityFilter({ onChange }) {
+function ManaCostFilter({ onChange }) {
   return (
     <CheckboxesInputGroup
       onChange={onChange}
@@ -18,8 +17,8 @@ function RarityFilter({ onChange }) {
   );
 }
 
-RarityFilter.propTypes = {
+ManaCostFilter.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-export default RarityFilter;
+export default ManaCostFilter;

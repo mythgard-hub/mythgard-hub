@@ -7,9 +7,12 @@ export default function SomeCards(props) {
 
   let hasFilters = filters;
   if (hasFilters) {
-    const { factions, text, rarities } = filters;
+    const { factions, text, rarities, manaCosts } = filters;
     hasFilters =
-      (factions && factions.length) || (rarities && rarities.length) || text;
+      (factions && factions.length) ||
+      (rarities && rarities.length) ||
+      (manaCosts && manaCosts.length) ||
+      text;
   }
 
   if (!hasFilters) {
@@ -24,6 +27,7 @@ SomeCards.propTypes = {
   filters: PropTypes.shape({
     factions: PropTypes.array,
     text: PropTypes.string,
-    rarities: PropTypes.array
+    rarities: PropTypes.array,
+    manaCosts: PropTypes.array
   })
 };
