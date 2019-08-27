@@ -20,6 +20,7 @@ function DeckBuilderPage() {
   const cardFilters = {
     text: cardSearchText,
     rarities: cardRarities,
+    manaCosts: cardManaCosts,
     factions
   };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
