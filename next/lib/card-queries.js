@@ -40,7 +40,7 @@ export const getCardsQuery = () => {
 };
 
 // ['1', '3', '6+'] => [[1,3], 6]
-const getManaCostVars = manaCostEnums => {
+export const getManaCostVars = manaCostEnums => {
   if (!(manaCostEnums && manaCostEnums.length)) {
     return [null, null];
   }
