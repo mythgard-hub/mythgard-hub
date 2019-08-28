@@ -80,6 +80,22 @@ describe('Deck builder page', () => {
       .then(cards => {
         expect(numCardsBeforeFilter).to.equal(cards.length);
 
+        // basic test - mana cost filter
+        cy.get('[data-cy="cardSearch_supertype"] input')
+          .eq(1)
+          .click();
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.be.above(cards.length);
+        cy.get('[data-cy="cardSearch_supertype"] input')
+          .eq(1)
+          .click();
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.equal(cards.length);
+
         // finally save the deck
         cy.get('[data-cy="deckTitle"]').type('Floop the Pig');
         cy.get('[data-cy="saveDeck"]').click();
