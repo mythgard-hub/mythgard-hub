@@ -68,7 +68,7 @@ export default function DeckCardsTable({ deck, deleteCard }) {
 }
 
 DeckCardsTable.propTypes = {
-  deleteCard: PropTypes.func,
+  deleteCard: PropTypes.func.isRequired,
   deck: PropTypes.shape({
     deckName: PropTypes.string,
     deckPath: PropTypes.string,
