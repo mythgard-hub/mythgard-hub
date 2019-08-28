@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CheckboxesInputGroup from './checkboxes-input-group.js';
 
-const values = ['COMMON', 'UNCOMMON', 'RARE', 'MYTHIC'];
-const labels = values.map(s => s.toLowerCase());
-const name = 'rarity';
+const values = ['Minion', 'Spell', 'Enchantment', 'Artifact', 'Item', 'Brand'];
+const labels = [...values];
+const name = 'supertype';
 
-function RarityFilter({ onChange }) {
+function SupertypeFilter({ onChange }) {
   return (
     <CheckboxesInputGroup
       onChange={onChange}
@@ -17,8 +17,8 @@ function RarityFilter({ onChange }) {
   );
 }
 
-RarityFilter.propTypes = {
+SupertypeFilter.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-export default RarityFilter;
+export default SupertypeFilter;

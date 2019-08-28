@@ -8,6 +8,7 @@ export const getCardsQuery = () => {
       $rarities: [Rarity!]
       $factionIds: [String!]
       $manaCosts: [Int!]
+      $supertypes: [Cardtype]
       $manaGTE: Int
     ) {
       cards(
@@ -27,6 +28,7 @@ export const getCardsQuery = () => {
             }
           ]
           rarity: { in: $rarities }
+          supertype: { containedBy: $supertypes }
           cardFactions: { some: { faction: { name: { in: $factionIds } } } }
         }
       ) {
@@ -57,7 +59,13 @@ export const getManaCostVars = manaCostEnums => {
   return [discreteManaCosts, manaGTE];
 };
 
-export const executeCardQuery = (factions, text, rarities, manaCostEnums) => {
+export const executeCardQuery = (
+  factions,
+  text,
+  rarities,
+  manaCostEnums,
+  supertypes
+) => {
   const [manaCosts, manaCostGTE] = getManaCostVars(manaCostEnums);
   const query = getCardsQuery();
   return useQuery(query, {
@@ -66,6 +74,10 @@ export const executeCardQuery = (factions, text, rarities, manaCostEnums) => {
       factionIds: factions && factions.length ? factions : null,
       rarities: rarities && rarities.length ? rarities : null,
       manaCosts: manaCosts && manaCosts.length ? manaCosts : null,
+      supertypes:
+        supertypes && supertypes.length
+          ? supertypes.map(s => s.toUpperCase())
+          : null,
       manaGTE: manaCostGTE || null
     }
   });
