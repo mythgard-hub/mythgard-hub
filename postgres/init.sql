@@ -4,11 +4,14 @@ CREATE SCHEMA mythgard;
 
 CREATE TYPE mythgard.rarity AS ENUM ('common', 'uncommon', 'rare', 'mythic');
 
+CREATE TYPE mythgard.cardType AS ENUM ('Minion', 'Spell', 'Enchantment', 'Artifact', 'Item', 'Brand');
+
 CREATE TABLE mythgard.card (
   id SERIAL PRIMARY KEY,
   name varchar(255),
   rules TEXT,
-  type varchar(255),
+  supertype mythgard.cardType[] default '{Minion}',
+  subtype varchar(255),
   atk integer,
   def integer,
   mana integer,
@@ -16,17 +19,17 @@ CREATE TABLE mythgard.card (
   rarity mythgard.rarity default 'common'
 );
 
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
-  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1', 'common');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
-  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2', 'uncommon');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
-  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6', 'rare');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem", "rarity")
-  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2', 'mythic');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
-  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2');
-INSERT INTO mythgard.card ("name", "rules", "type", "atk", "def", "mana", "gem")
+INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
+  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1', 'common', '{Minion}');
+INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
+  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2', 'uncommon', '{Spell}');
+INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
+  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6', 'rare', '{Enchantment}');
+INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
+  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2', 'mythic', '{Artifact}');
+INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, supertype)
+  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2', '{Minion,Artifact}');
+INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem)
   VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', '0');
 
 CREATE TABLE mythgard.path (
