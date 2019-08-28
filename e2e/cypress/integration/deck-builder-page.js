@@ -20,7 +20,18 @@ describe('Deck builder page', () => {
     cy.get(cardList).should('be.visible');
     cy.get(deckInProgress).should('be.visible');
     cy.get('[data-cy="factionFilters"]').should('be.visible');
+
+    // basic test - add some cards to the deck
     cy.get(`${cardListCard}:first`).click();
+    cy.get(`${cardListCard}:first`).click();
+    cy.get(`${cardListCard}`)
+      .eq(2)
+      .click();
+    cy.get(deckInProgress).should('be.visible');
+    cy.get(deckCardRow).should('have.length', 2);
+
+    // basic test - delete a card from the deck
+    cy.get('[data-cy="deckDeleteCard"]:first').click();
     cy.get(deckInProgress).should('be.visible');
     cy.get(deckCardRow).should('have.length', 1);
 
