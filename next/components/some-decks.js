@@ -25,6 +25,7 @@ class SomeDecks extends React.Component {
     variables.modifiedOnOrAfter = daysAgoToGraphQLTimestamp(
       variables.updatedTime
     );
+    variables.authorName = variables.authorName || null;
     return (
       <Query query={decksSearchQuery} variables={variables}>
         {({ loading, error, data }) => {

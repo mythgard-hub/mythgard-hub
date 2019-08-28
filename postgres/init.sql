@@ -50,16 +50,26 @@ INSERT INTO mythgard.power ("id", "name") VALUES (1, 'It''s over 9000!!');
 INSERT INTO mythgard.power ("id", "name") VALUES (2, 'Power Rangers');
 INSERT INTO mythgard.power ("id", "name") VALUES (3, 'Powerpuff Girls');
 
+-- In PostgreSQL, user is a keyword
+CREATE TABLE mythgard.account (
+  id SERIAL PRIMARY KEY,
+  google_id varchar(255) UNIQUE,
+  email varchar(255) UNIQUE,
+  username varchar(255) UNIQUE
+);
+
+INSERT INTO mythgard.account ("username") VALUES ('lsv');
+
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,
   name varchar(255),
-  author_id integer,
+  author_id integer REFERENCES mythgard.account (id),
   path_id integer REFERENCES mythgard.path (id),
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp
 );
-INSERT INTO mythgard.deck("name") VALUES ('dragons');
-INSERT INTO mythgard.deck("name", "path_id", "power_id") VALUES ('cats', 1, 1);
+INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
 INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', '2019-05-1 00:00:00');
 INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', '2019-01-1 00:00:00');
 
@@ -79,14 +89,6 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
-
--- In PostgreSQL, user is a keyword
-CREATE TABLE mythgard.account (
-  id SERIAL PRIMARY KEY,
-  google_id varchar(255) UNIQUE,
-  email varchar(255) UNIQUE,
-  username varchar(255) UNIQUE
-);
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (

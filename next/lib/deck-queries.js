@@ -90,10 +90,15 @@ export const getDeckSearchQuery = (
   const factionFilters = getFactionFilters(factionNames, isOnlyFactions);
   const allAndQueries = [...cardFilters, ...factionFilters];
   return gql`
-    query decks($name: String!, $modifiedOnOrAfter: Datetime!) {
+    query decks($name: String!, $authorName: String, $modifiedOnOrAfter: Datetime!) {
       decks(
         filter: {
           name: { includesInsensitive: $name },
+          author: {
+            username: {
+              includesInsensitive: $authorName
+            }
+          },
           modified: {
             greaterThanOrEqualTo: $modifiedOnOrAfter
           },

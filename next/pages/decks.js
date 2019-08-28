@@ -12,7 +12,7 @@ const hasSearch = function(searchQuery) {
       searchQuery.cardIds ||
       searchQuery.factionNames ||
       searchQuery.updatedTime ||
-      searchQuery.creatorName)
+      searchQuery.authorName)
   );
 };
 
