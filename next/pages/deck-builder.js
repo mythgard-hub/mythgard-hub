@@ -44,6 +44,16 @@ function DeckBuilderPage() {
     });
   };
 
+  const deleteCardFromTable = id => {
+    const newMainDeck = { ...deckInProgress.mainDeck };
+    delete newMainDeck[id];
+
+    setDeckInProgress({
+      ...deckInProgress,
+      mainDeck: newMainDeck
+    });
+  };
+
   const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
 
   return (
@@ -97,7 +107,10 @@ function DeckBuilderPage() {
               deckName={deckInProgress.deckName}
               onChange={updateDeckName}
             />
-            <DeckCardTable deck={deckInProgress} />
+            <DeckCardTable
+              deck={deckInProgress}
+              deleteCard={deleteCardFromTable}
+            />
           </div>
         </div>
       </div>
