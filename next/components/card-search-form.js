@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChange } from '../lib/form-utils.js';
+import FactionFilters from './faction-filters.js';
 
 class CardSearchForm extends Component {
   constructor(props) {
@@ -13,6 +14,10 @@ class CardSearchForm extends Component {
   handleSubmit(e) {
     e && e.preventDefault();
     this.props.onSubmit(this.state);
+  }
+
+  onFactionClick(factionNames) {
+    // this.setState({ factionNames });
   }
 
   render() {
@@ -29,6 +34,7 @@ class CardSearchForm extends Component {
         />
         <br />
         <br />
+        <FactionFilters onFactionClick={this.onFactionClick} />
         <input
           data-cy="cardSearchSubmit"
           type="submit"
