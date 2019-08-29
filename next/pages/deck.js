@@ -10,6 +10,7 @@ export const deckQuery = gql`
     deck(id: $id) {
       id
       name
+      authorId
       power {
         name
       }

@@ -77,6 +77,23 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
+CREATE OR REPLACE FUNCTION mythgard.remove_refs_to_deck()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Remove cards
+  DELETE FROM mythgard.card_deck
+  WHERE deck_id = OLD.id;
+  -- Remove remove from tournaments
+  DELETE from mythgard.tournament_deck
+  where deck_id = OLD.id;
+  RETURN OLD;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER remove_refs_to_deck_before_delete
+  BEFORE DELETE ON mythgard.deck
+  FOR EACH ROW EXECUTE PROCEDURE mythgard.remove_refs_to_deck();
+
 -- In PostgreSQL, user is a keyword
 CREATE TABLE mythgard.account (
   id SERIAL PRIMARY KEY,
