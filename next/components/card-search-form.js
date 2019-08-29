@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
+import SupertypeFilter from '../components/supertype-filter.js';
 
 export default function CardSearchForm(props) {
   const { onSubmit } = props;
@@ -24,6 +25,7 @@ export default function CardSearchForm(props) {
         data-cy="cardSearchText"
         onChange={handleInputChangeHooks(setText)}
       />
+      <SupertypeFilter onChange={() => {}} />
       <br />
       <br />
       <FactionFilters
