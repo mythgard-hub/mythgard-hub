@@ -37,6 +37,18 @@ describe('Cards Page', function() {
         expect(length).to.equal(allCardsLength);
 
         cy.get(`${factionFilter}:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.be.below(allCardsLength);
+
+        cy.get(`${factionFilter}:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.equal(allCardsLength);
       });
   });
 });
