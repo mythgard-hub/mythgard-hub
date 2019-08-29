@@ -6,7 +6,8 @@ import {
   factionFilter,
   deckCardRow,
   cardSearchText,
-  superTypePicker
+  superTypePicker,
+  manaPicker
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -77,14 +78,14 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.equal(cards.length);
 
         // basic test - mana cost filter
-        cy.get('[data-cy="cardSearch_manaCost"] input')
+        cy.get(`${manaPicker} input`)
           .eq(2)
           .click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
       })
       .then(cards => {
         expect(numCardsBeforeFilter).to.be.above(cards.length);
-        cy.get('[data-cy="cardSearch_manaCost"] input')
+        cy.get(`${manaPicker} input`)
           .eq(2)
           .click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);

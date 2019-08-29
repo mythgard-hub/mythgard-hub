@@ -3,7 +3,8 @@ import {
   cardSearchSubmit,
   factionFilter,
   cardListCard,
-  superTypePicker
+  superTypePicker,
+  manaPicker
 } from '../page-objects/all.js';
 describe('Cards Page', function() {
   beforeEach(() => {
@@ -65,6 +66,24 @@ describe('Cards Page', function() {
       })
       .then(({ length }) => {
         expect(length).to.equal(allCardsLength);
+
+        // basic test - mana cost filter
+        cy.get(`${manaPicker} input`)
+          .eq(2)
+          .click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(cards => {
+        expect(allCardsLength).to.be.above(cards.length);
+        cy.get(`${manaPicker} input`)
+          .eq(2)
+          .click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(cards => {
+        expect(allCardsLength).to.equal(cards.length);
       });
   });
 });

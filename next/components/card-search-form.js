@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
+import ManaCostFilter from '../components/mana-cost-filter.js';
 import SupertypeFilter from '../components/supertype-filter.js';
 
 export default function CardSearchForm(props) {
@@ -9,10 +10,11 @@ export default function CardSearchForm(props) {
   const [text, setText] = useState('');
   const [factions, setFactions] = useState(null);
   const [supertypes, setSupertypes] = useState(null);
+  const [manaCosts, setManaCosts] = useState(null);
 
   const handleSubmit = e => {
     e && e.preventDefault();
-    onSubmit({ text, factions, supertypes });
+    onSubmit({ text, factions, supertypes, manaCosts });
   };
 
   return (
@@ -27,6 +29,7 @@ export default function CardSearchForm(props) {
         onChange={handleInputChangeHooks(setText)}
       />
       <SupertypeFilter onChange={setSupertypes} />
+      <ManaCostFilter onChange={setManaCosts} />
       <br />
       <br />
       <FactionFilters
