@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CardSearch from './card-search.js';
 import { handleInputChange } from '../lib/form-utils.js';
-import { Query } from 'react-apollo';
-import allCardsQuery from '../lib/queries/all-cards-query';
 
 class CardSearchForm extends Component {
   constructor(props) {
