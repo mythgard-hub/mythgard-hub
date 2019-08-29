@@ -16,11 +16,13 @@ function DeckBuilderPage() {
   const [cardSearchText, setCardSearchText] = useState('');
   const [cardRarities, setCardRarities] = useState([]);
   const [cardManaCosts, setCardManaCosts] = useState([]);
+  const [supertypes, setSupertypes] = useState([]);
   const [factions, setFactions] = useState([]);
   const cardFilters = {
     text: cardSearchText,
     rarities: cardRarities,
     manaCosts: cardManaCosts,
+    supertypes,
     factions
   };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
@@ -84,6 +86,7 @@ function DeckBuilderPage() {
             setText={setCardSearchText}
             setRarities={setCardRarities}
             setManaCosts={setCardManaCosts}
+            setSupertypes={setSupertypes}
             onFactionClick={setFactions}
           />
           <div className="collection" data-cy="deckBuilderCollection">

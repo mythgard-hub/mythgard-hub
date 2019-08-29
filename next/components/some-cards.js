@@ -7,11 +7,12 @@ export default function SomeCards(props) {
 
   let hasFilters = filters;
   if (hasFilters) {
-    const { factions, text, rarities, manaCosts } = filters;
+    const { factions, text, rarities, manaCosts, supertypes } = filters;
     hasFilters =
       (factions && factions.length) ||
       (rarities && rarities.length) ||
       (manaCosts && manaCosts.length) ||
+      (supertypes && supertypes.length) ||
       text;
   }
 
@@ -28,6 +29,7 @@ SomeCards.propTypes = {
     factions: PropTypes.array,
     text: PropTypes.string,
     rarities: PropTypes.array,
-    manaCosts: PropTypes.array
+    manaCosts: PropTypes.array,
+    supertypes: PropTypes.array
   })
 };

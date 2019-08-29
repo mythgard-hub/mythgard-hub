@@ -4,13 +4,15 @@ import { handleInputChangeStateless } from '../lib/form-utils.js';
 import FactionFilters from '../components/faction-filters';
 import RarityFilter from '../components/rarity-filter.js';
 import ManaCostFilter from '../components/mana-cost-filter.js';
+import SupertypeFilter from '../components/supertype-filter.js';
 
 function DeckBuilderSearchForm({
   text,
   setText,
   setRarities,
   onFactionClick,
-  setManaCosts
+  setManaCosts,
+  setSupertypes
 }) {
   const onTextChange = handleInputChangeStateless(setText);
 
@@ -28,6 +30,7 @@ function DeckBuilderSearchForm({
       />
       <RarityFilter onChange={setRarities}></RarityFilter>
       <ManaCostFilter onChange={setManaCosts} />
+      <SupertypeFilter onChange={setSupertypes} />
       <FactionFilters onFactionClick={onFactionClick} />
     </>
   );
@@ -38,7 +41,8 @@ DeckBuilderSearchForm.propTypes = {
   text: PropTypes.string.isRequired,
   onFactionClick: PropTypes.func.isRequired,
   setRarities: PropTypes.func.isRequired,
-  setManaCosts: PropTypes.func.isRequired
+  setManaCosts: PropTypes.func.isRequired,
+  setSupertypes: PropTypes.func.isRequired
 };
 
 export default DeckBuilderSearchForm;
