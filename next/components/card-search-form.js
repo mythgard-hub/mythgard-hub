@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { handleInputChangeStateless } from '../lib/form-utils.js';
+import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
 
 export default function CardSearchForm(props) {
@@ -22,7 +22,7 @@ export default function CardSearchForm(props) {
         placeholder="Name or Rules Text"
         maxLength="100"
         data-cy="cardSearchText"
-        onChange={handleInputChangeStateless(setText)}
+        onChange={handleInputChangeHooks(setText)}
       />
       <br />
       <br />

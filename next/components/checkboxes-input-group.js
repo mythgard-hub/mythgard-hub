@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { handleInputChangeStateless } from '../lib/form-utils.js';
+import { handleInputChangeHooks } from '../lib/form-utils.js';
 
 const flagsToValues = (flags, values) =>
   flags.reduce((acc, isChecked, i) => {
@@ -27,7 +27,7 @@ function CheckboxesInputGroup({ onChange, name, labels, values }) {
               type="checkbox"
               name={`${name}_${label}`}
               value={value}
-              onChange={handleInputChangeStateless(setter)}
+              onChange={handleInputChangeHooks(setter)}
             />
           </label>
         );
