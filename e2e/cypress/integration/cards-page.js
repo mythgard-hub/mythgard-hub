@@ -49,6 +49,9 @@ describe('Cards Page', function() {
       })
       .then(({ length }) => {
         expect(length).to.equal(allCardsLength);
+
+        // basic test - supertype filter
+        cy.get('[data-cy="cardSearch_supertype"] input:first');
       });
   });
 });
