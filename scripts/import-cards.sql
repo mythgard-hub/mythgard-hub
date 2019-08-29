@@ -30,7 +30,7 @@ insert into mythgard.card (name, rules, supertype, subtype, atk, def)
 select
   name,
   rules,
-  string_to_array(supertype, ',')::mythgard.cardType[],
+  string_to_array(upper(supertype), ',')::mythgard.cardType[],
   subtype,
   REGEXP_REPLACE(atk, '[^0-9]' ,'-1')::integer,
   REGEXP_REPLACE(def, '[^0-9]' ,'-1')::integer
