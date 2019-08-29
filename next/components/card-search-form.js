@@ -8,10 +8,11 @@ export default function CardSearchForm(props) {
   const { onSubmit } = props;
   const [text, setText] = useState('');
   const [factions, setFactions] = useState(null);
+  const [supertypes, setSupertypes] = useState(null);
 
   const handleSubmit = e => {
     e && e.preventDefault();
-    onSubmit({ text, factions });
+    onSubmit({ text, factions, supertypes });
   };
 
   return (
@@ -25,7 +26,7 @@ export default function CardSearchForm(props) {
         data-cy="cardSearchText"
         onChange={handleInputChangeHooks(setText)}
       />
-      <SupertypeFilter onChange={() => {}} />
+      <SupertypeFilter onChange={setSupertypes} />
       <br />
       <br />
       <FactionFilters

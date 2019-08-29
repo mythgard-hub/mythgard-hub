@@ -8,7 +8,7 @@ class CardsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.handlSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
   handleSearchSubmit(searchQuery) {
