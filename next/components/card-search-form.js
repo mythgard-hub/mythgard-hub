@@ -9,6 +9,7 @@ class CardSearchForm extends Component {
     this.state = { text: '' };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = handleInputChange.bind(this);
+    this.onFactionClick = this.onFactionClick.bind(this);
   }
 
   handleSubmit(e) {
@@ -16,8 +17,8 @@ class CardSearchForm extends Component {
     this.props.onSubmit(this.state);
   }
 
-  onFactionClick(factionNames) {
-    // this.setState({ factionNames });
+  onFactionClick(factions) {
+    this.setState({ factions });
   }
 
   render() {
