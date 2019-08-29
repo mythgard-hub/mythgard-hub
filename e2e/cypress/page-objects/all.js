@@ -12,5 +12,7 @@ export default {
   deckCardRow: '[data-cy="deckCardRow"]',
 
   cardSearchText: '[data-cy="cardSearchText"]',
-  cardSearchSubmit: '[data-cy="cardSearchSubmit"]'
+  cardSearchSubmit: '[data-cy="cardSearchSubmit"]',
+
+  superTypePicker: '[data-cy="cardSearch_supertype"]'
 };

@@ -2,7 +2,8 @@ import {
   cardSearchText,
   cardSearchSubmit,
   factionFilter,
-  cardListCard
+  cardListCard,
+  superTypePicker
 } from '../page-objects/all.js';
 describe('Cards Page', function() {
   beforeEach(() => {
@@ -51,7 +52,7 @@ describe('Cards Page', function() {
         expect(length).to.equal(allCardsLength);
 
         // basic test - supertype filter
-        cy.get('[data-cy="cardSearch_supertype"] input:first');
+        cy.get(`${superTypePicker} input:first`);
       });
   });
 });
