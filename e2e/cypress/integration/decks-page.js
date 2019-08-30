@@ -77,6 +77,20 @@ describe('Decks Page', function() {
             'have.length',
             initialListLength
           );
+
+          // test deck author search
+          cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv');
+          cy.get('[data-cy="deckSearchSubmit"]').click();
+          return cy.get('[data-cy="deckListItem"]');
+        })
+        .then(cards => {
+          expect(cards.length).to.be.lessThan(initialListLength);
+          cy.get('[data-cy="deckSearchDeckAuthor"]').clear();
+          cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.get('[data-cy="deckListItem"]').should(
+            'have.length',
+            initialListLength
+          );
         });
     });
   });

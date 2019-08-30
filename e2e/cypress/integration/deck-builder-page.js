@@ -5,7 +5,8 @@ import {
   cardList,
   factionFilter,
   deckCardRow,
-  cardSearchText
+  cardSearchText,
+  superTypePicker
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -20,7 +21,18 @@ describe('Deck builder page', () => {
     cy.get(cardList).should('be.visible');
     cy.get(deckInProgress).should('be.visible');
     cy.get('[data-cy="factionFilters"]').should('be.visible');
+
+    // basic test - add some cards to the deck
     cy.get(`${cardListCard}:first`).click();
+    cy.get(`${cardListCard}:first`).click();
+    cy.get(`${cardListCard}`)
+      .eq(2)
+      .click();
+    cy.get(deckInProgress).should('be.visible');
+    cy.get(deckCardRow).should('have.length', 2);
+
+    // basic test - delete a card from the deck
+    cy.get('[data-cy="deckDeleteCard"]:first').click();
     cy.get(deckInProgress).should('be.visible');
     cy.get(deckCardRow).should('have.length', 1);
 
@@ -74,6 +86,22 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.be.above(cards.length);
         cy.get('[data-cy="cardSearch_manaCost"] input')
           .eq(2)
+          .click();
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.equal(cards.length);
+
+        // basic test - supertype filter
+        cy.get(`${superTypePicker} input`)
+          .eq(1)
+          .click();
+        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+      })
+      .then(cards => {
+        expect(numCardsBeforeFilter).to.be.above(cards.length);
+        cy.get(`${superTypePicker} input`)
+          .eq(1)
           .click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
       })

@@ -11,7 +11,8 @@ const hasSearch = function(searchQuery) {
     (searchQuery.name ||
       searchQuery.cardIds ||
       searchQuery.factionNames ||
-      searchQuery.updatedTime)
+      searchQuery.updatedTime ||
+      searchQuery.authorName)
   );
 };
 

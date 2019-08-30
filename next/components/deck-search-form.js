@@ -15,7 +15,8 @@ class DeckSearchForm extends React.Component {
       cardIds: [],
       factionNames: [],
       isOnlyFactions: true,
-      updatedTime: '150'
+      updatedTime: '150',
+      authorName: ''
     };
 
     this.handleInputChange = handleInputChange.bind(this);
@@ -63,6 +64,19 @@ class DeckSearchForm extends React.Component {
             name="name"
             data-cy="deckSearchDeckName"
             className="name"
+            onChange={this.handleInputChange}
+          />
+        </label>
+        <br />
+        <br />
+        <label>
+          Creator Name:
+          <input
+            type="text"
+            value={this.state.authorName}
+            data-cy="deckSearchDeckAuthor"
+            name="authorName"
+            className="authorName"
             onChange={this.handleInputChange}
           />
         </label>

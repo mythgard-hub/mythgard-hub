@@ -16,11 +16,13 @@ function DeckBuilderPage() {
   const [cardSearchText, setCardSearchText] = useState('');
   const [cardRarities, setCardRarities] = useState([]);
   const [cardManaCosts, setCardManaCosts] = useState([]);
+  const [supertypes, setSupertypes] = useState([]);
   const [factions, setFactions] = useState([]);
   const cardFilters = {
     text: cardSearchText,
     rarities: cardRarities,
     manaCosts: cardManaCosts,
+    supertypes,
     factions
   };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
@@ -39,6 +41,16 @@ function DeckBuilderPage() {
       quantity: 1,
       card
     });
+
+    setDeckInProgress({
+      ...deckInProgress,
+      mainDeck: newMainDeck
+    });
+  };
+
+  const deleteCardFromTable = id => {
+    const newMainDeck = { ...deckInProgress.mainDeck };
+    delete newMainDeck[id];
 
     setDeckInProgress({
       ...deckInProgress,
@@ -74,6 +86,7 @@ function DeckBuilderPage() {
             setText={setCardSearchText}
             setRarities={setCardRarities}
             setManaCosts={setCardManaCosts}
+            setSupertypes={setSupertypes}
             onFactionClick={setFactions}
           />
           <div className="collection" data-cy="deckBuilderCollection">
@@ -100,7 +113,10 @@ function DeckBuilderPage() {
               deckName={deckInProgress.deckName}
               onChange={updateDeckName}
             />
-            <DeckCardTable deck={deckInProgress} />
+            <DeckCardTable
+              deck={deckInProgress}
+              deleteCard={deleteCardFromTable}
+            />
           </div>
         </div>
       </div>

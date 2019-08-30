@@ -1,7 +1,9 @@
 import {
   cardSearchText,
   cardSearchSubmit,
-  cardListCard
+  factionFilter,
+  cardListCard,
+  superTypePicker
 } from '../page-objects/all.js';
 describe('Cards Page', function() {
   beforeEach(() => {
@@ -29,6 +31,35 @@ describe('Cards Page', function() {
         expect(length).to.be.below(allCardsLength);
 
         cy.get(cardSearchText).clear();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.equal(allCardsLength);
+
+        cy.get(`${factionFilter}:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.be.below(allCardsLength);
+
+        cy.get(`${factionFilter}:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.equal(allCardsLength);
+
+        // basic test - supertype filter
+        cy.get(`${superTypePicker} input:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.be.below(allCardsLength);
+
+        cy.get(`${superTypePicker} input:first`).click();
         cy.get(cardSearchSubmit).click();
         return cy.get(cardListCard);
       })
