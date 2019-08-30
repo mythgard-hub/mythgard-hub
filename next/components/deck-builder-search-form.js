@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { handleInputChangeStateless } from '../lib/form-utils.js';
+import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from '../components/faction-filters';
 import RarityFilter from '../components/rarity-filter.js';
 import ManaCostFilter from '../components/mana-cost-filter.js';
@@ -14,7 +14,7 @@ function DeckBuilderSearchForm({
   setManaCosts,
   setSupertypes
 }) {
-  const onTextChange = handleInputChangeStateless(setText);
+  const onTextChange = handleInputChangeHooks(setText);
 
   return (
     <>

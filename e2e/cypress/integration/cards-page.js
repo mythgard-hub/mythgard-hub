@@ -1,6 +1,7 @@
 import {
   cardSearchText,
   cardSearchSubmit,
+  factionFilter,
   cardListCard
 } from '../page-objects/all.js';
 describe('Cards Page', function() {
@@ -29,6 +30,20 @@ describe('Cards Page', function() {
         expect(length).to.be.below(allCardsLength);
 
         cy.get(cardSearchText).clear();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.equal(allCardsLength);
+
+        cy.get(`${factionFilter}:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(({ length }) => {
+        expect(length).to.be.below(allCardsLength);
+
+        cy.get(`${factionFilter}:first`).click();
         cy.get(cardSearchSubmit).click();
         return cy.get(cardListCard);
       })
