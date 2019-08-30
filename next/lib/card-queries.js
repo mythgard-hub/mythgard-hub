@@ -58,7 +58,7 @@ export const getCardsQuery = () => {
 };
 
 // ['1', '3', '6+'] => [[1,3], 6]
-export const getManaCostVars = manaCostEnums => {
+export const intEnumsToGQLVars = manaCostEnums => {
   if (!(manaCostEnums && manaCostEnums.length)) {
     return [null, null];
   }
@@ -84,9 +84,9 @@ export const executeCardQuery = (
   strengthEnums,
   defenseEnums
 ) => {
-  const [manaCosts, manaCostGTE] = getManaCostVars(manaCostEnums);
-  const [strengths, strengthGTE] = getManaCostVars(strengthEnums);
-  const [defenses, defenseGTE] = getManaCostVars(defenseEnums);
+  const [manaCosts, manaCostGTE] = intEnumsToGQLVars(manaCostEnums);
+  const [strengths, strengthGTE] = intEnumsToGQLVars(strengthEnums);
+  const [defenses, defenseGTE] = intEnumsToGQLVars(defenseEnums);
   const query = getCardsQuery();
   return useQuery(query, {
     variables: {
