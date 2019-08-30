@@ -9,9 +9,11 @@ export const getCardsQuery = () => {
       $factionIds: [String!]
       $manaCosts: [Int!]
       $strengths: [Int!]
+      $defenses: [Int!]
       $supertypes: [Cardtype]
       $manaGTE: Int
       $strengthGTE: Int
+      $defenseGTE: Int
     ) {
       cards(
         filter: {
@@ -32,6 +34,12 @@ export const getCardsQuery = () => {
               or: [
                 { atk: { in: $strengths } }
                 { atk: { greaterThanOrEqualTo: $strengthGTE } }
+              ]
+            }
+            {
+              or: [
+                { atk: { in: $defenses } }
+                { atk: { greaterThanOrEqualTo: $defenseGTE } }
               ]
             }
           ]
@@ -73,10 +81,12 @@ export const executeCardQuery = (
   rarities,
   manaCostEnums,
   supertypes,
-  strengthEnums
+  strengthEnums,
+  defenseEnums
 ) => {
   const [manaCosts, manaCostGTE] = getManaCostVars(manaCostEnums);
   const [strengths, strengthGTE] = getManaCostVars(strengthEnums);
+  const [defenses, defenseGTE] = getManaCostVars(defenseEnums);
   const query = getCardsQuery();
   return useQuery(query, {
     variables: {
@@ -87,6 +97,8 @@ export const executeCardQuery = (
       manaGTE: manaCostGTE || null,
       strengths: strengths && strengths.length ? strengths : null,
       strengthGTE: strengthGTE || null,
+      defenses: defenses && defenses.length ? defenses : null,
+      defenseGTE: defenseGTE || null,
       supertypes:
         supertypes && supertypes.length
           ? supertypes.map(s => s.toUpperCase())

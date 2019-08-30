@@ -10,7 +10,8 @@ function filteredCards({ filters, onCardClick }) {
     rarities,
     manaCosts,
     supertypes,
-    strengths
+    strengths,
+    defenses
   } = filters;
 
   const { loading, error, data } = executeCardQuery(
@@ -19,7 +20,8 @@ function filteredCards({ filters, onCardClick }) {
     rarities,
     manaCosts,
     supertypes,
-    strengths
+    strengths,
+    defenses
   );
 
   if (error) return <ErrorMessage message={error} />;
@@ -38,7 +40,8 @@ filteredCards.propTypes = {
     rarities: PropTypes.array,
     manaCosts: PropTypes.array,
     supertypes: PropTypes.array,
-    strengths: PropTypes.array
+    strengths: PropTypes.array,
+    defenses: PropTypes.array
   }).isRequired
 };
 

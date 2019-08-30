@@ -13,7 +13,8 @@ export default function SomeCards(props) {
       rarities,
       manaCosts,
       supertypes,
-      strengths
+      strengths,
+      defenses
     } = filters;
     hasFilters =
       (factions && factions.length) ||
@@ -21,6 +22,7 @@ export default function SomeCards(props) {
       (manaCosts && manaCosts.length) ||
       (supertypes && supertypes.length) ||
       (strengths && strengths.length) ||
+      (defenses && defenses.length) ||
       text;
   }
 
@@ -39,6 +41,7 @@ SomeCards.propTypes = {
     rarities: PropTypes.array,
     manaCosts: PropTypes.array,
     strengths: PropTypes.array,
-    supertypes: PropTypes.array
+    supertypes: PropTypes.array,
+    defenses: PropTypes.array
   })
 };
