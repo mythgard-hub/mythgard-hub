@@ -7,15 +7,35 @@ function TabGroup({ onChange, name, labels }) {
   useEffect(() => onChange(selectedLabel));
 
   return (
-    <div data-cy={`tabs_${name}`}>
+    <div className="mg-tab-group" data-cy={`tabs_${name}`}>
       <style jsx>{`
-        display: flex;
-        flex-wrap: none;
-        border-bottom: 1px solid orange;
+        .mg-tab-group {
+          display: flex;
+          flex-wrap: nowrap;
+          font-size: 11px;
+        }
         .tab {
+          padding: 5px;
+          border: 1px solid #458a9e;
+          background-color: #11222a;
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+          color: #458a9e;
+          min-width: 100px;
+          text-align: center;
+          height: 30px;
         }
         .tab-spacer {
-          min-width: 20px;
+          border-bottom: 1px solid #458a9e;
+          min-width: 15px;
+        }
+        .tab.selected {
+          border-bottom: none;
+        }
+        .tab-spacer:last-of-type {
+          border-bottom: 1px solid #458a9e;
+          min-width: 10px;
+          flex-grow: 1;
         }
       `}</style>
       <div className="tab-spacer"></div>
@@ -23,9 +43,10 @@ function TabGroup({ onChange, name, labels }) {
         return (
           <>
             <button
-              name={`${label} tab`}
               key={2 * i}
-              className="tab reset-button"
+              className={`tab reset-button ${
+                label == selectedLabel ? 'selected' : ''
+              }`}
               onClick={() => setLabel(label)}
             >
               {label}
