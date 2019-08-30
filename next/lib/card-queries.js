@@ -38,8 +38,8 @@ export const getCardsQuery = () => {
             }
             {
               or: [
-                { atk: { in: $defenses } }
-                { atk: { greaterThanOrEqualTo: $defenseGTE } }
+                { def: { in: $defenses } }
+                { def: { greaterThanOrEqualTo: $defenseGTE } }
               ]
             }
           ]
