@@ -12,10 +12,11 @@ export default function CardSearchForm(props) {
   const [factions, setFactions] = useState(null);
   const [supertypes, setSupertypes] = useState(null);
   const [manaCosts, setManaCosts] = useState(null);
+  const [strengths, setStrengths] = useState(null);
 
   const handleSubmit = e => {
     e && e.preventDefault();
-    onSubmit({ text, factions, supertypes, manaCosts });
+    onSubmit({ text, factions, supertypes, manaCosts, strengths });
   };
 
   return (
@@ -31,7 +32,7 @@ export default function CardSearchForm(props) {
       />
       <SupertypeFilter onChange={setSupertypes} />
       Mana Cost: <ManaCostFilter onChange={setManaCosts} />
-      Strength: <StrengthFilter onChange={() => {}} />
+      Strength: <StrengthFilter onChange={setStrengths} />
       <br />
       <br />
       <FactionFilters
