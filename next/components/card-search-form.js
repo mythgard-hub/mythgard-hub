@@ -4,6 +4,7 @@ import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
 import ManaCostFilter from '../components/mana-cost-filter.js';
 import SupertypeFilter from '../components/supertype-filter.js';
+import StrengthFilter from '../components/strength-filter.js';
 
 export default function CardSearchForm(props) {
   const { onSubmit } = props;
@@ -29,7 +30,8 @@ export default function CardSearchForm(props) {
         onChange={handleInputChangeHooks(setText)}
       />
       <SupertypeFilter onChange={setSupertypes} />
-      <ManaCostFilter onChange={setManaCosts} />
+      Mana Cost: <ManaCostFilter onChange={setManaCosts} />
+      Strength: <StrengthFilter onChange={() => {}} />
       <br />
       <br />
       <FactionFilters

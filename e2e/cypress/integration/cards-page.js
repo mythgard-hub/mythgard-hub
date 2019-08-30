@@ -4,6 +4,7 @@ import {
   factionFilter,
   cardListCard,
   superTypePicker,
+  strengthPicker,
   manaPicker
 } from '../page-objects/all.js';
 describe('Cards Page', function() {
