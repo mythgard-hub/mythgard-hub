@@ -5,7 +5,8 @@ import {
   cardList,
   factionFilter,
   deckCardRow,
-  cardSearchText
+  cardSearchText,
+  superTypePicker
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -91,15 +92,15 @@ describe('Deck builder page', () => {
       .then(cards => {
         expect(numCardsBeforeFilter).to.equal(cards.length);
 
-        // basic test - mana cost filter
-        cy.get('[data-cy="cardSearch_supertype"] input')
+        // basic test - supertype filter
+        cy.get(`${superTypePicker} input`)
           .eq(1)
           .click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
       })
       .then(cards => {
         expect(numCardsBeforeFilter).to.be.above(cards.length);
-        cy.get('[data-cy="cardSearch_supertype"] input')
+        cy.get(`${superTypePicker} input`)
           .eq(1)
           .click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
