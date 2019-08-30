@@ -21,9 +21,11 @@ class SomeDecks extends React.Component {
       isOnlyFactions
     );
     const variables = this.props.search;
+    //eslint-disable-next-line react/prop-types
     variables.modifiedOnOrAfter = daysAgoToGraphQLTimestamp(
       variables.updatedTime
     );
+    variables.authorName = variables.authorName || null;
     return (
       <Query query={decksSearchQuery} variables={variables}>
         {({ loading, error, data }) => {
