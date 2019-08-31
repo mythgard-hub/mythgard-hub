@@ -4,14 +4,24 @@ import CardList from './card-list';
 import ErrorMessage from './error-message';
 
 function filteredCards({ filters, onCardClick }) {
-  const { factions, text, rarities, manaCosts, supertypes } = filters;
+  const {
+    factions,
+    text,
+    rarities,
+    manaCosts,
+    supertypes,
+    strengths,
+    defenses
+  } = filters;
 
   const { loading, error, data } = executeCardQuery(
     factions,
     text,
     rarities,
     manaCosts,
-    supertypes
+    supertypes,
+    strengths,
+    defenses
   );
 
   if (error) return <ErrorMessage message={error} />;
@@ -29,7 +39,9 @@ filteredCards.propTypes = {
     text: PropTypes.string,
     rarities: PropTypes.array,
     manaCosts: PropTypes.array,
-    supertypes: PropTypes.array
+    supertypes: PropTypes.array,
+    strengths: PropTypes.array,
+    defenses: PropTypes.array
   }).isRequired
 };
 
