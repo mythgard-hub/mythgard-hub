@@ -14,5 +14,8 @@ export default {
   cardSearchText: '[data-cy="cardSearchText"]',
   cardSearchSubmit: '[data-cy="cardSearchSubmit"]',
 
-  superTypePicker: '[data-cy="cardSearch_supertype"]'
+  superTypePicker: '[data-cy="cardSearch_supertype"]',
+  manaPicker: '[data-cy="cardSearch_manaCost"]',
+  strengthPicker: '[data-cy="cardSearch_strength"]',
+  defensePicker: '[data-cy="cardSearch_defense"]'
 };
