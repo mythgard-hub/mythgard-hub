@@ -8,8 +8,12 @@ export const getCardsQuery = () => {
       $rarities: [Rarity!]
       $factionIds: [String!]
       $manaCosts: [Int!]
+      $strengths: [Int!]
+      $defenses: [Int!]
       $supertypes: [Cardtype]
       $manaGTE: Int
+      $strengthGTE: Int
+      $defenseGTE: Int
     ) {
       cards(
         filter: {
@@ -24,6 +28,18 @@ export const getCardsQuery = () => {
               or: [
                 { mana: { in: $manaCosts } }
                 { mana: { greaterThanOrEqualTo: $manaGTE } }
+              ]
+            }
+            {
+              or: [
+                { atk: { in: $strengths } }
+                { atk: { greaterThanOrEqualTo: $strengthGTE } }
+              ]
+            }
+            {
+              or: [
+                { def: { in: $defenses } }
+                { def: { greaterThanOrEqualTo: $defenseGTE } }
               ]
             }
           ]
@@ -42,7 +58,7 @@ export const getCardsQuery = () => {
 };
 
 // ['1', '3', '6+'] => [[1,3], 6]
-export const getManaCostVars = manaCostEnums => {
+export const intEnumsToGQLVars = manaCostEnums => {
   if (!(manaCostEnums && manaCostEnums.length)) {
     return [null, null];
   }
@@ -64,9 +80,13 @@ export const executeCardQuery = (
   text,
   rarities,
   manaCostEnums,
-  supertypes
+  supertypes,
+  strengthEnums,
+  defenseEnums
 ) => {
-  const [manaCosts, manaCostGTE] = getManaCostVars(manaCostEnums);
+  const [manaCosts, manaCostGTE] = intEnumsToGQLVars(manaCostEnums);
+  const [strengths, strengthGTE] = intEnumsToGQLVars(strengthEnums);
+  const [defenses, defenseGTE] = intEnumsToGQLVars(defenseEnums);
   const query = getCardsQuery();
   return useQuery(query, {
     variables: {
@@ -74,11 +94,15 @@ export const executeCardQuery = (
       factionIds: factions && factions.length ? factions : null,
       rarities: rarities && rarities.length ? rarities : null,
       manaCosts: manaCosts && manaCosts.length ? manaCosts : null,
+      manaGTE: manaCostGTE || null,
+      strengths: strengths && strengths.length ? strengths : null,
+      strengthGTE: strengthGTE || null,
+      defenses: defenses && defenses.length ? defenses : null,
+      defenseGTE: defenseGTE || null,
       supertypes:
         supertypes && supertypes.length
           ? supertypes.map(s => s.toUpperCase())
-          : null,
-      manaGTE: manaCostGTE || null
+          : null
     }
   });
 };
