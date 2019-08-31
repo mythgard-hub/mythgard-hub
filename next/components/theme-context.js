@@ -12,7 +12,9 @@ export const themes = {
     tabBorder: `1px solid ${mgColors.lightBlue}`,
     tabColor: mgColors.lightBlue,
     border: `1px solid ${mgColors.orange}`,
-    fontFamily: mgFonts.exo2
+    fontFamily: mgFonts.exo2,
+    buttonOutline: `1px solid ${mgColors.orange}`,
+    buttonOutlineOffset: '6px'
   }
 };
 

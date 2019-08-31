@@ -32,8 +32,8 @@ function TabGroup({ onChange, name, labels }) {
               border-bottom: none;
             }
             .tab:focus {
-              outline: ${theme.border};
-              outline-offset: 6px;
+              outline: ${theme.buttonOutline};
+              outline-offset: ${theme.buttonOutlineOffset};
             }
             .tab:hover {
               background-color: ${theme.backgroundLight};
