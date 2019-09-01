@@ -7,7 +7,8 @@ import {
   deckCardRow,
   cardSearchText,
   superTypePicker,
-  manaPicker
+  manaPicker,
+  rarityPicker
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -66,12 +67,12 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.equal(cards.length);
 
         // basic test - rarity filter
-        cy.get('[data-cy="cardSearch_rarity"] input:first').click();
+        cy.get(`${rarityPicker} input:first`).click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
       })
       .then(cards => {
         expect(numCardsBeforeFilter).to.be.above(cards.length);
-        cy.get('[data-cy="cardSearch_rarity"] input:first').click();
+        cy.get(`${rarityPicker} input:first`).click();
         return cy.get(`${deckBuilderCollection} ${cardListCard}`);
       })
       .then(cards => {
