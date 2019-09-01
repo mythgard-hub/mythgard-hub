@@ -86,7 +86,7 @@ router.get(
       {
         // Aging these out after 1 day for now
         exp: Math.floor(Date.now() / 1000 + 24 * 60 * 60),
-        role: 'authd_user',
+        role: process.env.PG_AUTHD_USER_ROLE,
         ...user
       },
       process.env.JWT_SECRET,
