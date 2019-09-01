@@ -118,8 +118,6 @@ CREATE POLICY accountupdate_if_author
   USING ("id" = mythgard.current_user_id())
   WITH CHECK ("id" = mythgard.current_user_id());
 
-GRANT SELECT (id, email, username) on mythgard.account TO authd_user;
-
 CREATE TABLE mythgard.tournament (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -192,7 +190,17 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO postgraphile;
 GRANT authd_user TO postgraphile;
 GRANT anon_user TO postgraphile;
 
+GRANT ALL PRIVILEGES ON SCHEMA mythgard TO admin;
 GRANT ALL PRIVILEGES ON SCHEMA mythgard TO authd_user;
 GRANT ALL PRIVILEGES ON SCHEMA mythgard TO anon_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO admin;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO authd_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO anon_user;
+
+-- Set specific permissions for sensitive tables
+REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM authd_user;
+REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM anon_user;
+
+GRANT SELECT ON TABLE mythgard.account TO authd_user;
+GRANT UPDATE (username) ON TABLE mythgard.account TO authd_user;
+GRANT SELECT (id, username) ON TABLE mythgard.account TO anon_user;
