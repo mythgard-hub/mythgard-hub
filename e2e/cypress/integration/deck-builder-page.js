@@ -109,11 +109,13 @@ describe('Deck builder page', () => {
       .then(cards => {
         expect(numCardsBeforeFilter).to.equal(cards.length);
 
-        // finally save the deck
+        // finally try to save the deck and fail
         cy.get('[data-cy="deckTitle"]').type('Floop the Pig');
         cy.get('[data-cy="saveDeck"]').click();
-        return cy.location().should(location => {
-          expect(location.pathname).to.eq('/deck');
+        cy.on('window:alert', str => {
+          expect(str).to.equal(
+            'You are not logged in. You will be dealt with in another PR'
+          );
         });
       });
   });

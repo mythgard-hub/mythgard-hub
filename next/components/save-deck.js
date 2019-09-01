@@ -28,7 +28,7 @@ export default function SaveDeck({ deckInProgress }) {
     e && e.preventDefault();
 
     if (!user || !user.id) {
-      alert('you are not logged in. You will be dealt with in another PR');
+      alert('You are not logged in. You will be dealt with in another PR');
       return;
     }
 
