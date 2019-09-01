@@ -1,34 +1,20 @@
 import { withRouter } from 'next/router';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from '../components/error-message';
 import Deck from '../components/deck';
 import Layout from '../components/layout';
+import { singleDeckQuery } from '../lib/deck-queries';
 
-export const deckQuery = gql`
-  query deck($id: Int!) {
-    deck(id: $id) {
-      id
-      name
-      power {
-        name
-      }
-      path {
-        name
-      }
-    }
-  }
-`;
+export default withRouter(({ router }) => {
+  const { error, data } = useQuery(singleDeckQuery, {
+    variables: { id: parseInt(router.query.id, 10) }
+  });
 
-export default withRouter(({ router }) => (
-  <Layout>
-    <Query query={deckQuery} variables={{ id: parseInt(router.query.id, 10) }}>
-      {({ loading, error, data }) => {
-        if (loading) return null;
-        if (error) return <ErrorMessage message={`Error: ${error}`} />;
+  let pageElement = null;
 
-        return <Deck deck={data.deck} />;
-      }}
-    </Query>
-  </Layout>
-));
+  if (error) pageElement = <ErrorMessage message={`Error: ${error}`} />;
+
+  if (data) pageElement = <Deck deck={data.deck} />;
+
+  return <Layout>{pageElement}</Layout>;
+});
