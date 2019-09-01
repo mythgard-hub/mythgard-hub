@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
 import ManaCostFilter from '../components/mana-cost-filter.js';
+import RarityFilter from '../components/rarity-filter.js';
 import SupertypeFilter from '../components/supertype-filter.js';
 import StrengthFilter from '../components/strength-filter.js';
 import DefenseFilter from '../components/defense-filter.js';
@@ -15,10 +16,19 @@ export default function CardSearchForm(props) {
   const [manaCosts, setManaCosts] = useState(null);
   const [strengths, setStrengths] = useState(null);
   const [defenses, setDefenses] = useState(null);
+  const [rarities, setRarities] = useState(null);
 
   const handleSubmit = e => {
     e && e.preventDefault();
-    onSubmit({ text, factions, supertypes, manaCosts, strengths, defenses });
+    onSubmit({
+      text,
+      factions,
+      supertypes,
+      manaCosts,
+      strengths,
+      defenses,
+      rarities
+    });
   };
 
   return (
@@ -33,6 +43,7 @@ export default function CardSearchForm(props) {
         onChange={handleInputChangeHooks(setText)}
       />
       <SupertypeFilter onChange={setSupertypes} />
+      <RarityFilter onChange={setRarities}></RarityFilter>
       Mana Cost: <ManaCostFilter onChange={setManaCosts} />
       Strength: <StrengthFilter onChange={setStrengths} />
       Health/Durability: <DefenseFilter onChange={setDefenses} />

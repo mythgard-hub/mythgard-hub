@@ -6,6 +6,7 @@ import {
   superTypePicker,
   strengthPicker,
   defensePicker,
+  rarityPicker,
   manaPicker
 } from '../page-objects/all.js';
 describe('Cards Page', function() {
@@ -117,6 +118,20 @@ describe('Cards Page', function() {
         cy.get(`${defensePicker} input`)
           .eq(1)
           .click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(cards => {
+        expect(allCardsLength).to.equal(cards.length);
+
+        // basic test - rarity filter
+        cy.get(`${rarityPicker} input:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return cy.get(cardListCard);
+      })
+      .then(cards => {
+        expect(allCardsLength).to.be.above(cards.length);
+        cy.get(`${rarityPicker} input:first`).click();
         cy.get(cardSearchSubmit).click();
         return cy.get(cardListCard);
       })
