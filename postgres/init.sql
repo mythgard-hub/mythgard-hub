@@ -4,6 +4,10 @@ CREATE SCHEMA mythgard;
 
 CREATE TYPE mythgard.rarity AS ENUM ('common', 'uncommon', 'rare', 'mythic');
 
+CREATE ROLE admin;
+CREATE ROLE authd_user;
+CREATE ROLE anon_user;
+
 CREATE TABLE mythgard.card (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -96,6 +100,26 @@ RETURNS mythgard.account as $$
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
 
+CREATE OR REPLACE FUNCTION mythgard.current_user_id()
+RETURNS integer as $$
+  SELECT nullif(current_setting('jwt.claims.userId', true), '')::integer;
+$$ language sql stable;
+
+ALTER TABLE mythgard.account ENABLE ROW LEVEL SECURITY;
+
+-- Admin users can make any changes and read all rows
+CREATE POLICY admin_all ON mythgard.account TO admin USING (true) WITH CHECK (true);
+-- Non-admins can read all rows
+CREATE POLICY all_view ON mythgard.account FOR SELECT USING (true);
+-- Rows can only be updated by their author
+CREATE POLICY accountupdate_if_author
+  ON mythgard.account
+  FOR UPDATE
+  USING ("id" = mythgard.current_user_id())
+  WITH CHECK ("id" = mythgard.current_user_id());
+
+GRANT SELECT (id, email, username) on mythgard.account TO authd_user;
+
 CREATE TABLE mythgard.tournament (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -156,3 +180,19 @@ $$ language 'plpgsql';
 CREATE TRIGGER update_deck_modtime
   BEFORE UPDATE ON mythgard.deck
   FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+-- Create a user for Postgraphile to connect as which has permissions
+-- to the mythgard schema
+
+CREATE USER postgraphile WITH password 'bears4life';
+GRANT ALL PRIVILEGES ON SCHEMA mythgard TO postgraphile;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO postgraphile;
+
+-- The Postgraphile user needs privileges to set role for itself
+GRANT authd_user TO postgraphile;
+GRANT anon_user TO postgraphile;
+
+GRANT ALL PRIVILEGES ON SCHEMA mythgard TO authd_user;
+GRANT ALL PRIVILEGES ON SCHEMA mythgard TO anon_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO authd_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO anon_user;

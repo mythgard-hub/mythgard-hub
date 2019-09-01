@@ -5,9 +5,9 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 
 const client = new PgClient({
-  user: process.env.PGUSER,
+  user: process.env.EXPRESS_PGUSER,
   database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
+  password: process.env.EXPRESS_PGPASSWORD,
   host: process.env.PGHOST,
   port: process.env.PGPORT,
   ssl: process.env.PGSSL === 'yes'
@@ -39,12 +39,13 @@ passport.use(
       const { id } = profile;
       const email = profile.emails[0].value;
       const text =
-        'SELECT email ' +
+        'SELECT id, email ' +
         'FROM mythgard.find_account_or_create_by_google($1, $2)';
       const values = [id, email];
       client.query(text, values, (err, res) => {
         if (err) return cb(err);
         cb(null, {
+          userId: res.rows[0].id,
           email: res.rows[0].email
         });
       });
@@ -85,9 +86,13 @@ router.get(
       {
         // Aging these out after 1 day for now
         exp: Math.floor(Date.now() / 1000 + 24 * 60 * 60),
-        data: user
+        role: 'authd_user',
+        ...user
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      {
+        audience: process.env.JWT_AUDIENCE
+      }
     );
     res.cookie(process.env.JWT_COOKIE_NAME, token);
     res.redirect('/');
@@ -105,7 +110,8 @@ router.get('/user', async (req, res) => {
   let user;
   try {
     const token = jwt.verify(signedToken, process.env.JWT_SECRET);
-    user = await getUserByEmail(token.data.email);
+    console.log(token);
+    user = await getUserByEmail(token.email);
   } catch (err) {
     res.json(null);
   }
@@ -117,7 +123,7 @@ router.get('/user/:token', async (req, res) => {
   let user;
   try {
     const token = jwt.verify(signedToken, process.env.JWT_SECRET);
-    user = await getUserByEmail(token.data.email);
+    user = await getUserByEmail(token.email);
   } catch (err) {
     res.json(null);
   }
