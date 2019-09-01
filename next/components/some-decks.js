@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
+import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 import {
@@ -8,36 +8,31 @@ import {
   daysAgoToGraphQLTimestamp
 } from '../lib/deck-queries';
 
-class SomeDecks extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+export default function SomeDecks(props) {
+  const { cardIds, factionNames, isOnlyFactions } = props.search;
+  const decksSearchQuery = getDeckSearchQuery(
+    cardIds,
+    factionNames,
+    isOnlyFactions
+  );
 
-  render() {
-    const { cardIds, factionNames, isOnlyFactions } = this.props.search;
-    const decksSearchQuery = getDeckSearchQuery(
-      cardIds,
-      factionNames,
-      isOnlyFactions
-    );
-    const variables = this.props.search;
-    //eslint-disable-next-line react/prop-types
-    variables.modifiedOnOrAfter = daysAgoToGraphQLTimestamp(
-      variables.updatedTime
-    );
-    variables.authorName = variables.authorName || null;
-    return (
-      <Query query={decksSearchQuery} variables={variables}>
-        {({ loading, error, data }) => {
-          if (error) return <ErrorMessage message="Error loading decks." />;
-          if (loading) return <div>Loading</div>;
+  const variables = props.search;
 
-          return <DeckList decks={data.decks.nodes} />;
-        }}
-      </Query>
-    );
-  }
+  //eslint-disable-next-line react/prop-types
+  variables.modifiedOnOrAfter = daysAgoToGraphQLTimestamp(
+    variables.updatedTime
+  );
+
+  variables.authorName = variables.authorName || null;
+
+  const { loading, error, data } = useQuery(decksSearchQuery, { variables });
+
+  if (error) return <ErrorMessage message="Error loading decks." />;
+  if (loading) return <div>Loading</div>;
+
+  return <DeckList decks={data.decks.nodes} />;
 }
+
 SomeDecks.propTypes = {
   search: PropTypes.shape({
     name: PropTypes.string,
@@ -47,5 +42,3 @@ SomeDecks.propTypes = {
     updatedTime: PropTypes.string
   }).isRequired
 };
-
-export default SomeDecks;

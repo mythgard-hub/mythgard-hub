@@ -1,29 +1,14 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
-
-export const decksQuery = gql`
-  query decks {
-    decks {
-      nodes {
-        id
-        name
-      }
-    }
-  }
-`;
+import { allDecksQuery } from '../lib/deck-queries';
 
 export default function AllDecks() {
-  return (
-    <Query query={decksQuery}>
-      {({ loading, error, data: { decks } }) => {
-        if (error) return <ErrorMessage message="Error loading decks." />;
-        if (loading) return <div>Loading</div>;
+  const { loading, error, data } = useQuery(allDecksQuery);
 
-        return <DeckList decks={decks.nodes} />;
-      }}
-    </Query>
-  );
+  if (error) return <ErrorMessage message="Error loading decks." />;
+  if (loading) return <div>Loading</div>;
+
+  return <DeckList decks={data.decks.nodes} />;
 }
