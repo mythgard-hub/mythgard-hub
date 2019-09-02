@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import CardListItem from './card-list-item';
 
@@ -12,6 +13,7 @@ export default function CardList({ onCardClick, cards }) {
     </ul>
   );
 }
+
 CardList.propTypes = {
   cards: PropTypes.array,
   onCardClick: PropTypes.func
