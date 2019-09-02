@@ -8,13 +8,15 @@ class FactionFilter extends React.Component {
   }
 
   render() {
+    const { faction, onFactionClick, selected, factionIcon } = this.props;
     let theme = this.context;
+
     return (
       <div
         data-cy="factionFilter"
-        data-mgfaction={this.props.faction}
-        onClick={this.props.onFactionClick}
-        className={this.props.selected && 'selected'}
+        data-mgfaction={faction}
+        onClick={onFactionClick}
+        className={selected && 'selected'}
       >
         <style jsx>{`
           div {
@@ -29,7 +31,7 @@ class FactionFilter extends React.Component {
             border: ${theme.border};
           }
         `}</style>
-        <img src={this.props.factionIcon} alt={`${this.props.faction}-icon`} />
+        <img src={factionIcon} alt={`${faction}-icon`} />
       </div>
     );
   }
