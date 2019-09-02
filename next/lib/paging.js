@@ -1,15 +1,15 @@
-const rangeMax = (currentPage, pageSize) => (currentPage + 1) * pageSize - 1;
+// 1, 20 => 20
+const rangeMax = (currentPage, pageSize) => (currentPage + 1) * pageSize;
 
-const rangeMin = (currentPage, pageSize) => currentPage * pageSize;
+// 1, 20 => 1
+const rangeMin = (currentPage, pageSize) => currentPage * pageSize + 1;
 
-const onCurrentPage = (index, currentPage, pageSize) => {
-  const min = rangeMin(currentPage, pageSize);
-  const max = rangeMax(currentPage, pageSize);
-  return index >= min && index <= max;
-};
+const onCurrentPage = (index, currentPage, pageSize) =>
+  index >= rangeMin(currentPage, pageSize) - 1 &&
+  index <= rangeMax(currentPage, pageSize) - 1;
 
 const hasNextPage = (currentPage, pageSize, itemCount) =>
-  itemCount - 1 > rangeMax(currentPage, pageSize);
+  itemCount > rangeMax(currentPage, pageSize);
 
 const hasPrevPage = currentPage => currentPage > 0;
 

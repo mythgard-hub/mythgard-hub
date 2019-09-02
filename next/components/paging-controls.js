@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { hasNextPage, hasPrevPage, totalPages } from '../lib/paging.js';
+import { hasNextPage, hasPrevPage, rangeMin, rangeMax } from '../lib/paging.js';
 
 function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
   const showNext = hasNextPage(currentPage, pageSize, itemCount);
@@ -29,7 +29,11 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
         Previous
       </button>
       <div className="counter">
-        {currentPage + 1} / {totalPages(itemCount, pageSize)}
+        Showing {rangeMin(currentPage, pageSize)} -{' '}
+        {Math.min(itemCount, rangeMax(currentPage, pageSize))} of{' '}
+        <span className="mgPagingTotal" data-cy="paging-controls-total">
+          {itemCount}
+        </span>{' '}
       </div>
       <button
         disabled={!showNext}
