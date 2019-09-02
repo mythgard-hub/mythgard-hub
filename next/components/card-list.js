@@ -2,10 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import CardListItem from './card-list-item';
 
-const DEFAULT_PAGE_SIZE = 20;
-
 export default function CardList({ onCardClick, cards, pageSize }) {
-  pageSize = pageSize || DEFAULT_PAGE_SIZE;
   const [currentPage, setPage] = useState(0);
   const min = currentPage * pageSize;
   const max = (currentPage + 1) * pageSize - 1;
@@ -63,6 +60,10 @@ export default function CardList({ onCardClick, cards, pageSize }) {
     </>
   );
 }
+
+CardList.defaultProps = {
+  pageSize: 20
+};
 
 CardList.propTypes = {
   cards: PropTypes.array,
