@@ -23,7 +23,7 @@ class FactionFilter extends React.Component {
             padding: 5px;
           }
           img {
-            max-height: 50px;
+            max-height: 40px;
             vertical-align: top;
           }
           border: 1px solid transparent;

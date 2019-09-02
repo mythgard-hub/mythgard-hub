@@ -49,6 +49,7 @@ class FactionFilters extends React.Component {
         <style jsx>{`
           .faction-filters {
             display: flex;
+            padding: 10px 0;
           }
           ul {
             list-style: none;
