@@ -59,6 +59,11 @@ function Layout({ title, desc, children }) {
           border: ${theme.sectionBorder};
           border-radius: 10px;
         }
+
+        button:disabled {
+          color: ${theme.fontColorDisabled};
+          border: ${theme.buttonBorderDisabled};
+        }
       `}</style>
       <style jsx global>{`
         .header + * {

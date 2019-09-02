@@ -7,6 +7,7 @@ export const themes = {
     backgroundLight: mgColors.blackPearlLight,
     fontColor: mgColors.white,
     fontColorSelected: mgColors.blue,
+    fontColorDisabled: mgColors.lightGray,
     sectionBackground: mgColors.mediumGray,
     sectionBorder: `2px solid ${mgColors.lightBlue}`,
     tabBorder: `1px solid ${mgColors.lightBlue}`,
@@ -14,7 +15,8 @@ export const themes = {
     border: `1px solid ${mgColors.orange}`,
     fontFamily: mgFonts.exo2,
     buttonOutline: `1px solid ${mgColors.orange}`,
-    buttonOutlineOffset: '6px'
+    buttonOutlineOffset: '6px',
+    buttonBorderDisabled: `2px solid ${mgColors.lightGray}`
   }
 };
 

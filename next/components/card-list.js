@@ -36,20 +36,21 @@ export default function CardList({ onCardClick, cards, pageSize }) {
             max-width: 100px;
           }
         `}</style>
-        {showPrev && (
-          <button
-            className="mgPrevious"
-            onClick={() => setPage(currentPage - 1)}
-          >
-            Previous
-          </button>
-        )}
+        <button
+          className="mgPrevious"
+          disabled={!showPrev}
+          onClick={() => setPage(currentPage - 1)}
+        >
+          Previous
+        </button>
         <span>{currentPage + 1}</span>
-        {showNext && (
-          <button className="mgNext" onClick={() => setPage(currentPage + 1)}>
-            Next
-          </button>
-        )}
+        <button
+          disabled={!showNext}
+          className="mgNext"
+          onClick={() => setPage(currentPage + 1)}
+        >
+          Next
+        </button>
       </div>
     </>
   );
