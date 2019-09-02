@@ -1,21 +1,17 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import CardListItem from './card-list-item';
+import PagingControls from './paging-controls.js';
+import { onCurrentPage } from '../lib/paging.js';
 
 export default function CardList({ onCardClick, cards, pageSize }) {
   const [currentPage, setPage] = useState(0);
-  const min = currentPage * pageSize;
-  const max = (currentPage + 1) * pageSize - 1;
-  const totalPages = Math.ceil(cards.length / pageSize);
-
-  const showNext = cards.length - 1 > max;
-  const showPrev = currentPage > 0;
 
   return (
     <>
       <ul className="cardList" data-cy="cardList">
         {cards.map((card, index) => {
-          if (index < min || index > max) {
+          if (!onCurrentPage(index, currentPage, pageSize)) {
             return;
           }
           return (
@@ -25,38 +21,11 @@ export default function CardList({ onCardClick, cards, pageSize }) {
           );
         })}
       </ul>
-      <div className="mg-paging">
-        <style jsx>{`
-          .mg-paging {
-            display: flex;
-          }
-          .mg-paging button {
-            max-width: 100px;
-          }
-          .mg-paging .counter {
-            font-size: 20px;
-            padding: 5px 10px;
-            margin: 0 10px;
-          }
-        `}</style>
-        <button
-          className="mgPrevious"
-          disabled={!showPrev}
-          onClick={() => setPage(currentPage - 1)}
-        >
-          Previous
-        </button>
-        <div className="counter">
-          {currentPage + 1} / {totalPages}{' '}
-        </div>
-        <button
-          disabled={!showNext}
-          className="mgNext"
-          onClick={() => setPage(currentPage + 1)}
-        >
-          Next
-        </button>
-      </div>
+      <PagingControls
+        currentPage={currentPage}
+        setPage={setPage}
+        itemCount={cards.length}
+      ></PagingControls>
     </>
   );
 }
