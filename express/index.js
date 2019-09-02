@@ -27,7 +27,7 @@ app.use(
       jwtVerifyOptions: {
         audience: [process.env.JWT_AUDIENCE]
       },
-      pgDefaultRole: 'anon_user'
+      pgDefaultRole: process.env.PG_ANON_USER_ROLE
     }
   )
 );
