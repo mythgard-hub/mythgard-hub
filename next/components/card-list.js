@@ -9,6 +9,7 @@ export default function CardList({ onCardClick, cards, pageSize }) {
   const [currentPage, setPage] = useState(0);
   const min = currentPage * pageSize;
   const max = (currentPage + 1) * pageSize - 1;
+  const totalPages = Math.ceil(cards.length / pageSize);
 
   const showNext = cards.length - 1 > max;
   const showPrev = currentPage > 0;
@@ -35,6 +36,11 @@ export default function CardList({ onCardClick, cards, pageSize }) {
           .mg-paging button {
             max-width: 100px;
           }
+          .mg-paging .counter {
+            font-size: 20px;
+            padding: 5px 10px;
+            margin: 0 10px;
+          }
         `}</style>
         <button
           className="mgPrevious"
@@ -43,7 +49,9 @@ export default function CardList({ onCardClick, cards, pageSize }) {
         >
           Previous
         </button>
-        <span>{currentPage + 1}</span>
+        <div className="counter">
+          {currentPage + 1} / {totalPages}{' '}
+        </div>
         <button
           disabled={!showNext}
           className="mgNext"
