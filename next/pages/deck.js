@@ -12,9 +12,13 @@ export default withRouter(({ router }) => {
 
   let pageElement = null;
 
-  if (error) pageElement = <ErrorMessage message={`Error: ${error}`} />;
-
-  if (data) pageElement = <Deck deck={data.deck} />;
+  if (error) {
+    pageElement = <ErrorMessage message={error} />;
+  } else if (data && data.deck) {
+    pageElement = <Deck deck={data.deck} />;
+  } else {
+    pageElement = <ErrorMessage message={'Deck does not exist!'} />;
+  }
 
   return <Layout>{pageElement}</Layout>;
 });
