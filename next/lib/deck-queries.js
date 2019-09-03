@@ -174,6 +174,7 @@ export const singleDeckQuery = gql`
       id
       name
       author {
+        id
         username
       }
       power {

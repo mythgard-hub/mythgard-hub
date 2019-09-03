@@ -34,7 +34,7 @@ export default function SaveDeck({ deckInProgress }) {
 
     if (!validateState()) return;
 
-    saveDeckWithCards(client, deckInProgress, user.user.id).then(deckId => {
+    saveDeckWithCards(client, deckInProgress, user.id).then(deckId => {
       Router.push(`/deck?id=${deckId}`);
     });
   };

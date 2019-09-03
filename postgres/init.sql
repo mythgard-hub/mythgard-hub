@@ -79,7 +79,8 @@ CREATE TABLE mythgard.card_deck (
   deck_id integer,
   card_id integer,
   FOREIGN KEY (deck_id)
-    REFERENCES mythgard.deck (id),
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE,
   FOREIGN KEY (card_id)
     REFERENCES mythgard.card (id),
   UNIQUE(deck_id, card_id)
@@ -120,6 +121,7 @@ CREATE TABLE mythgard.tournament_deck (
     REFERENCES mythgard.tournament (id),
   FOREIGN KEY (deck_id)
     REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE
 );
 
 INSERT INTO mythgard.tournament_deck("rank", "tournament_id", "deck_id")

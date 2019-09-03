@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
+import PropTypes from 'prop-types';
 import ErrorMessage from './error-message';
 import DeckCardList from './deck-card-list';
 import DeckExport from './deck-export';
+import DeckDelete from './deck-delete';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import { deckCardsQuery } from '../lib/deck-queries';
 
@@ -42,9 +43,11 @@ export default function Deck({ deck }) {
       <h2>Cards</h2>
       <DeckCardList deckCards={cards} />
       <DeckExport deckInProgress={deckToExport} />
+      <DeckDelete deck={deck} />
     </>
   );
 }
+
 Deck.propTypes = {
   deck: PropTypes.shape({
     id: PropTypes.number,
