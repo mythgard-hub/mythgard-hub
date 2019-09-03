@@ -88,7 +88,8 @@ class CardSearch extends Component {
     const inputProps = {
       placeholder: 'Type a card name',
       value,
-      onChange: this.onChange
+      onChange: this.onChange,
+      className: 'card-search-input'
     };
     return (
       <div data-cy="cardSearch">

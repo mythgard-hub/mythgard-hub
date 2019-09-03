@@ -11,6 +11,7 @@ export default function AllCards(props) {
 
   if (error) return <ErrorMessage message={error} />;
   if (loading) return <div>Loading cards...</div>;
+  if (!data || !data.cards) return null;
 
   const cards = data.cards;
   return <CardList onCardClick={onCardClick} cards={cards.nodes} />;

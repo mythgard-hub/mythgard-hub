@@ -1,134 +1,125 @@
-import React from 'react';
-import { Query } from 'react-apollo';
+import React, { useState } from 'react';
+import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message';
 import FactionFilters from './faction-filters.js';
 import PropTypes from 'prop-types';
-import { handleInputChange } from '../lib/form-utils';
+import { handleInputChangeHooks } from '../lib/form-utils.js';
 import CardSearch from './card-search';
 import allCardsQuery from '../lib/queries/all-cards-query';
+import DeckSearchFormText from './deck-search-form-text';
+import DeckSearchFormUpdated from './deck-search-form-updated';
 
-class DeckSearchForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      cardIds: [],
-      factionNames: [],
-      isOnlyFactions: true,
-      updatedTime: '150',
-      authorName: ''
-    };
+export default function DeckSearchForm(props) {
+  const { onSubmit } = props;
+  const [name, setName] = useState('');
+  const [cardIds, setCardIds] = useState([]);
+  const [factionNames, setFactionNames] = useState([]);
+  const [isOnlyFactions, setIsOnlyFactions] = useState(true);
+  const [updatedTime, setUpdatedTime] = useState('150');
+  const [authorName, setAuthorName] = useState('');
 
-    this.handleInputChange = handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.onCardSearchSelect = this.onCardSearchSelect.bind(this);
-    this.onFactionClick = this.onFactionClick.bind(this);
-  }
-
-  handleSubmit(e) {
+  const handleSubmit = e => {
     e && e.preventDefault();
-    this.props.onSubmit(this.state);
-  }
-
-  onCardSearchSelect(selectedCardIds) {
-    this.setState({
-      cardIds: selectedCardIds
+    onSubmit({
+      name,
+      cardIds,
+      factionNames,
+      isOnlyFactions,
+      updatedTime,
+      authorName
     });
+  };
+
+  const { error, data } = useQuery(allCardsQuery);
+
+  let cardSearchElement = null;
+  if (error) cardSearchElement = <ErrorMessage message={error} />;
+  if (data) {
+    cardSearchElement = (
+      <CardSearch
+        cards={data.cards.nodes}
+        onSelect={selectedCardIds => setCardIds(selectedCardIds)}
+      />
+    );
   }
 
-  onFactionClick(factionNames) {
-    this.setState({ factionNames });
-  }
-
-  render() {
-    return (
-      <form>
-        <FactionFilters onFactionClick={this.onFactionClick} />
-        <label>
-          Only Selected
-          <input
-            onChange={this.handleInputChange}
-            type="checkbox"
-            name="isOnlyFactions"
-            value={this.state.isOnlyFactions}
-            checked={this.state.isOnlyFactions}
-          />
-        </label>
-        <br />
-        <br />
-        <label>
-          Deck Name:
-          <input
-            type="text"
-            value={this.state.name}
+  return (
+    <form>
+      <style jsx>{`
+        .filters-container {
+          display: flex;
+        }
+        .filter-column {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        label {
+          text-transform: uppercase;
+          padding-right: 20px;
+        }
+        .included-cards :global(.card-search-input) {
+          margin: 10px 0;
+          width: 100%;
+        }
+        .action-buttons {
+          width: 25%;
+          float: right;
+          display: flex;
+          flex-direction: row;
+        }
+        .action-buttons input {
+          margin-right: 10px;
+        }
+      `}</style>
+      <FactionFilters
+        onFactionClick={factionNames => setFactionNames(factionNames)}
+        onIsOnlyFactionClick={handleInputChangeHooks(setIsOnlyFactions)}
+        isOnlyFactions={isOnlyFactions}
+      />
+      <div className="filters-container">
+        <div className="filter-column">
+          <DeckSearchFormText
+            label="Deck Name"
+            value={name}
             name="name"
-            data-cy="deckSearchDeckName"
-            className="name"
-            onChange={this.handleInputChange}
+            cyName="deckSearchDeckName"
+            onChange={handleInputChangeHooks(setName)}
           />
-        </label>
-        <br />
-        <br />
-        <label>
-          Creator Name:
-          <input
-            type="text"
-            value={this.state.authorName}
-            data-cy="deckSearchDeckAuthor"
+          <DeckSearchFormText
+            label="Creator Name"
+            value={authorName}
             name="authorName"
-            className="authorName"
-            onChange={this.handleInputChange}
+            cyName="deckSearchDeckAuthor"
+            onChange={handleInputChangeHooks(setAuthorName)}
           />
-        </label>
-        <br />
-        <br />
-        <label>
-          Updated:
-          <select
-            data-cy="deckSearchUpdatedTime"
+        </div>
+        <div className="filter-column">
+          <label className="included-cards">
+            Includes cards
+            {cardSearchElement}
+          </label>
+          <DeckSearchFormUpdated
+            value={updatedTime}
+            onChange={handleInputChangeHooks(setUpdatedTime)}
             name="updatedTime"
-            value={this.state.updatedTime}
-            onChange={this.handleInputChange}
-          >
-            <option value="100000">Beginning of time</option>
-            <option value="15">Last 15 days</option>
-            <option value="30">Last 30 days</option>
-            <option value="45">Last 45 days</option>
-            <option value="60">Last 60 days</option>
-            <option value="75">Last 75 days</option>
-            <option value="90">Last 90 days</option>
-            <option value="150">Last 150 days</option>
-          </select>
-        </label>
-        <br />
-        <br />
-        <div>Includes cards:</div>
-        <Query query={allCardsQuery}>
-          {({ loading, error, data: { cards } }) => {
-            if (error) return <ErrorMessage message={error} />;
-            if (loading) return null;
-            return (
-              <CardSearch
-                cards={cards.nodes}
-                onSelect={this.onCardSearchSelect}
-              />
-            );
-          }}
-        </Query>
-        <br />
-        <br />
+            cyName="deckSearchUpdatedTime"
+          />
+        </div>
+      </div>
+      <div className="action-buttons">
         <input
           data-cy="deckSearchSubmit"
           type="submit"
           value="Search"
-          onClick={this.handleSubmit}
+          onClick={handleSubmit}
         />
-      </form>
-    );
-  }
+        <button>Clear</button>
+      </div>
+    </form>
+  );
 }
+
 DeckSearchForm.propTypes = {
   onSubmit: PropTypes.func
 };
-
-export default DeckSearchForm;
