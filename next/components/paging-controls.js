@@ -54,9 +54,9 @@ PagingControls.defaultProps = {
 };
 
 PagingControls.propTypes = {
-  currentPage: PropTypes.any.isRequired,
-  pageSize: PropTypes.any.isRequired,
-  itemCount: PropTypes.any.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  itemCount: PropTypes.number.isRequired,
   setPage: PropTypes.func.isRequired
 };
 
