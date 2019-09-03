@@ -1,5 +1,6 @@
 export const mgColors = {
   blackPearl: '#11222A',
+  blackPearlLight: '#1a3541',
   orange: '#F1810B',
   blue: '#4EB8E7',
   white: '#FFF',

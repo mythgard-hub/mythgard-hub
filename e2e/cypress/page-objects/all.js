@@ -17,5 +17,6 @@ export default {
   superTypePicker: '[data-cy="cardSearch_supertype"]',
   manaPicker: '[data-cy="cardSearch_manaCost"]',
   strengthPicker: '[data-cy="cardSearch_strength"]',
-  defensePicker: '[data-cy="cardSearch_defense"]'
+  defensePicker: '[data-cy="cardSearch_defense"]',
+  rarityPicker: '[data-cy="cardSearch_rarity"]'
 };

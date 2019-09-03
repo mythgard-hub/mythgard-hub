@@ -5,6 +5,9 @@ import FactionFilters from '../components/faction-filters';
 import RarityFilter from '../components/rarity-filter.js';
 import ManaCostFilter from '../components/mana-cost-filter.js';
 import SupertypeFilter from '../components/supertype-filter.js';
+import TabGroup from '../components/tab-group.js';
+
+const tabLabels = ['Cards', 'Paths', 'Powers'];
 
 function DeckBuilderSearchForm({
   text,
@@ -32,6 +35,11 @@ function DeckBuilderSearchForm({
       <ManaCostFilter onChange={setManaCosts} />
       <SupertypeFilter onChange={setSupertypes} />
       <FactionFilters onFactionClick={onFactionClick} />
+      <TabGroup
+        onChange={() => {}}
+        labels={tabLabels}
+        name="cardsPathsPowers"
+      />
     </>
   );
 }

@@ -42,9 +42,15 @@ class FactionFilters extends React.Component {
   }
 
   render() {
+    const { onIsOnlyFactionClick, isOnlyFactions } = this.props;
+
     return (
-      <div data-cy="factionFilters">
+      <div data-cy="factionFilters" className="faction-filters">
         <style jsx>{`
+          .faction-filters {
+            display: flex;
+            padding: 10px 0;
+          }
           ul {
             list-style: none;
             display: flex;
@@ -69,13 +75,27 @@ class FactionFilters extends React.Component {
             </li>
           ))}
         </ul>
+        <div>
+          <label>
+            Only Selected
+            <input
+              onChange={onIsOnlyFactionClick}
+              type="checkbox"
+              name="isOnlyFactions"
+              value={isOnlyFactions}
+              checked={isOnlyFactions}
+            />
+          </label>
+        </div>
       </div>
     );
   }
 }
 
 FactionFilters.propTypes = {
-  onFactionClick: PropTypes.func.isRequired
+  onFactionClick: PropTypes.func.isRequired,
+  onIsOnlyFactionClick: PropTypes.func,
+  isOnlyFactions: PropTypes.bool
 };
 
 export default FactionFilters;

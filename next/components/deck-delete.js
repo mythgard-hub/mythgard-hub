@@ -31,7 +31,7 @@ function DeckDelete({ deck }) {
   });
 
   // Users can only delete decks they authored
-  if (!user || user.id !== deck.authorId) return null;
+  if (!user || user.id !== deck.author.id) return null;
 
   return (
     <div className="deck-delete-container">
@@ -48,7 +48,10 @@ function DeckDelete({ deck }) {
 
 DeckDelete.propTypes = {
   deck: PropTypes.shape({
-    id: PropTypes.number
+    id: PropTypes.number,
+    author: PropTypes.shape({
+      id: PropTypes.number
+    })
   }).isRequired
 };
 

@@ -108,8 +108,81 @@ export const getDeckSearchQuery = (
         nodes {
           name
           id
+          author {
+            username
+          }
         }
       }
     }
   `;
 };
+
+export const deckCardsQuery = gql`
+  query($id: Int!) {
+    deck(id: $id) {
+      id
+      name
+      cardDecks {
+        nodes {
+          quantity
+          card {
+            name
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const allDecksQuery = gql`
+  query decks {
+    decks {
+      nodes {
+        id
+        name
+        author {
+          username
+        }
+      }
+    }
+  }
+`;
+
+export const tourneyDecksQuery = gql`
+  query($id: Int!, $ranks: Int = 8) {
+    tournament(id: $id) {
+      tournamentDecks(orderBy: RANK_ASC, first: $ranks) {
+        nodes {
+          rank
+          deck {
+            id
+            name
+            author {
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const singleDeckQuery = gql`
+  query deck($id: Int!) {
+    deck(id: $id) {
+      id
+      name
+      author {
+        id
+        username
+      }
+      power {
+        name
+      }
+      path {
+        name
+      }
+    }
+  }
+`;
