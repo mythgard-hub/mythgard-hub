@@ -3,6 +3,7 @@ import {
   cardSearchSubmit,
   factionFilter,
   cardListCard,
+  getPagingTotalAsInt,
   superTypePicker,
   strengthPicker,
   defensePicker,
@@ -24,50 +25,50 @@ describe('Cards Page', function() {
   it('filters cards', function() {
     cy.get(cardSearchSubmit).click();
     let allCardsLength;
-    cy.get(cardListCard)
-      .then(({ length }) => {
+    getPagingTotalAsInt()
+      .then(length => {
         allCardsLength = length;
         cy.get(cardSearchText).type('fur');
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(({ length }) => {
+      .then(length => {
         expect(length).to.be.below(allCardsLength);
 
         cy.get(cardSearchText).clear();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(({ length }) => {
+      .then(length => {
         expect(length).to.equal(allCardsLength);
 
         cy.get(`${factionFilter}:first`).click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(({ length }) => {
+      .then(length => {
         expect(length).to.be.below(allCardsLength);
 
         cy.get(`${factionFilter}:first`).click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(({ length }) => {
+      .then(length => {
         expect(length).to.equal(allCardsLength);
 
         // basic test - supertype filter
         cy.get(`${superTypePicker} input:first`).click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(({ length }) => {
+      .then(length => {
         expect(length).to.be.below(allCardsLength);
 
         cy.get(`${superTypePicker} input:first`).click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(({ length }) => {
+      .then(length => {
         expect(length).to.equal(allCardsLength);
 
         // basic test - mana cost filter
@@ -75,68 +76,68 @@ describe('Cards Page', function() {
           .eq(2)
           .click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.be.above(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.be.above(length);
         cy.get(`${manaPicker} input`)
           .eq(2)
           .click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.equal(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.equal(length);
 
         // basic test - strength filter
         cy.get(`${strengthPicker} input`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.be.above(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.be.above(length);
         cy.get(`${strengthPicker} input`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.equal(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.equal(length);
 
         // basic test - defense filter
         cy.get(`${defensePicker} input`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.be.above(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.be.above(length);
         cy.get(`${defensePicker} input`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.equal(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.equal(length);
 
         // basic test - rarity filter
         cy.get(`${rarityPicker} input:first`).click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.be.above(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.be.above(length);
         cy.get(`${rarityPicker} input:first`).click();
         cy.get(cardSearchSubmit).click();
-        return cy.get(cardListCard);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(allCardsLength).to.equal(cards.length);
+      .then(length => {
+        expect(allCardsLength).to.equal(length);
       });
   });
 });

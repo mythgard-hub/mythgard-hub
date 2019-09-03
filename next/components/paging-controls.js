@@ -31,7 +31,7 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
       <div className="counter">
         Showing {rangeMin(currentPage, pageSize)} -{' '}
         {Math.min(itemCount, rangeMax(currentPage, pageSize))} of{' '}
-        <span className="mgPagingTotal" data-cy="paging-controls-total">
+        <span className="mgPagingTotal" data-cy="pagingControlsTotal">
           {itemCount}
         </span>{' '}
       </div>
