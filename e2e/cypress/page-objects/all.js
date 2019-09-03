@@ -1,3 +1,10 @@
+const pagingTotal = '[data-cy="pagingControlsTotal"]';
+const getPagingTotalAsInt = () => {
+  return cy.get(pagingTotal).then(el => {
+    return el && el.length ? parseInt(el[0].innerText, 10) : 0;
+  });
+};
+
 export default {
   cardListCard: '[data-cy="cardListCard"]',
   cardList: '[data-cy="cardList"]',
@@ -5,6 +12,9 @@ export default {
   factionFilter: '[data-cy="factionFilter"]',
   cardSearch: '[data-cy="cardSearch"]',
   cardSelectionItem: '[data-cy="cardSelectionItem"]',
+
+  pagingTotal,
+  getPagingTotalAsInt,
 
   // deck builder page
   deckBuilderCollection: '[data-cy="deckBuilderCollection"]',

@@ -8,7 +8,8 @@ import {
   cardSearchText,
   superTypePicker,
   manaPicker,
-  rarityPicker
+  rarityPicker,
+  getPagingTotalAsInt
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -40,75 +41,75 @@ describe('Deck builder page', () => {
 
     // basic test - faction filter
     let numCardsBeforeFilter;
-    cy.get(`${deckBuilderCollection} ${cardListCard}`)
-      .then(cards => {
-        numCardsBeforeFilter = cards.length;
+    getPagingTotalAsInt()
+      .then(length => {
+        numCardsBeforeFilter = length;
         cy.get(`${factionFilter}:first`).click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.be.above(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.be.above(length);
         cy.get(`${factionFilter}:first`).click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.equal(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - text filter
         cy.get(cardSearchText).type('fur');
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.be.above(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.be.above(length);
         cy.get(cardSearchText).clear();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.equal(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - rarity filter
         cy.get(`${rarityPicker} input:first`).click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.be.above(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.be.above(length);
         cy.get(`${rarityPicker} input:first`).click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.equal(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - mana cost filter
         cy.get(`${manaPicker} input`)
           .eq(2)
           .click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.be.above(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.be.above(length);
         cy.get(`${manaPicker} input`)
           .eq(2)
           .click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.equal(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - supertype filter
         cy.get(`${superTypePicker} input`)
           .eq(1)
           .click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.be.above(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.be.above(length);
         cy.get(`${superTypePicker} input`)
           .eq(1)
           .click();
-        return cy.get(`${deckBuilderCollection} ${cardListCard}`);
+        return getPagingTotalAsInt();
       })
-      .then(cards => {
-        expect(numCardsBeforeFilter).to.equal(cards.length);
+      .then(length => {
+        expect(numCardsBeforeFilter).to.equal(length);
 
         // finally try to save the deck and fail
         cy.get('[data-cy="deckTitle"]').type('Floop the Pig');
