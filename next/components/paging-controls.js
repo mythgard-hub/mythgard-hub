@@ -14,11 +14,14 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
         }
         .mg-paging button {
           max-width: 120px;
+          height: 40px;
+          padding: 0;
         }
         .mg-paging .counter {
           font-size: 20px;
           padding: 5px 10px;
           margin: 0 10px;
+          white-space: nowrap;
         }
       `}</style>
       <button
