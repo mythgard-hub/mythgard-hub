@@ -50,16 +50,16 @@ class MyApp extends App {
   }
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       user: props.user
-    }
+    };
   }
 
-  updateUser = (user) => {
-    this.setState({ user })
-  }
+  updateUser = user => {
+    this.setState({ user });
+  };
 
   render() {
     const { Component, pageProps, apolloClient } = this.props;
@@ -69,6 +69,7 @@ class MyApp extends App {
         <ApolloProvider client={apolloClient}>
           <HooksApolloProvider client={apolloClient}>
             <Head>
+              <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
               <meta charSet="utf-8" />
               <meta
                 name="viewport"
