@@ -9,6 +9,18 @@ export default function CardList({ onCardClick, cards, pageSize }) {
 
   return (
     <>
+      <style jsx>{`
+        ul {
+          list-style: none;
+          display: flex;
+          flex-wrap: wrap;
+        }
+        ul li {
+          margin-right: 17px;
+          margin-bottom: 17px;
+          min-width: 160px;
+        }
+      `}</style>
       <ul className="cardList" data-cy="cardList">
         {cards.map((card, index) => {
           if (!onCurrentPage(index, currentPage, pageSize)) {
@@ -31,7 +43,7 @@ export default function CardList({ onCardClick, cards, pageSize }) {
 }
 
 CardList.defaultProps = {
-  pageSize: 20
+  pageSize: 12
 };
 
 CardList.propTypes = {
