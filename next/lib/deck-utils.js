@@ -40,7 +40,7 @@ export const collectDeckFactions = deckData => {
       return factionsPerDeck;
     }, {});
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return {};
   }
 };
