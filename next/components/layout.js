@@ -35,8 +35,6 @@ function Layout({ title, desc, children }) {
 
         h1 {
           color: ${theme.fontColorSelected};
-          margin: 0;
-          padding-right: 0.5em;
           text-transform: uppercase;
         }
 

@@ -16,6 +16,10 @@ function PageBanner({ children, image }) {
           flex-direction: row-reverse;
           align-items: center;
         }
+        .page-banner h1 {
+          margin: 0;
+          padding-right: 0.5em;
+        }
       `}</style>
       <h1 data-cy="header">{children}</h1>
     </div>
