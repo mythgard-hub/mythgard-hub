@@ -2,17 +2,12 @@ import React from 'react';
 import FactionFilter from './faction-filter';
 import PropTypes from 'prop-types';
 
+import { FACTION_NAMES, FACTION_IMAGES } from '../constants/factions';
+
 const cdn = `${process.env.MG_CDN}/collection-icons/`;
 
-const factions = ['norden', 'aztlan', 'oberos', 'dreni', 'parsa', 'harmony'];
-const factionImages = [
-  'Filter-Icons_0000s_0003s_0000_blue.png',
-  'Filter-Icons_0000s_0003s_0001_yellow.png',
-  'Filter-Icons_0000s_0003s_0002_red.png',
-  'Filter-Icons_0000s_0003s_0003_green.png',
-  'Filter-Icons_0000s_0003s_0004_orange.png',
-  'Filter-Icons_0000s_0003s_0005_purple.png'
-].map(img => `${cdn}${img}`);
+const factions = [...FACTION_NAMES];
+const factionImages = Object.values(FACTION_IMAGES);
 
 class FactionFilters extends React.Component {
   constructor(props) {
