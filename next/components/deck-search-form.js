@@ -67,6 +67,7 @@ export default function DeckSearchForm(props) {
           float: right;
           display: flex;
           flex-direction: row;
+          margin-top: 20px;
         }
         .action-buttons input {
           margin-right: 10px;
@@ -81,13 +82,15 @@ export default function DeckSearchForm(props) {
         <div className="filter-column">
           <DeckSearchFormText
             label="Deck Name"
+            placeholder="Name..."
             value={name}
             name="name"
             cyName="deckSearchDeckName"
             onChange={handleInputChangeHooks(setName)}
           />
           <DeckSearchFormText
-            label="Creator Name"
+            label="Creator"
+            placeholder="Name of creator..."
             value={authorName}
             name="authorName"
             cyName="deckSearchDeckAuthor"
@@ -111,7 +114,7 @@ export default function DeckSearchForm(props) {
         <input
           data-cy="deckSearchSubmit"
           type="submit"
-          value="Search"
+          value="Apply"
           onClick={handleSubmit}
         />
         <button>Clear</button>

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 export default function DeckSearchFormText(props) {
-  const { label, value, name, cyName, onChange } = props;
+  const { label, value, name, cyName, onChange, placeholder } = props;
 
   return (
     <label>
@@ -18,6 +18,7 @@ export default function DeckSearchFormText(props) {
       {label}
       <br />
       <input
+        placeholder={placeholder}
         type="text"
         value={value}
         name={name}
@@ -34,5 +35,6 @@ DeckSearchFormText.propTypes = {
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
   cyName: PropTypes.string,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
 };
