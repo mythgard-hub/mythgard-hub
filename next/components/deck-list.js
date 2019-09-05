@@ -93,7 +93,7 @@ export default function DeckList({ decks }) {
               : '';
 
             return (
-              <tr key={deck.id} className={classNames}>
+              <tr key={deck.id} className={classNames} data-cy="deckListItem">
                 <td>
                   <div className="deckName">
                     <Link href={`/deck?id=${deck.id}`} key={index}>
