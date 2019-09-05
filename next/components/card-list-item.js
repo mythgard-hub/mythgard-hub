@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import {
-  imagePath as getPath,
+  imagePathSmall as getPath,
   imagePathMedium as getHoverPath
 } from '../lib/card.js';
 

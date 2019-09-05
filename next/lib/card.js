@@ -1,5 +1,10 @@
 const cdn = process.env.MG_CARDS_CDN;
 
+const capitalize = s => {
+  const rest = s.length > 1 ? s.slice(1) : '';
+  return `${s[0].toUpperCase()}${rest}`;
+};
+
 export const nameToImage = name => {
   name = name
     .trim()
@@ -10,20 +15,14 @@ export const nameToImage = name => {
   }
   return name
     .split(' ')
-    .map(s => {
-      const rest = s.length > 1 ? s.slice(1) : '';
-      return `${s[0].toUpperCase()}${rest}`;
-    })
+    .map(capitalize)
     .join('_')
     .split('-')
-    .map(s => {
-      const rest = s.length > 1 ? s.slice(1) : '';
-      return `${s[0].toUpperCase()}${rest}`;
-    })
+    .map(capitalize)
     .join('-');
 };
 
-export const imagePath = (name, set = 'core') => {
+export const imagePathSmall = (name, set = 'core') => {
   return `${cdn}/${set.toLowerCase()}/s/${nameToImage(name)}.png`;
 };
 
