@@ -22,7 +22,12 @@ app.use(
       graphileBuildOptions: {
         connectionFilterAllowNullInput: true,
         connectionFilterRelations: true
-      }
+      },
+      jwtSecret: process.env.JWT_SECRET,
+      jwtVerifyOptions: {
+        audience: [process.env.JWT_AUDIENCE]
+      },
+      pgDefaultRole: process.env.PG_ANON_USER_ROLE
     }
   )
 );

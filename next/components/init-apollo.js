@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache } from 'apollo-boost';
 import { BatchHttpLink } from 'apollo-link-batch-http';
+import { setContext } from 'apollo-link-context';
 import fetch from 'isomorphic-unfetch';
 
 let apolloClient = null;
@@ -17,17 +18,41 @@ const makeCache = initialState =>
     dataIdFromObject: object => object.nodeId || null
   }).restore(initialState || {});
 
+// Tries to read the JWT cookie and adds an authorization
+// header to the GraphQL request if it exists
+const authLink = setContext((_, { headers }) => {
+  const cookies = document.cookie
+    ? document.cookie.split(';').map(n => n.trim())
+    : [];
+  let token;
+  const jwtCookie = cookies.find(cook =>
+    cook.startsWith(`${process.env.JWT_COOKIE_NAME}=`)
+  );
+  if (jwtCookie) {
+    token = jwtCookie.split('=')[1];
+  }
+  const newHeaders = { ...headers };
+  if (token) {
+    newHeaders.Authorization = `Bearer ${token}`;
+  }
+  return {
+    headers: newHeaders
+  };
+});
+
 function create(initialState) {
   return new ApolloClient({
     connectToDevTools: process.browser,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
-    link: new BatchHttpLink({
-      batchMax: 200,
-      uri,
-      // credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
-      // Use fetch() polyfill on the server
-      fetch: !process.browser && fetch
-    }),
+    link: authLink.concat(
+      new BatchHttpLink({
+        batchMax: 200,
+        uri,
+        // credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
+        // Use fetch() polyfill on the server
+        fetch: !process.browser && fetch
+      })
+    ),
     cache: makeCache(initialState)
   });
 }
