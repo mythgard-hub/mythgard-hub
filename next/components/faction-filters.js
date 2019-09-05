@@ -4,11 +4,6 @@ import PropTypes from 'prop-types';
 
 import { FACTION_NAMES, FACTION_IMAGES } from '../constants/factions';
 
-const cdn = `${process.env.MG_CDN}/collection-icons/`;
-
-const factions = [...FACTION_NAMES];
-const factionImages = Object.values(FACTION_IMAGES);
-
 class FactionFilters extends React.Component {
   constructor(props) {
     super(props);
@@ -59,13 +54,13 @@ class FactionFilters extends React.Component {
           }
         `}</style>
         <ul>
-          {factions.map((f, index) => (
+          {FACTION_NAMES.map((f, index) => (
             <li key={f}>
               <FactionFilter
                 faction={f}
                 selected={this.state.factions.indexOf(f) > -1}
                 onFactionClick={this.handleFactionClick}
-                factionIcon={factionImages[index]}
+                factionIcon={FACTION_IMAGES[f]}
               ></FactionFilter>
             </li>
           ))}
