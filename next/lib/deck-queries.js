@@ -144,6 +144,7 @@ export const allDecksQuery = gql`
         author {
           username
         }
+        modified
       }
     }
   }
@@ -182,6 +183,25 @@ export const singleDeckQuery = gql`
       }
       path {
         name
+      }
+    }
+  }
+`;
+
+export const deckFactions = gql`
+  query cardDecks($deckIds: [Int!]) {
+    cardDecks(filter: { deckId: { in: $deckIds } }) {
+      nodes {
+        deckId
+        card {
+          cardFactions {
+            nodes {
+              faction {
+                name
+              }
+            }
+          }
+        }
       }
     }
   }
