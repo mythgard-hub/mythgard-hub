@@ -27,3 +27,20 @@ export const addCardToDeck = (deck, card) => {
 
   return newDeck;
 };
+
+export const collectDeckFactions = deckData => {
+  try {
+    return deckData.cardDecks.nodes.reduce((factionsPerDeck, c) => {
+      const factions = c.card.cardFactions.nodes.map(f => f.faction.name);
+
+      factionsPerDeck[c.deckId] = factionsPerDeck[c.deckId]
+        ? new Set([...factionsPerDeck[c.deckId], ...factions])
+        : factions;
+
+      return factionsPerDeck;
+    }, {});
+  } catch (e) {
+    console.log(e);
+    return {};
+  }
+};

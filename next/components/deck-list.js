@@ -6,22 +6,7 @@ import { ThemeContext } from './theme-context';
 import { deckFactions } from '../lib/deck-queries';
 import { FACTION_IMAGES } from '../constants/factions';
 import ErrorMessage from './error-message';
-
-function formatDataToFactions(data) {
-  try {
-    return data.cardDecks.nodes.reduce((factionsPerDeck, c) => {
-      const factions = c.card.cardFactions.nodes.map(f => f.faction.name);
-
-      factionsPerDeck[c.deckId] = factionsPerDeck[c.deckId]
-        ? new Set([...factionsPerDeck[c.deckId], ...factions])
-        : factions;
-
-      return factionsPerDeck;
-    }, {});
-  } catch (e) {
-    return {};
-  }
-}
+import { collectDeckFactions } from '../lib/deck-utils';
 
 export default function DeckList({ decks }) {
   if (!decks || !decks.length) return null;
@@ -38,7 +23,7 @@ export default function DeckList({ decks }) {
   if (loading) return 'Loading...';
   if (error) return <ErrorMessage message={error.message} />;
 
-  const factions = formatDataToFactions(data);
+  const factions = collectDeckFactions(data);
 
   return (
     <div>
