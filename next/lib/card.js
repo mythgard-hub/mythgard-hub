@@ -1,3 +1,5 @@
+const cdn = process.env.MG_CARDS_CDN;
+
 export const nameToImage = name => {
   name = name
     .trim()
@@ -19,4 +21,12 @@ export const nameToImage = name => {
       return `${s[0].toUpperCase()}${rest}`;
     })
     .join('-');
+};
+
+export const imagePath = (name, set = 'core') => {
+  return `${cdn}/${set.toLowerCase()}/s/${nameToImage(name)}.png`;
+};
+
+export const imagePathMedium = (name, set = 'core') => {
+  return `${cdn}/${set.toLowerCase()}/m/${nameToImage(name)}.png`;
 };

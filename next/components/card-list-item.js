@@ -1,17 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { nameToImage } from '../lib/card.js';
+import {
+  imagePath as getPath,
+  imagePathMedium as getHoverPath
+} from '../lib/card.js';
 
-const cdn = process.env.MG_CARDS_CDN;
-
-const getPath = (name, set = 'core') => {
-  return `${cdn}/${set.toLowerCase()}/s/${nameToImage(name)}.png`;
-};
-
-const getHoverPath = (name, set = 'core') => {
-  return `${cdn}/${set.toLowerCase()}/m/${nameToImage(name)}.png`;
-};
+const smallImageWidth = 160;
+const hoverImageWidth = 320;
+const hoverImageVerticalOffset = 64;
 
 export default function CardListItem({ card, onClick }) {
   const imgAlt = card.name;
@@ -22,7 +19,7 @@ export default function CardListItem({ card, onClick }) {
     <>
       <style jsx>{`
         .cardListImg {
-          width: 160px;
+          width: ${smallImageWidth}px;
         }
         .imgWrapper {
           display: inline-block;
@@ -31,10 +28,10 @@ export default function CardListItem({ card, onClick }) {
         // hover image
         .imgWrapper:hover::before {
           content: url(${imgPathMedium});
-          width: 320px;
+          width: ${hoverImageWidth}px;
           position: absolute;
-          top: -64px;
-          left: -80px; // relative to small img
+          top: -${hoverImageVerticalOffset}px;
+          left: -${smallImageWidth / 2}px;
           z-index: 2;
         }
       `}</style>
