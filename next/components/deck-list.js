@@ -9,17 +9,15 @@ import ErrorMessage from './error-message';
 
 function formatDataToFactions(data) {
   try {
-    const factionsPerDeck = {};
-
-    data.cardDecks.nodes.forEach(c => {
+    return data.cardDecks.nodes.reduce((factionsPerDeck, c) => {
       const factions = c.card.cardFactions.nodes.map(f => f.faction.name);
 
       factionsPerDeck[c.deckId] = factionsPerDeck[c.deckId]
-        ? [...factionsPerDeck[c.deckId], ...factions]
+        ? new Set([...factionsPerDeck[c.deckId], ...factions])
         : factions;
-    });
 
-    return factionsPerDeck;
+      return factionsPerDeck;
+    }, {});
   } catch (e) {
     return {};
   }
