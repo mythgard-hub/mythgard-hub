@@ -34,7 +34,7 @@ function Layout({ title, desc, children }) {
         }
 
         h1 {
-          color: ${theme.fontColorSelected};
+          color: ${theme.fontColorHeading};
           text-transform: uppercase;
         }
 
@@ -69,7 +69,7 @@ function Layout({ title, desc, children }) {
         input[type='text'],
         select {
           height: 30px;
-          border: ${theme.tabBorder};
+          border: ${theme.inputBorder};
           background-color: ${theme.inputBackground};
           border-radius: 7px;
           padding-left: 10px;

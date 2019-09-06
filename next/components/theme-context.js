@@ -18,8 +18,10 @@ export const themes = {
     buttonOutlineOffset: '6px',
     buttonBorderDisabled: `2px solid ${mgColors.lightGray}`,
     inputBackground: mgColors.lightGray,
+    inputBorder: `1px solid ${mgColors.lightBlue}`,
     inputPlaceholderTextColor: mgColors.lightBlue,
-    zebraRowBackroung: mgColors.grayBlue
+    zebraRowBackroung: mgColors.grayBlue,
+    fontColorHeading: mgColors.blue
   }
 };
 
