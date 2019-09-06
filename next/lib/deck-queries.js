@@ -111,6 +111,19 @@ export const getDeckSearchQuery = (
           author {
             username
           }
+          cardDecks {
+            nodes {
+              card {
+                cardFactions {
+                  nodes {
+                    faction {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -145,6 +158,19 @@ export const allDecksQuery = gql`
           username
         }
         modified
+        cardDecks {
+          nodes {
+            card {
+              cardFactions {
+                nodes {
+                  faction {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -183,25 +209,6 @@ export const singleDeckQuery = gql`
       }
       path {
         name
-      }
-    }
-  }
-`;
-
-export const deckFactions = gql`
-  query cardDecks($deckIds: [Int!]) {
-    cardDecks(filter: { deckId: { in: $deckIds } }) {
-      nodes {
-        deckId
-        card {
-          cardFactions {
-            nodes {
-              faction {
-                name
-              }
-            }
-          }
-        }
       }
     }
   }

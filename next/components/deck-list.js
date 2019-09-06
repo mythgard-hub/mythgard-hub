@@ -9,21 +9,8 @@ import ErrorMessage from './error-message';
 import { collectDeckFactions } from '../lib/deck-utils';
 
 export default function DeckList({ decks }) {
-  if (!decks || !decks.length) return null;
-
   const theme = useContext(ThemeContext);
-
-  const deckIds = decks.map(deck => deck.id);
-  const { loading, error, data } = useQuery(deckFactions, {
-    variables: {
-      deckIds
-    }
-  });
-
-  if (loading) return 'Loading...';
-  if (error) return <ErrorMessage message={error.message} />;
-
-  const factions = collectDeckFactions(data);
+  const factions = collectDeckFactions(decks);
 
   return (
     <div>
