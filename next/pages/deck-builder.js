@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SomeCards from '../components/some-cards';
+import AllPaths from '../components/all-paths';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
@@ -101,8 +102,7 @@ function DeckBuilderPage() {
           )}
           {currentTab === 'Paths' && (
             <div className="collection" data-cy="deckBuilderPaths">
-              {/* <AllPaths /> */}
-              <div>all paths</div>
+              <AllPaths />
             </div>
           )}
           {currentTab === 'Powers' && (
