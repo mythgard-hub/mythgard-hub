@@ -111,6 +111,19 @@ export const getDeckSearchQuery = (
           author {
             username
           }
+          cardDecks {
+            nodes {
+              card {
+                cardFactions {
+                  nodes {
+                    faction {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -143,6 +156,20 @@ export const allDecksQuery = gql`
         name
         author {
           username
+        }
+        modified
+        cardDecks {
+          nodes {
+            card {
+              cardFactions {
+                nodes {
+                  faction {
+                    name
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

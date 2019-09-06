@@ -17,10 +17,8 @@ function PageBanner({ children, image }) {
           align-items: center;
         }
         .page-banner h1 {
-          color: ${theme.fontColorSelected};
           margin: 0;
           padding-right: 0.5em;
-          text-transform: uppercase;
         }
       `}</style>
       <h1 data-cy="header">{children}</h1>

@@ -33,8 +33,17 @@ function Layout({ title, desc, children }) {
           margin: 0;
         }
 
+        h1 {
+          color: ${theme.fontColorHeading};
+          text-transform: uppercase;
+        }
+
         a {
           color: ${theme.fontColor};
+        }
+
+        a:hover {
+          color: ${theme.fontColorSelected};
         }
 
         hr {
@@ -48,10 +57,31 @@ function Layout({ title, desc, children }) {
           border: ${theme.sectionBorder};
           color: ${theme.fontColor};
           font-family: ${theme.fontFamily};
-          font-size: 20px;
-          padding: 5px 10px;
+          font-size: 14px;
+          font-weight: bold;
+          text-transform: uppercase;
+          padding: 10px 10px;
           width: 100%;
           border-radius: 10px;
+          font-style: italic;
+        }
+
+        input[type='text'],
+        select {
+          height: 30px;
+          border: ${theme.inputBorder};
+          background-color: ${theme.inputBackground};
+          border-radius: 7px;
+          padding-left: 10px;
+          opacity: 1;
+          font-family: ${theme.fontFamily};
+        }
+
+        ::placeholder {
+          color: ${theme.inputPlaceholderTextColor};
+          opacity: 1;
+          font-style: italic;
+          font-family: ${theme.fontFamily};
         }
 
         .deck-card-table-container {

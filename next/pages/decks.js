@@ -30,8 +30,14 @@ class DecksPage extends React.Component {
   render() {
     return (
       <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
+        <style jsx>{`
+          h1 {
+            margin: 20px 0 25px 0;
+          }
+        `}</style>
         <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
         <DeckSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
+        <h1>Results</h1>
         {hasSearch(this.state.searchQuery) ? (
           <SomeDecks search={this.state.searchQuery} />
         ) : (

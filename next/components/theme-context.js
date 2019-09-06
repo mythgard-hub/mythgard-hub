@@ -9,14 +9,19 @@ export const themes = {
     fontColorSelected: mgColors.blue,
     fontColorDisabled: mgColors.lightGray,
     sectionBackground: mgColors.mediumGray,
-    sectionBorder: `2px solid ${mgColors.lightBlue}`,
+    sectionBorder: `1px solid ${mgColors.lightBlue}`,
     tabBorder: `1px solid ${mgColors.lightBlue}`,
     tabColor: mgColors.lightBlue,
     border: `1px solid ${mgColors.orange}`,
     fontFamily: mgFonts.exo2,
     buttonOutline: `1px solid ${mgColors.orange}`,
     buttonOutlineOffset: '6px',
-    buttonBorderDisabled: `2px solid ${mgColors.lightGray}`
+    buttonBorderDisabled: `2px solid ${mgColors.lightGray}`,
+    inputBackground: mgColors.lightGray,
+    inputBorder: `1px solid ${mgColors.lightBlue}`,
+    inputPlaceholderTextColor: mgColors.lightBlue,
+    zebraRowBackground: mgColors.grayBlue,
+    fontColorHeading: mgColors.blue
   }
 };
 
