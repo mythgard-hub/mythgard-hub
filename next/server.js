@@ -17,6 +17,9 @@ app
     server.use(cookieParser());
     server.use(passport.initialize());
 
+    const articles = require('./server-routes/articles');
+    server.use('/articles', articles);
+
     const auth = require('./server-routes/auth.js');
     server.use('/auth', auth);
 

@@ -1,4 +1,5 @@
 import Layout from '../components/layout';
+import ArticleList from '../components/article-list';
 
 const index = () => (
   <Layout>
@@ -23,6 +24,7 @@ const index = () => (
     </div>
     <div>
       <h2>recent articles</h2>
+      <ArticleList />
     </div>
   </Layout>
 );

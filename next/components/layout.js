@@ -34,7 +34,8 @@ function Layout({ title, desc, children }) {
         }
 
         a {
-          color: ${theme.fontColor};
+          color: ${theme.fontColorAccent};
+          text-decoration: none;
         }
 
         hr {
