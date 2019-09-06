@@ -1,12 +1,12 @@
 import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message';
-import CardList from './card-list';
+import PathList from './path-list';
 import PropTypes from 'prop-types';
 
 import allPathsQuery from '../lib/queries/all-paths-query';
 
 export default function AllPaths(props) {
-  const { onCardClick } = props;
+  const { onPathClick } = props;
   const { loading, error, data } = useQuery(allPathsQuery);
 
   if (error) return <ErrorMessage message={error} />;
@@ -14,9 +14,9 @@ export default function AllPaths(props) {
   if (!data || !data.paths) return null;
 
   const paths = data.paths;
-  return <CardList onCardClick={onCardClick} cards={paths.nodes} />;
+  return <PathList onPathClick={onPathClick} paths={paths.nodes} />;
 }
 
 AllPaths.propTypes = {
-  onCardClick: PropTypes.func
+  onPathClick: PropTypes.func
 };
