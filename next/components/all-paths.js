@@ -13,8 +13,8 @@ export default function AllPaths(props) {
   if (loading) return <div>Loading Paths...</div>;
   if (!data || !data.paths) return null;
 
-  const paths = data.paths;
-  return <PathList onPathClick={onPathClick} paths={paths.nodes} />;
+  const paths = data.paths.nodes.filter(p => p.name !== 'No path selected');
+  return <PathList onPathClick={onPathClick} paths={paths} />;
 }
 
 AllPaths.propTypes = {
