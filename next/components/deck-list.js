@@ -26,7 +26,7 @@ export default function DeckList({ decks }) {
           padding: 15px 10px 15px 10px;
         }
         .zebraRow {
-          background-color: ${theme.zebraRowBackroung};
+          background-color: ${theme.zebraRowBackground};
         }
         img {
           max-height: 15px;

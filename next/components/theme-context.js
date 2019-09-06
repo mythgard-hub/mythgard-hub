@@ -20,7 +20,7 @@ export const themes = {
     inputBackground: mgColors.lightGray,
     inputBorder: `1px solid ${mgColors.lightBlue}`,
     inputPlaceholderTextColor: mgColors.lightBlue,
-    zebraRowBackroung: mgColors.grayBlue,
+    zebraRowBackground: mgColors.grayBlue,
     fontColorHeading: mgColors.blue
   }
 };
