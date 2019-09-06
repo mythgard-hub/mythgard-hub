@@ -2,3 +2,5 @@
 /next/coverage
 non-code resources
 scripts/mgcards.csv
+scripts/mgpowers.csv
+scripts/mgpaths.csv

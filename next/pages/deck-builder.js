@@ -18,6 +18,7 @@ function DeckBuilderPage() {
   const [cardManaCosts, setCardManaCosts] = useState([]);
   const [supertypes, setSupertypes] = useState([]);
   const [factions, setFactions] = useState([]);
+  const [currentTab, setTab] = useState('');
   const cardFilters = {
     text: cardSearchText,
     rarities: cardRarities,
@@ -88,10 +89,28 @@ function DeckBuilderPage() {
             setManaCosts={setCardManaCosts}
             setSupertypes={setSupertypes}
             onFactionClick={setFactions}
+            setTab={setTab}
           />
-          <div className="collection" data-cy="deckBuilderCollection">
-            <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />
-          </div>
+          {currentTab === 'Cards' && (
+            <div className="collection" data-cy="deckBuilderCollection">
+              <SomeCards
+                filters={cardFilters}
+                onCardClick={onCollectionClick}
+              />
+            </div>
+          )}
+          {currentTab === 'Paths' && (
+            <div className="collection" data-cy="deckBuilderPaths">
+              {/* <AllPaths /> */}
+              <div>all paths</div>
+            </div>
+          )}
+          {currentTab === 'Powers' && (
+            <div className="collection" data-cy="deckBuilderPaths">
+              {/* <AllPowers /> */}
+              <div>all powers</div>
+            </div>
+          )}
           <ImportedDeckErrors importedDeck={deckInProgress} />
         </div>
         <div className="deck-builder-actions">
