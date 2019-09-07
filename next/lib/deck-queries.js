@@ -111,6 +111,7 @@ export const getDeckSearchQuery = (
           author {
             username
           }
+          modified
           cardDecks {
             nodes {
               quantity
