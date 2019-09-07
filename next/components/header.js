@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { ThemeContext } from './theme-context';
-import withUser from './with-user';
 
 const cdn = process.env.MG_CDN;
 
@@ -11,7 +10,6 @@ const linkStyle = {
 class Header extends React.Component {
   render() {
     let theme = this.context;
-    const { user } = this.props;
     return (
       <div className="header">
         <style jsx>{`
@@ -24,7 +22,6 @@ class Header extends React.Component {
             padding-top: 10px;
             max-height: 100px;
             overflow: hidden;
-            position: fixed;
             font-weight: bold;
             max-width: 940px;
           }
@@ -94,22 +91,6 @@ class Header extends React.Component {
           <a href="/privacy-policy" style={linkStyle}>
             PRIVACY POLICY
           </a>
-          {!user && (
-            <Link href="/auth/google">
-              <a style={linkStyle}>LOG IN (GOOGLE)</a>
-            </Link>
-          )}
-          {user && (
-            <>
-              <Link href="/account">
-                <a style={linkStyle}>ACCOUNT</a>
-              </Link>
-              <Link href="/auth/logout">
-                <a style={linkStyle}>LOG OUT</a>
-              </Link>
-              <span>Howdy, {user.username || 'Mystery User'}</span>
-            </>
-          )}
         </div>
       </div>
     );
@@ -118,4 +99,4 @@ class Header extends React.Component {
 
 Header.contextType = ThemeContext;
 
-export default withUser(Header);
+export default Header;
