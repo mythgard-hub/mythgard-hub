@@ -35,7 +35,12 @@ function NewDecks() {
   const theme = useContext(ThemeContext);
   let decks = (data && data.deckPreviews && data.deckPreviews.nodes) || [];
   decks = decks.map(d => {
-    return { name: d.deckName, factions: d.factions, author: d.deck.author };
+    return {
+      name: d.deckName,
+      factions: d.factions,
+      author: d.deck.author,
+      created: d.deckCreated
+    };
   });
   return (
     <>
@@ -49,6 +54,10 @@ function NewDecks() {
           display: block;
           margin-bottom: 10px;
           padding: 10px;
+        }
+
+        .deckName {
+          max-width: 257px;
         }
 
         .deckName :global(a) {
@@ -65,7 +74,6 @@ function NewDecks() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          max-width: 257px;
           flex-wrap: wrap; /* seems preferable to squishing */
           height: 30px;
         }
