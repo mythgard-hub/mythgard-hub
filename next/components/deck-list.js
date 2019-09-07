@@ -72,7 +72,9 @@ export default function DeckList({ decks }) {
                   </div>
                   <div className="deckAuthor">by {author}</div>
                 </td>
-                <td className="factions">{currFactions}</td>
+                <td className="factions" data-cy="deckFactionsCell">
+                  {currFactions}
+                </td>
                 <td className="mana">
                   <ManaIndicator mana={currMana} />
                 </td>

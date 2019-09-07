@@ -1,7 +1,9 @@
 import {
   cardSearch,
   cardSelectionItem,
-  factionFilter
+  factionFilter,
+  deckFactionsPicker,
+  deckManaPicker
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -27,7 +29,8 @@ describe('Decks Page', function() {
       cy.get('[data-cy="deckSearchSubmit"]').click();
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
       cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
-
+      cy.get(deckFactionsPicker).should('have.length', '1');
+      cy.get(deckManaPicker).should('contain', '3');
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
       cy.get('[data-cy="deckListItem"]').should(
@@ -56,6 +59,8 @@ describe('Decks Page', function() {
         })
         .then(() => {
           cy.get(`${cardSearchSelections} button`).should('have.length', 2);
+          cy.get(deckFactionsPicker).should('have.length', '6');
+          cy.get(deckManaPicker).should('contain', '10');
           cy.get(`${cardSearchSelections} button`).click({ multiple: true });
           cy.get(cardSearchSelections).should('have.length', 0);
           cy.get('[data-cy="deckSearchSubmit"]').click();

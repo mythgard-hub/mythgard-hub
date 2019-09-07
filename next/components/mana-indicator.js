@@ -20,7 +20,7 @@ export default function ManaIndicator({ mana }) {
         }
       `}</style>
       <img src={iconUrl} />
-      {mana}
+      <span data-cy="deckManaCell">{mana}</span>
     </span>
   );
 }
