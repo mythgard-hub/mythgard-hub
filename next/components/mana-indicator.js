@@ -7,7 +7,7 @@ export default function ManaIndicator({ mana }) {
   const iconUrl = `${process.env.MG_CDN}/filters/essence.png`;
 
   return (
-    <span>
+    <span className="manaIndicator">
       <style jsx>{`
         span {
           color: ${theme.manaColor};

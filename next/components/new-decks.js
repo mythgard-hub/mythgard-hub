@@ -63,11 +63,49 @@ function NewDecks() {
           padding-top: 10px;
           border-top: ${theme.sectionBorder};
           display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 257px;
+          flex-wrap: wrap; /* seems preferable to squishing */
+          height: 30px;
+        }
+
+        .factionIcons {
+          display: flex;
         }
 
         .factionIcons img {
           height: 15px;
           margin-right: 5px;
+        }
+
+        :global(.manaIndicator img) {
+          height: 15px;
+          max-height: 15px;
+        }
+
+        :global(.manaIndicator span) {
+          font-size: 16px;
+          line-height: 15px;
+        }
+
+        :global(.upvoteIndicator img) {
+          height: 15px;
+          max-height: 15px;
+        }
+
+        :global(.manaIndicator),
+        :global(.upvoteIndicator) {
+          display: block;
+          height: 15px;
+          line-height: 15px;
+          display: flex;
+          align-items: center;
+        }
+
+        :global(.upvoteIndicator span) {
+          font-size: 16px;
+          line-height: 15px;
         }
       `}</style>
       <ul className="deckList">
@@ -92,7 +130,7 @@ function NewDecks() {
                     ))}
                   </div>
                   <ManaIndicator mana={10000} />
-                  <UpvoteIndicator votes={5} />
+                  <UpvoteIndicator votes={5000} />
                 </div>
               </div>
             </li>

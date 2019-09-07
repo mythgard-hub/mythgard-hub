@@ -7,7 +7,7 @@ export default function UpvoteIndicator({ votes }) {
   const iconUrl = `${process.env.MG_CDN}/filters/uparrow.png`;
 
   return (
-    <span>
+    <span className="upvoteIndicator">
       <style jsx>{`
         span {
           color: ${theme.votesColor};
