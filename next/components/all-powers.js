@@ -16,7 +16,7 @@ export default function AllPowers(props) {
   const powers = data.powers.nodes.filter(p => p.name !== 'No power selected');
   return (
     <CardList
-      onPathClick={onPowerClick}
+      onCardClick={onPowerClick}
       cards={powers}
       options={{ isLandscape: true, withPaging: false }}
     />

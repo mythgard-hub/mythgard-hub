@@ -51,6 +51,20 @@ function DeckBuilderPage() {
     });
   };
 
+  const onPathClick = (e, path) => {
+    setDeckInProgress({
+      ...deckInProgress,
+      deckPath: path
+    });
+  };
+
+  const onPowerClick = (e, power) => {
+    setDeckInProgress({
+      ...deckInProgress,
+      deckPower: power
+    });
+  };
+
   const deleteCardFromTable = id => {
     const newMainDeck = { ...deckInProgress.mainDeck };
     delete newMainDeck[id];
@@ -103,12 +117,12 @@ function DeckBuilderPage() {
           )}
           {currentTab === 'Paths' && (
             <div className="collection" data-cy="deckBuilderPaths">
-              <AllPaths />
+              <AllPaths onPathClick={onPathClick} />
             </div>
           )}
           {currentTab === 'Powers' && (
             <div className="collection" data-cy="deckBuilderPaths">
-              <AllPowers></AllPowers>
+              <AllPowers onPowerClick={onPowerClick}></AllPowers>
             </div>
           )}
           <ImportedDeckErrors importedDeck={deckInProgress} />
