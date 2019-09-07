@@ -1,5 +1,6 @@
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
+import NewDecks from '../components/new-decks.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 
@@ -16,7 +17,7 @@ const index = () => {
           margin: 0 -20px;
         }
 
-        .homePageColumns .mg-column {
+        .mg-column {
           min-width: 303px;
         }
 
@@ -31,6 +32,7 @@ const index = () => {
         </div>
         <div className="mg-column">
           <h2>New Decks</h2>
+          <NewDecks />
         </div>
         <div className="mg-column">
           <h2>Top Decks</h2>
