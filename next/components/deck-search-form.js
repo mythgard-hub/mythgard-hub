@@ -30,8 +30,7 @@ export default function DeckSearchForm(props) {
     });
   };
 
-  const handleClear = e => {
-    e && e.preventDefault();
+  const handleClear = () => {
     setName('');
     setCardIds([]);
     setFactionNames([]);
@@ -128,7 +127,7 @@ export default function DeckSearchForm(props) {
           value="Apply"
           onClick={handleSubmit}
         />
-        <button onClick={handleClear} data-cy="deckSearchClear">
+        <button type="button" onClick={handleClear} data-cy="deckSearchClear">
           Clear
         </button>
       </div>
