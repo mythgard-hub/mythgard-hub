@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import SomeCards from '../components/some-cards';
+import AllPaths from '../components/all-paths';
+import AllPowers from '../components/all-powers.js';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import ImportDeck from '../components/import-deck';
@@ -18,6 +20,7 @@ function DeckBuilderPage() {
   const [cardManaCosts, setCardManaCosts] = useState([]);
   const [supertypes, setSupertypes] = useState([]);
   const [factions, setFactions] = useState([]);
+  const [currentTab, setTab] = useState('');
   const cardFilters = {
     text: cardSearchText,
     rarities: cardRarities,
@@ -45,6 +48,20 @@ function DeckBuilderPage() {
     setDeckInProgress({
       ...deckInProgress,
       mainDeck: newMainDeck
+    });
+  };
+
+  const onPathClick = (e, path) => {
+    setDeckInProgress({
+      ...deckInProgress,
+      deckPath: path
+    });
+  };
+
+  const onPowerClick = (e, power) => {
+    setDeckInProgress({
+      ...deckInProgress,
+      deckPower: power
     });
   };
 
@@ -88,10 +105,26 @@ function DeckBuilderPage() {
             setManaCosts={setCardManaCosts}
             setSupertypes={setSupertypes}
             onFactionClick={setFactions}
+            setTab={setTab}
           />
-          <div className="collection" data-cy="deckBuilderCollection">
-            <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />
-          </div>
+          {currentTab === 'Cards' && (
+            <div className="collection" data-cy="deckBuilderCollection">
+              <SomeCards
+                filters={cardFilters}
+                onCardClick={onCollectionClick}
+              />
+            </div>
+          )}
+          {currentTab === 'Paths' && (
+            <div className="collection" data-cy="deckBuilderPaths">
+              <AllPaths onPathClick={onPathClick} />
+            </div>
+          )}
+          {currentTab === 'Powers' && (
+            <div className="collection" data-cy="deckBuilderPaths">
+              <AllPowers onPowerClick={onPowerClick}></AllPowers>
+            </div>
+          )}
           <ImportedDeckErrors importedDeck={deckInProgress} />
         </div>
         <div className="deck-builder-actions">

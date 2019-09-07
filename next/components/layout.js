@@ -53,7 +53,7 @@ function Layout({ title, desc, children }) {
 
         button,
         input[type='submit'] {
-          background-color: ${theme.sectionBackground};
+          background-color: ${theme.buttonBackground};
           border: ${theme.sectionBorder};
           color: ${theme.fontColor};
           font-family: ${theme.fontFamily};
@@ -82,6 +82,11 @@ function Layout({ title, desc, children }) {
           opacity: 1;
           font-style: italic;
           font-family: ${theme.fontFamily};
+        }
+
+        button:hover,
+        input[type='submit']:hover {
+          background-color: ${theme.buttonBackgroundHover};
         }
 
         .deck-card-table-container {
