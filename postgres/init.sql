@@ -72,7 +72,8 @@ CREATE TABLE mythgard.deck (
   author_id integer REFERENCES mythgard.account (id),
   path_id integer REFERENCES mythgard.path (id),
   power_id integer REFERENCES mythgard.power (id),
-  modified timestamp default current_timestamp
+  modified timestamp default current_timestamp,
+  created timestamp default current_timestamp
 );
 INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
