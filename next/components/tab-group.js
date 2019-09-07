@@ -31,10 +31,6 @@ function TabGroup({ onChange, name, labels }) {
             .tab.selected {
               border-bottom: none;
             }
-            .tab:focus {
-              outline: ${theme.buttonOutline};
-              outline-offset: ${theme.buttonOutlineOffset};
-            }
             .tab:hover {
               background-color: ${theme.backgroundLight};
             }
