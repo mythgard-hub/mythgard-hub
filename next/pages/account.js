@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import UserContext from '../components/user-context';
 import { ApolloConsumer } from 'react-apollo';
 import updateUsername from '../lib/mutations/update-username';
+import Link from 'next/link';
 
 class Account extends React.Component {
   constructor(props, context) {
@@ -47,6 +48,9 @@ class Account extends React.Component {
         <h2>Settings</h2>
 
         <div className="stack">
+          <div>
+            <Link href="/auth/logout">Log out</Link>
+          </div>
           <div>
             <label>Email: </label>
             <span>{user.email}</span>
