@@ -3,7 +3,7 @@ import ErrorMessage from './error-message';
 import CardList from './card-list.js';
 import PropTypes from 'prop-types';
 
-import allPathsQuery from '../lib/queries/all-paths-query';
+import allPathsQuery from '../lib/queries/paths-query.js';
 
 export default function AllPaths(props) {
   const { onPathClick } = props;

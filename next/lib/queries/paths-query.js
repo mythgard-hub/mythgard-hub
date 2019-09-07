@@ -1,11 +1,12 @@
 import gql from 'graphql-tag';
 
 const allPathsQuery = gql`
-  query pathsAndPowers {
+  query paths {
     paths {
       nodes {
         id
         name
+        rules
       }
     }
   }
