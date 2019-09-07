@@ -219,6 +219,7 @@ export const singleDeckQuery = gql`
   }
 `;
 
+// A view that aggregates facts and stats about a deck
 export const deckPreviewQuery = gql`
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
@@ -236,3 +237,16 @@ export const deckPreviewQuery = gql`
     }
   }
 `;
+
+// converts a deckPreview view to a deck-like object
+// for use in components that expect a deck-like
+export const deckPreviewToDeck = d => {
+  return {
+    name: d.deckName,
+    factions: d.factions,
+    author: d.deck.author,
+    created: d.deckCreated
+  };
+};
+
+export const deckPreviewsToDecks = dp => dp.map(deckPreviewToDeck);

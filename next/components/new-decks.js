@@ -9,7 +9,10 @@ import { ThemeContext } from '../components/theme-context.js';
 import Link from 'next/link';
 import { FACTION_IMAGES } from '../constants/factions';
 import { dateToDeltaString } from '../lib/time.js';
-import { deckPreviewQuery as decksQuery } from '../lib/deck-queries.js';
+import {
+  deckPreviewQuery as decksQuery,
+  deckPreviewsToDecks
+} from '../lib/deck-queries.js';
 
 function NewDecks() {
   const { loading, error, data } = useQuery(decksQuery);
@@ -19,14 +22,7 @@ function NewDecks() {
   const theme = useContext(ThemeContext);
 
   let decks = (data && data.deckPreviews && data.deckPreviews.nodes) || [];
-  decks = decks.map(d => {
-    return {
-      name: d.deckName,
-      factions: d.factions,
-      author: d.deck.author,
-      created: d.deckCreated
-    };
-  });
+  decks = deckPreviewsToDecks(decks);
 
   return (
     <>
@@ -40,10 +36,7 @@ function NewDecks() {
           display: block;
           margin-bottom: 10px;
           padding: 10px;
-        }
-
-        .deckName {
-          max-width: 257px;
+          max-width: 277px;
         }
 
         .deckName :global(a) {
@@ -61,27 +54,22 @@ function NewDecks() {
           justify-content: space-between;
           align-items: center;
           flex-wrap: wrap; /* seems preferable to squishing */
-          height: 30px;
-        }
-
-        .factionIcons {
-          display: flex;
         }
 
         .factionIcons img {
-          height: 15px;
           margin-right: 5px;
         }
 
         :global(.manaIndicator),
-        :global(.upvoteIndicator) {
+        :global(.upvoteIndicator),
+        .factionIcons {
           display: block;
-          height: 15px;
-          line-height: 15px;
+          height: 20px;
           display: flex;
           align-items: center;
         }
 
+        .factionIcons img,
         :global(.manaIndicator img),
         :global(.upvoteIndicator img) {
           height: 15px;
@@ -91,7 +79,6 @@ function NewDecks() {
         :global(.manaIndicator span),
         :global(.upvoteIndicator span) {
           font-size: 16px;
-          line-height: 15px;
         }
       `}</style>
       <ul className="deckList">
@@ -109,15 +96,15 @@ function NewDecks() {
                     'unknown'}{' '}
                   <i>{dateToDeltaString(new Date(deck.created))}</i>
                 </div>
-                <div className="subsection">
-                  <div className="factionIcons">
-                    {deck.factions.map(f => (
-                      <img key={f} src={FACTION_IMAGES[f]} />
-                    ))}
-                  </div>
-                  <ManaIndicator mana={10000} />
-                  <UpvoteIndicator votes={5000} />
+              </div>
+              <div className="subsection">
+                <div className="factionIcons">
+                  {deck.factions.map(f => (
+                    <img key={f} src={FACTION_IMAGES[f]} />
+                  ))}
                 </div>
+                <ManaIndicator mana={10000} />
+                <UpvoteIndicator votes={5000} />
               </div>
             </li>
           );
