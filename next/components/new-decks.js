@@ -3,6 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import ErrorMessage from './error-message.js';
 import ManaIndicator from './mana-indicator.js';
+import UpvoteIndicator from './upvote-indicator.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import Link from 'next/link';
@@ -85,6 +86,7 @@ function NewDecks() {
                     ))}
                   </div>
                   <ManaIndicator mana={10000} />
+                  <UpvoteIndicator votes={5} />
                 </div>
               </div>
             </li>
