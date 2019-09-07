@@ -16,6 +16,12 @@ const decksQuery = gql`
         deckName
         deckCreated
         factions
+        deck {
+          author {
+            username
+            id
+          }
+        }
       }
     }
   }
@@ -29,7 +35,7 @@ function NewDecks() {
   const theme = useContext(ThemeContext);
   let decks = (data && data.deckPreviews && data.deckPreviews.nodes) || [];
   decks = decks.map(d => {
-    return { name: d.deckName, factions: d.factions };
+    return { name: d.deckName, factions: d.factions, author: d.deck.author };
   });
   return (
     <>
