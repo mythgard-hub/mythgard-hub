@@ -49,6 +49,12 @@ function NewDecks() {
           text-decoration: none;
           font-size: 1.1em;
         }
+
+        .subsection {
+          margin-top: 10px;
+          padding-top: 10px;
+          border-top: ${theme.sectionBorder};
+        }
       `}</style>
       <ul className="deckList">
         {decks.map((deck, i) => {
@@ -65,6 +71,7 @@ function NewDecks() {
                     'unknown'}{' '}
                   {deck.created}
                 </div>
+                <div className="subsection">hello</div>
               </div>
             </li>
           );
