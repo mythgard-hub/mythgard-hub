@@ -189,20 +189,20 @@ CREATE VIEW mythgard.deck_preview as
          deck.name as deck_name,
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions
-  FROM deck
-  JOIN card_deck
+  FROM mythgard.deck
+  JOIN mythgard.card_deck
     ON card_deck.deck_id = deck.id
-  JOIN card
+  JOIN mythgard.card
     ON card_deck.card_id = card.id
-  JOIN card_faction
+  JOIN mythgard.card_faction
     ON card.id = card_faction.id
-  JOIN faction
+  JOIN mythgard.faction
     On faction.id = card_faction.id
  GROUP BY deck.id
 ;
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
 -- But basically is for postgraphile to see relation to deck
-comment on view deck_preview is E'@foreignKey (deck_id) references deck';
+comment on view mythgard.deck_preview is E'@foreignKey (deck_id) references mythgard.deck';
 
 CREATE TRIGGER update_deck_modtime
   BEFORE UPDATE ON mythgard.deck
