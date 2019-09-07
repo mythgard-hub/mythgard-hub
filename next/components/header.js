@@ -1,5 +1,7 @@
+import React from 'react';
 import Link from 'next/link';
 import { ThemeContext } from './theme-context';
+import PropTypes from 'prop-types';
 
 const cdn = process.env.MG_CDN;
 
@@ -15,15 +17,12 @@ class Header extends React.Component {
         <style jsx>{`
           .header {
             background: ${theme.background};
-          }
-        `}</style>
-        <style jsx>{`
-          .header {
             padding-top: 10px;
             max-height: 100px;
             overflow: hidden;
             font-weight: bold;
             max-width: 940px;
+            z-index: 2;
           }
           .header .home {
             display: inline-block;
@@ -96,6 +95,10 @@ class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  user: PropTypes.object
+};
 
 Header.contextType = ThemeContext;
 

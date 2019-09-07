@@ -38,21 +38,23 @@ INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem)
 
 CREATE TABLE mythgard.path (
   id SERIAL PRIMARY KEY,
-  name varchar(255)
+  name varchar(255),
+  rules TEXT
 );
 
-INSERT INTO mythgard.path ("id", "name") VALUES (1, 'Way of the Black Lotus');
-INSERT INTO mythgard.path ("id", "name") VALUES (2, 'Path to Redemption');
-INSERT INTO mythgard.path ("id", "name") VALUES (3, 'Path Variable');
+INSERT INTO mythgard.path ("name", "rules") VALUES ('Way of the Black Lotus', 'lorems');
+INSERT INTO mythgard.path ("name", "rules") VALUES ('Path to Redemption', 'lorems');
+INSERT INTO mythgard.path ("name", "rules") VALUES ('Path Variable', 'lorems');
 
 CREATE TABLE mythgard.power (
   id SERIAL PRIMARY KEY,
-  name varchar(255)
+  name varchar(255),
+  rules TEXT
 );
 
-INSERT INTO mythgard.power ("id", "name") VALUES (1, 'It''s over 9000!!');
-INSERT INTO mythgard.power ("id", "name") VALUES (2, 'Power Rangers');
-INSERT INTO mythgard.power ("id", "name") VALUES (3, 'Powerpuff Girls');
+INSERT INTO mythgard.power ("name", "rules") VALUES ('It''s over 9000!!', 'lorems');
+INSERT INTO mythgard.power ("name", "rules") VALUES ('Power Rangers', 'lorems');
+INSERT INTO mythgard.power ("name", "rules") VALUES ('Powerpuff Girls', 'lorems');
 
 -- In PostgreSQL, user is a keyword
 CREATE TABLE mythgard.account (

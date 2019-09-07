@@ -15,7 +15,8 @@ function DeckBuilderSearchForm({
   setRarities,
   onFactionClick,
   setManaCosts,
-  setSupertypes
+  setSupertypes,
+  setTab
 }) {
   const onTextChange = handleInputChangeHooks(setText);
 
@@ -35,11 +36,7 @@ function DeckBuilderSearchForm({
       <ManaCostFilter onChange={setManaCosts} />
       <SupertypeFilter onChange={setSupertypes} />
       <FactionFilters onFactionClick={onFactionClick} />
-      <TabGroup
-        onChange={() => {}}
-        labels={tabLabels}
-        name="cardsPathsPowers"
-      />
+      <TabGroup onChange={setTab} labels={tabLabels} name="cardsPathsPowers" />
     </>
   );
 }
@@ -50,7 +47,8 @@ DeckBuilderSearchForm.propTypes = {
   onFactionClick: PropTypes.func.isRequired,
   setRarities: PropTypes.func.isRequired,
   setManaCosts: PropTypes.func.isRequired,
-  setSupertypes: PropTypes.func.isRequired
+  setSupertypes: PropTypes.func.isRequired,
+  setTab: PropTypes.func.isRequired
 };
 
 export default DeckBuilderSearchForm;
