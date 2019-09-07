@@ -20,6 +20,7 @@ function NewDecks() {
       <style jsx>{`
         .deckList {
           list-style: none;
+          padding: 0;
         }
       `}</style>
       <ul className="deckList">
