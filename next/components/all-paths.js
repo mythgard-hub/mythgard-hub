@@ -16,7 +16,7 @@ export default function AllPaths(props) {
   const paths = data.paths.nodes.filter(p => p.name !== 'No path selected');
   return (
     <CardList
-      onPathClick={onPathClick}
+      onCardClick={onPathClick}
       cards={paths}
       options={{ isLandscape: true, withPaging: false }}
     />
