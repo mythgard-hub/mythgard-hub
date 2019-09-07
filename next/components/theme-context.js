@@ -14,6 +14,8 @@ export const themes = {
     tabColor: mgColors.lightBlue,
     border: `1px solid ${mgColors.orange}`,
     fontFamily: mgFonts.exo2,
+    buttonBackground: mgColors.mediumGray,
+    buttonBackgroundHover: mgColors.mediumLightGray,
     buttonOutline: `1px solid ${mgColors.orange}`,
     buttonOutlineOffset: '6px',
     buttonBorderDisabled: `2px solid ${mgColors.lightGray}`,
@@ -23,7 +25,8 @@ export const themes = {
     zebraRowBackground: mgColors.grayBlue,
     fontColorHeading: mgColors.blue,
     manaColor: mgColors.lightGreen,
-    deckNameColor: mgColors.orange
+    deckNameColor: mgColors.orange,
+    welcomeBannerBackground: mgColors.orange
   }
 };
 
