@@ -2,21 +2,19 @@ import React from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import ErrorMessage from './error-message.js';
+import ManaIndicator from './mana-indicator.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import Link from 'next/link';
+import { FACTION_IMAGES } from '../constants/factions';
 
 const decksQuery = gql`
-  query decks {
-    decks(orderBy: CREATED_DESC, first: 3) {
+  query deckPreview {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
       nodes {
-        id
-        name
-        created
-        author {
-          id
-          username
-        }
+        deckName
+        deckCreated
+        factions
       }
     }
   }
@@ -28,7 +26,10 @@ function NewDecks() {
   if (loading) return <div>Loading...</div>;
 
   const theme = useContext(ThemeContext);
-  const decks = (data && data.decks && data.decks.nodes) || [];
+  let decks = (data && data.deckPreviews && data.deckPreviews.nodes) || [];
+  decks = decks.map(d => {
+    return { name: d.deckName, factions: d.factions };
+  });
   return (
     <>
       <style jsx>{`
@@ -54,6 +55,12 @@ function NewDecks() {
           margin-top: 10px;
           padding-top: 10px;
           border-top: ${theme.sectionBorder};
+          display: flex;
+        }
+
+        .factionIcons img {
+          height: 15px;
+          margin-right: 5px;
         }
       `}</style>
       <ul className="deckList">
@@ -71,7 +78,14 @@ function NewDecks() {
                     'unknown'}{' '}
                   {deck.created}
                 </div>
-                <div className="subsection">hello</div>
+                <div className="subsection">
+                  <div className="factionIcons">
+                    {deck.factions.map(f => (
+                      <img key={f} src={FACTION_IMAGES[f]} />
+                    ))}
+                  </div>
+                  <ManaIndicator mana={10000} />
+                </div>
               </div>
             </li>
           );
