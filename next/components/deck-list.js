@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
-import { FACTION_IMAGES } from '../constants/factions';
 import { collectDecksFactionsAndMana } from '../lib/deck-utils';
 import ManaIndicator from './mana-indicator';
+import FactionsIndicator from './factions-indicator.js';
 
 export default function DeckList({ decks }) {
   const theme = useContext(ThemeContext);
@@ -55,11 +55,11 @@ export default function DeckList({ decks }) {
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
             const modified = new Date(deck.modified);
-            const currFactions = factionsAndMana[deck.id].factions
-              ? [...factionsAndMana[deck.id].factions].map(f => (
-                  <img src={FACTION_IMAGES[f]} />
-                ))
-              : '';
+            const currFactions = (
+              <FactionsIndicator
+                factions={[...factionsAndMana[deck.id].factions]}
+              />
+            );
             const currMana = factionsAndMana[deck.id].mana || 0;
 
             return (

@@ -1,10 +1,10 @@
 import React from 'react';
 import ManaIndicator from './mana-indicator.js';
 import UpvoteIndicator from './upvote-indicator.js';
+import FactionsIndicator from './factions-indicator.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import Link from 'next/link';
-import { FACTION_IMAGES } from '../constants/factions';
 import { dateToDeltaString } from '../lib/time.js';
 import PropTypes from 'prop-types';
 
@@ -40,10 +40,6 @@ function DeckPreview({ deck }) {
           flex-wrap: wrap; /* seems preferable to squishing */
         }
 
-        .factionIcons img {
-          margin-right: 5px;
-        }
-
         :global(.manaIndicator),
         :global(.upvoteIndicator),
         .factionIcons {
@@ -77,11 +73,7 @@ function DeckPreview({ deck }) {
           </div>
         </div>
         <div className="subsection">
-          <div className="factionIcons">
-            {deck.factions.map(f => (
-              <img key={f} src={FACTION_IMAGES[f]} />
-            ))}
-          </div>
+          <FactionsIndicator factions={deck.factions} />
           <ManaIndicator mana={10000} />
           <UpvoteIndicator votes={5000} />
         </div>
