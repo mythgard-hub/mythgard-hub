@@ -113,7 +113,9 @@ export const getDeckSearchQuery = (
           }
           cardDecks {
             nodes {
+              quantity
               card {
+                mana
                 cardFactions {
                   nodes {
                     faction {
@@ -160,7 +162,9 @@ export const allDecksQuery = gql`
         modified
         cardDecks {
           nodes {
+            quantity
             card {
+              mana
               cardFactions {
                 nodes {
                   faction {

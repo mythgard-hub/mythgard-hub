@@ -33,8 +33,8 @@ export default function DeckSearchForm(props) {
   const { error, data } = useQuery(allCardsQuery);
 
   let cardSearchElement = null;
-  if (error) cardSearchElement = <ErrorMessage message={error} />;
-  if (data) {
+  if (error) cardSearchElement = <ErrorMessage message={error.message} />;
+  if (data && data.cards) {
     cardSearchElement = (
       <CardSearch
         cards={data.cards.nodes}

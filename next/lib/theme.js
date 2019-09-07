@@ -8,7 +8,8 @@ export const mgColors = {
   mediumLightGray: '#505050',
   mediumGray: '#333333',
   grayBlue: '#1C2D35',
-  lightBlue: '#458A9E'
+  lightBlue: '#458A9E',
+  lightGreen: '#B4E185'
 };
 
 export const mgFonts = {
