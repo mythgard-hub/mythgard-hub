@@ -218,3 +218,21 @@ export const singleDeckQuery = gql`
     }
   }
 `;
+
+export const deckPreviewQuery = gql`
+  query deckPreview {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
+      nodes {
+        deckName
+        deckCreated
+        factions
+        deck {
+          author {
+            username
+            id
+          }
+        }
+      }
+    }
+  }
+`;

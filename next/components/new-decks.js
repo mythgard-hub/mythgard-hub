@@ -9,24 +9,7 @@ import { ThemeContext } from '../components/theme-context.js';
 import Link from 'next/link';
 import { FACTION_IMAGES } from '../constants/factions';
 import { dateToDeltaString } from '../lib/time.js';
-
-const decksQuery = gql`
-  query deckPreview {
-    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
-      nodes {
-        deckName
-        deckCreated
-        factions
-        deck {
-          author {
-            username
-            id
-          }
-        }
-      }
-    }
-  }
-`;
+import { deckPreviewQuery as decksQuery } from '../lib/deck-queries.js';
 
 function NewDecks() {
   const { loading, error, data } = useQuery(decksQuery);
@@ -34,6 +17,7 @@ function NewDecks() {
   if (loading) return <div>Loading...</div>;
 
   const theme = useContext(ThemeContext);
+
   let decks = (data && data.deckPreviews && data.deckPreviews.nodes) || [];
   decks = decks.map(d => {
     return {
@@ -43,6 +27,7 @@ function NewDecks() {
       created: d.deckCreated
     };
   });
+
   return (
     <>
       <style jsx>{`
@@ -88,21 +73,6 @@ function NewDecks() {
           margin-right: 5px;
         }
 
-        :global(.manaIndicator img) {
-          height: 15px;
-          max-height: 15px;
-        }
-
-        :global(.manaIndicator span) {
-          font-size: 16px;
-          line-height: 15px;
-        }
-
-        :global(.upvoteIndicator img) {
-          height: 15px;
-          max-height: 15px;
-        }
-
         :global(.manaIndicator),
         :global(.upvoteIndicator) {
           display: block;
@@ -112,6 +82,13 @@ function NewDecks() {
           align-items: center;
         }
 
+        :global(.manaIndicator img),
+        :global(.upvoteIndicator img) {
+          height: 15px;
+          max-height: 15px;
+        }
+
+        :global(.manaIndicator span),
         :global(.upvoteIndicator span) {
           font-size: 16px;
           line-height: 15px;
