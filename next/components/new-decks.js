@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import Link from 'next/link';
 import { FACTION_IMAGES } from '../constants/factions';
+import { dateToDeltaString } from '../lib/time.js';
 
 const decksQuery = gql`
   query deckPreview {
@@ -129,7 +130,7 @@ function NewDecks() {
                     deck.author.username &&
                     deck.author.username) ||
                     'unknown'}{' '}
-                  {deck.created}
+                  <i>{dateToDeltaString(new Date(deck.created))}</i>
                 </div>
                 <div className="subsection">
                   <div className="factionIcons">
