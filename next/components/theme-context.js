@@ -21,7 +21,9 @@ export const themes = {
     inputBorder: `1px solid ${mgColors.lightBlue}`,
     inputPlaceholderTextColor: mgColors.lightBlue,
     zebraRowBackground: mgColors.grayBlue,
-    fontColorHeading: mgColors.blue
+    fontColorHeading: mgColors.blue,
+    manaColor: mgColors.lightGreen,
+    deckNameColor: mgColors.orange
   }
 };
 
