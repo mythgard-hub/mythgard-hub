@@ -32,6 +32,7 @@ PageBanner.IMG_DECKS = `${process.env.MG_CDN}/banner/Banner_Decks.jpg`;
 PageBanner.IMG_DECK_BUILDER = `${process.env.MG_CDN}/banner/Banner_DeckBuilder.jpg`;
 PageBanner.IMG_EVENTS = `${process.env.MG_CDN}/banner/Banner_Events.jpg`;
 PageBanner.IMG_PATCH_NOTES = `${process.env.MG_CDN}/banner/Banner_PatchNotes.jpg`;
+PageBanner.IMG_HOME_TOP = `${process.env.MG_CDN}/banner/Banner_Home_Top.jpg`;
 
 PageBanner.propTypes = {
   children: PropTypes.string.isRequired,
@@ -41,7 +42,8 @@ PageBanner.propTypes = {
     PageBanner.IMG_DECKS,
     PageBanner.IMG_DECK_BUILDER,
     PageBanner.IMG_EVENTS,
-    PageBanner.IMG_PATCH_NOTES
+    PageBanner.IMG_PATCH_NOTES,
+    PageBanner.IMG_HOME_TOP
   ]).isRequired
 };
 

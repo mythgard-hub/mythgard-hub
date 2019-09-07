@@ -1,8 +1,9 @@
 import Layout from '../components/layout';
+import PageBanner from '../components/page-banner';
 
 const index = () => (
   <Layout>
-    <hr />
+    <PageBanner image={PageBanner.IMG_HOME_TOP}></PageBanner>
     <div>
       <span>
         <b>Top Articles</b>
