@@ -1,31 +1,53 @@
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
+import { useContext } from 'react';
+import { ThemeContext } from '../components/theme-context.js';
 
-const index = () => (
-  <Layout>
-    <PageBanner image={PageBanner.IMG_HOME_TOP}></PageBanner>
-    <div>
-      <span>
-        <b>Top Articles</b>
-      </span>
-      <span>
-        <b>New Decks</b>
-      </span>
-      <span>
-        <b>Top Decks</b>
-      </span>
-    </div>
-    <div>
-      <h2>patch notes</h2>
-    </div>
-    <div>
-      <h2>tournament results</h2>
-      <div>tourney 1</div>
-    </div>
-    <div>
-      <h2>recent articles</h2>
-    </div>
-  </Layout>
-);
+const index = () => {
+  const theme = useContext(ThemeContext);
+  return (
+    <Layout>
+      <PageBanner image={PageBanner.IMG_HOME_TOP}></PageBanner>
+      <style jsx>{`
+        .homePageColumns {
+          display: flex;
+          flex-wrap: wrap;
+          min-width: 284px;
+          margin: 0 -20px;
+        }
+
+        .homePageColumns .mg-column {
+          min-width: 303px;
+        }
+
+        .homePageColumns h2 {
+          text-align: center;
+          border-bottom: ${theme.border};
+        }
+      `}</style>
+      <div className="homePageColumns">
+        <div className="mg-column">
+          <h2>Top Articles</h2>
+        </div>
+        <div className="mg-column">
+          <h2>New Decks</h2>
+        </div>
+        <div className="mg-column">
+          <h2>Top Decks</h2>
+        </div>
+      </div>
+      <div>
+        <h2>patch notes</h2>
+      </div>
+      <div>
+        <h2>tournament results</h2>
+        <div>tourney 1</div>
+      </div>
+      <div>
+        <h2>recent articles</h2>
+      </div>
+    </Layout>
+  );
+};
 
 export default index;
