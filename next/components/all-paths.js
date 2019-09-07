@@ -1,6 +1,6 @@
 import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message';
-import PathList from './path-list';
+import CardList from './card-list.js';
 import PropTypes from 'prop-types';
 
 import allPathsQuery from '../lib/queries/all-paths-query';
@@ -14,7 +14,13 @@ export default function AllPaths(props) {
   if (!data || !data.paths) return null;
 
   const paths = data.paths.nodes.filter(p => p.name !== 'No path selected');
-  return <PathList onPathClick={onPathClick} paths={paths} />;
+  return (
+    <CardList
+      onPathClick={onPathClick}
+      cards={paths}
+      options={{ isLandscape: true, withPaging: false }}
+    />
+  );
 }
 
 AllPaths.propTypes = {
