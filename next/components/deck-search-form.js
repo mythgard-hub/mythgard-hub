@@ -30,6 +30,16 @@ export default function DeckSearchForm(props) {
     });
   };
 
+  const handleClear = () => {
+    setName('');
+    setCardIds([]);
+    setFactionNames([]);
+    setIsOnlyFactions(true);
+    setUpdatedTime('150');
+    setAuthorName('');
+    onSubmit({});
+  };
+
   const { error, data } = useQuery(allCardsQuery);
 
   let cardSearchElement = null;
@@ -117,7 +127,9 @@ export default function DeckSearchForm(props) {
           value="Apply"
           onClick={handleSubmit}
         />
-        <button>Clear</button>
+        <button type="button" onClick={handleClear} data-cy="deckSearchClear">
+          Clear
+        </button>
       </div>
     </form>
   );
