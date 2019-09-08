@@ -16,19 +16,18 @@ export const getCardFilters = cardIds => {
 };
 
 const deckPreviewsFragment = `
-  deckPreviews {
     nodes {
       deckName
       deckCreated
       factions
       essenceCost
+      votes
       deck{
         author {
           username
           id
         }
       }
-    }
   }`;
 
 // Creates partial graphql filter(s) for finding decks that contain
@@ -128,7 +127,9 @@ export const getDeckSearchQuery = (
             username
           }
           modified
-          ${deckPreviewsFragment}
+          deckPreviews {
+            ${deckPreviewsFragment}
+          }
           cardDecks {
             nodes {
               quantity
@@ -193,7 +194,9 @@ export const allDecksQuery = gql`
             }
           }
         }
-        ${deckPreviewsFragment}
+        deckPreviews {
+          ${deckPreviewsFragment}
+        }
       }
     }
   }
@@ -241,18 +244,7 @@ export const singleDeckQuery = gql`
 export const newDeckPreviewsQuery = gql`
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
-      nodes {
-        deckName
-        deckCreated
-        factions
-        essenceCost
-        deck {
-          author {
-            username
-            id
-          }
-        }
-      }
+      ${deckPreviewsFragment}
     }
   }
 `;
@@ -261,11 +253,10 @@ export const newDeckPreviewsQuery = gql`
 // for use in components that expect a deck-like
 export const deckPreviewToDeck = d => {
   return {
+    ...d,
     name: d.deckName,
-    factions: d.factions,
     author: d.deck.author,
-    created: d.deckCreated,
-    essenceCost: d.essenceCost
+    created: d.deckCreated
   };
 };
 
