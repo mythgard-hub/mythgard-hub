@@ -15,6 +15,22 @@ export const getCardFilters = cardIds => {
   });
 };
 
+const deckPreviewsFragment = `
+  deckPreviews {
+    nodes {
+      deckName
+      deckCreated
+      factions
+      essenceCost
+      deck{
+        author {
+          username
+          id
+        }
+      }
+    }
+  }`;
+
 // Creates partial graphql filter(s) for finding decks that contain
 // cards that are certain factions.
 //
@@ -112,6 +128,7 @@ export const getDeckSearchQuery = (
             username
           }
           modified
+          ${deckPreviewsFragment}
           cardDecks {
             nodes {
               quantity
@@ -176,6 +193,7 @@ export const allDecksQuery = gql`
             }
           }
         }
+        ${deckPreviewsFragment}
       }
     }
   }
@@ -218,3 +236,37 @@ export const singleDeckQuery = gql`
     }
   }
 `;
+
+// A view that aggregates facts and stats about a deck
+export const newDeckPreviewsQuery = gql`
+  query deckPreview {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
+      nodes {
+        deckName
+        deckCreated
+        factions
+        essenceCost
+        deck {
+          author {
+            username
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+// converts a deckPreview view to a deck-like object
+// for use in components that expect a deck-like
+export const deckPreviewToDeck = d => {
+  return {
+    name: d.deckName,
+    factions: d.factions,
+    author: d.deck.author,
+    created: d.deckCreated,
+    essenceCost: d.essenceCost
+  };
+};
+
+export const deckPreviewsToDecks = dp => dp.map(deckPreviewToDeck);

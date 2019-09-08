@@ -2,14 +2,13 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
-import { FACTION_IMAGES } from '../constants/factions';
-import { collectDecksFactionsAndMana } from '../lib/deck-utils';
-import ManaIndicator from './mana-indicator';
+import EssenceIndicator from './essence-indicator.js';
+import FactionsIndicator from './factions-indicator.js';
 
 export default function DeckList({ decks }) {
-  const theme = useContext(ThemeContext);
-  const factionsAndMana = collectDecksFactionsAndMana(decks);
+  const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
 
+  const theme = useContext(ThemeContext);
   return (
     <div>
       <style jsx>{`
@@ -55,28 +54,22 @@ export default function DeckList({ decks }) {
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
             const modified = new Date(deck.modified);
-            const currFactions = factionsAndMana[deck.id].factions
-              ? [...factionsAndMana[deck.id].factions].map(f => (
-                  <img key={f} src={FACTION_IMAGES[f]} />
-                ))
-              : '';
-            const currMana = factionsAndMana[deck.id].mana || 0;
 
             return (
-              <tr key={deck.id} className={classNames} data-cy="deckListItem">
+              <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
                   <div className="deckName">
-                    <Link href={`/deck?id=${deck.id}`} key={index}>
+                    <Link href={`/deck?id=${deck.id}`}>
                       <a>{deck.name}</a>
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
-                  {currFactions}
+                  <FactionsIndicator factions={deckMetaData[index].factions} />
                 </td>
                 <td className="mana">
-                  <ManaIndicator mana={currMana} />
+                  <EssenceIndicator essence={deckMetaData[index].essenceCost} />
                 </td>
                 <td className="modifiedDate">
                   <span>
