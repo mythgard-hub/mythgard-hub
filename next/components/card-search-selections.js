@@ -15,6 +15,7 @@ export default function CardSearchSelections({ onDismissClick, cards }) {
           display: ${cards.length ? 'inline-block' : 'none'};
           list-style: none;
           margin: 0;
+          width: 100%;
         }
         .cardSearchSelectionsTitle {
           font-weight: bold;
