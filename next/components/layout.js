@@ -74,6 +74,7 @@ function Layout({ title, desc, children }) {
             width: 100%;
             border-radius: 10px;
             font-style: italic;
+            cursor: pointer;
           }
 
           input[type='text'],
