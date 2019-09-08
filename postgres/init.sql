@@ -108,6 +108,21 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
+CREATE TABLE mythgard.deck_vote (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  account_id integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (account_id)
+    REFERENCES mythgard.account (id)
+    ON DELETE CASCADE,
+  UNIQUE(deck_id, account_id)
+);
+
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
+
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
   _google_id varchar(255),
