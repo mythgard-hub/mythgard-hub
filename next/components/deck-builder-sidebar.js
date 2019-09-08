@@ -65,6 +65,25 @@ export default function DeckBuilderSidebar(props) {
 }
 
 DeckBuilderSidebar.propTypes = {
-  deckInProgress: PropTypes.object,
+  deckInProgress: PropTypes.shape({
+    deckName: PropTypes.string,
+    deckPath: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    }),
+    deckPath: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    }),
+    deckCoverArt: PropTypes.string,
+    mainDeck: PropTypes.shape({
+      quantity: PropTypes.number,
+      card: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string
+      })
+    }),
+    errors: PropTypes.arrayOf(PropTypes.string)
+  }),
   setDeckInProgress: PropTypes.func
 };
