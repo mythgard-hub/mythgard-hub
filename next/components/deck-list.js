@@ -57,7 +57,7 @@ export default function DeckList({ decks }) {
             const modified = new Date(deck.modified);
             const currFactions = factionsAndMana[deck.id].factions
               ? [...factionsAndMana[deck.id].factions].map(f => (
-                  <img src={FACTION_IMAGES[f]} />
+                  <img key={f} src={FACTION_IMAGES[f]} />
                 ))
               : '';
             const currMana = factionsAndMana[deck.id].mana || 0;
@@ -67,7 +67,7 @@ export default function DeckList({ decks }) {
                 <td>
                   <div className="deckName">
                     <Link href={`/deck?id=${deck.id}`} key={index}>
-                      {deck.name}
+                      <a>{deck.name}</a>
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
