@@ -14,7 +14,7 @@ export default function DeckCardsTable({ deck, deleteCard }) {
     <div className="deck-card-table-container">
       <style jsx>{`
         .deck-card-table-container {
-          margin-top: 20px;
+          margin-top: 10px;
           padding: 10px;
         }
         .deck-card-table {
