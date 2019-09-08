@@ -27,7 +27,8 @@ export const themes = {
     manaColor: mgColors.lightGreen,
     deckNameColor: mgColors.orange,
     welcomeBannerBackground: mgColors.orange,
-    smallTitleColor: mgColors.blue
+    smallTitleColor: mgColors.blue,
+    hoverColor: mgColors.blue
   }
 };
 
