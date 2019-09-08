@@ -2,14 +2,13 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
-import { collectDecksFactionsAndMana } from '../lib/deck-utils';
-import ManaIndicator from './mana-indicator';
+import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 
 export default function DeckList({ decks }) {
-  const theme = useContext(ThemeContext);
-  const factionsAndMana = collectDecksFactionsAndMana(decks);
+  const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
 
+  const theme = useContext(ThemeContext);
   return (
     <div>
       <style jsx>{`
@@ -56,18 +55,16 @@ export default function DeckList({ decks }) {
               deck && deck.author ? deck.author.username : 'unknown';
             const modified = new Date(deck.modified);
             const currFactions = (
-              <FactionsIndicator
-                factions={[...factionsAndMana[deck.id].factions]}
-              />
+              <FactionsIndicator factions={deckMetaData[index].factions} />
             );
-            const currMana = factionsAndMana[deck.id].mana || 0;
+            const essenceCost = deckMetaData[index].essenceCost;
 
             return (
-              <tr key={deck.id} className={classNames} data-cy="deckListItem">
+              <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
                   <div className="deckName">
-                    <Link href={`/deck?id=${deck.id}`} key={index}>
-                      {deck.name}
+                    <Link href={`/deck?id=${deck.id}`}>
+                      <a>{deck.name}</a>
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
@@ -76,7 +73,7 @@ export default function DeckList({ decks }) {
                   {currFactions}
                 </td>
                 <td className="mana">
-                  <ManaIndicator mana={currMana} />
+                  <EssenceIndicator essence={essenceCost} />
                 </td>
                 <td className="modifiedDate">
                   <span>

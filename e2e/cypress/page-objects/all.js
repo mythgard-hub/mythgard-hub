@@ -32,5 +32,5 @@ export default {
 
   // decks page
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
-  deckManaPicker: '[data-cy="deckManaCell"]'
+  deckEssencePicker: '[data-cy="deckEssenceCell"]'
 };

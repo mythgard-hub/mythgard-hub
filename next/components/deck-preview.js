@@ -1,5 +1,5 @@
 import React from 'react';
-import ManaIndicator from './mana-indicator.js';
+import EssenceIndicator from './essence-indicator.js';
 import UpvoteIndicator from './upvote-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 import { useContext } from 'react';
@@ -40,7 +40,7 @@ function DeckPreview({ deck }) {
           flex-wrap: wrap; /* seems preferable to squishing */
         }
 
-        :global(.manaIndicator),
+        :global(.essenceIndicator),
         :global(.upvoteIndicator),
         .factionIcons {
           display: block;
@@ -50,14 +50,14 @@ function DeckPreview({ deck }) {
         }
 
         .factionIcons img,
-        :global(.manaIndicator img),
+        :global(.essenceIndicator img),
         :global(.upvoteIndicator img) {
           height: 15px;
           max-height: 15px;
         }
 
-        :global(.manaIndicator span),
-        :global(.upvoteIndicator span) {
+        :global(.essenceIndicator .deckEssenceCell),
+        :global(.upvoteIndicator .deckVotesCell) {
           font-size: 16px;
         }
       `}</style>
@@ -74,7 +74,7 @@ function DeckPreview({ deck }) {
         </div>
         <div className="subsection">
           <FactionsIndicator factions={deck.factions} />
-          <ManaIndicator mana={10000} />
+          <EssenceIndicator essence={deck.essenceCost} />
           <UpvoteIndicator votes={5000} />
         </div>
       </div>
@@ -89,6 +89,7 @@ DeckPreview.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     factions: PropTypes.array,
+    essenceCost: PropTypes.number,
     author: PropTypes.shape({
       id: PropTypes.number,
       username: PropTypes.string

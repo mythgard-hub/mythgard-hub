@@ -3,7 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message.js';
 import DeckPreview from './deck-preview.js';
 import {
-  deckPreviewQuery as decksQuery,
+  newDeckPreviewsQuery as decksQuery,
   deckPreviewsToDecks
 } from '../lib/deck-queries.js';
 
