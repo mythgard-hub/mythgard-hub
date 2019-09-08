@@ -2,14 +2,15 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
-import { collectDecksFactionsAndMana } from '../lib/deck-utils';
 import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
+import { deckPreviewsToDecks } from '../lib/deck-queries.js';
 
-export default function DeckList({ decks }) {
+export default function DeckList({ decks: fullDecks }) {
+  const deckPreviews = fullDecks.map(d => d.deckPreviews.nodes[0]);
+  const decks = deckPreviewsToDecks(deckPreviews);
+
   const theme = useContext(ThemeContext);
-  const factionsAndMana = collectDecksFactionsAndMana(decks);
-
   return (
     <div>
       <style jsx>{`
@@ -54,20 +55,16 @@ export default function DeckList({ decks }) {
             const classNames = `deckListRow ${index % 2 ? 'zebraRow' : ''}`;
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
-            const modified = new Date(deck.modified);
-            const currFactions = (
-              <FactionsIndicator
-                factions={[...factionsAndMana[deck.id].factions]}
-              />
-            );
-            const currMana = factionsAndMana[deck.id].mana || 0;
+            const modified = new Date(fullDecks[index].modified);
+            const currFactions = <FactionsIndicator factions={deck.factions} />;
+            const essenceCost = deck.essenceCost;
 
             return (
-              <tr key={deck.id} className={classNames} data-cy="deckListItem">
+              <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
                   <div className="deckName">
-                    <Link href={`/deck?id=${deck.id}`} key={index}>
-                      {deck.name}
+                    <Link href={`/deck?id=${deck.id}`}>
+                      <a>{deck.name}</a>
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
@@ -76,7 +73,7 @@ export default function DeckList({ decks }) {
                   {currFactions}
                 </td>
                 <td className="mana">
-                  <EssenceIndicator essence={currMana} />
+                  <EssenceIndicator essence={essenceCost} />
                 </td>
                 <td className="modifiedDate">
                   <span>

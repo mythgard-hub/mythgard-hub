@@ -112,6 +112,20 @@ export const getDeckSearchQuery = (
             username
           }
           modified
+          deckPreviews {
+            nodes {
+              deckName
+              deckCreated
+              factions
+              essenceCost
+              deck{
+                author {
+                  username
+                  id
+                }
+              }
+            }
+          }
           cardDecks {
             nodes {
               quantity
@@ -176,6 +190,20 @@ export const allDecksQuery = gql`
             }
           }
         }
+        deckPreviews {
+          nodes {
+            deckName
+            deckCreated
+            factions
+            essenceCost
+            deck {
+              author {
+                username
+                id
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -220,7 +248,7 @@ export const singleDeckQuery = gql`
 `;
 
 // A view that aggregates facts and stats about a deck
-export const deckPreviewQuery = gql`
+export const newDeckPreviewsQuery = gql`
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
       nodes {
