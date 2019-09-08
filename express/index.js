@@ -21,7 +21,7 @@ app.use('/graphql', async (req, res, next) => {
   const allQueriesOk = queries.reduce((acc, query) => {
     const hash = hashQuery(query);
     const allowed = allowedQueryHashes.includes(hash);
-    if (!allowed) {
+    if (!allowed && process.env.DEBUG) {
       console.log('Bad query detected!!!');
       console.log('query: ', query);
       console.log('normalized: ', normalizeString(query));
