@@ -58,6 +58,7 @@ export default function CardSearchFilters(props) {
           <div className="filter-title first-title">Mana Cost</div>
           <hr />
           <NumericFilterGroup
+            cyName="cardSearch_manaCost"
             onChange={setCardManaCosts}
             selected={manaCosts}
           />
@@ -66,9 +67,10 @@ export default function CardSearchFilters(props) {
 
       {strengths && (
         <>
-          <div className="filter-title first-title">Strength</div>
+          <div className="filter-title middle-title">Strength</div>
           <hr />
           <NumericFilterGroup
+            cyName="cardSearch_strength"
             onChange={setCardStrengths}
             selected={strengths}
           />
@@ -77,9 +79,13 @@ export default function CardSearchFilters(props) {
 
       {healths && (
         <>
-          <div className="filter-title first-title">Health/Durability</div>
+          <div className="filter-title middle-title">Health/Durability</div>
           <hr />
-          <NumericFilterGroup onChange={setCardHealths} selected={healths} />
+          <NumericFilterGroup
+            cyName="cardSearch_defense"
+            onChange={setCardHealths}
+            selected={healths}
+          />
         </>
       )}
 

@@ -72,7 +72,7 @@ describe('Cards Page', function() {
         expect(length).to.equal(allCardsLength);
 
         // basic test - mana cost filter
-        cy.get(`${manaPicker} input`)
+        cy.get(`${manaPicker} img`)
           .eq(2)
           .click();
         cy.get(cardSearchSubmit).click();
@@ -80,7 +80,7 @@ describe('Cards Page', function() {
       })
       .then(length => {
         expect(allCardsLength).to.be.above(length);
-        cy.get(`${manaPicker} input`)
+        cy.get(`${manaPicker} img`)
           .eq(2)
           .click();
         cy.get(cardSearchSubmit).click();
@@ -90,7 +90,7 @@ describe('Cards Page', function() {
         expect(allCardsLength).to.equal(length);
 
         // basic test - strength filter
-        cy.get(`${strengthPicker} input`)
+        cy.get(`${strengthPicker} img`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
@@ -98,7 +98,7 @@ describe('Cards Page', function() {
       })
       .then(length => {
         expect(allCardsLength).to.be.above(length);
-        cy.get(`${strengthPicker} input`)
+        cy.get(`${strengthPicker} img`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
@@ -108,7 +108,7 @@ describe('Cards Page', function() {
         expect(allCardsLength).to.equal(length);
 
         // basic test - defense filter
-        cy.get(`${defensePicker} input`)
+        cy.get(`${defensePicker} img`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
@@ -116,7 +116,7 @@ describe('Cards Page', function() {
       })
       .then(length => {
         expect(allCardsLength).to.be.above(length);
-        cy.get(`${defensePicker} input`)
+        cy.get(`${defensePicker} img`)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();

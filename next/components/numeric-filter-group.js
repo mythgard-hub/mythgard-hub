@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function NumericFilterGroup({ selected, onChange }) {
+export default function NumericFilterGroup({ cyName, selected, onChange }) {
   const cdn = process.env.MG_CDN;
   const images = [
     {
@@ -46,7 +46,7 @@ export default function NumericFilterGroup({ selected, onChange }) {
   };
 
   return (
-    <div>
+    <div data-cy={cyName}>
       <style jsx>{`
         img {
           cursor: pointer;
@@ -79,7 +79,8 @@ export default function NumericFilterGroup({ selected, onChange }) {
 
 NumericFilterGroup.propTypes = {
   selected: PropTypes.array,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  cyName: PropTypes.string
 };
 
 NumericFilterGroup.defaultProps = {
