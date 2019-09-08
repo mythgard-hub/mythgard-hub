@@ -75,7 +75,7 @@ function DeckPreview({ deck }) {
         <div className="subsection">
           <FactionsIndicator factions={deck.factions} />
           <EssenceIndicator essence={deck.essenceCost} />
-          <UpvoteIndicator votes={5000} />
+          <UpvoteIndicator votes={deck.votes} />
         </div>
       </div>
     </>
@@ -90,6 +90,7 @@ DeckPreview.propTypes = {
     name: PropTypes.string,
     factions: PropTypes.array,
     essenceCost: PropTypes.number,
+    votes: PropTypes.number,
     author: PropTypes.shape({
       id: PropTypes.number,
       username: PropTypes.string

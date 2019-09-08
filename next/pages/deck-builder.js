@@ -74,6 +74,19 @@ function DeckBuilderPage() {
           width: 75%;
           margin: 30px 0 10px 0;
         }
+        .card-search-section {
+          display: flex;
+          justify-content: space-between;
+        }
+        .card-search-section button {
+          width: 25%;
+          height: 40px;
+          margin: 52px 35px 20px 20px;
+        }
+        :global(.input-label) {
+          width: 75%;
+          margin: 30px 0 10px 0;
+        }
       `}</style>
       <PageBanner image={PageBanner.IMG_DECK_BUILDER}>Deck Builder</PageBanner>
       <div className="deck-builder-panels">
