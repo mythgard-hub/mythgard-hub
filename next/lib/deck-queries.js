@@ -200,9 +200,9 @@ export const allDecksQuery = gql`
 `;
 
 export const tourneyDecksQuery = gql`
-  query($id: Int!, $ranks: Int = 8) {
+  query($id: Int!) {
     tournament(id: $id) {
-      tournamentDecks(orderBy: RANK_ASC, first: $ranks) {
+      tournamentDecks(orderBy: RANK_ASC, first: 8) {
         nodes {
           rank
           deck {
