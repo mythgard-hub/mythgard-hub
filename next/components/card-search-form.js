@@ -30,6 +30,7 @@ export default function CardSearchForm(props) {
 
   return (
     <>
+      <br />
       <SearchFormText
         value={text}
         placeholder={'Name or Rules Text'}
@@ -38,6 +39,9 @@ export default function CardSearchForm(props) {
         cyName="cardSearchText"
         onChange={handleInputChangeHooks(setText)}
         label="Card Search"
+      />
+      <FactionFilters
+        onFactionClick={newFactions => setFactions(newFactions)}
       />
       <CardSearchFilters
         manaCosts={manaCosts}
@@ -50,9 +54,6 @@ export default function CardSearchForm(props) {
         setCardHealths={setDefenses}
         setCardRarities={setRarities}
         setSupertypes={setSupertypes}
-      />
-      <FactionFilters
-        onFactionClick={newFactions => setFactions(newFactions)}
       />
       <input
         data-cy="cardSearchSubmit"
