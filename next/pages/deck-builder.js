@@ -4,17 +4,17 @@ import AllPaths from '../components/all-paths';
 import AllPowers from '../components/all-powers.js';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
-import ImportDeck from '../components/import-deck';
-import DeckExport from '../components/deck-export';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form.js';
-import DeckCardTable from '../components/deck-card-table';
-import EditDeckName from '../components/edit-deck-name';
-import SaveDeck from '../components/save-deck';
 import PageBanner from '../components/page-banner';
+import FactionFilters from '../components/faction-filters';
+import RarityFilter from '../components/rarity-filter.js';
+import ManaCostFilter from '../components/mana-cost-filter.js';
+import SupertypeFilter from '../components/supertype-filter.js';
+import TabGroup from '../components/tab-group.js';
+import DeckBuilderSidebar from '../components/deck-builder-sidebar';
 
 function DeckBuilderPage() {
-  const [mainDeckInput, setMainDeckInput] = useState('');
   const [cardSearchText, setCardSearchText] = useState('');
   const [cardRarities, setCardRarities] = useState([]);
   const [cardManaCosts, setCardManaCosts] = useState([]);
@@ -29,13 +29,6 @@ function DeckBuilderPage() {
     factions
   };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
-
-  const updateDeckName = e => {
-    setDeckInProgress({
-      ...deckInProgress,
-      deckName: e.target.value
-    });
-  };
 
   const onCollectionClick = (e, card) => {
     e && e.preventDefault();
@@ -75,7 +68,7 @@ function DeckBuilderPage() {
     });
   };
 
-  const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
+  const tabLabels = ['Cards', 'Paths', 'Powers'];
 
   return (
     <Layout title="Mythgard Hub | Deck Builder" desc="Build Mythgard Decks">
@@ -94,18 +87,40 @@ function DeckBuilderPage() {
         .deck-builder-actions button {
           margin-bottom: 10px;
         }
+        .card-search-section {
+          display: flex;
+          justify-content: space-between;
+        }
+        .card-search-section button {
+          width: 25%;
+          height: 40px;
+          margin: 52px 35px 20px 20px;
+        }
+        :global(.input-label) {
+          width: 75%;
+          margin: 30px 0 10px 0;
+        }
       `}</style>
       <PageBanner image={PageBanner.IMG_DECK_BUILDER}>Deck Builder</PageBanner>
       <div className="deck-builder-panels">
         <div className="deck-builder-card-selection">
-          <DeckBuilderSearchForm
-            text={cardSearchText}
-            setText={setCardSearchText}
-            setRarities={setCardRarities}
-            setManaCosts={setCardManaCosts}
-            setSupertypes={setSupertypes}
-            onFactionClick={setFactions}
-            setTab={setTab}
+          <div className="card-search-section">
+            <DeckBuilderSearchForm
+              text={cardSearchText}
+              setTab={setTab}
+              setText={setCardSearchText}
+            />
+            <button>Clear Filters</button>
+          </div>
+          <FactionFilters onFactionClick={setFactions} />
+
+          <RarityFilter onChange={setCardRarities}></RarityFilter>
+          <ManaCostFilter onChange={setCardManaCosts} />
+          <SupertypeFilter onChange={setSupertypes} />
+          <TabGroup
+            onChange={setTab}
+            labels={tabLabels}
+            name="cardsPathsPowers"
           />
           {currentTab === 'Cards' && (
             <div className="collection" data-cy="deckBuilderCollection">
@@ -127,31 +142,10 @@ function DeckBuilderPage() {
           )}
           <ImportedDeckErrors importedDeck={deckInProgress} />
         </div>
-        <div className="deck-builder-actions">
-          <ImportDeck
-            mainDeckInput={mainDeckInput}
-            currentMainDeck={deckInProgress.mainDeck}
-            handleInputChange={e => {
-              setMainDeckInput(e.target.value);
-            }}
-            updateImportedDeck={updateImportedDeck}
-          />
-          <DeckExport deckInProgress={deckInProgress} />
-          <SaveDeck deckInProgress={deckInProgress} />
-          <button onClick={() => setDeckInProgress(initializeDeckBuilder())}>
-            Clear
-          </button>
-          <div className="deck-in-progress" data-cy="deckInProgress">
-            <EditDeckName
-              deckName={deckInProgress.deckName}
-              onChange={updateDeckName}
-            />
-            <DeckCardTable
-              deck={deckInProgress}
-              deleteCard={deleteCardFromTable}
-            />
-          </div>
-        </div>
+        <DeckBuilderSidebar
+          deckInProgress={deckInProgress}
+          setDeckInProgress={setDeckInProgress}
+        />
       </div>
     </Layout>
   );
