@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@graphile-contrib/pg-simplify-inflector": "^5.0.0-beta.1",
+    "compression": "^1.7.4",
     "express": "4.17.x",
     "postgraphile": "4.4.x",
     "postgraphile-plugin-connection-filter": "^1.1.2"

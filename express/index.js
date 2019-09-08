@@ -2,8 +2,11 @@ const express = require('express');
 const { postgraphile } = require('postgraphile');
 const PgSimplifyInflectorPlugin = require('@graphile-contrib/pg-simplify-inflector');
 const ConnectionFilterPlugin = require('postgraphile-plugin-connection-filter');
+const compression = require('compression');
 
 const app = express();
+
+app.use(compression());
 
 app.use(
   postgraphile(
