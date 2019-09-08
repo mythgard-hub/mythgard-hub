@@ -227,6 +227,7 @@ export const deckPreviewQuery = gql`
         deckName
         deckCreated
         factions
+        essenceCost
         deck {
           author {
             username
@@ -245,7 +246,8 @@ export const deckPreviewToDeck = d => {
     name: d.deckName,
     factions: d.factions,
     author: d.deck.author,
-    created: d.deckCreated
+    created: d.deckCreated,
+    essenceCost: d.essenceCost
   };
 };
 

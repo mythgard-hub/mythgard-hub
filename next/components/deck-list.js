@@ -3,7 +3,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
 import { collectDecksFactionsAndMana } from '../lib/deck-utils';
-import ManaIndicator from './mana-indicator';
+import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 
 export default function DeckList({ decks }) {
@@ -76,7 +76,7 @@ export default function DeckList({ decks }) {
                   {currFactions}
                 </td>
                 <td className="mana">
-                  <ManaIndicator mana={currMana} />
+                  <EssenceIndicator essence={currMana} />
                 </td>
                 <td className="modifiedDate">
                   <span>

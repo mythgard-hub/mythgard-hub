@@ -3,29 +3,29 @@ import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
 
 // TODO - this is actually an essence indicator
-export default function ManaIndicator({ mana }) {
+export default function EssenceIndicator({ essence }) {
   const theme = useContext(ThemeContext);
   const iconUrl = `${process.env.MG_CDN}/filters/essence.png`;
 
   return (
-    <span className="manaIndicator">
+    <span className="essenceIndicator">
       <style jsx>{`
-        span {
-          color: ${theme.manaColor};
-          font-weight: bold;
-          font-size: 18px;
-        }
+        color: ${theme.essenceColor};
+        font-weight: bold;
+        font-size: 18px;
         img {
           max-height: 12px;
           margin-right: 3px;
         }
       `}</style>
       <img src={iconUrl} />
-      <span data-cy="deckManaCell">{mana}</span>
+      <span className="deckEssenceCell" data-cy="deckEssenceCell">
+        {essence}
+      </span>
     </span>
   );
 }
 
-ManaIndicator.propTypes = {
-  mana: PropTypes.number
+EssenceIndicator.propTypes = {
+  essence: PropTypes.number
 };

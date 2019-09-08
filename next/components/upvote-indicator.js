@@ -9,18 +9,18 @@ export default function UpvoteIndicator({ votes }) {
   return (
     <span className="upvoteIndicator">
       <style jsx>{`
-        span {
-          color: ${theme.votesColor};
-          font-weight: bold;
-          font-size: 18px;
-        }
+        color: ${theme.votesColor};
+        font-weight: bold;
+        font-size: 18px;
         img {
           max-height: 12px;
           margin-right: 3px;
         }
       `}</style>
       <img src={iconUrl} />
-      <span data-cy="deckVotesCell">{votes}</span>
+      <span className="deckVotesCell" data-cy="deckVotesCell">
+        {votes}
+      </span>
     </span>
   );
 }
