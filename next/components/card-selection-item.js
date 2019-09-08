@@ -9,11 +9,15 @@ export default function CardSelectionItem({ card, onDismissClick }) {
           display: flex;
           padding: 5px;
         }
+        .cardSelectionItem span {
+          width: fit-content;
+        }
         .cardSelectionItem button {
           margin-right: 10px;
           background-color: unset;
           border: none;
           padding: 0 0 0 30px;
+          width: fit-content;
         }
       `}</style>
       <span>{card.name}</span>
