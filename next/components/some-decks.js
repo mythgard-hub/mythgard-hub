@@ -35,6 +35,7 @@ export default function SomeDecks(props) {
 
 SomeDecks.propTypes = {
   search: PropTypes.shape({
+    authorName: PropTypes.string,
     name: PropTypes.string,
     cardIds: PropTypes.array,
     factionNames: PropTypes.array,
