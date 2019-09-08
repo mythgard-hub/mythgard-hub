@@ -9,6 +9,8 @@ export default function CardSearchFilters(props) {
     manaCosts,
     strengths,
     healths,
+    types,
+    rarities,
     setCardStrengths,
     setCardHealths,
     setCardManaCosts,
@@ -81,13 +83,21 @@ export default function CardSearchFilters(props) {
         </>
       )}
 
-      <div className="filter-title middle-title">Type</div>
-      <hr />
-      <SupertypeFilter onChange={setSupertypes} />
+      {types && (
+        <>
+          <div className="filter-title middle-title">Type</div>
+          <hr />
+          <SupertypeFilter onChange={setSupertypes} />
+        </>
+      )}
 
-      <div className="filter-title last-title">Rarity</div>
-      <hr />
-      <RarityFilter onChange={setCardRarities}></RarityFilter>
+      {rarities && (
+        <>
+          <div className="filter-title last-title">Rarity</div>
+          <hr />
+          <RarityFilter onChange={setCardRarities}></RarityFilter>
+        </>
+      )}
     </div>
   );
 }
@@ -96,6 +106,8 @@ CardSearchFilters.propTypes = {
   manaCosts: PropTypes.array,
   strengths: PropTypes.array,
   healths: PropTypes.array,
+  types: PropTypes.array,
+  rarities: PropTypes.array,
   setCardManaCosts: PropTypes.func,
   setCardStrengths: PropTypes.func,
   setCardHealths: PropTypes.func,
