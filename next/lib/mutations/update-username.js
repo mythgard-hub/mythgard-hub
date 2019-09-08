@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 
+// prettier-ignore
 const updateAccountUsername = gql`
   mutation UpdateAccountUsername($accountId: Int!, $username: String!) {
     updateAccount(
@@ -26,7 +27,7 @@ const updateUsername = (apolloClient, accountId, username) => {
       accountId,
       username
     }
-  })
-}
+  });
+};
 
-export default updateUsername
+export default updateUsername;

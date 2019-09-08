@@ -33,7 +33,10 @@ app.use(
         audience: [process.env.JWT_AUDIENCE]
       },
       pgDefaultRole: process.env.PG_ANON_USER_ROLE,
-      ignoreRBAC: false
+      ignoreRBAC: false,
+      pgSettings: {
+        statement_timeout: '3000'
+      }
     }
   )
 );
