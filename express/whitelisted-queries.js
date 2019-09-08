@@ -1,7 +1,3 @@
-//prettier-ignore
-// eslint-disable-next-line
-const jhashcode=s=>{for(var i=0,h;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;return h};
-
 const deckPreviewsFragment = `
   deckPreviews {
     nodes {
@@ -18,7 +14,8 @@ const deckPreviewsFragment = `
     }
   }`;
 
-const queriesWhitelist = [
+// whitespace doesn't matter here.
+module.exports = [
   `
   query tournaments {
     tournaments(orderBy: DATE_DESC) {
@@ -324,8 +321,4 @@ const queriesWhitelist = [
     }
   }
 `
-]
-  .map(s => s.trim())
-  .map(jhashcode);
-
-console.log(queriesWhitelist);
+];

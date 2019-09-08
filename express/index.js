@@ -4,43 +4,18 @@ const PgSimplifyInflectorPlugin = require('@graphile-contrib/pg-simplify-inflect
 const ConnectionFilterPlugin = require('postgraphile-plugin-connection-filter');
 const compression = require('compression');
 const helmet = require('helmet');
+const { hashQuery, allowedQueryHashes } = require('./query-checker.js');
 
 const app = express();
 
 app.use(compression());
 app.use(helmet());
 
-// prettier-ignore
-// eslint-disable-next-line
-const jhashcode=s=>{for(var i=0,h;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;return h};
-
-const allowedQueryHashes = [
-  -1521083219,
-  -1223515326,
-  1435166661,
-  23960061,
-  539470254,
-  -1987618902,
-  436396872,
-  987565251,
-  610459161,
-  1379591156,
-  569291494,
-  -2034784358,
-  594499639,
-  -1278945283,
-  -1204701883,
-  1952576784
-];
-
 app.use(express.json());
 app.use('/graphql', async (req, res, next) => {
   const queries = req.body.map(b => b.query);
   const allQueriesOk = queries.reduce((acc, query) => {
-    query = query.trim();
-    const hash = jhashcode(query);
-    console.log('query: ', `***${query}***`);
-    console.log('hash: ', hash);
+    const hash = hashQuery(query);
     return acc && allowedQueryHashes.includes(hash);
   }, true);
   if (!allQueriesOk) {
