@@ -42,6 +42,12 @@ function Layout({ title, desc, children }) {
             text-transform: uppercase;
           }
 
+          h2 {
+            font-style: italic;
+            font-weight: bold;
+            font-size: 1.2em;
+          }
+
           a {
             color: ${theme.fontColor};
           }
