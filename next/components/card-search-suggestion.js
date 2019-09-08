@@ -22,5 +22,7 @@ export default function CardSearchSuggestion({ suggestion }) {
 }
 
 CardSearchSuggestion.propTypes = {
-  suggestion: PropTypes.string
+  suggestion: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }).isRequired
 };
