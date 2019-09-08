@@ -4,7 +4,11 @@ const PgSimplifyInflectorPlugin = require('@graphile-contrib/pg-simplify-inflect
 const ConnectionFilterPlugin = require('postgraphile-plugin-connection-filter');
 const compression = require('compression');
 const helmet = require('helmet');
-const { hashQuery, allowedQueryHashes } = require('./query-checker.js');
+const {
+  hashQuery,
+  allowedQueryHashes,
+  normalizeString
+} = require('./query-checker.js');
 
 const app = express();
 
@@ -16,12 +20,21 @@ app.use('/graphql', async (req, res, next) => {
   const queries = req.body.map(b => b.query);
   const allQueriesOk = queries.reduce((acc, query) => {
     const hash = hashQuery(query);
-    return acc && allowedQueryHashes.includes(hash);
+    const allowed = allowedQueryHashes.includes(hash);
+    if (!allowed) {
+      console.log('Bad query detected!!!');
+      console.log('query: ', query);
+      console.log('normalized: ', normalizeString(query));
+      console.log('hash: ', hash);
+      console.log('allowedQueryHashes: ', allowedQueryHashes);
+    }
+    return acc && allowed;
   }, true);
   if (!allQueriesOk) {
-    res.json({ error: `query not on whitelist` });
+    res.status(500).send('Nope nope nope...');
+  } else {
+    next();
   }
-  next();
 });
 
 app.use(
