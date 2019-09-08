@@ -1,15 +1,19 @@
 import PropTypes from 'prop-types';
 
-export default function DeckSearchFormText(props) {
-  const { label, value, name, cyName, onChange, placeholder } = props;
+export default function SearchFormText(props) {
+  const {
+    label,
+    value,
+    name,
+    cyName,
+    onChange,
+    placeholder,
+    maxLength
+  } = props;
 
   return (
-    <label>
+    <label className="input-label">
       <style jsx>{`
-        label {
-          text-transform: uppercase;
-          padding-right: 20px;
-        }
         input {
           margin: 10px 0;
           width: 100%;
@@ -25,16 +29,18 @@ export default function DeckSearchFormText(props) {
         data-cy={cyName}
         className={name}
         onChange={onChange}
+        maxLength={maxLength}
       />
     </label>
   );
 }
 
-DeckSearchFormText.propTypes = {
+SearchFormText.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
   cyName: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  maxLength: PropTypes.string
 };
