@@ -68,12 +68,12 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - rarity filter
-        cy.get(`${rarityPicker} input:first`).click();
+        cy.get(`${rarityPicker} img:first`).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
-        cy.get(`${rarityPicker} input:first`).click();
+        cy.get(`${rarityPicker} img:first`).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
@@ -96,14 +96,14 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - supertype filter
-        cy.get(`${superTypePicker} input`)
+        cy.get(`${superTypePicker} img`)
           .eq(1)
           .click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
-        cy.get(`${superTypePicker} input`)
+        cy.get(`${superTypePicker} img`)
           .eq(1)
           .click();
         return getPagingTotalAsInt();
