@@ -10,7 +10,7 @@ import PageBanner from '../components/page-banner';
 import FactionFilters from '../components/faction-filters';
 import TabGroup from '../components/tab-group';
 import DeckBuilderSidebar from '../components/deck-builder-sidebar';
-import DeckBuilderAdditionalFilters from '../components/deck-builder-additional-filters';
+import CardSearchFilters from '../components/card-search-filters';
 
 function DeckBuilderPage() {
   const [cardSearchText, setCardSearchText] = useState('');
@@ -84,7 +84,7 @@ function DeckBuilderPage() {
             setText={setCardSearchText}
           />
           <FactionFilters onFactionClick={setFactions} />
-          <DeckBuilderAdditionalFilters
+          <CardSearchFilters
             manaCosts={cardManaCosts}
             setCardManaCosts={setCardManaCosts}
             setSupertypes={setSupertypes}

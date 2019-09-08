@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RarityFilter from '../components/rarity-filter.js';
-import SupertypeFilter from '../components/supertype-filter.js';
+import RarityFilter from './rarity-filter.js';
+import SupertypeFilter from './supertype-filter.js';
 import NumericFilterGroup from './numeric-filter-group.js';
 
-export default function DeckBuilderAdditionalFilters(props) {
-  const { manaCosts, setCardManaCosts, setSupertypes, setCardRarities } = props;
+export default function CardSearchFilters(props) {
+  const {
+    manaCosts,
+    strengths,
+    healths,
+    setCardStrengths,
+    setCardHealths,
+    setCardManaCosts,
+    setSupertypes,
+    setCardRarities
+  } = props;
 
   return (
     <div className="additional-filters">
@@ -41,12 +50,41 @@ export default function DeckBuilderAdditionalFilters(props) {
           margin-top: 15px;
         }
       `}</style>
-      <div className="filter-title first-title">Mana Cost</div>
-      <hr />
-      <NumericFilterGroup onChange={setCardManaCosts} selected={manaCosts} />
+
+      {manaCosts && (
+        <>
+          <div className="filter-title first-title">Mana Cost</div>
+          <hr />
+          <NumericFilterGroup
+            onChange={setCardManaCosts}
+            selected={manaCosts}
+          />
+        </>
+      )}
+
+      {strengths && (
+        <>
+          <div className="filter-title first-title">Strength</div>
+          <hr />
+          <NumericFilterGroup
+            onChange={setCardStrengths}
+            selected={strengths}
+          />
+        </>
+      )}
+
+      {healths && (
+        <>
+          <div className="filter-title first-title">Health/Durability</div>
+          <hr />
+          <NumericFilterGroup onChange={setCardHealths} selected={healths} />
+        </>
+      )}
+
       <div className="filter-title middle-title">Type</div>
       <hr />
       <SupertypeFilter onChange={setSupertypes} />
+
       <div className="filter-title last-title">Rarity</div>
       <hr />
       <RarityFilter onChange={setCardRarities}></RarityFilter>
@@ -54,9 +92,13 @@ export default function DeckBuilderAdditionalFilters(props) {
   );
 }
 
-DeckBuilderAdditionalFilters.propTypes = {
+CardSearchFilters.propTypes = {
   manaCosts: PropTypes.array,
+  strengths: PropTypes.array,
+  healths: PropTypes.array,
   setCardManaCosts: PropTypes.func,
+  setCardStrengths: PropTypes.func,
+  setCardHealths: PropTypes.func,
   setSupertypes: PropTypes.func,
   setCardRarities: PropTypes.func
 };
