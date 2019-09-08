@@ -65,7 +65,7 @@ function Layout({ title, desc, children }) {
           input[type='submit'] {
             background-color: ${theme.sectionBackground};
             border: ${theme.sectionBorder};
-            color: ${theme.fontColor};
+            color: ${theme.buttonTextColor};
             font-family: ${theme.fontFamily};
             font-size: 14px;
             font-weight: bold;
@@ -75,6 +75,15 @@ function Layout({ title, desc, children }) {
             border-radius: 10px;
             font-style: italic;
             cursor: pointer;
+          }
+
+          button:disabled {
+            color: ${theme.fontColorDisabled};
+            border: ${theme.buttonBorderDisabled};
+          }
+
+          button:hover {
+            color: ${theme.hoverColor};
           }
 
           input[type='text'],
@@ -101,9 +110,10 @@ function Layout({ title, desc, children }) {
             border-radius: 10px;
           }
 
-          button:disabled {
-            color: ${theme.fontColorDisabled};
-            border: ${theme.buttonBorderDisabled};
+          .input-label {
+            text-transform: uppercase;
+            padding-right: 20px;
+            font-weight: bold;
           }
         `}</style>
         <style jsx global>{`
