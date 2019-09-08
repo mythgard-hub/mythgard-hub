@@ -36,6 +36,16 @@ INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, supertype)
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem)
   VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', '0');
 
+CREATE TABLE mythgard.essence_costs (
+  rarity Mythgard.rarity,
+  essence integer
+);
+
+insert into mythgard.essence_costs (rarity, essence) values ('MYTHIC', 1000);
+insert into mythgard.essence_costs (rarity, essence) values ('RARE', 500);
+insert into mythgard.essence_costs (rarity, essence) values ('UNCOMMON', 100);
+insert into mythgard.essence_costs (rarity, essence) values ('COMMON', 50);
+
 CREATE TABLE mythgard.path (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -188,7 +198,8 @@ CREATE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
          deck.name as deck_name,
          deck.created as deck_created,
-         array_agg(DISTINCT faction.name) as factions
+         array_agg(DISTINCT faction.name) as factions,
+         sum(essence_costs.essence)::int as essence_cost
   FROM mythgard.deck
   JOIN mythgard.card_deck
     ON card_deck.deck_id = deck.id
@@ -198,6 +209,8 @@ CREATE VIEW mythgard.deck_preview as
     ON card.id = card_faction.id
   JOIN mythgard.faction
     On faction.id = card_faction.id
+  JOIN mythgard.essence_costs
+    On essence_costs.rarity = card.rarity
  GROUP BY deck.id
 ;
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
