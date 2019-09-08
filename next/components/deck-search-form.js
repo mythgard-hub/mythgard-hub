@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import CardSearch from './card-search';
 import allCardsQuery from '../lib/queries/all-cards-query';
-import DeckSearchFormText from './deck-search-form-text';
+import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
 
 const resetFilters = () => {
@@ -83,10 +83,6 @@ export default function DeckSearchForm(props) {
           display: flex;
           flex-direction: column;
         }
-        label {
-          text-transform: uppercase;
-          padding-right: 20px;
-        }
         .included-cards :global(.card-search-input) {
           margin: 10px 0;
           width: 100%;
@@ -113,7 +109,7 @@ export default function DeckSearchForm(props) {
       />
       <div className="filters-container">
         <div className="filter-column">
-          <DeckSearchFormText
+          <SearchFormText
             label="Deck Name"
             placeholder="Name..."
             value={filters.name}
@@ -121,7 +117,7 @@ export default function DeckSearchForm(props) {
             cyName="deckSearchDeckName"
             onChange={handleInputChangeHooks(name => changeState('name', name))}
           />
-          <DeckSearchFormText
+          <SearchFormText
             label="Creator"
             placeholder="Name of creator..."
             value={filters.authorName}
@@ -141,7 +137,7 @@ export default function DeckSearchForm(props) {
             name="updatedTime"
             cyName="deckSearchUpdatedTime"
           />
-          <label className="included-cards">
+          <label className="included-cards input-label">
             Includes cards
             {cardSearchElement}
           </label>

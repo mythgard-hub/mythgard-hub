@@ -4,12 +4,8 @@ export default function DeckSearchFormUpdated(props) {
   const { value, name, cyName, onChange } = props;
 
   return (
-    <label>
+    <label className="input-label">
       <style jsx>{`
-        label {
-          text-transform: uppercase;
-          padding-right: 20px;
-        }
         select {
           margin: 10px 0;
           width: 100%;
