@@ -121,6 +121,31 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: MG_CDN
+            - name: MG_CARDS_CDN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MG_CARDS_CDN
+            - name: EXPRESS_PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGUSER
+            - name: EXPRESS_PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGPASSWORD
+            - name: PG_AUTHD_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_AUTHD_USER_ROLE
+            - name: PG_ANON_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_ANON_USER_ROLE
         - name: express
           image: gsdf/mg-server:$VERSION
           ports:
@@ -212,3 +237,28 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: MG_CDN
+            - name: MG_CARDS_CDN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MG_CARDS_CDN
+            - name: EXPRESS_PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGUSER
+            - name: EXPRESS_PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGPASSWORD
+            - name: PG_AUTHD_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_AUTHD_USER_ROLE
+            - name: PG_ANON_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_ANON_USER_ROLE
