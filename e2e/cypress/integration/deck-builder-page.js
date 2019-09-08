@@ -80,14 +80,14 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - mana cost filter
-        cy.get(`${manaPicker} input`)
+        cy.get(`${manaPicker} img`)
           .eq(2)
           .click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
-        cy.get(`${manaPicker} input`)
+        cy.get(`${manaPicker} img`)
           .eq(2)
           .click();
         return getPagingTotalAsInt();

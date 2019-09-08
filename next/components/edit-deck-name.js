@@ -10,9 +10,9 @@ export default function EditDeckName(props) {
       label="Deck Name"
       value={deckName}
       name="text"
-      cyName="deckNameInput"
+      cyName="deckTitle"
       onChange={onChange}
-      placeholder="Enter name..."
+      placeholder="Enter a name..."
     />
   );
 }

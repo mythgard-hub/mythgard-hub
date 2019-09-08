@@ -85,6 +85,8 @@ function DeckBuilderPage() {
           />
           <FactionFilters onFactionClick={setFactions} />
           <CardSearchFilters
+            rarities={cardRarities}
+            types={supertypes}
             manaCosts={cardManaCosts}
             setCardManaCosts={setCardManaCosts}
             setSupertypes={setSupertypes}
