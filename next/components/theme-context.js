@@ -19,6 +19,7 @@ export const themes = {
     buttonOutline: `1px solid ${mgColors.orange}`,
     buttonOutlineOffset: '6px',
     buttonBorderDisabled: `2px solid ${mgColors.lightGray}`,
+    buttonTextColor: `${mgColors.orange}`,
     inputBackground: mgColors.lightGray,
     inputBorder: `1px solid ${mgColors.lightBlue}`,
     inputPlaceholderTextColor: mgColors.lightBlue,
