@@ -7,15 +7,29 @@ function DeckBuilderSearchForm({ text, setText }) {
   const onTextChange = handleInputChangeHooks(setText);
 
   return (
-    <SearchFormText
-      label="Card Search"
-      value={text}
-      name="text"
-      cyName="cardSearchText"
-      onChange={onTextChange}
-      placeholder="Search..."
-      maxLength="100"
-    />
+    <div className="card-search-section">
+      <style jsx>{`
+        .card-search-section {
+          display: flex;
+          justify-content: space-between;
+        }
+        .card-search-section button {
+          width: 130px;
+          height: 40px;
+          margin: 52px 35px 20px 20px;
+        }
+      `}</style>
+      <SearchFormText
+        label="Card Search"
+        value={text}
+        name="text"
+        cyName="cardSearchText"
+        onChange={onTextChange}
+        placeholder="Search..."
+        maxLength="100"
+      />
+      <button>Clear Filters</button>
+    </div>
   );
 }
 

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import SomeCards from '../components/some-cards';
 import AllPaths from '../components/all-paths';
-import AllPowers from '../components/all-powers.js';
+import AllPowers from '../components/all-powers';
 import Layout from '../components/layout';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
-import DeckBuilderSearchForm from '../components/deck-builder-search-form.js';
+import DeckBuilderSearchForm from '../components/deck-builder-search-form';
 import PageBanner from '../components/page-banner';
 import FactionFilters from '../components/faction-filters';
-import RarityFilter from '../components/rarity-filter.js';
-import ManaCostFilter from '../components/mana-cost-filter.js';
-import SupertypeFilter from '../components/supertype-filter.js';
-import TabGroup from '../components/tab-group.js';
+import RarityFilter from '../components/rarity-filter';
+import ManaCostFilter from '../components/mana-cost-filter';
+import SupertypeFilter from '../components/supertype-filter';
+import TabGroup from '../components/tab-group';
 import DeckBuilderSidebar from '../components/deck-builder-sidebar';
+import DeckBuilderAdditionalFilters from '../components/deck-builder-additional-filters';
 
 function DeckBuilderPage() {
   const [cardSearchText, setCardSearchText] = useState('');
@@ -30,9 +31,7 @@ function DeckBuilderPage() {
   };
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
 
-  const onCollectionClick = (e, card) => {
-    e && e.preventDefault();
-
+  const onCollectionClick = (_, card) => {
     const newMainDeck = addCardToDeck(deckInProgress.mainDeck, {
       quantity: 1,
       card
@@ -44,27 +43,17 @@ function DeckBuilderPage() {
     });
   };
 
-  const onPathClick = (e, path) => {
+  const onPathClick = (_, path) => {
     setDeckInProgress({
       ...deckInProgress,
       deckPath: path
     });
   };
 
-  const onPowerClick = (e, power) => {
+  const onPowerClick = (_, power) => {
     setDeckInProgress({
       ...deckInProgress,
       deckPower: power
-    });
-  };
-
-  const deleteCardFromTable = id => {
-    const newMainDeck = { ...deckInProgress.mainDeck };
-    delete newMainDeck[id];
-
-    setDeckInProgress({
-      ...deckInProgress,
-      mainDeck: newMainDeck
     });
   };
 
@@ -81,21 +70,6 @@ function DeckBuilderPage() {
         .collection {
           flex-grow: 1;
         }
-        .deck-builder-actions {
-          width: 35%;
-        }
-        .deck-builder-actions button {
-          margin-bottom: 10px;
-        }
-        .card-search-section {
-          display: flex;
-          justify-content: space-between;
-        }
-        .card-search-section button {
-          width: 25%;
-          height: 40px;
-          margin: 52px 35px 20px 20px;
-        }
         :global(.input-label) {
           width: 75%;
           margin: 30px 0 10px 0;
@@ -104,19 +78,17 @@ function DeckBuilderPage() {
       <PageBanner image={PageBanner.IMG_DECK_BUILDER}>Deck Builder</PageBanner>
       <div className="deck-builder-panels">
         <div className="deck-builder-card-selection">
-          <div className="card-search-section">
-            <DeckBuilderSearchForm
-              text={cardSearchText}
-              setTab={setTab}
-              setText={setCardSearchText}
-            />
-            <button>Clear Filters</button>
-          </div>
+          <DeckBuilderSearchForm
+            text={cardSearchText}
+            setTab={setTab}
+            setText={setCardSearchText}
+          />
           <FactionFilters onFactionClick={setFactions} />
-
-          <RarityFilter onChange={setCardRarities}></RarityFilter>
-          <ManaCostFilter onChange={setCardManaCosts} />
-          <SupertypeFilter onChange={setSupertypes} />
+          <DeckBuilderAdditionalFilters
+            setCardManaCosts={setCardManaCosts}
+            setSupertypes={setSupertypes}
+            setCardRarities={setCardRarities}
+          />
           <TabGroup
             onChange={setTab}
             labels={tabLabels}
