@@ -8,9 +8,6 @@ import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
 import PageBanner from '../components/page-banner';
 import FactionFilters from '../components/faction-filters';
-import RarityFilter from '../components/rarity-filter';
-import ManaCostFilter from '../components/mana-cost-filter';
-import SupertypeFilter from '../components/supertype-filter';
 import TabGroup from '../components/tab-group';
 import DeckBuilderSidebar from '../components/deck-builder-sidebar';
 import DeckBuilderAdditionalFilters from '../components/deck-builder-additional-filters';
@@ -62,6 +59,9 @@ function DeckBuilderPage() {
   return (
     <Layout title="Mythgard Hub | Deck Builder" desc="Build Mythgard Decks">
       <style jsx>{`
+        .deck-builder-card-selection {
+          padding-right: 25px;
+        }
         .deck-builder-panels {
           display: flex;
           justify-content: space-between;
@@ -85,6 +85,7 @@ function DeckBuilderPage() {
           />
           <FactionFilters onFactionClick={setFactions} />
           <DeckBuilderAdditionalFilters
+            manaCosts={cardManaCosts}
             setCardManaCosts={setCardManaCosts}
             setSupertypes={setSupertypes}
             setCardRarities={setCardRarities}

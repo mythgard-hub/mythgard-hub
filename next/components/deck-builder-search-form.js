@@ -16,7 +16,7 @@ function DeckBuilderSearchForm({ text, setText }) {
         .card-search-section button {
           width: 130px;
           height: 40px;
-          margin: 52px 35px 20px 20px;
+          margin: 52px 17px 20px 20px;
         }
       `}</style>
       <SearchFormText
