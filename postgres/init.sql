@@ -108,6 +108,21 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
+CREATE TABLE mythgard.deck_vote (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  account_id integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (account_id)
+    REFERENCES mythgard.account (id)
+    ON DELETE CASCADE,
+  UNIQUE(deck_id, account_id)
+);
+
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
+
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
   _google_id varchar(255),
@@ -199,20 +214,24 @@ CREATE VIEW mythgard.deck_preview as
          deck.name as deck_name,
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
-         sum(essence_costs.essence)::int as essence_cost
+         sum(essence_costs.essence)::int as essence_cost,
+         count(deck_vote)::int as votes
   FROM mythgard.deck
   JOIN mythgard.card_deck
     ON card_deck.deck_id = deck.id
   JOIN mythgard.card
     ON card_deck.card_id = card.id
-  JOIN mythgard.card_faction
+  LEFT JOIN mythgard.card_faction
     ON card.id = card_faction.id
-  JOIN mythgard.faction
+  LEFT JOIN mythgard.faction
     On faction.id = card_faction.id
-  JOIN mythgard.essence_costs
+  LEFT JOIN mythgard.essence_costs
     On essence_costs.rarity = card.rarity
+  LEFT JOIN mythgard.deck_vote
+    On deck_vote.deck_id = deck.id
  GROUP BY deck.id
 ;
+
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
 -- But basically is for postgraphile to see relation to deck
 comment on view mythgard.deck_preview is E'@foreignKey (deck_id) references mythgard.deck';
