@@ -15,6 +15,22 @@ export const getCardFilters = cardIds => {
   });
 };
 
+const deckPreviewsFragment = `
+  deckPreviews {
+    nodes {
+      deckName
+      deckCreated
+      factions
+      essenceCost
+      deck{
+        author {
+          username
+          id
+        }
+      }
+    }
+  }`;
+
 // Creates partial graphql filter(s) for finding decks that contain
 // cards that are certain factions.
 //
@@ -112,20 +128,7 @@ export const getDeckSearchQuery = (
             username
           }
           modified
-          deckPreviews {
-            nodes {
-              deckName
-              deckCreated
-              factions
-              essenceCost
-              deck{
-                author {
-                  username
-                  id
-                }
-              }
-            }
-          }
+          ${deckPreviewsFragment}
           cardDecks {
             nodes {
               quantity
@@ -190,20 +193,7 @@ export const allDecksQuery = gql`
             }
           }
         }
-        deckPreviews {
-          nodes {
-            deckName
-            deckCreated
-            factions
-            essenceCost
-            deck {
-              author {
-                username
-                id
-              }
-            }
-          }
-        }
+        ${deckPreviewsFragment}
       }
     }
   }
