@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import CardSearchSelections from './card-search-selections.js';
+import CardSearchSuggestion from './card-search-suggestion.js';
 
 export const getSuggestions = (value, cards) => {
   const inputValue = value.trim().toLowerCase();
@@ -12,107 +13,62 @@ export const getSuggestions = (value, cards) => {
     : cards.filter(card => card.name.toLowerCase().indexOf(inputValue) > -1);
 };
 
-const getSuggestionValue = suggestion => suggestion.name;
+export default function CardSearch(props) {
+  const { cards, value, onChangeValue, selections, onSelect } = props;
+  const [suggestions, setSuggestions] = useState([]);
 
-const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
-
-class CardSearch extends Component {
-  constructor(props) {
-    super(props);
-    this.onChange = this.onChange.bind(this);
-    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(
-      this
-    );
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
-      this
-    );
-    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
-    this.onSelectionDismiss = this.onSelectionDismiss.bind(this);
-    this.state = {
-      value: '',
-      suggestions: [],
-      selections: []
-    };
-  }
-
-  onChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value, this.props.cards)
-    });
-  };
-
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
-
-  onSuggestionSelected = (e, { suggestion }) => {
+  const onSuggestionSelected = (e, { suggestion }) => {
     e && e.preventDefault();
-    const newSelections = [...this.state.selections, suggestion];
-    this.setState(
-      {
-        selections: newSelections,
-        value: ''
-      },
-      () => {
-        this.props.onSelect(this.state.selections.map(card => card.id));
-      }
-    );
+
+    const newSelections = [...selections, suggestion];
+    onSelect(newSelections);
+    onChangeValue('');
   };
 
-  onSelectionDismiss = (e, c) => {
+  const onSelectionDismiss = (e, c) => {
     e && e.preventDefault();
-    const newSelections = this.state.selections.filter(card => {
-      return c.id !== card.id;
-    });
-    this.setState(
-      {
-        selections: newSelections
-      },
-      () => {
-        this.props.onSelect(this.state.selections.map(card => card.id));
-      }
-    );
+
+    const newSelections = selections.filter(card => c.id !== card.id);
+    onSelect(newSelections);
   };
 
-  render() {
-    const { value, suggestions } = this.state;
+  const inputProps = {
+    placeholder: 'Type a card name...',
+    value,
+    onChange: (_, { newValue }) => {
+      onChangeValue(newValue);
+    },
+    className: 'card-search-input'
+  };
 
-    const inputProps = {
-      placeholder: 'Type a card name...',
-      value,
-      onChange: this.onChange,
-      className: 'card-search-input'
-    };
-    return (
-      <div data-cy="cardSearch">
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionSelected={this.onSuggestionSelected}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-          highlightFirstSuggestion={true}
-        />
-        <CardSearchSelections
-          cards={this.state.selections}
-          onDismissClick={this.onSelectionDismiss}
-        ></CardSearchSelections>
-      </div>
-    );
-  }
+  return (
+    <div data-cy="cardSearch">
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={({ value }) =>
+          setSuggestions(getSuggestions(value, cards))
+        }
+        onSuggestionsClearRequested={() => setSuggestions([])}
+        onSuggestionSelected={onSuggestionSelected}
+        getSuggestionValue={suggestion => suggestion.name}
+        renderSuggestion={suggestion => (
+          <CardSearchSuggestion suggestion={suggestion} />
+        )}
+        inputProps={inputProps}
+        highlightFirstSuggestion={true}
+      />
+      <CardSearchSelections
+        cards={selections}
+        onDismissClick={onSelectionDismiss}
+      ></CardSearchSelections>
+    </div>
+  );
 }
 
 CardSearch.propTypes = {
+  value: PropTypes.string,
+  selections: PropTypes.array,
+  onChangeValue: PropTypes.func,
   cards: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -124,7 +80,6 @@ CardSearch.propTypes = {
 
 CardSearch.defaultProps = {
   cards: [],
-  onSelect: () => {}
+  onSelect: () => {},
+  onChangeValue: () => {}
 };
-
-export default CardSearch;

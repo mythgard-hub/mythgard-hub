@@ -27,7 +27,9 @@ export const themes = {
     essenceColor: mgColors.lightGreen,
     votesColor: mgColors.lightBlue,
     deckNameColor: mgColors.orange,
-    welcomeBannerBackground: mgColors.orange
+    welcomeBannerBackground: mgColors.orange,
+    smallTitleColor: mgColors.blue,
+    hoverColor: mgColors.blue
   }
 };
 

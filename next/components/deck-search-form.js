@@ -9,34 +9,44 @@ import allCardsQuery from '../lib/queries/all-cards-query';
 import DeckSearchFormText from './deck-search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
 
+const resetFilters = () => {
+  return {
+    name: '',
+    cardValue: '',
+    cardSelections: [],
+    cardSuggestions: [],
+    factionNames: [],
+    isOnlyFactions: true,
+    updatedTime: '150',
+    authorName: ''
+  };
+};
+
 export default function DeckSearchForm(props) {
   const { onSubmit } = props;
-  const [name, setName] = useState('');
-  const [cardIds, setCardIds] = useState([]);
-  const [factionNames, setFactionNames] = useState([]);
-  const [isOnlyFactions, setIsOnlyFactions] = useState(true);
-  const [updatedTime, setUpdatedTime] = useState('150');
-  const [authorName, setAuthorName] = useState('');
+  const [filters, setFilters] = useState(resetFilters());
+
+  const changeState = (filterName, value) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [filterName]: value
+    }));
+  };
 
   const handleSubmit = e => {
     e && e.preventDefault();
     onSubmit({
-      name,
-      cardIds,
-      factionNames,
-      isOnlyFactions,
-      updatedTime,
-      authorName
+      name: filters.name,
+      cardIds: filters.cardSelections.map(c => c.id),
+      factionNames: filters.factionNames,
+      isOnlyFactions: filters.isOnlyFactions,
+      updatedTime: filters.updatedTime,
+      authorName: filters.authorName
     });
   };
 
   const handleClear = () => {
-    setName('');
-    setCardIds([]);
-    setFactionNames([]);
-    setIsOnlyFactions(true);
-    setUpdatedTime('150');
-    setAuthorName('');
+    setFilters(resetFilters());
     onSubmit({});
   };
 
@@ -47,8 +57,17 @@ export default function DeckSearchForm(props) {
   if (data && data.cards) {
     cardSearchElement = (
       <CardSearch
+        suggestions={filters.cardSuggestions}
+        onChangeSuggestions={cardSuggestions =>
+          changeState('cardSuggestions', cardSuggestions)
+        }
+        value={filters.cardValue}
+        onChangeValue={cardValue => changeState('cardValue', cardValue)}
         cards={data.cards.nodes}
-        onSelect={selectedCardIds => setCardIds(selectedCardIds)}
+        selections={filters.cardSelections}
+        onSelect={cardSelections =>
+          changeState('cardSelections', cardSelections)
+        }
       />
     );
   }
@@ -84,40 +103,48 @@ export default function DeckSearchForm(props) {
         }
       `}</style>
       <FactionFilters
-        onFactionClick={factionNames => setFactionNames(factionNames)}
-        onIsOnlyFactionClick={handleInputChangeHooks(setIsOnlyFactions)}
-        isOnlyFactions={isOnlyFactions}
+        onFactionClick={factionNames =>
+          changeState('factionNames', factionNames)
+        }
+        onIsOnlyFactionClick={handleInputChangeHooks(isOnlyFactions =>
+          changeState('isOnlyFactions', isOnlyFactions)
+        )}
+        isOnlyFactions={filters.isOnlyFactions}
       />
       <div className="filters-container">
         <div className="filter-column">
           <DeckSearchFormText
             label="Deck Name"
             placeholder="Name..."
-            value={name}
+            value={filters.name}
             name="name"
             cyName="deckSearchDeckName"
-            onChange={handleInputChangeHooks(setName)}
+            onChange={handleInputChangeHooks(name => changeState('name', name))}
           />
           <DeckSearchFormText
             label="Creator"
             placeholder="Name of creator..."
-            value={authorName}
+            value={filters.authorName}
             name="authorName"
             cyName="deckSearchDeckAuthor"
-            onChange={handleInputChangeHooks(setAuthorName)}
+            onChange={handleInputChangeHooks(authorName =>
+              changeState('authorName', authorName)
+            )}
           />
         </div>
         <div className="filter-column">
+          <DeckSearchFormUpdated
+            value={filters.updatedTime}
+            onChange={handleInputChangeHooks(updatedTime =>
+              changeState('updatedTime', updatedTime)
+            )}
+            name="updatedTime"
+            cyName="deckSearchUpdatedTime"
+          />
           <label className="included-cards">
             Includes cards
             {cardSearchElement}
           </label>
-          <DeckSearchFormUpdated
-            value={updatedTime}
-            onChange={handleInputChangeHooks(setUpdatedTime)}
-            name="updatedTime"
-            cyName="deckSearchUpdatedTime"
-          />
         </div>
       </div>
       <div className="action-buttons">

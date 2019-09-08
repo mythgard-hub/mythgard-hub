@@ -54,10 +54,6 @@ export default function DeckList({ decks }) {
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
             const modified = new Date(deck.modified);
-            const currFactions = (
-              <FactionsIndicator factions={deckMetaData[index].factions} />
-            );
-            const essenceCost = deckMetaData[index].essenceCost;
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
@@ -70,10 +66,10 @@ export default function DeckList({ decks }) {
                   <div className="deckAuthor">by {author}</div>
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
-                  {currFactions}
+                  <FactionsIndicator factions={deckMetaData[index].factions} />
                 </td>
                 <td className="mana">
-                  <EssenceIndicator essence={essenceCost} />
+                  <EssenceIndicator essence={deckMetaData[index].essenceCost} />
                 </td>
                 <td className="modifiedDate">
                   <span>

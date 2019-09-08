@@ -141,6 +141,7 @@ describe('Decks Page', function() {
           cy.get(deckFactionsPicker).should('have.length', '6');
           cy.get(deckEssencePicker).should('contain', '1750');
           cy.get('[data-cy="deckSearchClear"]').click();
+          cy.get(cardSearchSelections).should('have.length', 0);
           cy.get('[data-cy="deckListItem"]').should(
             'have.length',
             initialListLength

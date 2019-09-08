@@ -3,23 +3,28 @@ import PropTypes from 'prop-types';
 
 export default function CardSelectionItem({ card, onDismissClick }) {
   return (
-    <div className="cardSelectionItem" data-cy="cardSelectionItem">
+    <li className="cardSelectionItem" data-cy="cardSelectionItem">
+      <style jsx>{`
+        .cardSelectionItem {
+          display: flex;
+          padding: 5px;
+        }
+        .cardSelectionItem span {
+          width: fit-content;
+        }
+        .cardSelectionItem button {
+          margin-right: 10px;
+          background-color: unset;
+          border: none;
+          padding: 0 0 0 30px;
+          width: fit-content;
+        }
+      `}</style>
+      <span>{card.name}</span>
       <button aria-label="Remove card" onClick={e => onDismissClick(e, card)}>
         X
       </button>
-      <span>{card.name}</span>
-      <style jsx>{`
-        .cardSelectionItem {
-          display: inline-block;
-          border: 1px solid black;
-          padding: 5px;
-        }
-
-        .cardSelectionItem button {
-          margin-right: 10px;
-        }
-      `}</style>
-    </div>
+    </li>
   );
 }
 
