@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RarityFilter from '../components/rarity-filter.js';
-import ManaCostFilter from '../components/mana-cost-filter.js';
 import SupertypeFilter from '../components/supertype-filter.js';
+import NumericFilterGroup from './numeric-filter-group.js';
 
 export default function DeckBuilderAdditionalFilters(props) {
-  const { setCardManaCosts, setSupertypes, setCardRarities } = props;
+  const { manaCosts, setCardManaCosts, setSupertypes, setCardRarities } = props;
 
   return (
     <div className="additional-filters">
       <style jsx>{`
         .additional-filters {
+          margin-left: 35px;
+          margin-right: 35px;
           margin-bottom: 35px;
         }
         hr {
@@ -41,7 +43,7 @@ export default function DeckBuilderAdditionalFilters(props) {
       `}</style>
       <div className="filter-title first-title">Mana Cost</div>
       <hr />
-      <ManaCostFilter onChange={setCardManaCosts} />
+      <NumericFilterGroup onChange={setCardManaCosts} selected={manaCosts} />
       <div className="filter-title middle-title">Type</div>
       <hr />
       <SupertypeFilter onChange={setSupertypes} />
@@ -53,6 +55,7 @@ export default function DeckBuilderAdditionalFilters(props) {
 }
 
 DeckBuilderAdditionalFilters.propTypes = {
+  manaCosts: PropTypes.array,
   setCardManaCosts: PropTypes.func,
   setSupertypes: PropTypes.func,
   setCardRarities: PropTypes.func
