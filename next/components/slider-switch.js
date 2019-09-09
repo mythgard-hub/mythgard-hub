@@ -5,8 +5,8 @@ import { ThemeContext } from './theme-context';
 export default function SliderSwitch({
   checked,
   onChange,
-  leftLabel,
-  rightLabel,
+  leftSlider,
+  rightSlider,
   onClickLabel
 }) {
   const theme = useContext(ThemeContext);
@@ -18,19 +18,19 @@ export default function SliderSwitch({
           display: flex;
           margin-bottom: 20px;
         }
-        .leftLabel,
-        .rightLabel {
+        .leftSlider,
+        .rightSlider {
           padding-top: 2px;
           cursor: pointer;
         }
-        .leftLabel:hover,
-        .rightLabel:hover {
+        .leftSlider:hover,
+        .rightSlider:hover {
           color: ${theme.switchColor};
         }
-        .leftLabel {
+        .leftSlider {
           margin-right: 10px;
         }
-        .rightLabel {
+        .rightSlider {
           margin-left: 10px;
         }
         .switch {
@@ -39,13 +39,11 @@ export default function SliderSwitch({
           width: 60px;
           height: 25px;
         }
-
         .switch input {
           opacity: 0;
           width: 0;
           height: 0;
         }
-
         .slider {
           position: absolute;
           cursor: pointer;
@@ -57,7 +55,6 @@ export default function SliderSwitch({
           -webkit-transition: 0.4s;
           transition: 0.4s;
         }
-
         .slider:before {
           position: absolute;
           content: '';
@@ -69,54 +66,49 @@ export default function SliderSwitch({
           -webkit-transition: 0.4s;
           transition: 0.4s;
         }
-
         input:checked + .slider {
           background-color: ${theme.switchColor};
         }
-
         input:focus + .slider {
           box-shadow: 0 0 1px ${theme.switchColor};
         }
-
         input:checked + .slider:before {
           -webkit-transform: translateX(32px);
           -ms-transform: translateX(32px);
           transform: translateX(32px);
         }
-
         .slider.round {
           border-radius: 34px;
         }
-
         .slider.round:before {
           border-radius: 50%;
         }
       `}</style>
       <span
-        className="leftLabel"
-        data-cy="sliderLeftLabel"
+        className="leftSlider"
+        data-cy="leftSlider"
         onClick={() => onClickLabel(false)}
       >
-        {leftLabel}
+        {leftSlider}
       </span>
       <div className="switch" onClick={onChange}>
         <input type="checkbox" checked={checked} readOnly />
         <span className="slider round" />
       </div>
       <span
-        className="rightLabel"
-        data-cy="sliderRightLabel"
+        className="rightSlider"
+        data-cy="rightSlider"
         onClick={() => onClickLabel(true)}
       >
-        {rightLabel}
+        {rightSlider}
       </span>
     </div>
   );
 }
 
 SliderSwitch.propTypes = {
-  leftLabel: PropTypes.string,
-  rightLabel: PropTypes.string,
+  leftSlider: PropTypes.string,
+  rightSlider: PropTypes.string,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
   onClickLabel: PropTypes.func

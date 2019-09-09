@@ -35,6 +35,6 @@ export default {
   deckEssencePicker: '[data-cy="deckEssenceCell"]',
 
   // slider
-  leftLabel: '[data-cy="sliderLeftLabel"]',
-  rightLabel: '[data-cy="sliderRightLabel"]'
+  leftSlider: '[data-cy="leftSlider"]',
+  rightSlider: '[data-cy="rightSlider"]'
 };

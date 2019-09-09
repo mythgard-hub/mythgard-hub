@@ -77,8 +77,8 @@ class FactionFilters extends React.Component {
         <div className="factions-slider">
           {isOnlyFactionsSetter && (
             <SliderSwitch
-              leftLabel="Has Selected"
-              rightLabel="Only Selected"
+              leftSlider="Has Selected"
+              rightSlider="Only Selected"
               checked={isOnlyFactions}
               onChange={onIsOnlyFactionClick}
               onClickLabel={isOnlyFactionsSetter}
