@@ -45,15 +45,15 @@ function DeckBuilderPage() {
           />
           <FactionFilters onFactionClick={setFactions} />
           <SliderSwitch
-            leftLabel="View Cards"
-            rightLabel="View Filters"
+            leftSlider="View Cards"
+            rightSlider="View Filters"
             checked={viewFilters}
             onChange={() => {
               setViewFilters(prev => !prev);
             }}
             onClickLabel={setViewFilters}
           />
-          {viewFilters && (
+          {viewFilters ? (
             <CardSearchFilters
               rarities={cardRarities}
               types={supertypes}
@@ -62,8 +62,7 @@ function DeckBuilderPage() {
               setSupertypes={setSupertypes}
               setCardRarities={setCardRarities}
             />
-          )}
-          {!viewFilters && (
+          ) : (
             <DeckBuilderCardDisplay
               currentTab={currentTab}
               setTab={setTab}
