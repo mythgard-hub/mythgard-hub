@@ -75,7 +75,7 @@ class FactionFilters extends React.Component {
           ))}
         </ul>
         <div className="factions-slider">
-          {isOnlyFactions && (
+          {isOnlyFactionsSetter && (
             <SliderSwitch
               leftLabel="Has Selected"
               rightLabel="Only Selected"
