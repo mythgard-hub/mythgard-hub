@@ -11,6 +11,7 @@ import FactionFilters from '../components/faction-filters';
 import TabGroup from '../components/tab-group';
 import DeckBuilderSidebar from '../components/deck-builder-sidebar';
 import CardSearchFilters from '../components/card-search-filters';
+import SliderSwitch from '../components/slider-switch';
 
 function DeckBuilderPage() {
   const [cardSearchText, setCardSearchText] = useState('');
@@ -70,23 +71,6 @@ function DeckBuilderPage() {
         .collection {
           flex-grow: 1;
         }
-        :global(.input-label) {
-          width: 75%;
-          margin: 30px 0 10px 0;
-        }
-        .card-search-section {
-          display: flex;
-          justify-content: space-between;
-        }
-        .card-search-section button {
-          width: 25%;
-          height: 40px;
-          margin: 52px 35px 20px 20px;
-        }
-        :global(.input-label) {
-          width: 75%;
-          margin: 30px 0 10px 0;
-        }
       `}</style>
       <PageBanner image={PageBanner.IMG_DECK_BUILDER}>Deck Builder</PageBanner>
       <div className="deck-builder-panels">
@@ -97,6 +81,7 @@ function DeckBuilderPage() {
             setText={setCardSearchText}
           />
           <FactionFilters onFactionClick={setFactions} />
+          <SliderSwitch />
           <CardSearchFilters
             rarities={cardRarities}
             types={supertypes}

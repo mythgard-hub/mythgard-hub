@@ -30,7 +30,8 @@ export const themes = {
     deckNameColor: mgColors.orange,
     welcomeBannerBackground: mgColors.orange,
     smallTitleColor: mgColors.blue,
-    hoverColor: mgColors.blue
+    hoverColor: mgColors.blue,
+    switchColor: mgColors.lightGreen
   }
 };
 
