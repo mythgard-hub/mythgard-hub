@@ -19,7 +19,6 @@ describe('Deck builder page', () => {
   });
   it('should have a happy path', function() {
     cy.get('[data-cy="header"]').should('be.visible');
-    cy.get('[data-cy="importDeckTitle"]').should('be.visible');
     cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
     cy.get('[data-cy="importDeckButton"]').should('be.visible');
     cy.get(cardList).should('be.visible');

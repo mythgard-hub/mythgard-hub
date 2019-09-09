@@ -87,14 +87,23 @@ function Layout({ title, desc, children }) {
           }
 
           input[type='text'],
-          select {
-            height: 30px;
+          select,
+          textarea {
             border: ${theme.inputBorder};
             background-color: ${theme.inputBackground};
             border-radius: 7px;
-            padding-left: 10px;
             opacity: 1;
             font-family: ${theme.fontFamily};
+            padding-left: 10px;
+          }
+
+          textarea {
+            padding-top: 5px;
+          }
+
+          input[type='text'],
+          select {
+            height: 30px;
           }
 
           ::placeholder {
