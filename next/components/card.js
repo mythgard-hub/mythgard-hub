@@ -27,12 +27,15 @@ export default function Card({ card }) {
       <style jsx>{`
         .card-components {
           display: flex;
+          flex-wrap: wrap;
         }
         .card-image {
-          min-width: 320px;
-          max-width: 320px;
+          flex: 1;
+          max-width: 100%;
+          height: auto;
         }
         ul.card-details {
+          flex: 2;
           list-style: none;
           display: flex;
           flex-wrap: wrap;
@@ -82,7 +85,9 @@ export default function Card({ card }) {
           {card.name}
         </h1>
         <div className="card-components">
-          <img className="card-image" src={imagePath} alt={imageAlt} />
+          <div>
+            <img className="card-image" src={imagePath} alt={imageAlt} />
+          </div>
           <ul className="card-details">
             <li className="card-detail">
               <div className="card-detail-label">Faction</div>
