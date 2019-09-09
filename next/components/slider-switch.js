@@ -92,14 +92,22 @@ export default function SliderSwitch({
           border-radius: 50%;
         }
       `}</style>
-      <span className="leftLabel" onClick={() => onClickLabel(false)}>
+      <span
+        className="leftLabel"
+        data-cy="sliderLeftLabel"
+        onClick={() => onClickLabel(false)}
+      >
         {leftLabel}
       </span>
       <div className="switch" onClick={onChange}>
         <input type="checkbox" checked={checked} />
         <span className="slider round" />
       </div>
-      <span className="rightLabel" onClick={() => onClickLabel(true)}>
+      <span
+        className="rightLabel"
+        data-cy="sliderRightLabel"
+        onClick={() => onClickLabel(true)}
+      >
         {rightLabel}
       </span>
     </div>
