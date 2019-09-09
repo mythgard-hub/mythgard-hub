@@ -9,7 +9,7 @@ import {
 
 function NewDecks() {
   const { loading, error, data } = useQuery(decksQuery);
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading...</div>;
 
   let decks = (data && data.deckPreviews && data.deckPreviews.nodes) || [];
