@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import GemCost from './gem-cost.js';
 import { imagePathMedium as getImagePath } from '../lib/card.js';
 import { RARITY_IMAGES } from '../constants/rarities.js';
+import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
 
 const firstLetterUppercase = str => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -10,6 +11,9 @@ const firstLetterUppercase = str => {
 export default function Card({ card }) {
   const imagePath = getImagePath(card.name, card.set);
   const imageAlt = card.name;
+  // Because this is an enum it has to be explicitly converted to a string
+  // to render or perform string operations
+  const supertype = card.supertype.toString();
   let factions = [];
   try {
     factions = card.cardFactions.nodes.map(n =>
@@ -69,6 +73,9 @@ export default function Card({ card }) {
         .rarity-icon {
           height: 22px;
         }
+        .supertype-icon {
+          height: 22px;
+        }
       `}</style>
       <div>
         <h1 data-cy="cardName" className="cardName">
@@ -98,7 +105,11 @@ export default function Card({ card }) {
               <div className="card-detail-label">Type</div>
               <hr />
               <div className="card-detail-text">
-                {firstLetterUppercase(card.supertype + '')}
+                <img
+                  src={SUPERTYPE_IMAGES[supertype.toLowerCase()]}
+                  className="supertype-icon"
+                />{' '}
+                {firstLetterUppercase(supertype)}
               </div>
             </li>
             <li className="card-detail">

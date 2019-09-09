@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageFilterGroup from './image-filter-group';
+import { SUPERTYPE_IMAGES } from '../constants/supertypes';
 
-const cdn = process.env.MG_CDN;
 const images = [
   {
     key: 'Minion',
-    link: `${cdn}/filters/Filter-Icons_0000s_0004s_0000_minion.png`
+    link: SUPERTYPE_IMAGES.minion
   },
   {
     key: 'Spell',
-    link: `${cdn}/filters/Filter-Icons_0000s_0004s_0001_spell.png`
+    link: SUPERTYPE_IMAGES.spell
   },
   {
     key: 'Enchantment',
-    link: `${cdn}/filters/Filter-Icons_0000s_0004s_0002_enchantment.png`
+    link: SUPERTYPE_IMAGES.enchantment
   },
   {
     key: 'Artifact',
-    link: `${cdn}/filters/Filter-Icons_0000s_0004s_0003_artifact.png`
+    link: SUPERTYPE_IMAGES.artifact
   }
 ];
 

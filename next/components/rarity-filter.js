@@ -1,24 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageFilterGroup from './image-filter-group';
+import { RARITY_IMAGES } from '../constants/rarities'
 
 const cdn = process.env.MG_CDN;
 const images = [
   {
     key: 'COMMON',
-    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0000_C.png`
+    link: RARITY_IMAGES.common
   },
   {
     key: 'UNCOMMON',
-    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0001_U.png`
+    link: RARITY_IMAGES.uncommon
   },
   {
     key: 'RARE',
-    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0002_R.png`
+    link: RARITY_IMAGES.rare
   },
   {
     key: 'MYTHIC',
-    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0003_M.png`
+    link: RARITY_IMAGES.mythic
   }
 ];
 
