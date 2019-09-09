@@ -23,6 +23,7 @@ function DeckBuilderPage() {
     <Layout title="Mythgard Hub | Deck Builder" desc="Build Mythgard Decks">
       <style jsx>{`
         .deck-builder-card-selection {
+          width: 100%;
           padding-right: 25px;
         }
         .deck-builder-panels {

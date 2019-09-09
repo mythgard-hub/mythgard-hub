@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import RarityFilter from './rarity-filter.js';
 import SupertypeFilter from './supertype-filter.js';
 import NumericFilterGroup from './numeric-filter-group.js';
+import { ThemeContext } from './theme-context';
 
 export default function CardSearchFilters(props) {
+  const theme = useContext(ThemeContext);
   const {
     manaCosts,
     strengths,
@@ -34,9 +36,9 @@ export default function CardSearchFilters(props) {
           height: 1px;
           background-image: linear-gradient(
             to right,
-            #4eb8e7,
-            #4eb8e7,
-            #1c2d35
+            ${theme.hrColorGradientLight},
+            ${theme.hrColorGradientLight},
+            ${theme.hrColorGradientDark}
           );
         }
         .filter-title {

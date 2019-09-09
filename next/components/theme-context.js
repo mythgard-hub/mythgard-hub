@@ -31,7 +31,9 @@ export const themes = {
     welcomeBannerBackground: mgColors.orange,
     smallTitleColor: mgColors.blue,
     hoverColor: mgColors.blue,
-    switchColor: mgColors.lightGreen
+    switchColor: mgColors.lightGreen,
+    hrColorGradientLight: mgColors.blue,
+    hrColorGradientDark: mgColors.darkBlue
   }
 };
 
