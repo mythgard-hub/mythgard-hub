@@ -2,12 +2,37 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
 
-export default function SliderSwitch({ checked }) {
+export default function SliderSwitch({
+  checked,
+  onChange,
+  leftLabel,
+  rightLabel,
+  onClickLabel
+}) {
   const theme = useContext(ThemeContext);
 
   return (
-    <div>
+    <div className="switch-container">
       <style jsx>{`
+        .switch-container {
+          display: flex;
+          margin-bottom: 20px;
+        }
+        .leftLabel,
+        .rightLabel {
+          padding-top: 2px;
+          cursor: pointer;
+        }
+        .leftLabel:hover,
+        .rightLabel:hover {
+          color: ${theme.switchColor};
+        }
+        .leftLabel {
+          margin-right: 10px;
+        }
+        .rightLabel {
+          margin-left: 10px;
+        }
         .switch {
           position: relative;
           display: inline-block;
@@ -54,9 +79,9 @@ export default function SliderSwitch({ checked }) {
         }
 
         input:checked + .slider:before {
-          -webkit-transform: translateX(26px);
-          -ms-transform: translateX(26px);
-          transform: translateX(26px);
+          -webkit-transform: translateX(32px);
+          -ms-transform: translateX(32px);
+          transform: translateX(32px);
         }
 
         .slider.round {
@@ -67,14 +92,24 @@ export default function SliderSwitch({ checked }) {
           border-radius: 50%;
         }
       `}</style>
-      <label className="switch">
+      <span className="leftLabel" onClick={() => onClickLabel(false)}>
+        {leftLabel}
+      </span>
+      <div className="switch" onClick={onChange}>
         <input type="checkbox" checked={checked} />
         <span className="slider round" />
-      </label>
+      </div>
+      <span className="rightLabel" onClick={() => onClickLabel(true)}>
+        {rightLabel}
+      </span>
     </div>
   );
 }
 
 SliderSwitch.propTypes = {
-  checked: PropTypes.bool
+  leftLabel: PropTypes.string,
+  rightLabel: PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+  onClickLabel: PropTypes.func
 };

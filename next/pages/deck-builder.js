@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import SomeCards from '../components/some-cards';
-import AllPaths from '../components/all-paths';
-import AllPowers from '../components/all-powers';
 import Layout from '../components/layout';
-import ImportedDeckErrors from '../components/imported-deck-errors';
-import { initializeDeckBuilder, addCardToDeck } from '../lib/deck-utils';
+import { initializeDeckBuilder } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
 import PageBanner from '../components/page-banner';
 import FactionFilters from '../components/faction-filters';
-import TabGroup from '../components/tab-group';
 import DeckBuilderSidebar from '../components/deck-builder-sidebar';
 import CardSearchFilters from '../components/card-search-filters';
 import SliderSwitch from '../components/slider-switch';
+import DeckBuilderCardDisplay from '../components/deck-builder-card-display';
 
 function DeckBuilderPage() {
   const [cardSearchText, setCardSearchText] = useState('');
@@ -20,42 +16,8 @@ function DeckBuilderPage() {
   const [supertypes, setSupertypes] = useState([]);
   const [factions, setFactions] = useState([]);
   const [currentTab, setTab] = useState('');
-  const cardFilters = {
-    text: cardSearchText,
-    rarities: cardRarities,
-    manaCosts: cardManaCosts,
-    supertypes,
-    factions
-  };
+  const [viewFilters, setViewFilters] = useState(false);
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
-
-  const onCollectionClick = (_, card) => {
-    const newMainDeck = addCardToDeck(deckInProgress.mainDeck, {
-      quantity: 1,
-      card
-    });
-
-    setDeckInProgress({
-      ...deckInProgress,
-      mainDeck: newMainDeck
-    });
-  };
-
-  const onPathClick = (_, path) => {
-    setDeckInProgress({
-      ...deckInProgress,
-      deckPath: path
-    });
-  };
-
-  const onPowerClick = (_, power) => {
-    setDeckInProgress({
-      ...deckInProgress,
-      deckPower: power
-    });
-  };
-
-  const tabLabels = ['Cards', 'Paths', 'Powers'];
 
   return (
     <Layout title="Mythgard Hub | Deck Builder" desc="Build Mythgard Decks">
@@ -81,39 +43,38 @@ function DeckBuilderPage() {
             setText={setCardSearchText}
           />
           <FactionFilters onFactionClick={setFactions} />
-          <SliderSwitch />
-          <CardSearchFilters
-            rarities={cardRarities}
-            types={supertypes}
-            manaCosts={cardManaCosts}
-            setCardManaCosts={setCardManaCosts}
-            setSupertypes={setSupertypes}
-            setCardRarities={setCardRarities}
+          <SliderSwitch
+            leftLabel="View Cards"
+            rightLabel="View Filters"
+            checked={viewFilters}
+            onChange={() => {
+              setViewFilters(prev => !prev);
+            }}
+            onClickLabel={setViewFilters}
           />
-          <TabGroup
-            onChange={setTab}
-            labels={tabLabels}
-            name="cardsPathsPowers"
-          />
-          {currentTab === 'Cards' && (
-            <div className="collection" data-cy="deckBuilderCollection">
-              <SomeCards
-                filters={cardFilters}
-                onCardClick={onCollectionClick}
-              />
-            </div>
+          {viewFilters && (
+            <CardSearchFilters
+              rarities={cardRarities}
+              types={supertypes}
+              manaCosts={cardManaCosts}
+              setCardManaCosts={setCardManaCosts}
+              setSupertypes={setSupertypes}
+              setCardRarities={setCardRarities}
+            />
           )}
-          {currentTab === 'Paths' && (
-            <div className="collection" data-cy="deckBuilderPaths">
-              <AllPaths onPathClick={onPathClick} />
-            </div>
+          {!viewFilters && (
+            <DeckBuilderCardDisplay
+              currentTab={currentTab}
+              setTab={setTab}
+              deckInProgress={deckInProgress}
+              setDeckInProgress={setDeckInProgress}
+              cardSearchText={cardSearchText}
+              cardRarities={cardRarities}
+              cardManaCosts={cardManaCosts}
+              supertypes={supertypes}
+              factions={factions}
+            />
           )}
-          {currentTab === 'Powers' && (
-            <div className="collection" data-cy="deckBuilderPaths">
-              <AllPowers onPowerClick={onPowerClick}></AllPowers>
-            </div>
-          )}
-          <ImportedDeckErrors importedDeck={deckInProgress} />
         </div>
         <DeckBuilderSidebar
           deckInProgress={deckInProgress}
