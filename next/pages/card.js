@@ -4,14 +4,25 @@ import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
 import Card from '../components/card';
 import Layout from '../components/layout';
+import PageBanner from '../components/page-banner';
 
 export const cardQuery = gql`
   query card($id: Int!) {
     card(id: $id) {
+      id
       name
-      atk
-      def
-      rules
+      mana
+      gem
+      rarity
+      supertype
+      subtype
+      cardFactions {
+        nodes {
+          faction {
+            name
+          }
+        }
+      }
     }
   }
 `;
@@ -27,6 +38,7 @@ export default withRouter(({ router }) => (
           title={`Mythgard Hub | Cards | ${data.card.name}`}
           desc={`Details and rulings for Mythgard card ${data.card.name}`}
         >
+          <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
           <Card card={data.card} />
         </Layout>
       );
