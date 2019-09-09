@@ -1,12 +1,23 @@
 import PropTypes from 'prop-types';
+import GemCost from './gem-cost.js';
 import { imagePathMedium as getImagePath } from '../lib/card.js';
+import { RARITY_IMAGES } from '../constants/rarities.js';
+
+const firstLetterUppercase = str => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
 
 export default function Card({ card }) {
   const imagePath = getImagePath(card.name, card.set);
   const imageAlt = card.name;
-  const factions = card.cardFactions.nodes.map(
-    n => n.faction.name.charAt(0).toUpperCase() + n.faction.name.slice(1)
-  );
+  let factions = [];
+  try {
+    factions = card.cardFactions.nodes.map(n =>
+      firstLetterUppercase(n.faction.name)
+    );
+  } catch (error) {
+    console.error('Something went wrong trying to read card factions', error);
+  }
   return (
     <>
       <style jsx>{`
@@ -55,6 +66,9 @@ export default function Card({ card }) {
           font-size: 1.8em;
           margin-bottom: 18px;
         }
+        .rarity-icon {
+          height: 22px;
+        }
       `}</style>
       <div>
         <h1 data-cy="cardName" className="cardName">
@@ -76,23 +90,42 @@ export default function Card({ card }) {
             <li className="card-detail">
               <div className="card-detail-label">Cost</div>
               <hr />
-              <div className="card-detail-text">{card.mana} {card.gem}</div>
+              <div className="card-detail-text">
+                {card.mana} <GemCost costString={card.gem} />
+              </div>
             </li>
             <li className="card-detail">
               <div className="card-detail-label">Type</div>
               <hr />
-              <div className="card-detail-text">{card.supertype}</div>
+              <div className="card-detail-text">
+                {firstLetterUppercase(card.supertype + '')}
+              </div>
             </li>
             <li className="card-detail">
               <div className="card-detail-label">Rarity</div>
               <hr />
-              <div className="card-detail-text">Meh</div>
+              <div className="card-detail-text">
+                {firstLetterUppercase(card.rarity)}{' '}
+                <img
+                  src={RARITY_IMAGES[card.rarity.toLowerCase()]}
+                  className="rarity-icon"
+                />
+              </div>
             </li>
             <li className="card-detail">
               <div className="card-detail-label">Subtype</div>
               <hr />
-              <div className="card-detail-text">{card.name}</div>
+              <div className="card-detail-text">{card.subtype}</div>
             </li>
+            {(card.atk || card.def) && (
+              <li className="card-detail">
+                <div className="card-detail-label">Attack/Health</div>
+                <hr />
+                <div className="card-detail-text">
+                  {card.atk}/{card.def}
+                </div>
+              </li>
+            )}
             <li className="card-detail">
               <div className="card-detail-label">Card Set</div>
               <hr />
@@ -100,7 +133,6 @@ export default function Card({ card }) {
             </li>
           </ul>
         </div>
-        <div data-cy="cardRules">rules: {card.rules}</div>
       </div>
     </>
   );
@@ -109,7 +141,23 @@ Card.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    supertype: PropTypes.string.isRequired,
+    mana: PropTypes.number,
+    gem: PropTypes.string,
+    rarity: PropTypes.string,
+    subtype: PropTypes.string,
+    atk: PropTypes.number,
+    def: PropTypes.number,
     rules: PropTypes.string,
-    set: PropTypes.string
+    set: PropTypes.string,
+    cardFactions: PropTypes.shape({
+      nodes: PropTypes.arrayOf(
+        PropTypes.shape({
+          faction: PropTypes.shape({
+            name: PropTypes.string
+          })
+        })
+      )
+    })
   })
 };

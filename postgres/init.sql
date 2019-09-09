@@ -19,22 +19,24 @@ CREATE TABLE mythgard.card (
   atk integer,
   def integer,
   mana integer,
-  gem integer,
+  gem varchar(10),
   rarity mythgard.rarity default 'COMMON'
 );
 
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
-  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', '1', 'COMMON', '{MINION}');
+  VALUES ('Furball', 'rules', 'cat', '1', '2', '3', 'B', 'COMMON', '{MINION}');
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
-  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', '2', 'UNCOMMON', '{SPELL}');
+  VALUES ('Imp', 'rules', 'devil', '2', '1', '2', 'R', 'UNCOMMON', '{SPELL}');
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
-  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', '6', 'RARE', '{ENCHANTMENT}');
+  VALUES ('Grizzly Bear', 'rules', 'bear', '2', '2', '2', 'O', 'RARE', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
-  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', '2', 'MYTHIC', '{ARTIFACT}');
+  VALUES ('Dragon', 'flying', 'dragon', '5', '5', '1', 'G', 'MYTHIC', '{ARTIFACT}');
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, supertype)
-  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', '2', '{MINION,ARTIFACT}');
+  VALUES ('Vampire', 'lifelink', 'vampire', '2', '2', '1', 'PP', '{MINION,ARTIFACT}');
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem)
-  VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', '0');
+  VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', 'YY');
+INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
+  VALUES ('Cairnhenge', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 
 CREATE TABLE mythgard.path (
   id SERIAL PRIMARY KEY,

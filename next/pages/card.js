@@ -13,6 +13,8 @@ export const cardQuery = gql`
       name
       mana
       gem
+      atk
+      def
       rarity
       supertype
       subtype
