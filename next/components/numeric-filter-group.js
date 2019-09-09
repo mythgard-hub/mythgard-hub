@@ -1,41 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function NumericFilterGroup({ cyName, selected, onChange }) {
-  const cdn = process.env.MG_CDN;
-  const images = [
-    {
-      key: 1,
-      label: '1',
-      link: `${cdn}/filters/Filter-Icons_0000s_0001s_0005_1.png`
-    },
-    {
-      key: 2,
-      label: '2',
-      link: `${cdn}/filters/Filter-Icons_0000s_0001s_0004_2.png`
-    },
-    {
-      key: 3,
-      label: '3',
-      link: `${cdn}/filters/Filter-Icons_0000s_0001s_0003_3.png`
-    },
-    {
-      key: 4,
-      label: '4',
-      link: `${cdn}/filters/Filter-Icons_0000s_0001s_0002_4.png`
-    },
-    {
-      key: 5,
-      label: '5',
-      link: `${cdn}/filters/Filter-Icons_0000s_0001s_0001_5.png`
-    },
-    {
-      key: 6,
-      label: '6+',
-      link: `${cdn}/filters/Filter-Icons_0000s_0001s_0000_6%2B.png`
-    }
-  ];
+const cdn = process.env.MG_CDN;
+const images = [
+  {
+    key: 1,
+    label: '1',
+    link: `${cdn}/filters/Filter-Icons_0000s_0001s_0005_1.png`
+  },
+  {
+    key: 2,
+    label: '2',
+    link: `${cdn}/filters/Filter-Icons_0000s_0001s_0004_2.png`
+  },
+  {
+    key: 3,
+    label: '3',
+    link: `${cdn}/filters/Filter-Icons_0000s_0001s_0003_3.png`
+  },
+  {
+    key: 4,
+    label: '4',
+    link: `${cdn}/filters/Filter-Icons_0000s_0001s_0002_4.png`
+  },
+  {
+    key: 5,
+    label: '5',
+    link: `${cdn}/filters/Filter-Icons_0000s_0001s_0001_5.png`
+  },
+  {
+    key: 6,
+    label: '6+',
+    link: `${cdn}/filters/Filter-Icons_0000s_0001s_0000_6%2B.png`
+  }
+];
 
+export default function NumericFilterGroup({ cyName, selected, onChange }) {
   const onClick = image => {
     if (selected.indexOf(image.label) > -1) {
       onChange(selected.filter(s => s !== image.label));
@@ -56,7 +56,7 @@ export default function NumericFilterGroup({ cyName, selected, onChange }) {
         }
 
         img:hover {
-          opacity: 0.8;
+          filter: drop-shadow(0px 0px 3px #fff);
         }
 
         img.selected {

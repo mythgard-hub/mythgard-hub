@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
-import RarityFilter from '../components/rarity-filter.js';
-import SupertypeFilter from '../components/supertype-filter.js';
 import CardSearchFilters from './card-search-filters.js';
 import SearchFormText from './search-form-text.js';
 
@@ -32,6 +30,7 @@ export default function CardSearchForm(props) {
 
   return (
     <>
+      <br />
       <SearchFormText
         value={text}
         placeholder={'Name or Rules Text'}
@@ -41,20 +40,20 @@ export default function CardSearchForm(props) {
         onChange={handleInputChangeHooks(setText)}
         label="Card Search"
       />
+      <FactionFilters
+        onFactionClick={newFactions => setFactions(newFactions)}
+      />
       <CardSearchFilters
         manaCosts={manaCosts}
         strengths={strengths}
         healths={defenses}
+        rarities={rarities}
+        types={supertypes}
         setCardManaCosts={setManaCosts}
         setCardStrengths={setStrengths}
         setCardHealths={setDefenses}
-      />
-      <SupertypeFilter onChange={setSupertypes} />
-      <RarityFilter onChange={setRarities}></RarityFilter>
-      <br />
-      <br />
-      <FactionFilters
-        onFactionClick={newFactions => setFactions(newFactions)}
+        setCardRarities={setRarities}
+        setSupertypes={setSupertypes}
       />
       <input
         data-cy="cardSearchSubmit"

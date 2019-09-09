@@ -93,7 +93,11 @@ export default function CardSearchFilters(props) {
         <>
           <div className="filter-title middle-title">Type</div>
           <hr />
-          <SupertypeFilter onChange={setSupertypes} />
+          <SupertypeFilter
+            cyName="cardSearch_supertype"
+            selected={types}
+            onChange={setSupertypes}
+          />
         </>
       )}
 
@@ -101,7 +105,11 @@ export default function CardSearchFilters(props) {
         <>
           <div className="filter-title last-title">Rarity</div>
           <hr />
-          <RarityFilter onChange={setCardRarities}></RarityFilter>
+          <RarityFilter
+            cyName="cardSearch_rarity"
+            selected={rarities}
+            onChange={setCardRarities}
+          ></RarityFilter>
         </>
       )}
     </div>

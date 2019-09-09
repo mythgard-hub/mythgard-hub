@@ -1,24 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CheckboxesInputGroup from './checkboxes-input-group.js';
+import ImageFilterGroup from './image-filter-group';
 
-const values = ['COMMON', 'UNCOMMON', 'RARE', 'MYTHIC'];
-const labels = values.map(s => s.toLowerCase());
-const name = 'rarity';
+const cdn = process.env.MG_CDN;
+const images = [
+  {
+    key: 'COMMON',
+    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0000_C.png`
+  },
+  {
+    key: 'UNCOMMON',
+    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0001_U.png`
+  },
+  {
+    key: 'RARE',
+    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0002_R.png`
+  },
+  {
+    key: 'MYTHIC',
+    link: `${cdn}/filters/Filter-Icons_0000s_0000s_0003_M.png`
+  }
+];
 
-function RarityFilter({ onChange }) {
+function RarityFilter({ selected, onChange, cyName }) {
   return (
-    <CheckboxesInputGroup
+    <ImageFilterGroup
+      images={images}
+      selected={selected}
       onChange={onChange}
-      values={values}
-      labels={labels}
-      name={name}
+      cyName={cyName}
     />
   );
 }
 
 RarityFilter.propTypes = {
-  onChange: PropTypes.func.isRequired
+  selected: PropTypes.array,
+  onChange: PropTypes.func.isRequired,
+  cyName: PropTypes.string
 };
 
 export default RarityFilter;

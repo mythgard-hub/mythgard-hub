@@ -57,14 +57,14 @@ describe('Cards Page', function() {
         expect(length).to.equal(allCardsLength);
 
         // basic test - supertype filter
-        cy.get(`${superTypePicker} input:first`).click();
+        cy.get(`${superTypePicker} img:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(length).to.be.below(allCardsLength);
 
-        cy.get(`${superTypePicker} input:first`).click();
+        cy.get(`${superTypePicker} img:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
@@ -126,13 +126,13 @@ describe('Cards Page', function() {
         expect(allCardsLength).to.equal(length);
 
         // basic test - rarity filter
-        cy.get(`${rarityPicker} input:first`).click();
+        cy.get(`${rarityPicker} img:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(allCardsLength).to.be.above(length);
-        cy.get(`${rarityPicker} input:first`).click();
+        cy.get(`${rarityPicker} img:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
