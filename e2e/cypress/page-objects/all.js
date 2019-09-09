@@ -28,5 +28,9 @@ export default {
   manaPicker: '[data-cy="cardSearch_manaCost"]',
   strengthPicker: '[data-cy="cardSearch_strength"]',
   defensePicker: '[data-cy="cardSearch_defense"]',
-  rarityPicker: '[data-cy="cardSearch_rarity"]'
+  rarityPicker: '[data-cy="cardSearch_rarity"]',
+
+  // decks page
+  deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
+  deckEssencePicker: '[data-cy="deckEssenceCell"]'
 };

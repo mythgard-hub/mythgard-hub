@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 
@@ -7,6 +6,7 @@ import allPowersQuery from '../lib/queries/powers-query';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import { convertImportToDeck } from '../lib/import-utils';
 import { addCardToDeck } from '../lib/deck-utils';
+import ErrorMessage from './error-message.js';
 
 const handleImport = (
   mainDeckInput,
@@ -52,8 +52,8 @@ export default function ImportDeck({
     data: powerData
   } = useQuery(allPowersQuery);
 
-  if (cardsError || pathError || powerError)
-    return <ErrorMessage message={error} />;
+  const error = cardsError || pathError || powerError;
+  if (error) return <ErrorMessage message={error} />;
 
   if (cardsLoading || pathLoading || powerLoading) return <div>Loading</div>;
 

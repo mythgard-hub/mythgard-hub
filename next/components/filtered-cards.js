@@ -24,7 +24,7 @@ function filteredCards({ filters, onCardClick }) {
     defenses
   );
 
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error.message} />;
   if (loading) return null;
 
   const cards = data && data.cards && data.cards.nodes;

@@ -1,31 +1,38 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import CardSelectionItem from './card-selection-item';
+import { ThemeContext } from './theme-context';
 
 export default function CardSearchSelections({ onDismissClick, cards }) {
+  const theme = useContext(ThemeContext);
+
+  if (!cards || !cards.length) return null;
+
   return (
-    <ul className="cardSearchSelections" data-cy="cardSearchSelections">
-      {cards.map((card, index) => (
-        <li key={card.id ? card.id : index}>
-          <CardSelectionItem card={card} onDismissClick={onDismissClick} />
-        </li>
-      ))}
-      <style jsx>{`
-        .cardSearchSelections {
-          list-style: none;
-          padding: 10px 10px 0 10px;
-          border: 1px solid black;
-          margin: 10px 0 0;
-        }
-        .cardSearchSelections li {
-          margin-bottom: 10px;
-        }
-      `}</style>
+    <div>
       <style jsx>{`
         .cardSearchSelections {
           display: ${cards.length ? 'inline-block' : 'none'};
+          list-style: none;
+          margin: 0;
+          width: 100%;
+        }
+        .cardSearchSelectionsTitle {
+          font-weight: bold;
+          color: ${theme.smallTitleColor};
         }
       `}</style>
-    </ul>
+      <div className="cardSearchSelectionsTitle">Includes cards:</div>
+      <ul className="cardSearchSelections" data-cy="cardSearchSelections">
+        {cards.map((card, index) => (
+          <CardSelectionItem
+            key={card.id ? card.id : index}
+            card={card}
+            onDismissClick={onDismissClick}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 CardSearchSelections.propTypes = {

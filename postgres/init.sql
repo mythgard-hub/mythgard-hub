@@ -38,23 +38,35 @@ INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem)
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Cairnhenge', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 
-CREATE TABLE mythgard.path (
-  id SERIAL PRIMARY KEY,
-  name varchar(255)
+CREATE TABLE mythgard.essence_costs (
+  rarity Mythgard.rarity,
+  essence integer
 );
 
-INSERT INTO mythgard.path ("id", "name") VALUES (1, 'Way of the Black Lotus');
-INSERT INTO mythgard.path ("id", "name") VALUES (2, 'Path to Redemption');
-INSERT INTO mythgard.path ("id", "name") VALUES (3, 'Path Variable');
+insert into mythgard.essence_costs (rarity, essence) values ('MYTHIC', 1000);
+insert into mythgard.essence_costs (rarity, essence) values ('RARE', 500);
+insert into mythgard.essence_costs (rarity, essence) values ('UNCOMMON', 100);
+insert into mythgard.essence_costs (rarity, essence) values ('COMMON', 50);
+
+CREATE TABLE mythgard.path (
+  id SERIAL PRIMARY KEY,
+  name varchar(255),
+  rules TEXT
+);
+
+INSERT INTO mythgard.path ("name", "rules") VALUES ('Way of the Black Lotus', 'lorems');
+INSERT INTO mythgard.path ("name", "rules") VALUES ('Path to Redemption', 'lorems');
+INSERT INTO mythgard.path ("name", "rules") VALUES ('Path Variable', 'lorems');
 
 CREATE TABLE mythgard.power (
   id SERIAL PRIMARY KEY,
-  name varchar(255)
+  name varchar(255),
+  rules TEXT
 );
 
-INSERT INTO mythgard.power ("id", "name") VALUES (1, 'It''s over 9000!!');
-INSERT INTO mythgard.power ("id", "name") VALUES (2, 'Power Rangers');
-INSERT INTO mythgard.power ("id", "name") VALUES (3, 'Powerpuff Girls');
+INSERT INTO mythgard.power ("name", "rules") VALUES ('It''s over 9000!!', 'lorems');
+INSERT INTO mythgard.power ("name", "rules") VALUES ('Power Rangers', 'lorems');
+INSERT INTO mythgard.power ("name", "rules") VALUES ('Powerpuff Girls', 'lorems');
 
 -- In PostgreSQL, user is a keyword
 CREATE TABLE mythgard.account (
@@ -72,7 +84,8 @@ CREATE TABLE mythgard.deck (
   author_id integer REFERENCES mythgard.account (id),
   path_id integer REFERENCES mythgard.path (id),
   power_id integer REFERENCES mythgard.power (id),
-  modified timestamp default current_timestamp
+  modified timestamp default current_timestamp,
+  created timestamp default current_timestamp
 );
 INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
@@ -96,6 +109,21 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
+
+CREATE TABLE mythgard.deck_vote (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  account_id integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (account_id)
+    REFERENCES mythgard.account (id)
+    ON DELETE CASCADE,
+  UNIQUE(deck_id, account_id)
+);
+
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
@@ -183,6 +211,32 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+CREATE VIEW mythgard.deck_preview as
+  SELECT deck.id as deck_id,
+         deck.name as deck_name,
+         deck.created as deck_created,
+         array_agg(DISTINCT faction.name) as factions,
+         sum(essence_costs.essence)::int as essence_cost,
+         count(deck_vote)::int as votes
+  FROM mythgard.deck
+  JOIN mythgard.card_deck
+    ON card_deck.deck_id = deck.id
+  JOIN mythgard.card
+    ON card_deck.card_id = card.id
+  LEFT JOIN mythgard.card_faction
+    ON card.id = card_faction.id
+  LEFT JOIN mythgard.faction
+    On faction.id = card_faction.id
+  LEFT JOIN mythgard.essence_costs
+    On essence_costs.rarity = card.rarity
+  LEFT JOIN mythgard.deck_vote
+    On deck_vote.deck_id = deck.id
+ GROUP BY deck.id
+;
+
+-- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
+-- But basically is for postgraphile to see relation to deck
+comment on view mythgard.deck_preview is E'@foreignKey (deck_id) references mythgard.deck';
 
 CREATE TRIGGER update_deck_modtime
   BEFORE UPDATE ON mythgard.deck
@@ -205,6 +259,9 @@ GRANT ALL PRIVILEGES ON SCHEMA mythgard TO anon_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO admin;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO authd_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO anon_user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA mythgard TO admin;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA mythgard TO authd_user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA mythgard TO anon_user;
 
 -- Set specific permissions for sensitive tables
 REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM authd_user;
@@ -213,3 +270,5 @@ REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM anon_user;
 GRANT SELECT ON TABLE mythgard.account TO authd_user;
 GRANT UPDATE (username) ON TABLE mythgard.account TO authd_user;
 GRANT SELECT (id, username) ON TABLE mythgard.account TO anon_user;
+
+\echo 'Remember to update the postgraphile users pw with the production version in the kubernetes secrets file.';

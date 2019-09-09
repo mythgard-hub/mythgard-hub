@@ -17,7 +17,6 @@ function TabGroup({ onChange, name, labels }) {
               flex-wrap: nowrap;
               font-size: 11px;
             }
-
             .tab {
               border: ${theme.tabBorder};
               border-bottom-left-radius: 0px;
@@ -31,14 +30,9 @@ function TabGroup({ onChange, name, labels }) {
             .tab.selected {
               border-bottom: none;
             }
-            .tab:focus {
-              outline: ${theme.buttonOutline};
-              outline-offset: ${theme.buttonOutlineOffset};
-            }
             .tab:hover {
               background-color: ${theme.backgroundLight};
             }
-
             .tab-spacer {
               border-bottom: ${theme.tabBorder};
               min-width: 15px;
@@ -51,16 +45,15 @@ function TabGroup({ onChange, name, labels }) {
           {labels.map((label, i) => {
             const selectedClass = label == selectedLabel ? 'selected' : '';
             return (
-              <>
+              <React.Fragment key={i}>
                 <button
-                  key={2 * i}
                   className={`tab reset-button ${selectedClass}`}
                   onClick={() => setLabel(label)}
                 >
                   {label}
                 </button>
-                <div key={2 * i + 1} className="tab-spacer"></div>
-              </>
+                <div className="tab-spacer"></div>
+              </React.Fragment>
             );
           })}
           <div className="tab-spacer"></div>

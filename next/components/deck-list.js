@@ -1,17 +1,14 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-apollo-hooks';
 import { ThemeContext } from './theme-context';
-import { deckFactions } from '../lib/deck-queries';
-import { FACTION_IMAGES } from '../constants/factions';
-import ErrorMessage from './error-message';
-import { collectDeckFactions } from '../lib/deck-utils';
+import EssenceIndicator from './essence-indicator.js';
+import FactionsIndicator from './factions-indicator.js';
 
 export default function DeckList({ decks }) {
-  const theme = useContext(ThemeContext);
-  const factions = collectDeckFactions(decks);
+  const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
 
+  const theme = useContext(ThemeContext);
   return (
     <div>
       <style jsx>{`
@@ -34,7 +31,8 @@ export default function DeckList({ decks }) {
           margin-right: 5px;
         }
         .deckName :global(a) {
-          font-size: 18px;
+          color: ${theme.deckNameColor};
+          font-size: 20px;
           font-weight: bold;
           text-decoration: none;
         }
@@ -42,7 +40,7 @@ export default function DeckList({ decks }) {
           font-size: 14px;
           line-height: 2;
         }
-        .modifiedDate {
+        .modifiedDate span {
           float: right;
         }
         .factions {
@@ -56,29 +54,31 @@ export default function DeckList({ decks }) {
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
             const modified = new Date(deck.modified);
-            const currFactions = factions[deck.id]
-              ? [...new Set(factions[deck.id])].map(f => (
-                  <img src={FACTION_IMAGES[f]} />
-                ))
-              : '';
 
             return (
-              <tr key={deck.id} className={classNames} data-cy="deckListItem">
+              <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
                   <div className="deckName">
-                    <Link href={`/deck?id=${deck.id}`} key={index}>
-                      {deck.name}
+                    <Link href={`/deck?id=${deck.id}`}>
+                      <a>{deck.name}</a>
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
                 </td>
-                <td className="factions">{currFactions}</td>
+                <td className="factions" data-cy="deckFactionsCell">
+                  <FactionsIndicator factions={deckMetaData[index].factions} />
+                </td>
+                <td className="mana">
+                  <EssenceIndicator essence={deckMetaData[index].essenceCost} />
+                </td>
                 <td className="modifiedDate">
-                  {modified.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                  })}
+                  <span>
+                    {modified.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </span>
                 </td>
               </tr>
             );

@@ -1,8 +1,8 @@
 export const initializeDeckBuilder = () => {
   return {
     deckName: '',
-    deckPath: '',
-    deckPower: '',
+    deckPath: {},
+    deckPower: {},
     deckCoverArt: '',
     mainDeck: {},
     sideboard: [],
@@ -26,27 +26,4 @@ export const addCardToDeck = (deck, card) => {
   };
 
   return newDeck;
-};
-
-export const collectDeckFactions = decks => {
-  try {
-    return decks.reduce((factionsPerDeck, deck) => {
-      const deckFactions = deck.cardDecks.nodes.reduce((factions, cardNode) => {
-        const cardFactions = cardNode.card.cardFactions.nodes.map(
-          f => f.faction.name
-        );
-
-        return [...factions, ...cardFactions];
-      }, []);
-
-      factionsPerDeck[deck.id] = factionsPerDeck[deck.id]
-        ? new Set([...factionsPerDeck[deck.id], ...deckFactions])
-        : deckFactions;
-
-      return factionsPerDeck;
-    }, {});
-  } catch (e) {
-    console.error(e);
-    return {};
-  }
 };

@@ -1,24 +1,28 @@
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import {
-  imagePathSmall as getPath,
-  imagePathMedium as getHoverPath
-} from '../lib/card.js';
+import { imagePathSmall, imagePathMedium } from '../lib/card.js';
 
-const smallImageWidth = 160;
+const smallImageWidthPortrait = 160;
+const smallImageWidthLandscape = 240;
 const hoverImageWidth = 320;
 const hoverImageVerticalOffset = 64;
 
-export default function CardListItem({ card, onClick }) {
+export default function CardListItem({ card, onClick, options }) {
+  options = options || {};
   const imgAlt = card.name;
-  const imgPath = getPath(card.name, card.set || undefined);
-  const imgPathMedium = getHoverPath(card.name, card.set || undefined);
+  const imagePathFn = options.isLandscape ? imagePathMedium : imagePathSmall;
+  const imgPath = imagePathFn(card.name, card.set || undefined);
+  const imgPathMedium = imagePathMedium(card.name, card.set || undefined);
+  const smallImageWidth = options.isLandscape
+    ? smallImageWidthLandscape
+    : smallImageWidthPortrait;
 
   return (
     <>
       <style jsx>{`
         .cardListImg {
+          min-width: ${smallImageWidth}px;
           width: ${smallImageWidth}px;
         }
         .imgWrapper {
@@ -31,7 +35,7 @@ export default function CardListItem({ card, onClick }) {
           width: ${hoverImageWidth}px;
           position: absolute;
           top: -${hoverImageVerticalOffset}px;
-          left: -${smallImageWidth / 2}px;
+          left: -${(hoverImageWidth - smallImageWidth) / 2}px;
           z-index: 2;
         }
       `}</style>
@@ -62,5 +66,8 @@ CardListItem.propTypes = {
     name: PropTypes.string.isRequired,
     set: PropTypes.string
   }).isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  options: PropTypes.shape({
+    isLandscape: PropTypes.bool
+  })
 };

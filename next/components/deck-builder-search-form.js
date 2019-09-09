@@ -1,56 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
-import FactionFilters from '../components/faction-filters';
-import RarityFilter from '../components/rarity-filter.js';
-import ManaCostFilter from '../components/mana-cost-filter.js';
-import SupertypeFilter from '../components/supertype-filter.js';
-import TabGroup from '../components/tab-group.js';
+import SearchFormText from './search-form-text.js';
 
-const tabLabels = ['Cards', 'Paths', 'Powers'];
-
-function DeckBuilderSearchForm({
-  text,
-  setText,
-  setRarities,
-  onFactionClick,
-  setManaCosts,
-  setSupertypes
-}) {
+function DeckBuilderSearchForm({ text, setText }) {
   const onTextChange = handleInputChangeHooks(setText);
 
   return (
-    <>
-      <label htmlFor="text">Card Search</label>
-      <input
-        type="text"
+    <div className="card-search-section">
+      <style jsx>{`
+        .card-search-section {
+          display: flex;
+          justify-content: space-between;
+        }
+        .card-search-section button {
+          width: 130px;
+          height: 40px;
+          margin: 52px 17px 20px 20px;
+        }
+      `}</style>
+      <SearchFormText
+        label="Card Search"
         value={text}
         name="text"
-        placeholder="Name or Rules Text"
-        maxLength="100"
-        data-cy="cardSearchText"
+        cyName="cardSearchText"
         onChange={onTextChange}
+        placeholder="Search..."
+        maxLength="100"
       />
-      <RarityFilter onChange={setRarities}></RarityFilter>
-      <ManaCostFilter onChange={setManaCosts} />
-      <SupertypeFilter onChange={setSupertypes} />
-      <FactionFilters onFactionClick={onFactionClick} />
-      <TabGroup
-        onChange={() => {}}
-        labels={tabLabels}
-        name="cardsPathsPowers"
-      />
-    </>
+      <button>Clear Filters</button>
+    </div>
   );
 }
 
 DeckBuilderSearchForm.propTypes = {
   setText: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  onFactionClick: PropTypes.func.isRequired,
-  setRarities: PropTypes.func.isRequired,
-  setManaCosts: PropTypes.func.isRequired,
-  setSupertypes: PropTypes.func.isRequired
+  text: PropTypes.string.isRequired
 };
 
 export default DeckBuilderSearchForm;

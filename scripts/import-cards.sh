@@ -7,4 +7,8 @@
 
 # This file also serves as an example of how one could import cards
 # to the production or staging environments.
+
+
 psql -h localhost -p 5433 -U postgres -d postgres -f import-cards.sql
+#psql -h localhost -p 5433 -U postgres -d postgres -f import-paths.sql
+#psql -h localhost -p 5433 -U postgres -d postgres -f import-powers.sql

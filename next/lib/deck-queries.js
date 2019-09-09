@@ -15,6 +15,21 @@ export const getCardFilters = cardIds => {
   });
 };
 
+const deckPreviewsFragment = `
+    nodes {
+      deckName
+      deckCreated
+      factions
+      essenceCost
+      votes
+      deck{
+        author {
+          username
+          id
+        }
+      }
+  }`;
+
 // Creates partial graphql filter(s) for finding decks that contain
 // cards that are certain factions.
 //
@@ -111,9 +126,15 @@ export const getDeckSearchQuery = (
           author {
             username
           }
+          modified
+          deckPreviews {
+            ${deckPreviewsFragment}
+          }
           cardDecks {
             nodes {
+              quantity
               card {
+                mana
                 cardFactions {
                   nodes {
                     faction {
@@ -160,7 +181,9 @@ export const allDecksQuery = gql`
         modified
         cardDecks {
           nodes {
+            quantity
             card {
+              mana
               cardFactions {
                 nodes {
                   faction {
@@ -170,6 +193,9 @@ export const allDecksQuery = gql`
               }
             }
           }
+        }
+        deckPreviews {
+          ${deckPreviewsFragment}
         }
       }
     }
@@ -213,3 +239,25 @@ export const singleDeckQuery = gql`
     }
   }
 `;
+
+// A view that aggregates facts and stats about a deck
+export const newDeckPreviewsQuery = gql`
+  query deckPreview {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
+      ${deckPreviewsFragment}
+    }
+  }
+`;
+
+// converts a deckPreview view to a deck-like object
+// for use in components that expect a deck-like
+export const deckPreviewToDeck = d => {
+  return {
+    ...d,
+    name: d.deckName,
+    author: d.deck.author,
+    created: d.deckCreated
+  };
+};
+
+export const deckPreviewsToDecks = dp => dp.map(deckPreviewToDeck);

@@ -14,14 +14,23 @@ export const themes = {
     tabColor: mgColors.lightBlue,
     border: `1px solid ${mgColors.orange}`,
     fontFamily: mgFonts.exo2,
+    buttonBackground: mgColors.mediumGray,
+    buttonBackgroundHover: mgColors.mediumLightGray,
     buttonOutline: `1px solid ${mgColors.orange}`,
     buttonOutlineOffset: '6px',
     buttonBorderDisabled: `2px solid ${mgColors.lightGray}`,
+    buttonTextColor: `${mgColors.orange}`,
     inputBackground: mgColors.lightGray,
     inputBorder: `1px solid ${mgColors.lightBlue}`,
     inputPlaceholderTextColor: mgColors.lightBlue,
     zebraRowBackground: mgColors.grayBlue,
-    fontColorHeading: mgColors.blue
+    fontColorHeading: mgColors.blue,
+    essenceColor: mgColors.lightGreen,
+    votesColor: mgColors.lightBlue,
+    deckNameColor: mgColors.orange,
+    welcomeBannerBackground: mgColors.orange,
+    smallTitleColor: mgColors.blue,
+    hoverColor: mgColors.blue
   }
 };
 

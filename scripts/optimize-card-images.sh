@@ -9,7 +9,7 @@
 # Step 2 run script
 
 # Step 3 remove script and sync to s3
-# aws s3 sync . s3://cards.mythgardhub.com
+# aws s3 sync . s3://cards.mythgardhub.com --acl public-read
 # You may want these extra args: --exclude "core/*.png" --include "core/m/*"
 # You probably aren't touching the originals so this is likely a decent idea as it will
 # save time and bandwidth, and prevent accidentally doing something bad to a full-size.
