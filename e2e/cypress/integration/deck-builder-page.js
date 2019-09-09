@@ -1,6 +1,5 @@
 import {
   cardListCard,
-  deckBuilderCollection,
   deckInProgress,
   cardList,
   factionFilter,
@@ -9,7 +8,9 @@ import {
   superTypePicker,
   manaPicker,
   rarityPicker,
-  getPagingTotalAsInt
+  getPagingTotalAsInt,
+  leftSlider,
+  rightSlider
 } from '../page-objects/all';
 
 describe('Deck builder page', () => {
@@ -18,7 +19,6 @@ describe('Deck builder page', () => {
   });
   it('should have a happy path', function() {
     cy.get('[data-cy="header"]').should('be.visible');
-    cy.get('[data-cy="importDeckTitle"]').should('be.visible');
     cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
     cy.get('[data-cy="importDeckButton"]').should('be.visible');
     cy.get(cardList).should('be.visible');
@@ -68,44 +68,56 @@ describe('Deck builder page', () => {
         expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - rarity filter
+        cy.get(rightSlider).click();
         cy.get(`${rarityPicker} img:first`).click();
+        cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
+        cy.get(rightSlider).click();
         cy.get(`${rarityPicker} img:first`).click();
+        cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - mana cost filter
+        cy.get(rightSlider).click();
         cy.get(`${manaPicker} img`)
           .eq(2)
           .click();
+        cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
+        cy.get(rightSlider).click();
         cy.get(`${manaPicker} img`)
           .eq(2)
           .click();
+        cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.equal(length);
 
         // basic test - supertype filter
+        cy.get(rightSlider).click();
         cy.get(`${superTypePicker} img`)
           .eq(1)
           .click();
+        cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
+        cy.get(rightSlider).click();
         cy.get(`${superTypePicker} img`)
           .eq(1)
           .click();
+        cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
