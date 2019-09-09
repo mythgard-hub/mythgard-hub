@@ -1,22 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SearchFormText from './search-form-text.js';
 
 export default function EditDeckName(props) {
   const { deckName, onChange } = props;
 
   return (
-    <div>
-      <label>
-        Deck Name:{' '}
-        <input
-          data-cy="deckTitle"
-          type="text"
-          name="deckName"
-          onChange={onChange}
-          value={deckName}
-        />
-      </label>
-    </div>
+    <SearchFormText
+      label="Deck Name"
+      value={deckName}
+      name="text"
+      cyName="deckTitle"
+      onChange={onChange}
+      placeholder="Enter a name..."
+    />
   );
 }
 

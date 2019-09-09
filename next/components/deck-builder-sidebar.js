@@ -29,6 +29,10 @@ export default function DeckBuilderSidebar(props) {
   };
 
   const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
+  const cardCount = Object.values(deckInProgress.mainDeck).reduce(
+    (count, card) => count + card.quantity,
+    0
+  );
 
   return (
     <div className="deck-builder-actions">
@@ -38,6 +42,14 @@ export default function DeckBuilderSidebar(props) {
         }
         .deck-builder-actions button {
           margin-bottom: 10px;
+        }
+        .card-count {
+          text-align: end;
+          text-transform: uppercase;
+        }
+        .card-count span {
+          font-size: 20px;
+          font-weight: bold;
         }
       `}</style>
       <ImportDeck
@@ -58,6 +70,9 @@ export default function DeckBuilderSidebar(props) {
           deckName={deckInProgress.deckName}
           onChange={updateDeckName}
         />
+        <div className="card-count">
+          Cards: <span>{cardCount}</span>
+        </div>
         <DeckCardTable deck={deckInProgress} deleteCard={deleteCardFromTable} />
       </div>
     </div>
@@ -65,6 +80,25 @@ export default function DeckBuilderSidebar(props) {
 }
 
 DeckBuilderSidebar.propTypes = {
-  deckInProgress: PropTypes.object,
+  deckInProgress: PropTypes.shape({
+    deckName: PropTypes.string,
+    deckPath: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    }),
+    deckPath: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    }),
+    deckCoverArt: PropTypes.string,
+    mainDeck: PropTypes.shape({
+      quantity: PropTypes.number,
+      card: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string
+      })
+    }),
+    errors: PropTypes.arrayOf(PropTypes.string)
+  }),
   setDeckInProgress: PropTypes.func
 };

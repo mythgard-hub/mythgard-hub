@@ -17,7 +17,6 @@ function TabGroup({ onChange, name, labels }) {
               flex-wrap: nowrap;
               font-size: 11px;
             }
-
             .tab {
               border: ${theme.tabBorder};
               border-bottom-left-radius: 0px;
@@ -34,7 +33,6 @@ function TabGroup({ onChange, name, labels }) {
             .tab:hover {
               background-color: ${theme.backgroundLight};
             }
-
             .tab-spacer {
               border-bottom: ${theme.tabBorder};
               min-width: 15px;

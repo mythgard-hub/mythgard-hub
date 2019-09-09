@@ -14,7 +14,7 @@ export default function DeckCardsTable({ deck, deleteCard }) {
     <div className="deck-card-table-container">
       <style jsx>{`
         .deck-card-table-container {
-          margin-top: 20px;
+          margin-top: 10px;
           padding: 10px;
         }
         .deck-card-table {
@@ -71,8 +71,14 @@ DeckCardsTable.propTypes = {
   deleteCard: PropTypes.func.isRequired,
   deck: PropTypes.shape({
     deckName: PropTypes.string,
-    deckPath: PropTypes.string,
-    deckPower: PropTypes.string,
+    deckPath: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    }),
+    deckPath: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    }),
     deckCoverArt: PropTypes.string,
     mainDeck: PropTypes.shape({
       quantity: PropTypes.number,
