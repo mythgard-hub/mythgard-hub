@@ -3,6 +3,7 @@ import FactionFilter from './faction-filter';
 import PropTypes from 'prop-types';
 
 import { FACTION_NAMES, FACTION_IMAGES } from '../constants/factions';
+import SliderSwitch from './slider-switch';
 
 class FactionFilters extends React.Component {
   constructor(props) {
@@ -32,7 +33,11 @@ class FactionFilters extends React.Component {
   }
 
   render() {
-    const { onIsOnlyFactionClick, isOnlyFactions } = this.props;
+    const {
+      onIsOnlyFactionClick,
+      isOnlyFactions,
+      isOnlyFactionsSetter
+    } = this.props;
 
     return (
       <div data-cy="factionFilters" className="faction-filters">
@@ -52,6 +57,10 @@ class FactionFilters extends React.Component {
             margin-left: 10px;
             margin-bottom: 10px;
           }
+          .factions-slider {
+            margin-left: 20px;
+            padding-top: 10px;
+          }
         `}</style>
         <ul>
           {FACTION_NAMES.map((f, index) => (
@@ -65,17 +74,16 @@ class FactionFilters extends React.Component {
             </li>
           ))}
         </ul>
-        <div>
-          <label>
-            Only Selected
-            <input
-              onChange={onIsOnlyFactionClick}
-              type="checkbox"
-              name="isOnlyFactions"
-              value={isOnlyFactions}
+        <div className="factions-slider">
+          {isOnlyFactions && (
+            <SliderSwitch
+              leftLabel="Has Selected"
+              rightLabel="Only Selected"
               checked={isOnlyFactions}
+              onChange={onIsOnlyFactionClick}
+              onClickLabel={isOnlyFactionsSetter}
             />
-          </label>
+          )}
         </div>
       </div>
     );
@@ -85,6 +93,7 @@ class FactionFilters extends React.Component {
 FactionFilters.propTypes = {
   onFactionClick: PropTypes.func.isRequired,
   onIsOnlyFactionClick: PropTypes.func,
+  isOnlyFactionsSetter: PropTypes.func,
   isOnlyFactions: PropTypes.bool
 };
 

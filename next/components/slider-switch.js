@@ -100,7 +100,7 @@ export default function SliderSwitch({
         {leftLabel}
       </span>
       <div className="switch" onClick={onChange}>
-        <input type="checkbox" checked={checked} />
+        <input type="checkbox" checked={checked} readOnly />
         <span className="slider round" />
       </div>
       <span
