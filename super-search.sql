@@ -27,7 +27,7 @@ CREATE INDEX author_name_index ON account
 -- faction4 int or null - id of a faction that deck must contain
 -- faction5 int or null - id of a faction that deck must contain
 -- faction6 int or null - id of a faction that deck must contain
-create function search_decks(deckName varchar(255), authorName varchar(255), deckModified date, numCards integer, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer)
+create function search_decks(deckName varchar(255), authorName varchar(255), deckModified date, numCards integer, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
   returns setof deck as $$
 
     SELECT deck.* FROM deck
@@ -47,6 +47,10 @@ create function search_decks(deckName varchar(255), authorName varchar(255), dec
     intersect
 
     -- factions filter
+    SELECT deck.* from deck left join card_deck on (deck.id = card_deck.deck_id) left join card on (card.id = card_deck.card_id) left join card_faction on (card.id = card_faction.card_id) left join faction on (faction.id = card_faction.faction_id)
+    group by deck.id
+    having numFactions is NULL or count(distinct faction.id) = numFactions
+    intersect
     SELECT deck.* from deck left join card_deck on (deck.id = card_deck.deck_id) left join card on (card.id = card_deck.card_id) left join card_faction on (card.id = card_faction.card_id) left join faction on (faction.id = card_faction.faction_id)
     where faction1 is null or faction.id = faction1
     intersect
@@ -71,7 +75,7 @@ create function search_decks(deckName varchar(255), authorName varchar(255), dec
     LIMIT 500;
   $$ language sql stable;
 
-select * from search_decks(null, null, null, null, null, null, null, null, null, null, null, null, null, 2, 1);
+select * from search_decks(null, null, null, null, null, null, null, null, null, null, null, null, null, 2, 1, 2);
 
 -------------------------
 
