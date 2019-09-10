@@ -53,7 +53,7 @@ export default function ImportDeck({
   } = useQuery(allPowersQuery);
 
   const error = cardsError || pathError || powerError;
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error.message} />;
 
   if (cardsLoading || pathLoading || powerLoading) return <div>Loading</div>;
 
@@ -71,18 +71,21 @@ export default function ImportDeck({
         .import-deck-container {
           margin-bottom: 10px;
         }
+        .import-deck-textarea {
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
       `}</style>
-      <h2 data-cy="importDeckTitle">Import Deck</h2>
       <textarea
+        className="import-deck-textarea"
         data-cy="importDeckTextarea"
-        cols="40"
-        rows="10"
+        cols="39"
+        rows="2"
         value={mainDeckInput}
         name="mainDeckInput"
         onChange={handleInputChange}
+        placeholder="Paste deck from Mythgard..."
       />
-      <br />
-      <br />
       <button
         onClick={() =>
           handleImport(

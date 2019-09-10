@@ -18,6 +18,10 @@ function DeckBuilderSearchForm({ text, setText }) {
           height: 40px;
           margin: 52px 17px 20px 20px;
         }
+        :global(.input-label) {
+          width: 75%;
+          margin: 30px 0 10px 0;
+        }
       `}</style>
       <SearchFormText
         label="Card Search"

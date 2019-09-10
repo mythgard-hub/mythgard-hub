@@ -51,7 +51,12 @@ export default function DeckBuilderSidebar(props) {
           font-size: 20px;
           font-weight: bold;
         }
+        .build-deck-title {
+          text-transform: uppercase;
+          text-align: center;
+        }
       `}</style>
+      <h2 className="build-deck-title">Import Deck from Mythgard</h2>
       <ImportDeck
         mainDeckInput={mainDeckInput}
         currentMainDeck={deckInProgress.mainDeck}
@@ -66,6 +71,7 @@ export default function DeckBuilderSidebar(props) {
         Clear Deck
       </button>
       <div className="deck-in-progress" data-cy="deckInProgress">
+        <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
         <EditDeckName
           deckName={deckInProgress.deckName}
           onChange={updateDeckName}

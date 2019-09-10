@@ -32,5 +32,9 @@ export default {
 
   // decks page
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
-  deckEssencePicker: '[data-cy="deckEssenceCell"]'
+  deckEssencePicker: '[data-cy="deckEssenceCell"]',
+
+  // slider
+  leftSlider: '[data-cy="leftSlider"]',
+  rightSlider: '[data-cy="rightSlider"]'
 };

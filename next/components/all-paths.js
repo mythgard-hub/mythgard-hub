@@ -9,7 +9,7 @@ export default function AllPaths(props) {
   const { onPathClick } = props;
   const { loading, error, data } = useQuery(allPathsQuery);
 
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading Paths...</div>;
   if (!data || !data.paths) return null;
 

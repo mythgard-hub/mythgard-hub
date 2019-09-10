@@ -9,7 +9,7 @@ export default function AllCards(props) {
   const { onCardClick } = props;
   const { loading, error, data } = useQuery(allCardsQuery);
 
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading cards...</div>;
   if (!data || !data.cards) return null;
 

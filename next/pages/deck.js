@@ -13,7 +13,7 @@ export default withRouter(({ router }) => {
   let pageElement = null;
 
   if (error) {
-    pageElement = <ErrorMessage message={error} />;
+    pageElement = <ErrorMessage message={error.message} />;
   } else if (data && data.deck) {
     pageElement = <Deck deck={data.deck} />;
   } else {

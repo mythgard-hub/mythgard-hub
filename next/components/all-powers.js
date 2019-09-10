@@ -9,7 +9,7 @@ export default function AllPowers(props) {
   const { onPowerClick } = props;
   const { loading, error, data } = useQuery(allPowersQuery);
 
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading Powers...</div>;
   if (!data || !data.powers) return null;
 
