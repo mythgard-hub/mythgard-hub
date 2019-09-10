@@ -238,16 +238,11 @@ CREATE VIEW mythgard.deck_preview as
 -- But basically is for postgraphile to see relation to deck
 comment on view mythgard.deck_preview is E'@foreignKey (deck_id) references mythgard.deck';
 
-
-
-
 CREATE TRIGGER update_deck_modtime
   BEFORE UPDATE ON mythgard.deck
   FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 -- INDEXES FOR QUERIES
-
-SET search_path TO mythgard,public;
 
 CREATE INDEX deck_name_index ON mythgard.deck
     USING gin(to_tsvector('simple',deck.name));
@@ -277,7 +272,7 @@ CREATE INDEX author_name_index ON mythgard.account
 -- faction5    int or null - id of a faction that deck must contain
 -- faction6    int or null - id of a faction that deck must contain
 -- numFactions int or null - number of specified factions TODO - refactor this out
-create function search_decks(deckName varchar(255), authorName varchar(255), deckModified date, numCards integer, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
+create function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, numCards integer, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
   returns setof mythgard.deck as $$
 
     SELECT deck.* FROM mythgard.deck
@@ -322,7 +317,7 @@ create function search_decks(deckName varchar(255), authorName varchar(255), dec
     GROUP BY deck.id
     -- Ensures that card filter requires *all* the specified cards, rather than *any* of them.
     HAVING numCards is null or numCards = 0 or count(distinct card.id) = numCards
-    LIMIT 500;
+    LIMIT 2000;
   $$ language sql stable;
 
 -- END QUERIES
