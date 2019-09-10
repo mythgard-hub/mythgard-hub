@@ -11,7 +11,7 @@ export default withRouter(({ router }) => {
     variables: { id: parseInt(router.query.id, 10) }
   });
   if (loading) return null;
-  if (error) return <ErrorMessage message={`Error: ${error}`} />;
+  if (error) return <ErrorMessage message={error.message} />;
 
   return (
     <Layout

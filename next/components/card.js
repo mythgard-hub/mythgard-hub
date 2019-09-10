@@ -121,11 +121,11 @@ export default function Card({ card }) {
               <div className="card-detail-label">Rarity</div>
               <hr />
               <div className="card-detail-text">
-                {firstLetterUppercase(card.rarity)}{' '}
                 <img
                   src={RARITY_IMAGES[card.rarity.toLowerCase()]}
                   className="rarity-icon"
-                />
+                />{' '}
+                {firstLetterUppercase(card.rarity)}
               </div>
             </li>
             <li className="card-detail">

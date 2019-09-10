@@ -3,6 +3,9 @@ import { FACTION_IMAGES } from '../constants/factions';
 import PropTypes from 'prop-types';
 
 function GemCost({ costString }) {
+  if (!costString) {
+    return null;
+  }
   return (
     <>
       <style jsx>{`
