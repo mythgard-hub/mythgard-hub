@@ -77,11 +77,24 @@ select * from search_decks(null, null, null, null, null, null, null, null, null,
 
 -- Debugging tool for seeing joined tables with all values
 
-select deckName, cardNames, cardIds
+select deckName, cardNames, cardIds, authorName, modifyDate, factions
   FROM
- (select deck.name as deckName, array_agg(card.name) as cardNames, array_agg(card.id) as cardIds
+ (select deck.name as deckName, deck.modified as modifyDate, array_agg(faction.name) as factions, account.username as authorName,
+ array_agg(card.name) as cardNames, array_agg(card.id) as cardIds
     FROM deck
-     LEFT JOIN card_deck ON (card_deck.deck_id = deck.id)
-     LEFT JOIN card ON (card.id = card_deck.card_id)
-   LEFT JOIN account ON (account.id = deck.author_id)
-   GROUP BY deckName) deckWithCards
+    LEFT JOIN card_deck ON (card_deck.deck_id = deck.id)
+    LEFT JOIN card ON (card.id = card_deck.card_id)
+    LEFT JOIN account ON (account.id = deck.author_id)
+    LEFT JOIN card_faction ON (card.id = card_faction.card_id)
+    LEFT JOIN faction ON (faction.id = card_faction.faction_id)
+   GROUP BY deckName, authorName, modifyDate) deckWithCards
+
+-- debugging tool exploded version (no group by)
+ select deck.name as deckName, deck.modified as modifyDate, faction.name as factions, account.username as authorName,
+ card.name as cardNames, card.id as cardIds
+    FROM deck
+    LEFT JOIN card_deck ON (card_deck.deck_id = deck.id)
+    LEFT JOIN card ON (card.id = card_deck.card_id)
+    LEFT JOIN account ON (account.id = deck.author_id)
+    LEFT JOIN card_faction ON (card.id = card_faction.card_id)
+    LEFT JOIN faction ON (faction.id = card_faction.faction_id)
