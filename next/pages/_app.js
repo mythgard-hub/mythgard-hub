@@ -63,6 +63,8 @@ class MyApp extends App {
   };
 
   componentDidMount() {
+    // Don't bother with the interval if we're not signed in
+    if (!this.state.user) return;
     this.userCheckInterval = setInterval(() => {
       if (!this.state.user) return;
       const r = new RegExp(`\\b${process.env.JWT_COOKIE_NAME}\\b`);
