@@ -22,7 +22,7 @@ export default withRouter(({ router }) => {
       <Query query={tournamentQuery} variables={{ id: id }}>
         {({ loading, error, data }) => {
           if (loading) return 'Loading...';
-          if (error) return <ErrorMessage message={`Error: ${error}`} />;
+          if (error) return <ErrorMessage message={error.message} />;
 
           return <Tournament tournament={data.tournament} />;
         }}

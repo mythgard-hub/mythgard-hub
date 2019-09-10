@@ -53,7 +53,7 @@ export default function ImportDeck({
   } = useQuery(allPowersQuery);
 
   const error = cardsError || pathError || powerError;
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error.message} />;
 
   if (cardsLoading || pathLoading || powerLoading) return <div>Loading</div>;
 
