@@ -237,8 +237,9 @@ CREATE INDEX author_name_index ON mythgard.account
 -- deckName    str or null - name of deck (prefix only, so finds dragons given drag but not given rag)
 -- authorName  str or null - name of author (prefix only, so finds alex given al but not given lex)
 -- deckModified str or null - modified on or after given date (e.g. "2019-07-11")
--- numCards    int         - number of cardN params that are not null (see next 5 params)
+-- numCards    int or null - number of cardN params that are not null (see next 5 params)
 --                           needed for searching decks that have specific cards in them. TODO - refactor this out
+--                           omitting will make card search a "has one of" rather than "includes each of"
 -- card1       int or null - id of card being searched for (search supports at most 5 cards)
 -- card2       int or null - id of card being searched for (search supports at most 5 cards)
 -- card3       int or null - id of card being searched for (search supports at most 5 cards)
@@ -250,7 +251,7 @@ CREATE INDEX author_name_index ON mythgard.account
 -- faction4    int or null - id of a faction that deck must contain
 -- faction5    int or null - id of a faction that deck must contain
 -- faction6    int or null - id of a faction that deck must contain
--- numFactions int or null - number of specified factions TODO - refactor this out
+-- numFactions int or null - number of specified factions. Omit to allow more factions than specifed.
 create function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, numCards integer, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
   returns setof mythgard.deck as $$
 
