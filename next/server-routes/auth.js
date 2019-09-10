@@ -26,6 +26,11 @@ const getUserByEmail = async email => {
   }
 };
 
+/**
+ * Stay logged in for one hour of non-activity
+ */
+const getJwtExp = () => Math.floor(Date.now() / 1000 + 1 * 60 * 60);
+
 client.connect();
 
 passport.use(
@@ -85,7 +90,7 @@ router.get(
     const token = jwt.sign(
       {
         // Aging these out after 1 day for now
-        exp: Math.floor(Date.now() / 1000 + 24 * 60 * 60),
+        exp: getJwtExp(),
         role: process.env.PG_AUTHD_USER_ROLE,
         ...user
       },
@@ -98,6 +103,30 @@ router.get(
     res.redirect('/');
   }
 );
+
+// If already logged in, update the JWT expiration and keep the party going
+router.use((req, res, next) => {
+  if (res.headersSent) return next();
+  if (!req.cookies || !req.cookies[process.env.JWT_COOKIE_NAME]) return next();
+  try {
+    const signedToken = req.cookies[process.env.JWT_COOKIE_NAME];
+    const token = jwt.sign(
+      {
+        ...jwt.verify(signedToken, process.env.JWT_SECRET),
+        exp: getJwtExp()
+      },
+      process.env.JWT_SECRET
+      // Audience will be forwarded from the previous token and attempting to
+      // set it again would throw
+    );
+    res.cookie(process.env.JWT_COOKIE_NAME, token);
+  } catch (err) {
+    console.error(err);
+    req.logout();
+    res.clearCookie(process.env.JWT_COOKIE_NAME);
+  }
+  next();
+});
 
 router.get('/logout', (req, res) => {
   req.logout();

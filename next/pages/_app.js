@@ -31,7 +31,8 @@ class MyApp extends App {
        * bundles. Thre should be a "browser" section in our package.json.
        */
       const fetch = require('isomorphic-unfetch');
-      const { JWT_COOKIE_NAME, SSR_HOST } = process.env;
+      const JWT_COOKIE_NAME = process.env.JWT_COOKIE_NAME;
+      const SSR_HOST = process.env.SSR_HOST;
       const token = ctx.req.cookies[JWT_COOKIE_NAME];
       const resp = await fetch(`${SSR_HOST}/auth/user/${token}`);
       user = await resp.json();
@@ -60,6 +61,20 @@ class MyApp extends App {
   updateUser = user => {
     this.setState({ user });
   };
+
+  componentDidMount() {
+    this.userCheckInterval = setInterval(() => {
+      if (!this.state.user) return;
+      const r = new RegExp(`\\b${process.env.JWT_COOKIE_NAME}\\b`);
+      if (!r.test(document.cookie)) {
+        this.setState({ user: null });
+      }
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.userCheckInterval);
+  }
 
   render() {
     const { Component, pageProps, apolloClient } = this.props;
