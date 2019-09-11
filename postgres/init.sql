@@ -282,9 +282,9 @@ create function mythgard.search_decks(deckName varchar(255), authorName varchar(
       LEFT JOIN mythgard.account ON (account.id = deck.author_id)
 
     -- deck name filter
-    WHERE (deckName is NULL or to_tsvector('simple', deck.name) @@ to_tsquery('simple',deckName || ':*'))
+    WHERE (deckName is NULL or deckName = '' or to_tsvector('simple', deck.name) @@ to_tsquery('simple',deckName || ':*'))
     -- author name filter
-    AND (authorName is NULL or to_tsvector('simple', account.username) @@ to_tsquery('simple',authorName || ':*'))
+    AND (authorName is NULL or authorName = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple',authorName || ':*'))
     -- modification date filter
     AND (deckModified is NULL or deck.modified >= deckModified)
     -- cards filter
@@ -295,7 +295,7 @@ create function mythgard.search_decks(deckName varchar(255), authorName varchar(
     -- factions filter
     SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
     group by deck.id
-    having numFactions is NULL or count(distinct faction.id) = numFactions
+    having numFactions is NULL or numFactions = 0 or count(distinct faction.id) = numFactions
     intersect
     SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
     where faction1 is null or faction.id = faction1

@@ -1,20 +1,5 @@
 import gql from 'graphql-tag';
 
-// Creates partial graphql filter(s) for finding card(s) that exist
-// in a deck.
-//
-// Returns an array of gql filter strings
-export const getCardFilters = cardIds => {
-  if (!cardIds.length) {
-    // null means ignore this filter.
-    // Comma allows chaining.
-    return ['{cardDecks: null}'];
-  }
-  return cardIds.map(cardId => {
-    return `{cardDecks: {some: {cardId: {equalTo: ${cardId}}}}}`;
-  });
-};
-
 const deckPreviewsFragment = `
     nodes {
       deckName
@@ -30,62 +15,6 @@ const deckPreviewsFragment = `
       }
   }`;
 
-// Creates partial graphql filter(s) for finding decks that contain
-// cards that are certain factions.
-//
-// Basically says, "you must have *a* card with this faction in
-// your deck. Same with these other factions.  If isOnlyFactions,
-// then additionally, no cards in your deck can contain *other*
-// factions."
-//
-// Returns an array of gql filter strings
-export const getFactionFilters = (factionNames, isOnlyFactions) => {
-  if (!factionNames.length) {
-    // null means ignore this filter.
-    // Comma allows chaining.
-    return ['{cardDecks: null}'];
-  }
-  const factionFilters = factionNames.map(factionName => {
-    return `{
-      cardDecks: {
-          some: {
-            card: {
-              cardFactions: {
-                some: {
-                  faction: {
-                    name: {
-                      in: ["${factionName}"]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-    }`;
-  });
-  if (isOnlyFactions) {
-    factionFilters.push(`{
-      cardDecks: {
-          every: {
-            card: {
-              cardFactions: {
-                every: {
-                  faction: {
-                    name: {
-                      in: ["${factionNames.join('","')}"]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }`);
-  }
-  return factionFilters;
-};
-
 // Takes "30" and converts it to an iso string 30 days ago,
 // with the time removed. Happens to be a valid database timestamp.
 export const daysAgoToGraphQLTimestamp = daysAgoString => {
@@ -95,55 +24,59 @@ export const daysAgoToGraphQLTimestamp = daysAgoString => {
   return isoDate.slice(0, isoDate.indexOf('T'));
 };
 
+export const getDeckSearchVars = vars => {
+  return {
+    ...vars,
+    deckModified: daysAgoToGraphQLTimestamp(vars.updatedTime)
+  };
+};
+
 // big query for decks advanced search
-export const getDeckSearchQuery = (
-  cardIds,
-  factionNames,
-  isOnlyFactions = true
-) => {
-  const cardFilters = getCardFilters(cardIds);
-  const factionFilters = getFactionFilters(factionNames, isOnlyFactions);
-  const allAndQueries = [...cardFilters, ...factionFilters];
+export const getDeckSearchQuery = () => {
   return gql`
-    query decks($name: String!, $authorName: String, $modifiedOnOrAfter: Datetime!) {
-      decks(
-        filter: {
-          name: { includesInsensitive: $name },
-          author: {
-            username: {
-              includesInsensitive: $authorName
-            }
-          },
-          modified: {
-            greaterThanOrEqualTo: $modifiedOnOrAfter
-          },
-          and: [${allAndQueries.join(',')}]
-        }
+    query decks(
+      $deckName: String
+      $authorName: String
+      $deckModified: Date
+      $numCards: Int
+      $card1: Int
+      $card2: Int
+      $card3: Int
+      $card4: Int
+      $card5: Int
+      $faction1: Int
+      $faction2: Int
+      $faction3: Int
+      $faction4: Int
+      $faction5: Int
+      $faction6: Int
+      $numfactions: Int
+    ) {
+      searchDecks(
+        deckname: $deckName
+        authorname: $authorName
+        deckmodified: $deckModified
+        numcards: $numCards
+        card1: $card1
+        card2: $card2
+        card3: $card3
+        card4: $card4
+        card5: $card5
+        faction1: $faction1
+        faction2: $faction2
+        faction3: $faction3
+        faction4: $faction4
+        faction5: $faction5
+        faction6: $faction6
+        numfactions: $numfactions
       ) {
         nodes {
           name
-          id
           author {
             username
           }
-          modified
           deckPreviews {
             ${deckPreviewsFragment}
-          }
-          cardDecks {
-            nodes {
-              quantity
-              card {
-                mana
-                cardFactions {
-                  nodes {
-                    faction {
-                      name
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
