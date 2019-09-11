@@ -26,7 +26,7 @@ export const daysAgoToGraphQLTimestamp = daysAgoString => {
   return isoDate.slice(0, isoDate.indexOf('T'));
 };
 
-// [1,2,3] => { numCards: 3, card1: 1, card2: 2, card3: 3 }
+// [1,2,3] => { card1: 1, card2: 2, card3: 3 }
 // yes, this is somewhat demented until we refactor.
 const supportedCards = 5;
 const cardIdsToVars = ids => {
@@ -34,8 +34,8 @@ const cardIdsToVars = ids => {
   if (!(ids && ids.length)) {
     return result;
   }
-  result.numCards = Math.min(ids.length, supportedCards);
-  for (let i = 0; i < result.numCards; i++) {
+  const numCards = Math.min(ids.length, supportedCards);
+  for (let i = 0; i < numCards; i++) {
     result[`card${i + 1}`] = ids[i];
   }
   return result;
@@ -83,7 +83,6 @@ const deckSearchQuery = gql`
       $deckName: String
       $authorName: String
       $deckModified: Date
-      $numCards: Int
       $card1: Int
       $card2: Int
       $card3: Int
@@ -101,7 +100,6 @@ const deckSearchQuery = gql`
         deckname: $deckName
         authorname: $authorName
         deckmodified: $deckModified
-        numcards: $numCards
         card1: $card1
         card2: $card2
         card3: $card3

@@ -237,9 +237,6 @@ CREATE INDEX author_name_index ON mythgard.account
 -- deckName    str or null - name of deck (prefix only, so finds dragons given drag but not given rag)
 -- authorName  str or null - name of author (prefix only, so finds alex given al but not given lex)
 -- deckModified str or null - modified on or after given date (e.g. "2019-07-11")
--- numCards    int or null - number of cardN params that are not null (see next 5 params)
---                           needed for searching decks that have specific cards in them. TODO - refactor this out
---                           omitting will make card search a "has one of" rather than "includes each of"
 -- card1       int or null - id of card being searched for (search supports at most 5 cards)
 -- card2       int or null - id of card being searched for (search supports at most 5 cards)
 -- card3       int or null - id of card being searched for (search supports at most 5 cards)
@@ -252,7 +249,7 @@ CREATE INDEX author_name_index ON mythgard.account
 -- faction5    int or null - id of a faction that deck must contain
 -- faction6    int or null - id of a faction that deck must contain
 -- numFactions int or null - number of specified factions. Omit to allow more factions than specifed.
-create function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, numCards integer, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
+create function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
   returns setof mythgard.deck as $$
 
     SELECT deck.* FROM mythgard.deck
@@ -266,8 +263,24 @@ create function mythgard.search_decks(deckName varchar(255), authorName varchar(
     AND (authorName is NULL or authorName = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple',authorName || ':*'))
     -- modification date filter
     AND (deckModified is NULL or deck.modified >= deckModified)
+
+    intersect
+
     -- cards filter
-    AND (numCards is null or numCards = 0 or (card.id in (card1, card2, card3, card4, card5)))
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    where card1 is null or card.id = card1
+    intersect
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    where card2 is null or card.id = card2
+    intersect
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    where card3 is null or card.id = card3
+    intersect
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    where card4 is null or card.id = card4
+    intersect
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    where card5 is null or card.id = card5
 
     intersect
 
@@ -295,8 +308,6 @@ create function mythgard.search_decks(deckName varchar(255), authorName varchar(
     where faction6 is null or faction.id = faction6
 
     GROUP BY deck.id
-    -- Ensures that card filter requires *all* the specified cards, rather than *any* of them.
-    HAVING numCards is null or numCards = 0 or count(distinct card.id) = numCards
     LIMIT 2000;
   $$ language sql stable;
 
