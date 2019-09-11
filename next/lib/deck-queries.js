@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo-hooks';
 
 const deckPreviewsFragment = `
   deckPreviews {
@@ -25,16 +26,59 @@ export const daysAgoToGraphQLTimestamp = daysAgoString => {
   return isoDate.slice(0, isoDate.indexOf('T'));
 };
 
+// [1,2,3] => { numCards: 3, card1: 1, card2: 2, card3: 3 }
+// yes, this is somewhat demented until we refactor.
+const supportedCards = 5;
+const cardIdsToVars = ids => {
+  const result = {};
+  if (!(ids && ids.length)) {
+    return result;
+  }
+  result.numCards = Math.min(ids.length, supportedCards);
+  for (let i = 0; i < result.numCards; i++) {
+    result[`card${i + 1}`] = ids[i];
+  }
+  return result;
+};
+
+// ['norden', 'aztlan'] => { faction1: 1, faction2: 2, numFactions: 2 }
+// yes, this is somewhat demented until we refactor.
+const factionIdsMap = {
+  norden: 1,
+  aztlan: 2,
+  oberos: 3,
+  dreni: 4,
+  parsa: 5,
+  harmony: 6
+};
+const supportedFactions = 6;
+const factionNamesToVars = (names, hasOnly) => {
+  const result = {};
+  if (!(names && names.length)) {
+    return result;
+  }
+  const numFactions = Math.min(names.length, supportedFactions);
+  for (let i = 0; i < numFactions; i++) {
+    result[`faction${i + 1}`] = factionIdsMap[names[i]];
+  }
+  if (hasOnly) {
+    result.numFactions = numFactions;
+  }
+  return result;
+};
+
 export const getDeckSearchVars = vars => {
   return {
-    ...vars,
-    deckModified: daysAgoToGraphQLTimestamp(vars.updatedTime)
+    authorName: vars.authorName,
+    deckName: vars.deckName,
+    deckModified: daysAgoToGraphQLTimestamp(vars.updatedTime),
+    ...cardIdsToVars(vars.cardIds),
+    ...factionNamesToVars(vars.factionNames, vars.isOnlyFactions)
   };
 };
 
 // big query for decks advanced search
-export const getDeckSearchQuery = () => {
-  return gql`
+const deckSearchQuery = gql`
     query decks(
       $deckName: String
       $authorName: String
@@ -51,7 +95,7 @@ export const getDeckSearchQuery = () => {
       $faction4: Int
       $faction5: Int
       $faction6: Int
-      $numfactions: Int
+      $numFactions: Int
     ) {
       searchDecks(
         deckname: $deckName
@@ -69,7 +113,7 @@ export const getDeckSearchQuery = () => {
         faction4: $faction4
         faction5: $faction5
         faction6: $faction6
-        numfactions: $numfactions
+        numfactions: $numFactions
       ) {
         nodes {
           name
@@ -81,6 +125,9 @@ export const getDeckSearchQuery = () => {
       }
     }
   `;
+
+export const useDeckSearchQuery = vars => {
+  return useQuery(deckSearchQuery, { variables: getDeckSearchVars(vars) });
 };
 
 export const deckCardsQuery = gql`
