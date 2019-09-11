@@ -296,7 +296,7 @@ create function mythgard.search_decks(deckName varchar(255), authorName varchar(
 
     GROUP BY deck.id
     -- Ensures that card filter requires *all* the specified cards, rather than *any* of them.
-    HAVING numCards is null or numCards = 0 or count(distinct card.id) = numCards
+    HAVING numCards is null or numCards = 0 or count(distinct card.id) >= numCards
     LIMIT 2000;
   $$ language sql stable;
 
