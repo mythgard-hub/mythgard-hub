@@ -3,6 +3,7 @@ describe('Tournaments Page', function() {
     cy.visit('/tournaments');
   });
   it('should have a list of clickable tournaments', function() {
+    cy.get('[data-cy="tournaments"]').should('have.class', 'selected');
     cy.get('[data-cy=tournamentList] [data-cy=tournamentListItem]').should(
       'have.length',
       2

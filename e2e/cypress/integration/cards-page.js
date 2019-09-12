@@ -15,6 +15,7 @@ describe('Cards Page', function() {
     cy.visit('/cards');
   });
   it('works', function() {
+    cy.get('[data-cy="cards"]').should('have.class', 'selected');
     cy.get('ul.cardList li').should('be.visible');
     cy.get('ul.cardList a:first').click();
     cy.location().should(location => {
