@@ -18,6 +18,7 @@ class Header extends React.Component {
           .header {
             background: ${theme.background};
             padding-top: 10px;
+            padding-bottom: 10px;
             max-height: 100px;
             overflow: hidden;
             font-weight: bold;
@@ -87,9 +88,6 @@ class Header extends React.Component {
           <Link href="/articles">
             <a style={linkStyle}>ARTICLES</a>
           </Link>
-          <a href="/privacy-policy" style={linkStyle}>
-            PRIVACY POLICY
-          </a>
         </div>
       </div>
     );

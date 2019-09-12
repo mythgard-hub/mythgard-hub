@@ -4,20 +4,24 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
+import Footer from './footer';
 
 function Layout({ title, desc, children }) {
   const theme = useContext(ThemeContext);
   return (
     <>
       <WelcomeBanner />
-      <div>
+      <div className="container">
         <style jsx>{`
-          padding: 0 43px 100px 43px;
-          border-left: ${theme.border};
-          border-right: ${theme.border};
-          font-family: ${theme.fontFamily};
-          max-width: 960px;
-          margin: auto;
+          .container {
+            padding: 0 43px;
+            border-left: ${theme.border};
+            border-right: ${theme.border};
+            font-family: ${theme.fontFamily};
+            max-width: 960px;
+            margin: auto;
+            min-height: 100%;
+          }
         `}</style>
         <Head>
           <title>{title}</title>
@@ -30,6 +34,13 @@ function Layout({ title, desc, children }) {
         <Header />
         {children}
         <style jsx global>{`
+          html,
+          body,
+          #__next {
+            height: 97%;
+            box-sizing: border-box;
+          }
+
           body {
             background: ${theme.background};
             color: ${theme.fontColor};
@@ -171,6 +182,7 @@ function Layout({ title, desc, children }) {
           }
         `}</style>
       </div>
+      <Footer />
     </>
   );
 }
