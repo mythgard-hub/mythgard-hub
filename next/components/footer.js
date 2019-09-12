@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
+import Link from 'next/link';
 
 // TODO - this is actually an essence indicator
 export default function Footer() {
@@ -24,8 +25,13 @@ export default function Footer() {
         }
       `}</style>
       &copy; {new Date().getFullYear()} Mythgard |{' '}
-      <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Contact</a> |{' '}
-      <a href="/privacy-policy">Privacy Policy</a>
+      <Link>
+        <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Contact</a>
+      </Link>{' '}
+      |{' '}
+      <Link>
+        <a href="/privacy-policy">Privacy Policy</a>
+      </Link>
     </div>
   );
 }
