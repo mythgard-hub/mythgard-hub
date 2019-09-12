@@ -2,6 +2,7 @@ import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import NewDecks from '../components/new-decks.js';
 import { useContext } from 'react';
+import Link from 'next/link';
 import { ThemeContext } from '../components/theme-context.js';
 
 const index = () => {
@@ -38,15 +39,24 @@ const index = () => {
           <h2>Top Decks</h2>
         </div>
       </div>
-      <div>
-        <h2>patch notes</h2>
-      </div>
-      <div>
-        <h2>tournament results</h2>
-        <div>tourney 1</div>
-      </div>
-      <div>
-        <h2>recent articles</h2>
+      <style jsx>{`
+        .patchNotes a {
+          text-decoration: none;
+        }
+        .patchNotes :global(.page-banner) {
+          height: 134px;
+        }
+      `}</style>
+      <div className="patchNotes">
+        <Link href="/patchNotes">
+          <a>
+            <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
+              Latest Patch Notes
+              <br />
+              v0.0.1
+            </PageBanner>
+          </a>
+        </Link>
       </div>
     </Layout>
   );
