@@ -13,7 +13,6 @@ describe('Decks Page', function() {
     cy.visit('/decks');
   });
   it('works', function() {
-    cy.get('[data-cy="decks"]').should('have.class', 'selected');
     cy.get('[data-cy="deckListItem"] a:first').click();
     cy.location().should(location => {
       expect(location.pathname).to.eq('/deck');
