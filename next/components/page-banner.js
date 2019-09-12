@@ -19,6 +19,7 @@ function PageBanner({ children, image }) {
         .page-banner h1 {
           margin: 0;
           padding-right: 0.5em;
+          text-align: right; /* multiline situations */
         }
       `}</style>
       <h1 data-cy="header">{children}</h1>
