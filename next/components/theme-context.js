@@ -33,7 +33,10 @@ export const themes = {
     hoverColor: mgColors.blue,
     switchColor: mgColors.lightGreen,
     hrColorGradientLight: mgColors.blue,
-    hrColorGradientDark: mgColors.darkBlue
+    hrColorGradientDark: mgColors.darkBlue,
+    footerBackgroundColor: mgColors.grayBlue,
+    footerLinkColor: mgColors.orange,
+    footerTextColor: mgColors.mediumLighterGray
   }
 };
 

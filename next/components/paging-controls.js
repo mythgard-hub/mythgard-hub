@@ -11,6 +11,8 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
       <style jsx>{`
         .mg-paging {
           display: flex;
+          padding-bottom: 30px;
+          justify-content: center;
         }
         .mg-paging button {
           max-width: 120px;
