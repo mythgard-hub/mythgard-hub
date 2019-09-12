@@ -36,7 +36,8 @@ export const themes = {
     hrColorGradientDark: mgColors.darkBlue,
     footerBackgroundColor: mgColors.grayBlue,
     footerLinkColor: mgColors.orange,
-    footerTextColor: mgColors.mediumLighterGray
+    footerTextColor: mgColors.mediumLighterGray,
+    selectedTabColor: mgColors.blue
   }
 };
 
