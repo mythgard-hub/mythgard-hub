@@ -37,7 +37,7 @@ export const themes = {
     footerBackgroundColor: mgColors.grayBlue,
     footerLinkColor: mgColors.orange,
     footerTextColor: mgColors.mediumLighterGray,
-    selectedTabColor: mgColors.blue
+    selectedPageColor: mgColors.blue
   }
 };
 

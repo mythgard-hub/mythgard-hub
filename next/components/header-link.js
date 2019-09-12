@@ -26,7 +26,7 @@ function HeaderLink(props) {
         }
 
         .selected {
-          color: ${theme.selectedTabColor};
+          color: ${theme.selectedPageColor};
         }
       `}</style>
       <Link href={route}>
