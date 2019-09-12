@@ -2,12 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 import PropTypes from 'prop-types';
+import HeaderLink from './header-link';
 
 const cdn = process.env.MG_CDN;
-
-const linkStyle = {
-  marginRight: 15
-};
 
 class Header extends React.Component {
   render() {
@@ -29,6 +26,7 @@ class Header extends React.Component {
             display: inline-block;
             line-height: 50px;
             position: relative;
+            margin-right: 15px;
           }
           .header .home .wordmark {
             width: 150px;
@@ -38,26 +36,10 @@ class Header extends React.Component {
             height: 50px;
             vertical-align: top;
           }
-          .header a {
-            text-decoration: none;
-          }
-          .header a:not(.home):before {
-            content: '\u25b6';
-            font-size: 80%;
-            margin-right: 5px;
-          }
-          .header .selected {
-            color: ${theme.fontColorHeading};
-          }
         `}</style>
         <div>
           <Link href="/">
-            <a
-              data-cy="home"
-              className="home"
-              aria-label="home link"
-              style={linkStyle}
-            >
+            <a data-cy="home" className="home" aria-label="home link">
               <img
                 className="crownIcon"
                 src={`${cdn}/mgh/MGH_CrownLogo_150.png`}
@@ -70,27 +52,19 @@ class Header extends React.Component {
               />
             </a>
           </Link>
-          <Link href="/decks">
-            <a data-cy="decks" style={linkStyle}>
-              DECKS
-            </a>
-          </Link>
-          <Link href="/cards">
-            <a data-cy="cards" style={linkStyle}>
-              CARDS
-            </a>
-          </Link>
-          <Link href="/deck-builder">
-            <a data-cy="deck-builder" style={linkStyle}>
-              DECK BUILDER
-            </a>
-          </Link>
-          <Link href="/tournaments">
-            <a style={linkStyle}>TOURNAMENTS</a>
-          </Link>
-          <Link href="/articles">
-            <a style={linkStyle}>ARTICLES</a>
-          </Link>
+          <HeaderLink route="/decks" cyName="decks">
+            Decks
+          </HeaderLink>
+          <HeaderLink route="/cards" cyName="cards">
+            Cards
+          </HeaderLink>
+          <HeaderLink route="/deck-builder" cyName="deck-builder">
+            Deck Builder
+          </HeaderLink>
+          <HeaderLink cyName="tournaments" route="/tournaments">
+            Tournaments
+          </HeaderLink>
+          <HeaderLink route="/articles">Articles</HeaderLink>
         </div>
       </div>
     );
