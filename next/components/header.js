@@ -61,7 +61,9 @@ class Header extends React.Component {
           <HeaderLink route="/deck-builder" cyName="deck-builder">
             Deck Builder
           </HeaderLink>
-          <HeaderLink route="/tournaments">Tournaments</HeaderLink>
+          <HeaderLink cyName="tournaments" route="/tournaments">
+            Tournaments
+          </HeaderLink>
           <HeaderLink route="/articles">Articles</HeaderLink>
         </div>
       </div>
