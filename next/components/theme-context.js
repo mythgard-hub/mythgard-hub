@@ -35,7 +35,8 @@ export const themes = {
     hrColorGradientLight: mgColors.blue,
     hrColorGradientDark: mgColors.darkBlue,
     footerBackgroundColor: mgColors.grayBlue,
-    footerLinkColor: mgColors.orange
+    footerLinkColor: mgColors.orange,
+    footerTextColor: mgColors.mediumLighterGray
   }
 };
 

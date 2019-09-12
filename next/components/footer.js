@@ -10,6 +10,7 @@ export default function Footer() {
       <style jsx>{`
         .footer {
           background-color: ${theme.footerBackgroundColor};
+          color: ${theme.footerTextColor};
           font-size: 11px;
           text-align: center;
           padding: 24px;

@@ -46,6 +46,9 @@ class Header extends React.Component {
             font-size: 80%;
             margin-right: 5px;
           }
+          .header .selected {
+            color: ${theme.fontColorHeading};
+          }
         `}</style>
         <div>
           <Link href="/">
