@@ -51,9 +51,9 @@ const index = () => {
         <Link href="/patchNotes">
           <a>
             <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
-                Latest Patch Notes
-                <br />
-                v0.0.1
+              Latest Patch Notes
+              <br />
+              v0.0.1
             </PageBanner>
           </a>
         </Link>
