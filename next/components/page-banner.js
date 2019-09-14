@@ -36,7 +36,6 @@ PageBanner.IMG_PATCH_NOTES = `${process.env.MG_CDN}/banner/Banner_PatchNotes.jpg
 PageBanner.IMG_HOME_TOP = `${process.env.MG_CDN}/banner/Banner_Home_Top.jpg`;
 
 PageBanner.propTypes = {
-  children: PropTypes.string,
   image: PropTypes.oneOf([
     PageBanner.IMG_ARTICLES,
     PageBanner.IMG_CARDS,

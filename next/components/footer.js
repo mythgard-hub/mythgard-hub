@@ -23,14 +23,17 @@ export default function Footer() {
           text-decoration: none;
           color: ${theme.footerLinkColor};
         }
+
+        * + *:before {
+          content: '|';
+          color: ${theme.footerTextColor};
+          margin: 0 2px;
+        }
       `}</style>
-      &copy; {new Date().getFullYear()} Mythgard |{' '}
-      <Link>
-        <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Contact</a>
-      </Link>{' '}
-      |{' '}
-      <Link>
-        <a href="/privacy-policy">Privacy Policy</a>
+      <span>&copy; {new Date().getFullYear()} Mythgard</span>
+      <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Contact</a>
+      <Link href="/privacy-policy">
+        <a>Privacy Policy</a>
       </Link>
     </div>
   );
