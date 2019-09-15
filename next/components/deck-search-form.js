@@ -125,11 +125,12 @@ export default function DeckSearchForm(props) {
         }
       `}</style>
       <FactionFilters
+        factions={filters.factionNames}
         onFactionClick={factionNames =>
           changeState('factionNames', factionNames)
         }
-        onIsOnlyFactionClick={handleInputChangeHooks(isOnlyFactions =>
-          changeState('isOnlyFactions', isOnlyFactions)
+        onIsOnlyFactionClick={handleInputChangeHooks(() =>
+          changeState('isOnlyFactions', !filters.isOnlyFactions)
         )}
         isOnlyFactionsSetter={newVal => changeState('isOnlyFactions', newVal)}
         isOnlyFactions={filters.isOnlyFactions}

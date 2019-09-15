@@ -8,28 +8,16 @@ import SliderSwitch from './slider-switch';
 class FactionFilters extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { factions: [] };
-
-    this.handleFactionClick = this.handleFactionClick.bind(this);
+    this.toggleFaction = this.toggleFaction.bind(this);
   }
 
-  handleFactionClick(e) {
-    const faction = e.currentTarget.getAttribute('data-mgfaction');
-    const factions = [...this.state.factions];
-    const i = factions.indexOf(faction);
-    if (i > -1) {
-      factions.splice(i, 1);
-    } else {
-      factions.push(faction);
+  toggleFaction(faction) {
+    const { factions } = this.props;
+    const nextFactions = factions.filter(f => f !== faction);
+    if (nextFactions.length === factions.length) {
+      nextFactions.push(faction);
     }
-    this.setState(
-      {
-        factions
-      },
-      () => {
-        this.props.onFactionClick(this.state.factions);
-      }
-    );
+    this.props.onFactionClick(nextFactions);
   }
 
   render() {
@@ -73,8 +61,8 @@ class FactionFilters extends React.Component {
             <li key={f}>
               <FactionFilter
                 faction={f}
-                selected={this.state.factions.indexOf(f) > -1}
-                onFactionClick={this.handleFactionClick}
+                selected={this.props.factions.indexOf(f) > -1}
+                onFactionClick={() => this.toggleFaction(f)}
                 factionIcon={FACTION_IMAGES[f]}
               ></FactionFilter>
             </li>
@@ -100,7 +88,8 @@ FactionFilters.propTypes = {
   onFactionClick: PropTypes.func.isRequired,
   onIsOnlyFactionClick: PropTypes.func,
   isOnlyFactionsSetter: PropTypes.func,
-  isOnlyFactions: PropTypes.bool
+  isOnlyFactions: PropTypes.bool,
+  factions: PropTypes.arrayOf(PropTypes.oneOf(FACTION_NAMES))
 };
 
 export default FactionFilters;

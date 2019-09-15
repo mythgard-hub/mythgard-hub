@@ -8,7 +8,7 @@ import SearchFormText from './search-form-text.js';
 export default function CardSearchForm(props) {
   const { onSubmit } = props;
   const [text, setText] = useState('');
-  const [factions, setFactions] = useState(null);
+  const [factions, setFactions] = useState([]);
   const [supertypes, setSupertypes] = useState([]);
   const [manaCosts, setManaCosts] = useState([]);
   const [strengths, setStrengths] = useState([]);
@@ -41,6 +41,7 @@ export default function CardSearchForm(props) {
         label="Card Search"
       />
       <FactionFilters
+        factions={factions}
         onFactionClick={newFactions => setFactions(newFactions)}
       />
       <CardSearchFilters

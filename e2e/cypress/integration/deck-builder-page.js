@@ -2,6 +2,7 @@ import {
   cardListCard,
   deckInProgress,
   cardList,
+  clearButton,
   factionFilter,
   deckCardRow,
   cardSearchText,
@@ -171,5 +172,17 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="exportDeckButton"]').click();
 
     cy.get('[data-cy="exportDeckSuccess"]').contains('Copied');
+  });
+
+  it.only('should clear filters', function() {
+    cy.get(cardSearchText).type('fur');
+    cy.get(cardSearchText).should('have.value', 'fur');
+    cy.get(factionFilter)
+      .eq(0)
+      .click();
+    cy.get(`${factionFilter}.selected`).should('have.length', 1);
+    cy.get(clearButton).click();
+    cy.get(cardSearchText).should('have.value', '');
+    cy.get(`${factionFilter}.selected`).should('have.length', 0);
   });
 });

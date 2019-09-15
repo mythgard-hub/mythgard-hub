@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Layout from '../components/layout';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
@@ -9,15 +9,37 @@ import CardSearchFilters from '../components/card-search-filters';
 import SliderSwitch from '../components/slider-switch';
 import DeckBuilderCardDisplay from '../components/deck-builder-card-display';
 
+const initialSearchFilters = {
+  cardSearchText: '',
+  cardRarities: [],
+  cardManaCosts: [],
+  supertypes: [],
+  factions: []
+};
+
 function DeckBuilderPage() {
-  const [cardSearchText, setCardSearchText] = useState('');
-  const [cardRarities, setCardRarities] = useState([]);
-  const [cardManaCosts, setCardManaCosts] = useState([]);
-  const [supertypes, setSupertypes] = useState([]);
-  const [factions, setFactions] = useState([]);
+  const [cardSearchText, setCardSearchText] = useState(
+    initialSearchFilters.cardSearchText
+  );
+  const [cardRarities, setCardRarities] = useState(
+    initialSearchFilters.cardRarities
+  );
+  const [cardManaCosts, setCardManaCosts] = useState(
+    initialSearchFilters.cardManaCosts
+  );
+  const [supertypes, setSupertypes] = useState(initialSearchFilters.supertypes);
+  const [factions, setFactions] = useState(initialSearchFilters.factions);
   const [currentTab, setTab] = useState('');
   const [viewFilters, setViewFilters] = useState(false);
   const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
+
+  const handleClearFilters = useCallback(() => {
+    setCardSearchText(initialSearchFilters.cardSearchText);
+    setCardRarities(initialSearchFilters.cardRarities);
+    setCardManaCosts(initialSearchFilters.cardManaCosts);
+    setSupertypes(initialSearchFilters.supertypes);
+    setFactions(initialSearchFilters.factions);
+  });
 
   return (
     <Layout title="Mythgard Hub | Deck Builder" desc="Build Mythgard Decks">
@@ -52,8 +74,9 @@ function DeckBuilderPage() {
             text={cardSearchText}
             setTab={setTab}
             setText={setCardSearchText}
+            onClearFilters={handleClearFilters}
           />
-          <FactionFilters onFactionClick={setFactions} />
+          <FactionFilters factions={factions} onFactionClick={setFactions} />
           <SliderSwitch
             leftSlider="View Cards"
             rightSlider="View Filters"
