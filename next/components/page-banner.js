@@ -24,7 +24,7 @@ function PageBanner({ children, image }) {
 
         @media only screen and (max-width: 600px) {
           .page-banner {
-            background-position-x: 60%;
+            background: unset;
           }
         }
       `}</style>
