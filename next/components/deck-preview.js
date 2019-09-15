@@ -60,6 +60,12 @@ function DeckPreview({ deck }) {
         :global(.upvoteIndicator .deckVotesCell) {
           font-size: 16px;
         }
+
+        @media only screen and (max-width: 600px) {
+          .deckPreview {
+            max-width: unset;
+          }
+        }
       `}</style>
 
       <div className="deckPreview">
