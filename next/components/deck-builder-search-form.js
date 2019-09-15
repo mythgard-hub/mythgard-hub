@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import SearchFormText from './search-form-text.js';
 
-function DeckBuilderSearchForm({ text, setText }) {
+function DeckBuilderSearchForm({ text, setText, onClearFilters }) {
   const onTextChange = handleInputChangeHooks(setText);
 
   return (
@@ -32,14 +32,17 @@ function DeckBuilderSearchForm({ text, setText }) {
         placeholder="Search..."
         maxLength="100"
       />
-      <button>Clear Filters</button>
+      <button data-cy="searchForm_clearButton" onClick={() => onClearFilters()}>
+        Clear Filters
+      </button>
     </div>
   );
 }
 
 DeckBuilderSearchForm.propTypes = {
   setText: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
+  onClearFilters: PropTypes.func.isRequired
 };
 
 export default DeckBuilderSearchForm;

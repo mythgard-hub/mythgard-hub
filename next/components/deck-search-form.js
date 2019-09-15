@@ -99,6 +99,7 @@ export default function DeckSearchForm(props) {
         }
       `}</style>
       <FactionFilters
+        factions={filters.factionNames}
         onFactionClick={factionNames =>
           changeState('factionNames', factionNames)
         }

@@ -20,6 +20,7 @@ export default {
   deckBuilderCollection: '[data-cy="deckBuilderCollection"]',
   deckInProgress: '[data-cy="deckInProgress"]',
   deckCardRow: '[data-cy="deckCardRow"]',
+  clearButton: '[data-cy="searchForm_clearButton"]',
 
   cardSearchText: '[data-cy="cardSearchText"]',
   cardSearchSubmit: '[data-cy="cardSearchSubmit"]',
