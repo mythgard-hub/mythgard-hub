@@ -45,6 +45,7 @@ class Header extends React.Component {
 
             .header .home {
               width: 100%;
+              margin-bottom: 10px;
             }
           }
         `}</style>
