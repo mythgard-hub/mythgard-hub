@@ -20,6 +20,12 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
           margin-right: 17px;
           margin-bottom: 17px;
         }
+
+        @media only screen and (max-width: 600px) {
+          ul {
+            padding: 0;
+          }
+        }
       `}</style>
       <ul className="cardList" data-cy="cardList">
         {cards.map((card, index) => {
