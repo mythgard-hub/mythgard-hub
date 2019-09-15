@@ -26,6 +26,8 @@ function Layout({ title, desc, children }) {
           @media only screen and (max-width: 600px) {
             .container {
               padding: 0 20px;
+              border-left: none;
+              border-right: none;
             }
           }
         `}</style>
