@@ -2,8 +2,13 @@ const express = require('express');
 const { postgraphile } = require('postgraphile');
 const PgSimplifyInflectorPlugin = require('@graphile-contrib/pg-simplify-inflector');
 const ConnectionFilterPlugin = require('postgraphile-plugin-connection-filter');
+const compression = require('compression');
+const helmet = require('helmet');
 
 const app = express();
+
+app.use(compression());
+app.use(helmet());
 
 app.use(
   postgraphile(
@@ -27,7 +32,11 @@ app.use(
       jwtVerifyOptions: {
         audience: [process.env.JWT_AUDIENCE]
       },
-      pgDefaultRole: process.env.PG_ANON_USER_ROLE
+      pgDefaultRole: process.env.PG_ANON_USER_ROLE,
+      ignoreRBAC: false,
+      pgSettings: {
+        statement_timeout: '3000'
+      }
     }
   )
 );
