@@ -25,6 +25,18 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
           margin: 0 10px;
           white-space: nowrap;
         }
+
+        @media only screen and (max-width: 600px) {
+          .mg-paging {
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .mg-paging .counter {
+            padding: 15px 0;
+            margin: 0;
+          }
+        }
       `}</style>
       <button
         className="mgPrevious"

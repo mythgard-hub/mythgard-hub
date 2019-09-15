@@ -53,6 +53,13 @@ export default function CardSearchFilters(props) {
         .last-title {
           margin-top: 15px;
         }
+
+        @media only screen and (max-width: 600px) {
+          .additional-filters {
+            margin-left: 0;
+            margin-right: 0;
+          }
+        }
       `}</style>
 
       {manaCosts && (

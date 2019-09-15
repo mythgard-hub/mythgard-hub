@@ -22,6 +22,14 @@ function Layout({ title, desc, children }) {
             margin: auto;
             min-height: 100%;
           }
+
+          @media only screen and (max-width: 600px) {
+            .container {
+              padding: 0 20px;
+              border-left: none;
+              border-right: none;
+            }
+          }
         `}</style>
         <Head>
           <title>{title}</title>
@@ -134,6 +142,13 @@ function Layout({ title, desc, children }) {
             text-transform: uppercase;
             padding-right: 20px;
             font-weight: bold;
+          }
+
+          @media only screen and (max-width: 600px) {
+            input[type='text'],
+            select {
+              height: 40px;
+            }
           }
         `}</style>
         <style jsx global>{`

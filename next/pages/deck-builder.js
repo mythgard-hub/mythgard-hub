@@ -34,6 +34,16 @@ function DeckBuilderPage() {
         .collection {
           flex-grow: 1;
         }
+
+        @media only screen and (max-width: 600px) {
+          .deck-builder-panels {
+            flex-direction: column-reverse;
+          }
+
+          .deck-builder-card-selection {
+            padding-right: 0;
+          }
+        }
       `}</style>
       <PageBanner image={PageBanner.IMG_DECK_BUILDER}>Deck Builder</PageBanner>
       <div className="deck-builder-panels">

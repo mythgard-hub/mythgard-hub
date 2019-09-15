@@ -36,6 +36,18 @@ class Header extends React.Component {
             height: 50px;
             vertical-align: top;
           }
+
+          @media only screen and (max-width: 600px) {
+            .header {
+              margin: 10px 0 25px 0;
+              max-height: unset;
+            }
+
+            .header .home {
+              width: 100%;
+              margin-bottom: 10px;
+            }
+          }
         `}</style>
         <div>
           <Link href="/">

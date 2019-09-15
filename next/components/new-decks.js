@@ -22,6 +22,12 @@ function NewDecks() {
           list-style: none;
           padding: 0;
         }
+
+        @media only screen and (max-width: 600px) {
+          .deckList {
+            padding: 0 10px;
+          }
+        }
       `}</style>
       <ul className="deckList">
         {decks.map((deck, i) => {

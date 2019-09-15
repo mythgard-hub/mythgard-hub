@@ -53,6 +53,12 @@ export default function WelcomeBanner() {
         .welcome-banner-link:focus {
           color: ${theme.fontColor};
         }
+
+        @media only screen and (max-width: 600px) {
+          .welcome-banner {
+            min-width: 100%;
+          }
+        }
       `}</style>
 
       <a

@@ -128,7 +128,7 @@ describe('Deck builder page', () => {
         cy.get('[data-cy="saveDeck"]').click();
         cy.on('window:alert', str => {
           expect(str).to.equal(
-            'You are not logged in. You will be dealt with in another PR'
+            'Only logged in users can save deck. Please export your work, log in and come back.'
           );
         });
       });

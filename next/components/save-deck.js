@@ -28,7 +28,9 @@ export default function SaveDeck({ deckInProgress }) {
     e && e.preventDefault();
 
     if (!user || !user.id) {
-      alert('You are not logged in. You will be dealt with in another PR');
+      alert(
+        'Only logged in users can save deck. Please export your work, log in and come back.'
+      );
       return;
     }
 
@@ -52,14 +54,15 @@ export default function SaveDeck({ deckInProgress }) {
       `}</style>
       <ApolloConsumer>
         {client => (
-          <input
+          <button
             type="submit"
-            value="Save"
             data-cy="saveDeck"
             onClick={e => {
               handleSubmit(e, client);
             }}
-          />
+          >
+            Save
+          </button>
         )}
       </ApolloConsumer>
     </div>

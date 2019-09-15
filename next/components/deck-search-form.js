@@ -97,6 +97,32 @@ export default function DeckSearchForm(props) {
         .action-buttons input {
           margin-right: 10px;
         }
+
+        @media only screen and (max-width: 600px) {
+          form {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .filters-container {
+            flex-direction: column;
+          }
+
+          .action-buttons {
+            width: 35%;
+            flex-direction: column;
+            margin-bottom: 20px;
+          }
+
+          .action-buttons input {
+            margin-bottom: 15px;
+          }
+
+          .action-buttons input,
+          .action-buttons button {
+            font-size: 20px;
+          }
+        }
       `}</style>
       <FactionFilters
         onFactionClick={factionNames =>

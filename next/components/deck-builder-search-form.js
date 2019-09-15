@@ -22,6 +22,22 @@ function DeckBuilderSearchForm({ text, setText }) {
           width: 75%;
           margin: 30px 0 10px 0;
         }
+
+        @media only screen and (max-width: 600px) {
+          .card-search-section {
+            flex-direction: column;
+            padding: 0;
+          }
+          .card-search-section button {
+            width: 185px;
+            margin: 0px 0px 10px 0px;
+          }
+          :global(.input-label) {
+            width: 100%;
+            margin: 20px 0;
+            padding-right: 0;
+          }
+        }
       `}</style>
       <SearchFormText
         label="Card Search"

@@ -55,6 +55,12 @@ export default function DeckBuilderSidebar(props) {
           text-transform: uppercase;
           text-align: center;
         }
+
+        @media only screen and (max-width: 600px) {
+          .deck-builder-actions {
+            width: 100%;
+          }
+        }
       `}</style>
       <h2 className="build-deck-title">Import Deck from Mythgard</h2>
       <ImportDeck

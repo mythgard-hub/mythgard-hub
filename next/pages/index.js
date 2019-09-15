@@ -26,6 +26,12 @@ const index = () => {
           text-align: center;
           border-bottom: ${theme.border};
         }
+
+        @media only screen and (max-width: 600px) {
+          .mg-column {
+            width: 100%;
+          }
+        }
       `}</style>
       <div className="homePageColumns">
         <div className="mg-column">
