@@ -39,6 +39,10 @@ function DeckBuilderPage() {
           .deck-builder-panels {
             flex-direction: column-reverse;
           }
+
+          .deck-builder-card-selection {
+            padding-right: 0;
+          }
         }
       `}</style>
       <PageBanner image={PageBanner.IMG_DECK_BUILDER}>Deck Builder</PageBanner>

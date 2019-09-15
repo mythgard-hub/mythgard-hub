@@ -35,6 +35,7 @@ function DeckBuilderSearchForm({ text, setText }) {
           :global(.input-label) {
             width: 100%;
             margin: 20px 0;
+            padding-right: 0;
           }
         }
       `}</style>
