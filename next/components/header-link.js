@@ -13,13 +13,10 @@ function HeaderLink(props) {
     <>
       <style jsx>{`
         a:before {
-          content: ' ';
-          width: 0px;
-          height: 0px;
-          border-top: 8px solid transparent;
-          border-bottom: 8px solid transparent;
-          border-left: 13px solid ${theme.fontColor};
-          margin: 5px;
+          text-decoration: none;
+          content: '\u25b6';
+          font-size: 80%;
+          margin-right: 5px;
         }
 
         a {
@@ -37,6 +34,16 @@ function HeaderLink(props) {
             font-size: 20px;
             margin-bottom: 10px;
             display: inline-flex;
+          }
+
+          a:before {
+            content: ' ';
+            width: 0px;
+            height: 0px;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 13px solid ${theme.fontColor};
+            margin: 5px;
           }
         }
       `}</style>
