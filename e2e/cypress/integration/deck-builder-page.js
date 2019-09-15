@@ -174,7 +174,7 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="exportDeckSuccess"]').contains('Copied');
   });
 
-  it.only('should clear filters', function() {
+  it('should clear filters', function() {
     cy.get(cardSearchText).type('fur');
     cy.get(cardSearchText).should('have.value', 'fur');
     cy.get(factionFilter)
