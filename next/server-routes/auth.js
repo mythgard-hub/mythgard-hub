@@ -29,7 +29,8 @@ const getUserByEmail = async email => {
 /**
  * Stay logged in for one hour of non-activity
  */
-const getJwtExp = () => Math.floor(Date.now() / 1000 + 1 * 60 * 60);
+const sessionTimeoutInSecs = 60 * 60;
+const getJwtExp = () => Math.floor(Date.now() / 1000 + sessionTimeoutInSecs);
 
 client.connect();
 
@@ -87,11 +88,12 @@ router.get(
    */
   (req, res) => {
     const { user } = req;
+    const exp = getJwtExp();
     const token = jwt.sign(
       {
         // Aging these out after 1 day for now
-        exp: getJwtExp(),
         role: process.env.PG_AUTHD_USER_ROLE,
+        exp,
         ...user
       },
       process.env.JWT_SECRET,
@@ -99,7 +101,10 @@ router.get(
         audience: process.env.JWT_AUDIENCE
       }
     );
-    res.cookie(process.env.JWT_COOKIE_NAME, token);
+    res.cookie(process.env.JWT_COOKIE_NAME, token, {
+      secured: process.env.NODE_ENV === 'production',
+      maxAge: sessionTimeoutInSecs * 1000
+    });
     res.redirect('/');
   }
 );
@@ -119,7 +124,10 @@ router.use((req, res, next) => {
       // Audience will be forwarded from the previous token and attempting to
       // set it again would throw
     );
-    res.cookie(process.env.JWT_COOKIE_NAME, token);
+    res.cookie(process.env.JWT_COOKIE_NAME, token, {
+      secured: process.env.NODE_ENV === 'production',
+      maxAge: sessionTimeoutInSecs * 1000
+    });
   } catch (err) {
     console.error(err);
     req.logout();
