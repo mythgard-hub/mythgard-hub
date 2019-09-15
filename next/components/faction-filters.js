@@ -61,6 +61,12 @@ class FactionFilters extends React.Component {
             margin-left: 20px;
             padding-top: 10px;
           }
+
+          @media only screen and (max-width: 600px) {
+            .faction-filters {
+              flex-direction: column;
+            }
+          }
         `}</style>
         <ul>
           {FACTION_NAMES.map((f, index) => (
