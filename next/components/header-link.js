@@ -28,6 +28,14 @@ function HeaderLink(props) {
         .selected {
           color: ${theme.selectedPageColor};
         }
+
+        @media only screen and (max-width: 600px) {
+          a {
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: inline-flex;
+          }
+        }
       `}</style>
       <Link href={route}>
         <a className={selectedClassName} data-cy={cyName}>

@@ -21,6 +21,12 @@ function PageBanner({ children, image }) {
           padding-right: 0.5em;
           text-align: right; /* multiline situations */
         }
+
+        @media only screen and (max-width: 600px) {
+          .page-banner {
+            background-position-x: 60%;
+          }
+        }
       `}</style>
       <h1 data-cy="header">{children}</h1>
     </div>
