@@ -1,19 +1,5 @@
 import gql from 'graphql-tag';
-
-// Creates partial graphql filter(s) for finding card(s) that exist
-// in a deck.
-//
-// Returns an array of gql filter strings
-export const getCardFilters = cardIds => {
-  if (!cardIds.length) {
-    // null means ignore this filter.
-    // Comma allows chaining.
-    return ['{cardDecks: null}'];
-  }
-  return cardIds.map(cardId => {
-    return `{cardDecks: {some: {cardId: {equalTo: ${cardId}}}}}`;
-  });
-};
+import { useQuery } from 'react-apollo-hooks';
 
 const deckPreviewsFragment = `
     nodes {
@@ -30,62 +16,6 @@ const deckPreviewsFragment = `
       }
   }`;
 
-// Creates partial graphql filter(s) for finding decks that contain
-// cards that are certain factions.
-//
-// Basically says, "you must have *a* card with this faction in
-// your deck. Same with these other factions.  If isOnlyFactions,
-// then additionally, no cards in your deck can contain *other*
-// factions."
-//
-// Returns an array of gql filter strings
-export const getFactionFilters = (factionNames, isOnlyFactions) => {
-  if (!factionNames.length) {
-    // null means ignore this filter.
-    // Comma allows chaining.
-    return ['{cardDecks: null}'];
-  }
-  const factionFilters = factionNames.map(factionName => {
-    return `{
-      cardDecks: {
-          some: {
-            card: {
-              cardFactions: {
-                some: {
-                  faction: {
-                    name: {
-                      in: ["${factionName}"]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-    }`;
-  });
-  if (isOnlyFactions) {
-    factionFilters.push(`{
-      cardDecks: {
-          every: {
-            card: {
-              cardFactions: {
-                every: {
-                  faction: {
-                    name: {
-                      in: ["${factionNames.join('","')}"]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }`);
-  }
-  return factionFilters;
-};
-
 // Takes "30" and converts it to an iso string 30 days ago,
 // with the time removed. Happens to be a valid database timestamp.
 export const daysAgoToGraphQLTimestamp = daysAgoString => {
@@ -95,60 +25,108 @@ export const daysAgoToGraphQLTimestamp = daysAgoString => {
   return isoDate.slice(0, isoDate.indexOf('T'));
 };
 
+// [1,2,3] => { card1: 1, card2: 2, card3: 3 }
+// yes, this is somewhat demented until we refactor.
+const supportedCards = 5;
+const cardIdsToVars = ids => {
+  const result = {};
+  if (!(ids && ids.length)) {
+    return result;
+  }
+  const numCards = Math.min(ids.length, supportedCards);
+  for (let i = 0; i < numCards; i++) {
+    result[`card${i + 1}`] = ids[i];
+  }
+  return result;
+};
+
+// ['norden', 'aztlan'] => { faction1: 1, faction2: 2, numFactions: 2 }
+// yes, this is somewhat demented until we refactor.
+const factionIdsMap = {
+  norden: 1,
+  aztlan: 2,
+  oberos: 3,
+  dreni: 4,
+  parsa: 5,
+  harmony: 6
+};
+const supportedFactions = 6;
+const factionNamesToVars = (names, hasOnly) => {
+  const result = {};
+  if (!(names && names.length)) {
+    return result;
+  }
+  const numFactions = Math.min(names.length, supportedFactions);
+  for (let i = 0; i < numFactions; i++) {
+    result[`faction${i + 1}`] = factionIdsMap[names[i]];
+  }
+  if (hasOnly) {
+    result.numFactions = numFactions;
+  }
+  return result;
+};
+
+export const getDeckSearchVars = vars => {
+  return {
+    authorName: vars.authorName,
+    deckName: vars.deckName,
+    deckModified: daysAgoToGraphQLTimestamp(vars.updatedTime),
+    ...cardIdsToVars(vars.cardIds),
+    ...factionNamesToVars(vars.factionNames, vars.isOnlyFactions)
+  };
+};
+
 // big query for decks advanced search
-export const getDeckSearchQuery = (
-  cardIds,
-  factionNames,
-  isOnlyFactions = true
-) => {
-  const cardFilters = getCardFilters(cardIds);
-  const factionFilters = getFactionFilters(factionNames, isOnlyFactions);
-  const allAndQueries = [...cardFilters, ...factionFilters];
-  return gql`
-    query decks($name: String!, $authorName: String, $modifiedOnOrAfter: Datetime!) {
-      decks(
-        filter: {
-          name: { includesInsensitive: $name },
-          author: {
-            username: {
-              includesInsensitive: $authorName
-            }
-          },
-          modified: {
-            greaterThanOrEqualTo: $modifiedOnOrAfter
-          },
-          and: [${allAndQueries.join(',')}]
-        }
+const deckSearchQuery = gql`
+    query decks(
+      $deckName: String
+      $authorName: String
+      $deckModified: Date
+      $card1: Int
+      $card2: Int
+      $card3: Int
+      $card4: Int
+      $card5: Int
+      $faction1: Int
+      $faction2: Int
+      $faction3: Int
+      $faction4: Int
+      $faction5: Int
+      $faction6: Int
+      $numFactions: Int
+    ) {
+      searchDecks(
+        deckname: $deckName
+        authorname: $authorName
+        deckmodified: $deckModified
+        card1: $card1
+        card2: $card2
+        card3: $card3
+        card4: $card4
+        card5: $card5
+        faction1: $faction1
+        faction2: $faction2
+        faction3: $faction3
+        faction4: $faction4
+        faction5: $faction5
+        faction6: $faction6
+        numfactions: $numFactions
       ) {
         nodes {
           name
-          id
           author {
             username
           }
-          modified
           deckPreviews {
             ${deckPreviewsFragment}
-          }
-          cardDecks {
-            nodes {
-              quantity
-              card {
-                mana
-                cardFactions {
-                  nodes {
-                    faction {
-                      name
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
     }
   `;
+
+export const useDeckSearchQuery = vars => {
+  return useQuery(deckSearchQuery, { variables: getDeckSearchVars(vars) });
 };
 
 export const deckCardsQuery = gql`

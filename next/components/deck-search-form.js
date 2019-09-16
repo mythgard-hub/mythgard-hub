@@ -65,6 +65,7 @@ export default function DeckSearchForm(props) {
         onChangeValue={cardValue => changeState('cardValue', cardValue)}
         cards={data.cards.nodes}
         selections={filters.cardSelections}
+        disabled={filters.cardSelections.length > 4}
         onSelect={cardSelections =>
           changeState('cardSelections', cardSelections)
         }
