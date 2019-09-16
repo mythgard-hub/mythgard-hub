@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Layout from '../components/layout';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
@@ -31,7 +31,35 @@ function DeckBuilderPage() {
   const [factions, setFactions] = useState(initialSearchFilters.factions);
   const [currentTab, setTab] = useState('');
   const [viewFilters, setViewFilters] = useState(false);
-  const [deckInProgress, setDeckInProgress] = useState(initializeDeckBuilder());
+  const [deckInProgress, _setDeckInProgress] = useState(
+    initializeDeckBuilder()
+  );
+
+  // Sync our edits locally as they're made. This let's us re-populate a deck
+  // after a page refresh or a sequence of redirects.
+  const setDeckInProgress = d => {
+    _setDeckInProgress(d);
+    sessionStorage.setItem('deckInProgress', JSON.stringify(d));
+  };
+
+  // `useEffect` will not run on the server. As long as we're using
+  // local/session storage, we need to make sure the code that loads/unloads a
+  // previously worked on decks is not run during an SSR.
+  useEffect(() => {
+    try {
+      const d = JSON.parse(sessionStorage.getItem('deckInProgress'));
+      if (!d) return;
+      const deckProperties = Object.keys(initializeDeckBuilder());
+      const isValidDeck = deckProperties.reduce((isValid, key) => {
+        return isValid && d.hasOwnProperty(key);
+      });
+      if (isValidDeck) {
+        setDeckInProgress(d);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
 
   const handleClearFilters = useCallback(() => {
     setCardSearchText(initialSearchFilters.cardSearchText);

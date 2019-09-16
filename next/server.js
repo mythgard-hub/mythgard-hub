@@ -4,6 +4,7 @@ const proxy = require('express-http-proxy');
 
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -16,6 +17,11 @@ app
 
     server.use(cookieParser());
     server.use(passport.initialize());
+    server.use(
+      session({
+        secret: process.env.EXPRESS_SESSION_SECRET
+      })
+    );
 
     const auth = require('./server-routes/auth.js');
     server.use('/auth', auth);

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ApolloConsumer } from 'react-apollo';
 import Router from 'next/router';
+import Link from 'next/link';
 
 import UserContext from '../components/user-context';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
@@ -45,13 +46,18 @@ export default function SaveDeck({ deckInProgress }) {
     return Boolean(deckInProgress.deckName);
   };
 
-  return (
-    <div className="save-deck-container">
-      <style jsx>{`
-        .save-deck-container {
-          margin-bottom: 10px;
-        }
-      `}</style>
+  // If user is not logged in, they must do so before saving
+  let saveButton;
+  if (!user || !user.id) {
+    saveButton = (
+      <Link href="/auth/google">
+        <a className="button" data-cy="saveDeck">
+          Login to Save
+        </a>
+      </Link>
+    );
+  } else {
+    saveButton = (
       <ApolloConsumer>
         {client => (
           <button
@@ -65,6 +71,17 @@ export default function SaveDeck({ deckInProgress }) {
           </button>
         )}
       </ApolloConsumer>
+    );
+  }
+
+  return (
+    <div className="save-deck-container">
+      <style jsx>{`
+        .save-deck-container {
+          margin-bottom: 10px;
+        }
+      `}</style>
+      {saveButton}
     </div>
   );
 }

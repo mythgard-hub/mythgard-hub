@@ -71,13 +71,18 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-router.get(
-  '/google',
+router.get('/google', (req, res, next) => {
+  const ref = req.get('Referrer');
+  const url = new URL(ref);
+  // Chop off the origin to make sure we only try to do internal redirects
+  const redirectTo = url.href.substr(url.origin.length);
+  req.session.redirectTo = redirectTo;
+
   passport.authenticate('google', {
     scope: process.env.GOOGLE_AUTH_SCOPE,
     session: false
-  })
-);
+  })(req, res, next);
+});
 
 router.get(
   '/google/callback',
@@ -105,7 +110,7 @@ router.get(
       secured: process.env.NODE_ENV === 'production',
       maxAge: sessionTimeoutInSecs * 1000
     });
-    res.redirect('/');
+    res.redirect(req.session.redirectTo || '/');
   }
 );
 
