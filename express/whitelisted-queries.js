@@ -1,18 +1,18 @@
 const deckPreviewsFragment = `
-  deckPreviews {
-    nodes {
-      deckName
-      deckCreated
-      factions
-      essenceCost
-      deck{
-        author {
-          username
-          id
-        }
+  nodes {
+    deckName
+    deckCreated
+    factions
+    essenceCost
+    votes
+    deck{
+      author {
+        username
+        id
       }
     }
-  }`;
+  }
+`;
 
 // whitespace doesn't matter here.
 module.exports = [
@@ -239,7 +239,9 @@ module.exports = [
             }
           }
         }
-        ${deckPreviewsFragment}
+        deckPreviews {
+          ${deckPreviewsFragment}
+        }
       }
     }
   }
@@ -314,11 +316,70 @@ module.exports = [
   `
   query card($id: Int!) {
     card(id: $id) {
+      id
       name
+      mana
+      gem
       atk
       def
-      rules
+      rarity
+      supertype
+      subtype
+      cardFactions {
+        nodes {
+          faction {
+            name
+          }
+        }
+      }
     }
   }
-`
+`,
+  `
+    query decks(
+      $deckName: String
+      $authorName: String
+      $deckModified: Date
+      $card1: Int
+      $card2: Int
+      $card3: Int
+      $card4: Int
+      $card5: Int
+      $faction1: Int
+      $faction2: Int
+      $faction3: Int
+      $faction4: Int
+      $faction5: Int
+      $faction6: Int
+      $numFactions: Int
+    ) {
+      searchDecks(
+        deckname: $deckName
+        authorname: $authorName
+        deckmodified: $deckModified
+        card1: $card1
+        card2: $card2
+        card3: $card3
+        card4: $card4
+        card5: $card5
+        faction1: $faction1
+        faction2: $faction2
+        faction3: $faction3
+        faction4: $faction4
+        faction5: $faction5
+        faction6: $faction6
+        numfactions: $numFactions
+      ) {
+        nodes {
+          name
+          author {
+            username
+          }
+          deckPreviews {
+            ${deckPreviewsFragment}
+          }
+        }
+      }
+    }
+  `
 ];
