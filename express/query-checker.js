@@ -1,8 +1,11 @@
 const allowedQueries = require('./whitelisted-queries.js');
+const crypto = require('crypto');
 
-//prettier-ignore
-// eslint-disable-next-line
-const jhashcode=s=>{for(var i=0,h;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;return h};
+const jhashcode = s =>
+  crypto
+    .createHash('sha1')
+    .update(s)
+    .digest('base64');
 
 // graphql or apollo tend to add stuff to queries that
 // can change the string, thus changing the hash.

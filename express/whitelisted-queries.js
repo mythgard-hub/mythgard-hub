@@ -288,18 +288,7 @@ module.exports = [
   `
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
-      nodes {
-        deckName
-        deckCreated
-        factions
-        essenceCost
-        deck {
-          author {
-            username
-            id
-          }
-        }
-      }
+      ${deckPreviewsFragment}
     }
   }
 `,
