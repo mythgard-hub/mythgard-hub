@@ -38,7 +38,8 @@ export default function CardSearch(props) {
     onChange: (_, { newValue }) => {
       onChangeValue(newValue);
     },
-    className: 'card-search-input'
+    className: 'card-search-input',
+    disabled: props.disabled
   };
 
   return (
@@ -75,11 +76,13 @@ CardSearch.propTypes = {
       name: PropTypes.string
     })
   ),
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 CardSearch.defaultProps = {
   cards: [],
   onSelect: () => {},
-  onChangeValue: () => {}
+  onChangeValue: () => {},
+  disabled: false
 };
