@@ -17,7 +17,7 @@ const client = new PgClient({
  * Fetches an account (user) record by email.
  */
 const getUserByEmail = async email => {
-  const query = `SELECT id, email, username FROM mythgard.account WHERE email = $1`;
+  const query = `SELECT id, email, username, registered FROM mythgard.account WHERE email = $1`;
   try {
     const res = await client.query(query, [email]);
     return res.rows[0];

@@ -73,7 +73,8 @@ CREATE TABLE mythgard.account (
   id SERIAL PRIMARY KEY,
   google_id varchar(255) UNIQUE,
   email varchar(255) UNIQUE,
-  username varchar(255) UNIQUE
+  username varchar(255) UNIQUE,
+  registered timestamp default current_timestamp
 );
 
 INSERT INTO mythgard.account ("username") VALUES ('lsv');
