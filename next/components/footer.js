@@ -31,7 +31,8 @@ export default function Footer() {
         }
       `}</style>
       <span>&copy; {new Date().getFullYear()} Mythgard</span>
-      <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Contact</a>
+      <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Email</a>
+      <a href={process.env.DISCORD_INVITE_URL}>Discord</a>
       <Link href="/privacy-policy">
         <a>Privacy Policy</a>
       </Link>
