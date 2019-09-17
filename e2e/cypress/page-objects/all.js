@@ -12,6 +12,7 @@ export default {
   factionFilter: '[data-cy="factionFilter"]',
   cardSearch: '[data-cy="cardSearch"]',
   cardSelectionItem: '[data-cy="cardSelectionItem"]',
+  deckPreview: '[data-cy="deckPreview"]',
 
   pagingTotal,
   getPagingTotalAsInt,
