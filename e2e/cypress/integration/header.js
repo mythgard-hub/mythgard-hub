@@ -17,11 +17,11 @@ describe('Header', function() {
       expect(location.pathname).to.eq('/');
     });
 
-    cy.get('.header a[data-cy="tournaments"]').click();
+    cy.get('.header a[data-cy="events"]').click();
     cy.location().should(location => {
-      expect(location.pathname).to.eq('/tournaments');
+      expect(location.pathname).to.eq('/events');
     });
-    cy.get('[data-cy="tournaments"]').should('have.class', 'selected');
+    cy.get('[data-cy="events"]').should('have.class', 'selected');
 
     cy.get('.header a[data-cy="cards"]').click();
     cy.location().should(location => {
