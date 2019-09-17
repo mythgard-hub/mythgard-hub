@@ -26,25 +26,31 @@ function Layout({ title, desc, children }) {
 
           @media only screen and (min-width: 600px) {
             .container:before {
-              content: ' ';
+              content: '';
               position: fixed;
               z-index: -1;
               top: 0;
               left: 0;
-              width: 432px;
+              width: calc((100% - 960px) / 2);
+              max-width: 432px;
+              min-width: 180px;
               height: 100%;
-              background: url(${process.env.MG_CDN}/backgrounds/BG-LeftSide.png);
+              background-image: url(${process.env.MG_CDN}/backgrounds/BG-LeftSide.png);
+              background-size: cover;
             }
 
             .container:after {
-              content: ' ';
+              content: '';
               position: fixed;
               z-index: -1;
               top: 0;
               right: 0;
-              width: 432px;
+              width: calc((100% - 960px) / 2);
+              max-width: 432px;
+              min-width: 180px;
               height: 100%;
               background: url(${process.env.MG_CDN}/backgrounds/BG-RightSide.png);
+              background-size: cover;
             }
           }
 
