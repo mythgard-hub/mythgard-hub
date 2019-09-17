@@ -21,6 +21,31 @@ function Layout({ title, desc, children }) {
             max-width: 960px;
             margin: auto;
             min-height: 100%;
+            background: ${theme.background};
+          }
+
+          @media only screen and (min-width: 600px) {
+            .container:before {
+              content: ' ';
+              position: fixed;
+              z-index: -1;
+              top: 0;
+              left: 0;
+              width: 432px;
+              height: 100%;
+              background: url(${process.env.MG_CDN}/backgrounds/BG-LeftSide.png);
+            }
+
+            .container:after {
+              content: ' ';
+              position: fixed;
+              z-index: -1;
+              top: 0;
+              right: 0;
+              width: 432px;
+              height: 100%;
+              background: url(${process.env.MG_CDN}/backgrounds/BG-RightSide.png);
+            }
           }
 
           @media only screen and (max-width: 600px) {
