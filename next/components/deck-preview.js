@@ -68,7 +68,7 @@ function DeckPreview({ deck }) {
         }
       `}</style>
 
-      <div className="deckPreview">
+      <div data-cy="deckPreview" className="deckPreview">
         {/* TODO - duplicate code in deck-list.js*/}
         <div className="deckName">
           <Link href={`/deck?id=${deck.id}`}>

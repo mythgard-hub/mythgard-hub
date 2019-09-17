@@ -29,7 +29,7 @@ function NewDecks() {
           }
         }
       `}</style>
-      <ul className="deckList">
+      <ul data-cy="newDecks" className="deckList">
         {decks.map((deck, i) => {
           return (
             <li key={i}>

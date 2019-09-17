@@ -23,7 +23,7 @@ function TopDecks() {
           padding: 0;
         }
       `}</style>
-      <ul className="deckList">
+      <ul data-cy="topDecks" className="deckList">
         {decks.map((deck, i) => {
           return (
             <li key={i}>
