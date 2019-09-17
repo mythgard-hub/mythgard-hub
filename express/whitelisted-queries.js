@@ -292,6 +292,21 @@ module.exports = [
     }
   }
 `,
+  `
+  query deckPreview {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3, filter: {
+      deck: {
+        deckFeatureds: {
+          some: {
+            deckExists: true
+          }
+        }
+      }
+    }) {
+      ${deckPreviewsFragment}
+    }
+  }
+`,
 
   `
   query tournament($id: Int!) {
