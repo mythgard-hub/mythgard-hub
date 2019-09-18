@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types';
+import GemDot from './gem-dot';
 
 export default function DeckCardsTable({ deck, deleteCard }) {
   const deckCards = deck && Object.values(deck.mainDeck);
-
-  const drawGems = gem => {
-    return Array(gem).fill(String.fromCharCode(8226));
-  };
-
   const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
   const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
 
@@ -49,7 +45,9 @@ export default function DeckCardsTable({ deck, deleteCard }) {
           {deckCards.map(deckCard => (
             <tr key={deckCard.card.id} data-cy="deckCardRow">
               <td>{deckCard.card.mana}</td>
-              <td>{drawGems(deckCard.card.gem)}</td>
+              <td>
+                <GemDot gems={deckCard.card.gem} />
+              </td>
               <td>{deckCard.card.name}</td>
               <td>x{deckCard.quantity}</td>
               <td
