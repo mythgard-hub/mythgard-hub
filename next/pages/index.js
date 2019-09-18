@@ -1,6 +1,7 @@
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import NewDecks from '../components/new-decks.js';
+import ArticleList from '../components/article-list.js';
 import { useContext } from 'react';
 import Link from 'next/link';
 import { ThemeContext } from '../components/theme-context.js';
@@ -18,8 +19,12 @@ const index = () => {
           margin: 0 -20px;
         }
 
+        .mg-column + .mg-column {
+          padding-left: 40px;
+        }
+
         .mg-column {
-          min-width: 303px;
+          flex: 1;
         }
 
         .homePageColumns h2 {
@@ -30,12 +35,18 @@ const index = () => {
         @media only screen and (max-width: 600px) {
           .mg-column {
             width: 100%;
+            flex: none;
+          }
+
+          .mg-column + .mg-column {
+            padding-left: 0;
           }
         }
       `}</style>
       <div className="homePageColumns">
         <div className="mg-column">
           <h2>Top Articles</h2>
+          <ArticleList max={3} />
         </div>
         <div className="mg-column">
           <h2>New Decks</h2>
