@@ -31,7 +31,7 @@ function DeckDelete({ deck }) {
   });
 
   // Users can only delete decks they authored
-  if (!user || user.id !== deck.author.id) return null;
+  if (!user || !deck || !deck.author || user.id !== deck.author.id) return null;
 
   return (
     <div className="deck-delete-container">
