@@ -10,8 +10,8 @@ import { deckCardsQuery } from '../lib/deck-queries';
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
   deckToExport.deckName = deckName;
-  deckToExport.deckPath = path ? path.name : '';
-  deckToExport.deckPower = power ? power.name : '';
+  deckToExport.deckPath = path ? { name: path.name } : {};
+  deckToExport.deckPower = power ? { name: power.name } : {};
   deckToExport.mainDeck = {
     ...deckCards
   };
