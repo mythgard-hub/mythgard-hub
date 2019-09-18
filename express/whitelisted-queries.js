@@ -137,6 +137,13 @@ module.exports = [
         name
         mana
         gem
+        cardFactions {
+          nodes {
+            faction {
+              name
+            }
+          }
+        }
       }
     }
   }
@@ -191,6 +198,15 @@ module.exports = [
         nodes {
           name
           id
+          mana
+          gem
+          cardFactions {
+            nodes {
+              faction {
+                name
+              }
+            }
+          }
         }
       }
     }
