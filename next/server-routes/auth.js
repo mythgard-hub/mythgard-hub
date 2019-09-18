@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const PgClient = require('pg').Client;
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
+const faker = require('faker');
 
 const client = new PgClient({
   user: process.env.EXPRESS_PGUSER,
@@ -26,6 +27,30 @@ const getUserByEmail = async email => {
   }
 };
 
+const ucfirst = str => str[0].toUpperCase() + str.substr(1).toLowerCase();
+
+const getUsername = () => {
+  let name;
+  switch (faker.random.number(1)) {
+    case 0:
+      name =
+        faker.name.firstName() +
+        'Of' +
+        faker.company.bsNoun() +
+        faker.random.number(1000);
+      break;
+    case 1:
+      name =
+        faker.name.lastName() +
+        'Who' +
+        ucfirst(faker.company.bsBuzz() + 's') +
+        ucfirst(faker.hacker.noun()) +
+        faker.random.number(1000);
+  }
+  name = name.replace(/[^\w\d]/g, '');
+  return name;
+};
+
 /**
  * Stay logged in for one hour of non-activity
  */
@@ -44,10 +69,11 @@ passport.use(
     (accessToken, refreshToken, profile, cb) => {
       const { id } = profile;
       const email = profile.emails[0].value;
+      const tmpUsername = getUsername();
       const text =
         'SELECT id, email ' +
-        'FROM mythgard.find_account_or_create_by_google($1, $2)';
-      const values = [id, email];
+        'FROM mythgard.find_account_or_create_by_google($1, $2, $3)';
+      const values = [id, email, tmpUsername];
       client.query(text, values, (err, res) => {
         if (err) return cb(err);
         cb(null, {
@@ -71,13 +97,18 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-router.get(
-  '/google',
+router.get('/google', (req, res, next) => {
+  const ref = req.get('Referrer');
+  const url = new URL(ref);
+  // Chop off the origin to make sure we only try to do internal redirects
+  const redirectTo = url.href.substr(url.origin.length);
+  req.session.redirectTo = redirectTo;
+
   passport.authenticate('google', {
     scope: process.env.GOOGLE_AUTH_SCOPE,
     session: false
-  })
-);
+  })(req, res, next);
+});
 
 router.get(
   '/google/callback',
@@ -105,7 +136,7 @@ router.get(
       secured: process.env.NODE_ENV === 'production',
       maxAge: sessionTimeoutInSecs * 1000
     });
-    res.redirect('/');
+    res.redirect(req.session.redirectTo || '/');
   }
 );
 

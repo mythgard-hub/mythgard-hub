@@ -15,14 +15,15 @@ function HeaderLink(props) {
         a:before {
           text-decoration: none;
           content: '\u25b6';
-          font-size: 80%;
           margin-right: 5px;
         }
 
         a {
           text-transform: uppercase;
           text-decoration: none;
-          margin-right: 15px;
+          margin-right: 22px;
+          font-size: 18px;
+          white-space: nowrap;
         }
 
         .selected {
@@ -34,6 +35,7 @@ function HeaderLink(props) {
             font-size: 20px;
             margin-bottom: 10px;
             display: inline-flex;
+            text-align: center;
           }
 
           a:before {

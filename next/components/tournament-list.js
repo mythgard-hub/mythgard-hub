@@ -16,7 +16,7 @@ export default function TournamentList({ tournaments }) {
       {tournaments.map((tourney, index) => (
         <li key={tourney.id} data-cy="tournamentListItem">
           {tourney.id + ' '}
-          <Link href={`/tournament?id=${tourney.id}`} key={index}>
+          <Link href={`/events?id=${tourney.id}`} key={index}>
             <a>{tourney.name}</a>
           </Link>
           {' Date: ' + tourney.date}

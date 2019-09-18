@@ -21,6 +21,37 @@ function Layout({ title, desc, children }) {
             max-width: 960px;
             margin: auto;
             min-height: 100%;
+            background: ${theme.background};
+          }
+
+          @media only screen and (min-width: 600px) {
+            .container:before {
+              content: '';
+              position: fixed;
+              z-index: -1;
+              top: 0;
+              left: 0;
+              width: calc((100% - 960px) / 2);
+              max-width: 432px;
+              min-width: 180px;
+              height: 100%;
+              background-image: url(${process.env.MG_CDN}/backgrounds/BG-LeftSide.png);
+              background-size: cover;
+            }
+
+            .container:after {
+              content: '';
+              position: fixed;
+              z-index: -1;
+              top: 0;
+              right: 0;
+              width: calc((100% - 960px) / 2);
+              max-width: 432px;
+              min-width: 180px;
+              height: 100%;
+              background: url(${process.env.MG_CDN}/backgrounds/BG-RightSide.png);
+              background-size: cover;
+            }
           }
 
           @media only screen and (max-width: 600px) {
@@ -65,6 +96,7 @@ function Layout({ title, desc, children }) {
             font-style: italic;
             font-weight: bold;
             font-size: 1.2em;
+            text-transform: uppercase;
           }
 
           a {
@@ -81,7 +113,8 @@ function Layout({ title, desc, children }) {
           }
 
           button,
-          input[type='submit'] {
+          input[type='submit'],
+          a.button {
             background-color: ${theme.sectionBackground};
             border: ${theme.sectionBorder};
             color: ${theme.buttonTextColor};
@@ -94,6 +127,9 @@ function Layout({ title, desc, children }) {
             border-radius: 10px;
             font-style: italic;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
           }
 
           button:disabled {

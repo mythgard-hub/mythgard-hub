@@ -23,5 +23,4 @@ export const cardQuery = gql`
   }
 `;
 
-
 export default cardQuery;

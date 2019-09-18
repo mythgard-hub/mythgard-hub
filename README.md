@@ -90,6 +90,10 @@ To run all tests:
 
 Please use prettier and eslint. Configs are located in next, express, and e2e, but you will need to `npm install` the necessary eslint plugins.
 
+## Graphql
+
+To protect our infrastructure from malicious graphql queries, we have implemented a whitelist. This creates a small inconvenience when updating or creating new graphql queries - one must remember to update the whitelist file. We have hopes to eliminate this step with an isomorphic node module in the future. `/express/whitelisted-queries.js`
+
 ## Deploying
 
 Ensure that the `docker` and `kubectl` commands are installed and in you path. Docker will need to be configured to push to the `gsdf` organization in the public registry and `kubectl` must be pointed at your target cluster.
