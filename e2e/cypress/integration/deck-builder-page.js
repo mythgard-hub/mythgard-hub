@@ -16,7 +16,11 @@ import {
 
 describe('Deck builder page', () => {
   beforeEach(() => {
-    cy.visit('/deck-builder');
+    cy.visit('/deck-builder', {
+      onBeforeLoad: win => {
+        win.sessionStorage.clear();
+      }
+    });
   });
   it('should have a happy path', function() {
     cy.get('[data-cy="header"]').should('be.visible');
@@ -123,15 +127,6 @@ describe('Deck builder page', () => {
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.equal(length);
-
-        // finally try to save the deck and fail
-        cy.get('[data-cy="deckTitle"]').type('Floop the Pig');
-        cy.get('[data-cy="saveDeck"]').click();
-        cy.on('window:alert', str => {
-          expect(str).to.equal(
-            'Only logged in users can save deck. Please export your work, log in and come back.'
-          );
-        });
       });
   });
 

@@ -106,7 +106,8 @@ function Layout({ title, desc, children }) {
           }
 
           button,
-          input[type='submit'] {
+          input[type='submit'],
+          a.button {
             background-color: ${theme.sectionBackground};
             border: ${theme.sectionBorder};
             color: ${theme.buttonTextColor};
@@ -119,6 +120,9 @@ function Layout({ title, desc, children }) {
             border-radius: 10px;
             font-style: italic;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
           }
 
           button:disabled {
