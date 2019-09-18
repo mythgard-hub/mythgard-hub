@@ -6,12 +6,13 @@ import DeckExport from './deck-export';
 import DeckDelete from './deck-delete';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import { deckCardsQuery } from '../lib/deck-queries';
+import DeckCardsTable from './deck-card-table';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
   deckToExport.deckName = deckName;
-  deckToExport.deckPath = path ? path.name : '';
-  deckToExport.deckPower = power ? power.name : '';
+  deckToExport.deckPath = path || '';
+  deckToExport.deckPower = power || '';
   deckToExport.mainDeck = {
     ...deckCards
   };
@@ -33,18 +34,53 @@ export default function Deck({ deck }) {
   const authorName = (author && author.username) || 'unknown';
 
   return (
-    <>
-      <h1 className="deckName">{deck.name}</h1>
-      <div>by {authorName}</div>
-      <h2>Power</h2>
-      {power ? power.name : 'No Power Selected'}
-      <h2>Path</h2>
-      {path ? path.name : 'No Path Selected'}
-      <h2>Cards</h2>
-      <DeckCardList deckCards={cards} />
-      <DeckExport deckInProgress={deckToExport} />
-      <DeckDelete deck={deck} />
-    </>
+    <div className="deck-page-container">
+      <style jsx>{`
+        .deck-page-container {
+          display: flex;
+        }
+
+        .deck-details {
+          width: 70%;
+          padding-right: 20px;
+          padding-bottom: 50px;
+        }
+
+        .deck-actions {
+          width: 30%;
+        }
+
+        .deck-name {
+          font-weight: bold;
+          font-size: 24px;
+          margin-bottom: 5px;
+        }
+
+        .deck-author {
+          margin-bottom: 20px;
+        }
+
+        @media only screen and (max-width: 600px) {
+          .deck-page-container {
+            flex-direction: column;
+          }
+
+          .deck-details,
+          .deck-actions {
+            width: 100%;
+          }
+        }
+      `}</style>
+      <div className="deck-details">
+        <div className="deck-name">{deck.name}</div>
+        <div className="deck-author">by {authorName}</div>
+        <DeckCardsTable deck={deckToExport} onlyTable />
+      </div>
+      <div className="deck-actions">
+        <DeckExport deckInProgress={deckToExport} />
+        <DeckDelete deck={deck} />
+      </div>
+    </div>
   );
 }
 

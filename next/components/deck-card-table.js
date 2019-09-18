@@ -5,11 +5,12 @@ import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
 import { cardMainColor } from '../lib/card';
 
-export default function DeckCardsTable({ deck, deleteCard }) {
+export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
   const theme = useContext(ThemeContext);
   const deckCards = deck && Object.values(deck.mainDeck);
   const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
   const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
+  const colspan = deleteCard ? 3 : 2;
 
   return (
     <div className="deck-card-table-container">
@@ -36,16 +37,18 @@ export default function DeckCardsTable({ deck, deleteCard }) {
           text-decoration: underline;
         }
       `}</style>
-      <div className="deck-title">{deck.deckName || '[untitled]'}</div>
+      {!onlyTable && (
+        <div className="deck-title">{deck.deckName || '[untitled]'}</div>
+      )}
       <table className="deck-card-table">
         <tbody>
           <tr>
             <td colSpan={2}>Path</td>
-            <td colSpan={3}>{path}</td>
+            <td colSpan={colspan}>{path}</td>
           </tr>
           <tr>
             <td colSpan={2}>Power</td>
-            <td colSpan={3}>{power}</td>
+            <td colSpan={colspan}>{power}</td>
           </tr>
           {deckCards.map(deckCard => {
             const backgroundColor = cardMainColor(deckCard.card, theme);
@@ -58,13 +61,15 @@ export default function DeckCardsTable({ deck, deleteCard }) {
                 </td>
                 <td style={{ backgroundColor, color }}>{deckCard.card.name}</td>
                 <td>x{deckCard.quantity}</td>
-                <td
-                  data-cy="deckDeleteCard"
-                  className="deck-delete-card"
-                  onClick={() => deleteCard(deckCard.card.id)}
-                >
-                  x
-                </td>
+                {deleteCard && (
+                  <td
+                    data-cy="deckDeleteCard"
+                    className="deck-delete-card"
+                    onClick={() => deleteCard(deckCard.card.id)}
+                  >
+                    x
+                  </td>
+                )}
               </tr>
             );
           })}
@@ -75,7 +80,8 @@ export default function DeckCardsTable({ deck, deleteCard }) {
 }
 
 DeckCardsTable.propTypes = {
-  deleteCard: PropTypes.func.isRequired,
+  onlyTable: PropTypes.bool,
+  deleteCard: PropTypes.func,
   deck: PropTypes.shape({
     deckName: PropTypes.string,
     deckPath: PropTypes.shape({
