@@ -17,3 +17,12 @@ export const FACTION_IMAGES = {
   parsa: `${cdn}Filter-Icons_0000s_0003s_0004_orange.png`,
   harmony: `${cdn}Filter-Icons_0000s_0003s_0005_purple.png`
 };
+
+export const FACTION_COLORS = {
+  blue: 'norden',
+  yellow: 'aztlan',
+  red: 'oberos',
+  green: 'dreni',
+  orange: 'parsa',
+  purple: 'harmony'
+};

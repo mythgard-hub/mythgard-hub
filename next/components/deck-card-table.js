@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
+import { cardMainColor } from '../lib/card';
 
 export default function DeckCardsTable({ deck, deleteCard }) {
+  const theme = useContext(ThemeContext);
   const deckCards = deck && Object.values(deck.mainDeck);
   const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
   const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
@@ -42,23 +47,27 @@ export default function DeckCardsTable({ deck, deleteCard }) {
             <td colSpan={2}>Power</td>
             <td colSpan={3}>{power}</td>
           </tr>
-          {deckCards.map(deckCard => (
-            <tr key={deckCard.card.id} data-cy="deckCardRow">
-              <td>{deckCard.card.mana}</td>
-              <td>
-                <GemDot gems={deckCard.card.gem} />
-              </td>
-              <td>{deckCard.card.name}</td>
-              <td>x{deckCard.quantity}</td>
-              <td
-                data-cy="deckDeleteCard"
-                className="deck-delete-card"
-                onClick={() => deleteCard(deckCard.card.id)}
-              >
-                x
-              </td>
-            </tr>
-          ))}
+          {deckCards.map(deckCard => {
+            const backgroundColor = cardMainColor(deckCard.card, theme);
+            const color = backgroundColor ? theme.cardTableName : 'inherit';
+            return (
+              <tr key={deckCard.card.id} data-cy="deckCardRow">
+                <td>{deckCard.card.mana}</td>
+                <td>
+                  <GemDot gems={deckCard.card.gem} />
+                </td>
+                <td style={{ backgroundColor, color }}>{deckCard.card.name}</td>
+                <td>x{deckCard.quantity}</td>
+                <td
+                  data-cy="deckDeleteCard"
+                  className="deck-delete-card"
+                  onClick={() => deleteCard(deckCard.card.id)}
+                >
+                  x
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
