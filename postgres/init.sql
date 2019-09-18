@@ -128,10 +128,11 @@ INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
   _google_id varchar(255),
-  _email varchar(255)
+  _email varchar(255),
+  _username varchar(255)
 )
 RETURNS mythgard.account as $$
-  INSERT INTO mythgard.account (google_id, email) VALUES (_google_id, _email)
+  INSERT INTO mythgard.account (google_id, email, username) VALUES (_google_id, _email, _username)
     ON CONFLICT (google_id) DO UPDATE SET email = _email
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
