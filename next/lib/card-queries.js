@@ -51,6 +51,15 @@ export const getCardsQuery = () => {
         nodes {
           name
           id
+          mana
+          gem
+          cardFactions {
+            nodes {
+              faction {
+                name
+              }
+            }
+          }
         }
       }
     }

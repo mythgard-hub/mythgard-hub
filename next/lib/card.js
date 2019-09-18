@@ -1,3 +1,4 @@
+import { FACTION_COLORS } from '../constants/factions';
 const cdn = process.env.MG_CARDS_CDN;
 
 const capitalize = s => {
@@ -28,4 +29,40 @@ export const imagePathSmall = (name, set = 'core') => {
 
 export const imagePathMedium = (name, set = 'core') => {
   return `${cdn}/${set.toLowerCase()}/m/${nameToImage(name)}.png`;
+};
+
+export const mainFaction = card => {
+  try {
+    return card.cardFactions.nodes[0].faction.name;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const cardMainColor = (card, theme) => {
+  const faction = mainFaction(card);
+
+  let color = null;
+  switch (faction) {
+    case FACTION_COLORS.blue:
+      color = theme.blueFactionColor;
+      break;
+    case FACTION_COLORS.yellow:
+      color = theme.yellowFactionColor;
+      break;
+    case FACTION_COLORS.red:
+      color = theme.redFactionColor;
+      break;
+    case FACTION_COLORS.purple:
+      color = theme.purpleFactionColor;
+      break;
+    case FACTION_COLORS.orange:
+      color = theme.orangeFactionColor;
+      break;
+    case FACTION_COLORS.green:
+      color = theme.greenFactionColor;
+      break;
+  }
+
+  return color;
 };

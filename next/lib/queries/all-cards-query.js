@@ -8,6 +8,13 @@ const cardsQuery = gql`
         name
         mana
         gem
+        cardFactions {
+          nodes {
+            faction {
+              name
+            }
+          }
+        }
       }
     }
   }

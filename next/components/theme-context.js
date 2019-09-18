@@ -37,7 +37,14 @@ export const themes = {
     footerBackgroundColor: mgColors.grayBlue,
     footerLinkColor: mgColors.orange,
     footerTextColor: mgColors.mediumLighterGray,
-    selectedPageColor: mgColors.blue
+    selectedPageColor: mgColors.blue,
+    blueFactionColor: mgColors.blue,
+    redFactionColor: mgColors.red,
+    yellowFactionColor: mgColors.yellow,
+    orangeFactionColor: mgColors.darkOrange,
+    greenFactionColor: mgColors.green,
+    purpleFactionColor: mgColors.purple,
+    cardTableName: mgColors.mediumGray
   }
 };
 
