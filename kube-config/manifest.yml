@@ -56,6 +56,21 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: GOOGLE_AUTH_SCOPE
+            - name: GA_TRACKING_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GA_TRACKING_ID
+            - name: MG_CDN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MG_CDN
+            - name: MG_CARDS_CDN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MG_CARDS_CDN
             - name: PGUSER
               valueFrom:
                 secretKeyRef:
@@ -86,6 +101,31 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: PGSSL
+            - name: EXPRESS_PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGUSER
+            - name: EXPRESS_PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGPASSWORD
+            - name: EXPRESS_SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_SESSION_SECRET
+            - name: PG_AUTHD_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_AUTHD_USER_ROLE
+            - name: PG_ANON_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_ANON_USER_ROLE
             - name: JWT_COOKIE_NAME
               valueFrom:
                 secretKeyRef:
@@ -116,36 +156,16 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: API_HOST
-            - name: MG_CDN
+            - name: EMAIL_MG_SUPPORT
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: MG_CDN
-            - name: MG_CARDS_CDN
+                  key: EMAIL_MG_SUPPORT
+            - name: DISCORD_INVITE_URL
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: MG_CARDS_CDN
-            - name: EXPRESS_PGUSER
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: EXPRESS_PGUSER
-            - name: EXPRESS_PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: EXPRESS_PGPASSWORD
-            - name: PG_AUTHD_USER_ROLE
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: PG_AUTHD_USER_ROLE
-            - name: PG_ANON_USER_ROLE
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: PG_ANON_USER_ROLE
+                  key: DISCORD_INVITE_URL
         - name: express
           image: gsdf/mg-server:$VERSION
           ports:
@@ -172,6 +192,21 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: GOOGLE_AUTH_SCOPE
+            - name: GA_TRACKING_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GA_TRACKING_ID
+            - name: MG_CDN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MG_CDN
+            - name: MG_CARDS_CDN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MG_CARDS_CDN
             - name: PGUSER
               valueFrom:
                 secretKeyRef:
@@ -202,6 +237,31 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: PGSSL
+            - name: EXPRESS_PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGUSER
+            - name: EXPRESS_PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_PGPASSWORD
+            - name: EXPRESS_SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EXPRESS_SESSION_SECRET
+            - name: PG_AUTHD_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_AUTHD_USER_ROLE
+            - name: PG_ANON_USER_ROLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PG_ANON_USER_ROLE
             - name: JWT_COOKIE_NAME
               valueFrom:
                 secretKeyRef:
@@ -232,33 +292,13 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: API_HOST
-            - name: MG_CDN
+            - name: EMAIL_MG_SUPPORT
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: MG_CDN
-            - name: MG_CARDS_CDN
+                  key: EMAIL_MG_SUPPORT
+            - name: DISCORD_INVITE_URL
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: MG_CARDS_CDN
-            - name: EXPRESS_PGUSER
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: EXPRESS_PGUSER
-            - name: EXPRESS_PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: EXPRESS_PGPASSWORD
-            - name: PG_AUTHD_USER_ROLE
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: PG_AUTHD_USER_ROLE
-            - name: PG_ANON_USER_ROLE
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: PG_ANON_USER_ROLE
+                  key: DISCORD_INVITE_URL
