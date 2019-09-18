@@ -2,8 +2,8 @@ export const exportDeck = deckInProgress => {
   try {
     const exportMeta = [
       `name: ${deckInProgress.deckName}`,
-      `path: ${deckInProgress.deckPath.name}`,
-      `power: ${deckInProgress.deckPower.name}`,
+      `path: ${deckInProgress.deckPath.name || ''}`,
+      `power: ${deckInProgress.deckPower.name || ''}`,
       `coverart: ${deckInProgress.deckCoverArt}`
     ].join('\n');
 
