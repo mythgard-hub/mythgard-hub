@@ -1,7 +1,6 @@
 import { useQuery } from 'react-apollo-hooks';
 import PropTypes from 'prop-types';
 import ErrorMessage from './error-message';
-import DeckCardList from './deck-card-list';
 import DeckExport from './deck-export';
 import DeckDelete from './deck-delete';
 import { initializeDeckBuilder } from '../lib/deck-utils';

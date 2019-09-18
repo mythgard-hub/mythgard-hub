@@ -223,6 +223,15 @@ module.exports = [
           card {
             name
             id
+            mana
+            gem
+            cardFactions {
+              nodes {
+                faction {
+                  name
+                }
+              }
+            }
           }
         }
       }

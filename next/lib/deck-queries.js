@@ -140,6 +140,15 @@ export const deckCardsQuery = gql`
           card {
             name
             id
+            mana
+            gem
+            cardFactions {
+              nodes {
+                faction {
+                  name
+                }
+              }
+            }
           }
         }
       }
