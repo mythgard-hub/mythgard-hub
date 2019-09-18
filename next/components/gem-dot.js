@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
 
 export default function GemDot({ gems }) {
+  if (!gems) return null;
+
   const theme = useContext(ThemeContext);
   const gemElements = gems.split('').map((gem, index) => {
     let gemColor = null;
