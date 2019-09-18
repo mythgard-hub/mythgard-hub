@@ -96,6 +96,7 @@ function Layout({ title, desc, children }) {
             font-style: italic;
             font-weight: bold;
             font-size: 1.2em;
+            text-transform: uppercase;
           }
 
           a {
