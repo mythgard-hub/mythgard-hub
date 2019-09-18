@@ -126,6 +126,16 @@ CREATE TABLE mythgard.deck_vote (
 
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
 
+CREATE TABLE mythgard.deck_featured (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE
+);
+
+INSERT INTO mythgard.deck_featured("deck_id") VALUES (1);
+
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
   _google_id varchar(255),
