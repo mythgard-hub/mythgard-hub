@@ -227,6 +227,18 @@ export const newDeckPreviewsQuery = gql`
   }
 `;
 
+export const userDecksQuery = gql`
+  query userDecks($authorId: Int!) {
+    decks(condition: { authorId: $authorId }, orderBy: CREATED_DESC) {
+      nodes {
+        deckPreviews {
+         ${deckPreviewsFragment}
+        }
+      }
+    }
+  }
+`;
+
 // converts a deckPreview view to a deck-like object
 // for use in components that expect a deck-like
 export const deckPreviewToDeck = d => {
