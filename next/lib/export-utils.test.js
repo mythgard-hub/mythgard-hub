@@ -53,8 +53,8 @@ describe('Export utility methods', () => {
       const deckInProgress = initializeDeckBuilder();
       deckInProgress.deckName = 'my deck';
       deckInProgress.deckCoverArt = 'myself';
-      deckInProgress.deckPath = 'my path';
-      deckInProgress.deckPower = 'power rangers';
+      deckInProgress.deckPath = { name: 'my path' };
+      deckInProgress.deckPower = { name: 'power rangers' };
       deckInProgress.mainDeck = {
         1: { quantity: 1, card: { id: 1, name: 'card 1' } },
         2: { quantity: 2, card: { id: 2, name: 'card 2' } },
@@ -79,8 +79,8 @@ describe('Export utility methods', () => {
       const deckInProgress = initializeDeckBuilder();
       deckInProgress.deckName = 'my deck';
       deckInProgress.deckCoverArt = 'myself';
-      deckInProgress.deckPath = 'my path';
-      deckInProgress.deckPower = 'power rangers';
+      deckInProgress.deckPath = { name: 'my path' };
+      deckInProgress.deckPower = { name: 'power rangers' };
       deckInProgress.mainDeck = {
         1: { quantity: 1, card: { id: 1, name: 'card 1' } }
       };

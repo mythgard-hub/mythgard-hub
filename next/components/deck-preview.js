@@ -20,7 +20,6 @@ function DeckPreview({ deck }) {
           display: block;
           margin-bottom: 10px;
           padding: 10px;
-          max-width: 277px;
         }
 
         .deckName :global(a) {

@@ -10,8 +10,8 @@ import DeckCardsTable from './deck-card-table';
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
   deckToExport.deckName = deckName;
-  deckToExport.deckPath = path || '';
-  deckToExport.deckPower = power || '';
+  deckToExport.deckPath = path ? { name: path.name } : {};
+  deckToExport.deckPower = power ? { name: power.name } : {};
   deckToExport.mainDeck = {
     ...deckCards
   };
