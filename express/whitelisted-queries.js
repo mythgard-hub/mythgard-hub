@@ -370,5 +370,16 @@ module.exports = [
         }
       }
     }
+  `,
+  `
+  query userDecks($authorId: Int!) {
+    decks(condition: { authorId: $authorId }, orderBy: CREATED_DESC) {
+      nodes {
+        deckPreviews {
+         ${deckPreviewsFragment}
+        }
+      }
+    }
+  }
   `
 ];
