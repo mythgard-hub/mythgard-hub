@@ -31,14 +31,14 @@ CREATE TEMPORARY TABLE t (
 -- used to convert these to -1.
 insert into mythgard.card (id, name, rules, supertype, subtype, atk, def, mana, gem, rarity)
 select
-  id,
-  name,
-  rules,
-  string_to_array(upper(supertype), ',')::mythgard.cardType[],
-  subtype,
-  REGEXP_REPLACE(atk, '[^0-9]' ,'-1')::integer,
-  REGEXP_REPLACE(def, '[^0-9]' ,'-1')::integer,
-  REGEXP_REPLACE(manaCost, '[^0-9]' ,'-1')::integer
+  id
+  ,name
+  ,rules
+  ,string_to_array(upper(supertype), ',')::mythgard.cardType[]
+  ,subtype
+  ,REGEXP_REPLACE(atk, '[^0-9]' ,'-1')::integer
+  ,REGEXP_REPLACE(def, '[^0-9]' ,'-1')::integer
+  ,REGEXP_REPLACE(manaCost, '[^0-9]' ,'-1')::integer
   ,gemCost
   ,UPPER(rarity)::mythgard.rarity
   from t
