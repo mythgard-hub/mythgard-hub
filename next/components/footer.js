@@ -35,7 +35,7 @@ export default function Footer() {
       <a href={`mailto:${process.env.EMAIL_MG_CONTACT}`}>General Contact</a>
       <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Support</a>
       <a href={`mailto:${process.env.EMAIL_MG_EVENTS}`}>List Your Event</a>
-x      <a href={`mailto:${process.env.EMAIL_MG_BUSINESS}`}>Business Inquiries</a>
+      <a href={`mailto:${process.env.EMAIL_MG_BUSINESS}`}>Business Inquiries</a>
       <Link href="/privacy-policy">
         <a>Privacy Policy</a>
       </Link>
