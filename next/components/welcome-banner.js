@@ -77,9 +77,9 @@ export default function WelcomeBanner() {
               {user.username || 'Welcome'}
             </a>
           </Link>
-          <Link href="/auth/logout">
-            <a className="welcome-banner-link">Logout</a>
-          </Link>
+          <a href="/auth/logout" className="welcome-banner-link">
+            Logout
+          </a>
         </div>
       )}
     </div>
