@@ -46,6 +46,15 @@ SET name = excluded.name,
     subtype = excluded.subtype,
     atk = excluded.atk,
     def = excluded.def;
-;
+
+truncate table mythgard.card_faction;
+insert into mythgard.card_faction (card_id, faction_id)
+  select t.id, faction.id
+    from t
+    left join mythgard.faction on lower(faction.name) = lower(t.facOne);
+insert into mythgard.card_faction (card_id, faction_id)
+  select t.id, faction.id
+    from t
+    left join mythgard.faction on lower(faction.name) = lower(t.facTwo);
 
 DROP TABLE t;
