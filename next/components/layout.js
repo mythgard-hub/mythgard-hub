@@ -112,6 +112,17 @@ function Layout({ title, desc, children }) {
             border-top: ${theme.border};
           }
 
+          hr.bgrad {
+            border-top: ${theme.borderAccent};
+            -webkit-mask-image: -webkit-gradient(
+              linear,
+              left top,
+              right bottom,
+              from(rgba(0, 0, 0, 0)),
+              to(rgba(0, 0, 0, 1))
+            );
+          }
+
           button,
           input[type='submit'],
           a.button {
