@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 const faker = require('faker');
 
 const client = new PgClient({
-  user: process.env.EXPRESS_PGUSER,
+  user: process.env.PGUSER,
   database: process.env.PGDATABASE,
-  password: process.env.EXPRESS_PGPASSWORD,
+  password: process.env.PGPASSWORD,
   host: process.env.PGHOST,
   port: process.env.PGPORT,
   ssl: process.env.PGSSL === 'yes'
