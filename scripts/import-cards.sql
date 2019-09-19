@@ -29,7 +29,7 @@ CREATE TEMPORARY TABLE t (
 -- We use -1 to denote variable attack and defense values.
 -- However, the csv uses X or * to denote this. A regex is
 -- used to convert these to -1.
-insert into mythgard.card (id, name, rules, supertype, subtype, atk, def, mana)
+insert into mythgard.card (id, name, rules, supertype, subtype, atk, def, mana, gem, rarity)
 select
   id,
   name,
@@ -39,6 +39,8 @@ select
   REGEXP_REPLACE(atk, '[^0-9]' ,'-1')::integer,
   REGEXP_REPLACE(def, '[^0-9]' ,'-1')::integer,
   REGEXP_REPLACE(manaCost, '[^0-9]' ,'-1')::integer
+  ,gemCost
+  ,UPPER(rarity)::mythgard.rarity
   from t
 ON CONFLICT (id) DO UPDATE
 SET name = excluded.name
@@ -48,6 +50,8 @@ SET name = excluded.name
     ,atk = excluded.atk
     ,def = excluded.def
     ,mana = excluded.mana
+    ,gem = excluded.gem
+    ,rarity = excluded.rarity
 ;
 
 truncate table mythgard.card_faction;
