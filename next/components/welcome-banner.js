@@ -69,9 +69,9 @@ export default function WelcomeBanner() {
       </a>
 
       {!user && (
-        <Link href="/auth/google">
-          <a className="welcome-banner-link">Login/Register</a>
-        </Link>
+        <a href="/auth/google" className="welcome-banner-link">
+          Login/Register
+        </a>
       )}
 
       {user && (
