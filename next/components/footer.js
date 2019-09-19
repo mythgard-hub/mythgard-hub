@@ -31,8 +31,11 @@ export default function Footer() {
         }
       `}</style>
       <span>&copy; {new Date().getFullYear()} Mythgard</span>
-      <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Email</a>
       <a href={process.env.DISCORD_INVITE_URL}>Discord</a>
+      <a href={`mailto:${process.env.EMAIL_MG_CONTACT}`}>General Contact</a>
+      <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Support</a>
+      <a href={`mailto:${process.env.EMAIL_MG_EVENTS}`}>List Your Event</a>
+x      <a href={`mailto:${process.env.EMAIL_MG_BUSINESS}`}>Business Inquiries</a>
       <Link href="/privacy-policy">
         <a>Privacy Policy</a>
       </Link>
