@@ -118,9 +118,6 @@ function Account() {
               <hr className="ograd" />
               <div className="stack">
                 <div>
-                  <Link href="/auth/logout">Log out</Link>
-                </div>
-                <div>
                   <label>Email: </label>
                   <span>{user.email}</span>
                 </div>

@@ -35,18 +35,14 @@ export default function WelcomeBanner() {
           content: none;
         }
 
-        .welcome-banner-link-username:after {
-          content: '\u25bc';
-          margin-left: 3px;
-          position: relative;
-          top: 1px;
+        .welcome-banner-link-username {
+          margin-right: 15px;
         }
 
         .welcome-banner-link {
           text-decoration: none;
           font-weight: 600;
           color: ${theme.background};
-          padding-bottom: 5px;
         }
 
         .welcome-banner-link:hover,
@@ -75,11 +71,16 @@ export default function WelcomeBanner() {
       )}
 
       {user && (
-        <Link href="/account">
-          <a className="welcome-banner-link welcome-banner-link-username">
-            {user.username || 'Welcome'}
+        <div>
+          <Link href="/account">
+            <a className="welcome-banner-link welcome-banner-link-username">
+              {user.username || 'Welcome'}
+            </a>
+          </Link>
+          <a href="/auth/logout" className="welcome-banner-link">
+            Logout
           </a>
-        </Link>
+        </div>
       )}
     </div>
   );
