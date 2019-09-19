@@ -51,7 +51,7 @@ class Header extends React.Component {
             }
           }
         `}</style>
-        <Link href="/" className="home-wrapper">
+        <Link href="/">
           <a data-cy="home" className="home" aria-label="home link">
             <img
               className="crownIcon"
