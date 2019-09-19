@@ -65,17 +65,19 @@ const index = () => {
         .patchNotes :global(.page-banner) {
           height: 134px;
         }
+
+        .patchNotes :global(.page-banner) .patchNotes__v {
+          text-transform: lowercase;
+        }
       `}</style>
       <div className="patchNotes">
-        <Link href="/patchNotes">
-          <a>
-            <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
-              Latest Patch Notes
-              <br />
-              v0.0.1
-            </PageBanner>
-          </a>
-        </Link>
+        <a href="https://www.mythgardgame.com/permalink/patch-notes-v0-16-1">
+          <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
+            Latest Patch Notes
+            <br />
+            <span className="patchNotes__v">v</span>0.16.1
+          </PageBanner>
+        </a>
       </div>
     </Layout>
   );
