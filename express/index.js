@@ -31,7 +31,7 @@ app.use('/graphql', async (req, res, next) => {
     return acc && allowed;
   }, true);
   if (!allQueriesOk) {
-    res.status(500).send('Nope nope nope...');
+    res.status(500).send('This query is not allowed.');
   } else {
     next();
   }

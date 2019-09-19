@@ -137,6 +137,13 @@ module.exports = [
         name
         mana
         gem
+        cardFactions {
+          nodes {
+            faction {
+              name
+            }
+          }
+        }
       }
     }
   }
@@ -191,6 +198,15 @@ module.exports = [
         nodes {
           name
           id
+          mana
+          gem
+          cardFactions {
+            nodes {
+              faction {
+                name
+              }
+            }
+          }
         }
       }
     }
@@ -207,6 +223,15 @@ module.exports = [
           card {
             name
             id
+            mana
+            gem
+            cardFactions {
+              nodes {
+                faction {
+                  name
+                }
+              }
+            }
           }
         }
       }
@@ -288,6 +313,21 @@ module.exports = [
   `
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
+      ${deckPreviewsFragment}
+    }
+  }
+`,
+  `
+  query deckPreview {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3, filter: {
+      deck: {
+        deckFeatureds: {
+          some: {
+            deckExists: true
+          }
+        }
+      }
+    }) {
       ${deckPreviewsFragment}
     }
   }

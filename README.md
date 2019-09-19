@@ -22,24 +22,6 @@ database: postgres
 
 The schema is mythgard
 
-## Postgraphile Graphiql
-
-Connect to localhost:3000/graphiql to query the db with graphiql.
-
-Example query:
-
-```
-{
-  allCards {
-    nodes {
-      id,
-      atk,
-      def
-    }
-  }
-}
-```
-
 ## Next
 
 The next service is a simple next.js app. The source files are bound using docker to the /next folder, so you should be able to just edit them with your editor of choice without restarting anything and next will recompile and refresh the page automatically. If you need to add a new npm package, you will either need to kill the remove the next container and then prune the volume, or more easily, docker exec <container-id> /bin.sh and run npm i from inside the container.
@@ -90,9 +72,25 @@ To run all tests:
 
 Please use prettier and eslint. Configs are located in next, express, and e2e, but you will need to `npm install` the necessary eslint plugins.
 
-## Graphql
+## Graphql and graphiql
 
 To protect our infrastructure from malicious graphql queries, we have implemented a whitelist. This creates a small inconvenience when updating or creating new graphql queries - one must remember to update the whitelist file. We have hopes to eliminate this step with an isomorphic node module in the future. `/express/whitelisted-queries.js`
+
+To play around with graphql or experiment, graphiql is a nice tool that is built into postgraphile. To use it,connect to localhost:3000/graphiql to query the db with graphiql. However, you will first want to comment out the whitelist middleware in `/express/index.js` and then `docker compose restart exporess`. Otherwise, the whitelister will prevent you from doing anything.
+
+Example query:
+
+```
+{
+  allCards {
+    nodes {
+      id,
+      atk,
+      def
+    }
+  }
+}
+```
 
 ## Deploying
 

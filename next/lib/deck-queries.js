@@ -140,6 +140,15 @@ export const deckCardsQuery = gql`
           card {
             name
             id
+            mana
+            gem
+            cardFactions {
+              nodes {
+                faction {
+                  name
+                }
+              }
+            }
           }
         }
       }
@@ -249,5 +258,21 @@ export const deckPreviewToDeck = d => {
     created: d.deckCreated
   };
 };
+
+export const topDeckPreviewsQuery = gql`
+  query deckPreview {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3, filter: {
+      deck: {
+        deckFeatureds: {
+          some: {
+            deckExists: true
+          }
+        }
+      }
+    }) {
+      ${deckPreviewsFragment}
+    }
+  }
+`;
 
 export const deckPreviewsToDecks = dp => dp.map(deckPreviewToDeck);

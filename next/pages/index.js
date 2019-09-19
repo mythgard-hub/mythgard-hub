@@ -2,6 +2,7 @@ import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import NewDecks from '../components/new-decks.js';
 import ArticleList from '../components/article-list.js';
+import TopDecks from '../components/top-decks.js';
 import { useContext } from 'react';
 import Link from 'next/link';
 import { ThemeContext } from '../components/theme-context.js';
@@ -54,6 +55,7 @@ const index = () => {
         </div>
         <div className="mg-column">
           <h2>Top Decks</h2>
+          <TopDecks />
         </div>
       </div>
       <style jsx>{`
