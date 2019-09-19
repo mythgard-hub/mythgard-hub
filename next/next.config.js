@@ -1,7 +1,10 @@
 module.exports = {
   env: {
     API_HOST: process.env.API_HOST,
+    EMAIL_MG_CONTACT: process.env.EMAIL_MG_CONTACT,
     EMAIL_MG_SUPPORT: process.env.EMAIL_MG_SUPPORT,
+    EMAIL_MG_EVENTS: process.env.EMAIL_MG_EVENTS,
+    EMAIL_MG_BUSINESS: process.env.EMAIL_MG_BUSINESS,
     DISCORD_INVITE_URL: process.env.DISCORD_INVITE_URL,
     JWT_COOKIE_NAME: process.env.JWT_COOKIE_NAME,
     MG_CDN: process.env.MG_CDN,
