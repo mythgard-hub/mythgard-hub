@@ -1,4 +1,4 @@
-const cdn = `${process.env.MG_CDN}/collection-icons/`;
+const cdn = `${process.env.MG_CDN}/filters/`;
 
 export const FACTION_NAMES = [
   'norden',
