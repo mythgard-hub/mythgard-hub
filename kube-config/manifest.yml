@@ -156,11 +156,26 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: API_HOST
+            - name: EMAIL_MG_CONTACT
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EMAIL_MG_CONTACT
             - name: EMAIL_MG_SUPPORT
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: EMAIL_MG_SUPPORT
+            - name: EMAIL_MG_EVENTS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EMAIL_MG_EVENTS
+            - name: EMAIL_MG_BUSINESS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EMAIL_MG_BUSINESS
             - name: DISCORD_INVITE_URL
               valueFrom:
                 secretKeyRef:
@@ -292,11 +307,26 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: API_HOST
+            - name: EMAIL_MG_CONTACT
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EMAIL_MG_CONTACT
             - name: EMAIL_MG_SUPPORT
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: EMAIL_MG_SUPPORT
+            - name: EMAIL_MG_EVENTS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EMAIL_MG_EVENTS
+            - name: EMAIL_MG_BUSINESS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EMAIL_MG_BUSINESS
             - name: DISCORD_INVITE_URL
               valueFrom:
                 secretKeyRef:
