@@ -71,7 +71,9 @@ export default function Deck({ deck }) {
         }
       `}</style>
       <div className="deck-details">
-        <div className="deck-name">{deck.name}</div>
+        <div className="deck-name" data-cy="deckName">
+          {deck.name}
+        </div>
         <div className="deck-author">by {authorName}</div>
         <DeckCardsTable deck={deckToExport} onlyTable />
       </div>

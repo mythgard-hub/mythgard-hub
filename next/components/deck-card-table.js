@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-
+import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
 import { cardMainColor } from '../lib/card';
@@ -36,11 +36,17 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
           text-align: center;
           text-decoration: underline;
         }
+        .deck-card-link,
+        .deck-card-link:hover,
+        .deck-card-link:focus {
+          color: ${theme.fontColor};
+          text-decoration: none;
+        }
       `}</style>
       {!onlyTable && (
         <div className="deck-title">{deck.deckName || '[untitled]'}</div>
       )}
-      <table className="deck-card-table">
+      <table className="deck-card-table" data-cy="deckCardTable">
         <tbody>
           <tr>
             <td colSpan={2}>Path</td>
@@ -59,7 +65,11 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
                 <td>
                   <GemDot gems={deckCard.card.gem} />
                 </td>
-                <td style={{ backgroundColor, color }}>{deckCard.card.name}</td>
+                <td style={{ backgroundColor, color }}>
+                  <Link href={`/card?id=${deckCard.card.id}`}>
+                    <a className="deck-card-link">{deckCard.card.name}</a>
+                  </Link>
+                </td>
                 <td>x{deckCard.quantity}</td>
                 {deleteCard && (
                   <td
@@ -67,7 +77,7 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
                     className="deck-delete-card"
                     onClick={() => deleteCard(deckCard.card.id)}
                   >
-                    x
+                    &times;
                   </td>
                 )}
               </tr>

@@ -2,6 +2,7 @@ import {
   cardSearch,
   cardSelectionItem,
   factionFilter,
+  deckName,
   deckFactionsPicker,
   deckEssencePicker
 } from '../page-objects/all';
@@ -17,7 +18,7 @@ describe('Decks Page', function() {
     cy.location().should(location => {
       expect(location.pathname).to.eq('/deck');
     });
-    cy.get('h1').should('have.class', 'deckName');
+    cy.get(deckName).should('have.length', 1);
   });
 
   it('should search for decks', function() {
