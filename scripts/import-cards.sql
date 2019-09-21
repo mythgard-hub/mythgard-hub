@@ -17,11 +17,13 @@ CREATE TEMPORARY TABLE t (
   rules TEXT,
   flavor VARCHAR(255),
   set INTEGER,
-  owned BOOLEAN);
+  owned BOOLEAN,
+  artist VARCHAR(255),
+  spawns VARCHAR(255));
 
 -- postgres only cares about index, so these names don't need
 -- to match the actual csv file's headers
-\copy t(id, name, facOne, facTwo, supertype, subtype, manaCost, gemCost, rarity, atk, def, rules, flavor, set, owned) FROM 'mgcards.csv' WITH CSV HEADER;
+\copy t(id, name, facOne, facTwo, supertype, subtype, manaCost, gemCost, rarity, atk, def, rules, flavor, set, owned, artist, spawns) FROM 'mgcards.csv' WITH CSV HEADER;
 
 -- We use -1 to denote variable attack and defense values.
 -- However, the csv uses X or * to denote this. A regex is
@@ -35,5 +37,10 @@ select
   REGEXP_REPLACE(atk, '[^0-9]' ,'-1')::integer,
   REGEXP_REPLACE(def, '[^0-9]' ,'-1')::integer
   from t;
+
+truncate table mythgard.spawns;
+insert into mythgard.spawns (card_id, spawn_id)
+  select id, unnest(string_to_array(spawns, ','))
+    where spawns <> '';
 
 DROP TABLE t;
