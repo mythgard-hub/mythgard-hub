@@ -361,6 +361,13 @@ module.exports = [
           }
         }
       }
+      cardSpawns {
+        nodes {
+          spawn {
+            name
+          }
+        }
+      }
     }
   }
 `,

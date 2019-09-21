@@ -19,6 +19,13 @@ export const cardQuery = gql`
           }
         }
       }
+      cardSpawns {
+        nodes {
+          spawn {
+            name
+          }
+        }
+      }
     }
   }
 `;

@@ -11,9 +11,9 @@ const firstLetterUppercase = str => {
 export default function Card({ card }) {
   const imagePath = getImagePath(card.name, card.set);
   const imageAlt = card.name;
-  // Because this is an enum it has to be explicitly converted to a string
-  // to render or perform string operations
-  const supertype = card.supertype.toString();
+  // Technically this is an array but in actuality all cards should have
+  // a single super type.
+  const supertype = card.supertype[0] || '';
   let factions = [];
   try {
     factions = card.cardFactions.nodes.map(n =>
@@ -21,6 +21,12 @@ export default function Card({ card }) {
     );
   } catch (error) {
     console.error('Something went wrong trying to read card factions', error);
+  }
+  let spawns = [];
+  try {
+    spawns = card.cardSpawns.nodes.map(n => n.spawn.name);
+  } catch (error) {
+    console.error('Something went wrong trying to read card spawns', error);
   }
   return (
     <>
@@ -53,7 +59,7 @@ export default function Card({ card }) {
           margin-bottom: 5px;
           text-transform: uppercase;
         }
-        .card-detail hr {
+        hr {
           margin-top: 0px;
           margin-bottom: 0px;
           margin-left: auto;
@@ -78,6 +84,18 @@ export default function Card({ card }) {
         }
         .supertype-icon {
           height: 22px;
+        }
+        .spawns hr {
+          margin-bottom: 15px;
+        }
+        .tokens {
+          display: flex;
+          margin-bottom: 15px;
+        }
+        .token-image {
+          max-width: 222px;
+          height: auto;
+          margin-right: 15px;
         }
       `}</style>
       <div>
@@ -149,6 +167,25 @@ export default function Card({ card }) {
             </li>
           </ul>
         </div>
+        {spawns.length > 0 && (
+          <div className="spawns">
+            <div className="card-detail-label">Tokens</div>
+            <hr />
+            <div className="tokens">
+              {spawns.map((spawn, ix) => {
+                const spawnImagePath = getImagePath(spawn);
+                return (
+                  <img
+                    key={ix}
+                    className="token-image"
+                    src={spawnImagePath}
+                    alt={spawn}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
@@ -157,7 +194,7 @@ Card.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    supertype: PropTypes.string.isRequired,
+    supertype: PropTypes.arrayOf(PropTypes.string).isRequired,
     mana: PropTypes.number,
     gem: PropTypes.string,
     rarity: PropTypes.string,
@@ -170,6 +207,15 @@ Card.propTypes = {
       nodes: PropTypes.arrayOf(
         PropTypes.shape({
           faction: PropTypes.shape({
+            name: PropTypes.string
+          })
+        })
+      )
+    }),
+    cardSpawns: PropTypes.shape({
+      nodes: PropTypes.arrayOf(
+        PropTypes.shape({
+          spawn: PropTypes.shape({
             name: PropTypes.string
           })
         })
