@@ -143,6 +143,11 @@ function Layout({ title, desc, children }) {
             text-align: center;
           }
 
+          a.button:hover,
+          a.button:focus {
+            color: ${theme.hoverColor};
+          }
+
           button:disabled {
             color: ${theme.fontColorDisabled};
             border: ${theme.buttonBorderDisabled};

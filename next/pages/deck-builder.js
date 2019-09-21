@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useLazyQuery } from '@apollo/react-hooks';
 import Layout from '../components/layout';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
@@ -8,6 +9,7 @@ import DeckBuilderSidebar from '../components/deck-builder-sidebar';
 import CardSearchFilters from '../components/card-search-filters';
 import SliderSwitch from '../components/slider-switch';
 import DeckBuilderCardDisplay from '../components/deck-builder-card-display';
+import { singleDeckQuery } from '../lib/deck-queries';
 
 const initialSearchFilters = {
   cardSearchText: '',
@@ -17,7 +19,12 @@ const initialSearchFilters = {
   factions: []
 };
 
-function DeckBuilderPage() {
+const getInitialProps = ({ query }) => {
+  const { id } = query;
+  return { id };
+};
+
+function DeckBuilderPage({ id }) {
   const [cardSearchText, setCardSearchText] = useState(
     initialSearchFilters.cardSearchText
   );
@@ -42,6 +49,10 @@ function DeckBuilderPage() {
     sessionStorage.setItem('deckInProgress', JSON.stringify(d));
   };
 
+  const [getDeckToEdit, { loading, error, data }] = useLazyQuery(
+    singleDeckQuery
+  );
+
   // `useEffect` will not run on the server. As long as we're using
   // local/session storage, we need to make sure the code that loads/unloads a
   // previously worked on decks is not run during an SSR.
@@ -59,7 +70,7 @@ function DeckBuilderPage() {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [id]);
 
   const handleClearFilters = useCallback(() => {
     setCardSearchText(initialSearchFilters.cardSearchText);
@@ -145,5 +156,7 @@ function DeckBuilderPage() {
     </Layout>
   );
 }
+
+DeckBuilderPage.getInitialProps = getInitialProps;
 
 export default DeckBuilderPage;
