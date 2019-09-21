@@ -1,2 +1,2 @@
-Id,Name,Faction 1,Faction 2,Type,Subtype (Tribe),Mana Cost,Gem Cost,Rarity,Strength,Health / Durability,Text,Flavor,Set,Owned
-,Clay Effigy,Aztlan,,Spell,Earth Spell,1,Y,Rare,,,Create a 0/1 Statue in any player's unoccupied lane and draw a card. ,,,
+Id,Name,Faction 1,Faction 2,Type,Subtype (Tribe),Mana Cost,Gem Cost,Rarity,Strength,Health / Durability,Text,Flavor,Set,Owned,Artist,Spawns
+1,Clay Effigy,Aztlan,,Spell,Earth Spell,1,Y,Rare,,,Create a 0/1 Statue in any player's unoccupied lane and draw a card. ,,,
