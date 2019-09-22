@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import GemCost from './gem-cost.js';
 import { imagePathMedium as getImagePath } from '../lib/card.js';
-import { RARITY_IMAGES } from '../constants/rarities.js';
+import { getRarityImage } from '../constants/rarities.js';
 import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
 
 const firstLetterUppercase = str => {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  return !str || str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
 export default function Card({ card }) {
@@ -16,8 +16,14 @@ export default function Card({ card }) {
   const supertype = card.supertype[0] || '';
   let factions = [];
   try {
-    factions = card.cardFactions.nodes.map(n =>
-      firstLetterUppercase(n.faction.name)
+    factions = card.cardFactions.nodes.reduce(
+      (acc, n) => {
+        if (n && n.faction && n.faction.name) {
+          acc.unshift(firstLetterUppercase(n.faction.name));
+        }
+        return acc;
+      },
+      ['', '']
     );
   } catch (error) {
     console.error('Something went wrong trying to read card factions', error);
@@ -128,22 +134,30 @@ export default function Card({ card }) {
               <div className="card-detail-label">Type</div>
               <hr />
               <div className="card-detail-text">
-                <img
-                  src={SUPERTYPE_IMAGES[supertype.toLowerCase()]}
-                  className="supertype-icon"
-                />{' '}
-                {firstLetterUppercase(supertype)}
+                {card.supertype && (
+                  <>
+                    <img
+                      src={SUPERTYPE_IMAGES[supertype.toLowerCase()]}
+                      className="supertype-icon"
+                    />{' '}
+                    {firstLetterUppercase(supertype)}
+                  </>
+                )}
               </div>
             </li>
             <li className="card-detail">
               <div className="card-detail-label">Rarity</div>
               <hr />
               <div className="card-detail-text">
-                <img
-                  src={RARITY_IMAGES[card.rarity.toLowerCase()]}
-                  className="rarity-icon"
-                />{' '}
-                {firstLetterUppercase(card.rarity)}
+                {card.rarity && (
+                  <>
+                    <img
+                      src={getRarityImage(card.rarity)}
+                      className="rarity-icon"
+                    />{' '}
+                    {firstLetterUppercase(card.rarity)}
+                  </>
+                )}
               </div>
             </li>
             <li className="card-detail">
