@@ -4,25 +4,41 @@ import Article from './article';
 function ArticleList({ max }) {
   const list = [
     {
-      title: 'Dope Article 1',
-      url: 'https://example.com',
+      title: 'Budget Decks For Mythgard September 2019',
+      url: 'https://teamrankstar.com/budget-decks-for-mythgard-september-2019/',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: new Date()
+        'Closed Beta is finally upon us in the land of Mythgard. With no more account wipe looming, it’s now more important than ever to be smart about building your collection...',
+      date: new Date('2019-09-22T17:24:18.280Z')
     },
     {
-      title: 'Dope Article 2',
-      url: 'https://example.com',
+      title: 'Yellow-Green Kolobok Ramp',
+      url: 'https://teamrankstar.com/yellow-green-kolobok-ramp/',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: new Date()
+        'I was trapped in a loop. I wanted to play big powerful minions and I wanted to play Green...',
+      date: new Date('2019-09-22T17:24:18.280Z')
     },
     {
-      title: 'Dope Article 3',
-      url: 'https://example.com',
+      title: 'Advanced Lane Mechanics in Mythgard',
+      url: 'https://teamrankstar.com/advanced-lane-mechanics-in-mythgard/',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: new Date()
+        'One of Mythgard’s most distinguishing features is its usage of lanes. This lane system leads to a very large number of nuanced decisions per game...',
+      date: new Date('2019-09-22T17:24:18.280Z')
+    },
+    {
+      title: 'Deckbuilding 105 - What about combo?',
+      url:
+        'https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-105-what-about-combo',
+      description:
+        'The previous articles in this series examined the spectrum of Aggro, Midrange, and Control.  Combo sits outside the spectrum, and looks to play the game totally differently...',
+      date: new Date('2019-09-22T17:24:18.280Z')
+    },
+    {
+      title: 'Deckbuilding 104 - Control',
+      url:
+        'https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-104-control',
+      description:
+        'Control decks are in it for the long haul.  Traditionally, they play a patient, defensive game...',
+      date: new Date('2019-09-22T17:24:18.280Z')
     }
   ];
 
