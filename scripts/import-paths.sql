@@ -6,10 +6,15 @@ CREATE TEMPORARY TABLE t (
 
 \copy t(id, name, rules) FROM 'mgpaths.csv' WITH CSV HEADER;
 
-insert into mythgard.path (name, rules)
+insert into mythgard.path (id, name, rules)
 select
+  id,
   name,
   rules
-  from t;
+  from t
+ON CONFLICT (id) DO UPDATE
+SET name = excluded.name
+    ,rules = excluded.rules
+;
 
 DROP TABLE t;
