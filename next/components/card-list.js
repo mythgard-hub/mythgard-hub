@@ -16,7 +16,7 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
           display: flex;
           flex-wrap: wrap;
         }
-        :global(.cardListItem) {
+        .cardListItem {
           margin-right: 17px;
           margin-bottom: 17px;
         }
@@ -33,13 +33,13 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
             return;
           }
           return (
-            <span key={card.id ? card.id : index}>
+            <li key={card.id ? card.id : index} className="cardListItem">
               <CardListItem
                 card={card}
                 onClick={onCardClick}
                 options={options}
               />
-            </span>
+            </li>
           );
         })}
       </ul>

@@ -64,7 +64,7 @@ function Layout({ title, desc, children }) {
             }
           }
 
-          @media only screen and (min-width: ${tabletMaxWidth}px) {
+          @media only screen and (min-width: ${tabletMaxWidth + 1}px) {
             :global(.hideOnNotTablet) {
               display: none;
             }

@@ -19,7 +19,7 @@ export default function CardListItem({ card, onClick, options }) {
     : smallImageWidthPortrait;
 
   return (
-    <li className="cardListItem">
+    <>
       <style jsx>{`
         .cardListImg {
           min-width: ${smallImageWidth}px;
@@ -56,7 +56,7 @@ export default function CardListItem({ card, onClick, options }) {
           </a>
         </Link>
       )}
-    </li>
+    </>
   );
 }
 
