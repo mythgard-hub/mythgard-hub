@@ -22,7 +22,7 @@ function UserDecks({ userId, limit }) {
       return acc;
     }, []);
   } catch (error) {
-    console.error('Lily was right and javascript is not to be trusted', error);
+    console.error('Lily was right and JavaScript is not to be trusted', error);
   }
 
   const userDeckCount = decks.length;

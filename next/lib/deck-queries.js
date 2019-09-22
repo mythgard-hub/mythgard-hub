@@ -9,6 +9,7 @@ const deckPreviewsFragment = `
       essenceCost
       votes
       deck{
+        id
         author {
           username
           id
@@ -113,6 +114,7 @@ const deckSearchQuery = gql`
         numfactions: $numFactions
       ) {
         nodes {
+          id
           name
           author {
             username
@@ -253,6 +255,7 @@ export const userDecksQuery = gql`
 export const deckPreviewToDeck = d => {
   return {
     ...d,
+    id: d.deck.id,
     name: d.deckName,
     author: d.deck.author,
     created: d.deckCreated
