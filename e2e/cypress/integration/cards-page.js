@@ -138,6 +138,28 @@ describe('Cards Page', function() {
       })
       .then(length => {
         expect(allCardsLength).to.equal(length);
+
+        // basic test - clear filters
+        cy.get(`${rarityPicker} img:first`).click();
+        cy.get(`${superTypePicker} img:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(allCardsLength).to.be.above(length);
+        cy.get('[data-cy="cardSearchClear"]').click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(allCardsLength).to.equal(length);
+        cy.get(`${rarityPicker} img:first`).should(
+          'not.have.class',
+          'selected'
+        );
+        cy.get(`${superTypePicker} img:first`).should(
+          'not.have.class',
+          'selected'
+        );
       });
   });
 });
