@@ -17,15 +17,23 @@ const widthSupportsTwoColumn = () => {
   return w >= 925;
 };
 
+const initialText = '';
+const initialFactions = [];
+const initialSuperTypes = [];
+const initialManaCosts = [];
+const initialStrengths = [];
+const initialDefenses = [];
+const initialRarities = [];
+
 export default function CardSearchForm(props) {
   const { onSubmit } = props;
-  const [text, setText] = useState('');
-  const [factions, setFactions] = useState([]);
-  const [supertypes, setSupertypes] = useState([]);
-  const [manaCosts, setManaCosts] = useState([]);
-  const [strengths, setStrengths] = useState([]);
-  const [defenses, setDefenses] = useState([]);
-  const [rarities, setRarities] = useState([]);
+  const [text, setText] = useState(initialText);
+  const [factions, setFactions] = useState(initialFactions);
+  const [supertypes, setSupertypes] = useState(initialSuperTypes);
+  const [manaCosts, setManaCosts] = useState(initialManaCosts);
+  const [strengths, setStrengths] = useState(initialStrengths);
+  const [defenses, setDefenses] = useState(initialDefenses);
+  const [rarities, setRarities] = useState(initialRarities);
   const [clearFilters, setClearFilters] = useState(false);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
 
@@ -37,13 +45,13 @@ export default function CardSearchForm(props) {
   });
 
   const handleClearFilters = () => {
-    setText('');
-    setFactions([]);
-    setSupertypes([]);
-    setManaCosts([]);
-    setStrengths([]);
-    setDefenses([]);
-    setRarities([]);
+    setText(initialText);
+    setFactions(initialFactions);
+    setSupertypes(initialSuperTypes);
+    setManaCosts(initialManaCosts);
+    setStrengths(initialStrengths);
+    setDefenses(initialDefenses);
+    setRarities(initialRarities);
     setClearFilters(true);
   };
 
@@ -71,7 +79,7 @@ export default function CardSearchForm(props) {
         }
 
         :global(.searchFormText input) {
-          width: 360px;
+          width: 380px;
         }
 
         .colLeft,
@@ -89,7 +97,23 @@ export default function CardSearchForm(props) {
           align-items: center;
           flex-wrap: wrap;
           justify-content: space-between;
-          padding-right: 40px;
+          padding-right: 15px;
+        }
+
+        .colLeftUpperRight {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .colLeftUpperRight > * {
+          min-width: 100px;
+          padding: 0;
+          font-size: 11px;
+          line-height: 35px;
+        }
+
+        .clearButton {
+          margin-top: 10px;
         }
       `}</style>
       <div className="colLeft">
@@ -116,7 +140,11 @@ export default function CardSearchForm(props) {
               value="Apply"
               onClick={handleSubmit}
             />
-            <button data-cy="cardSearchClear" onClick={handleClearFilters}>
+            <button
+              data-cy="cardSearchClear"
+              className="clearButton"
+              onClick={handleClearFilters}
+            >
               Clear
             </button>
           </div>

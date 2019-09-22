@@ -31,7 +31,11 @@ class FactionFilter extends React.Component {
             border: ${theme.border};
           }
         `}</style>
-        <img src={factionIcon} alt={`${faction}-icon`} />
+        <img
+          className="factionFilterImg"
+          src={factionIcon}
+          alt={`${faction}-icon`}
+        />
       </div>
     );
   }
