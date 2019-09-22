@@ -3,7 +3,6 @@ import PageBanner from '../components/page-banner';
 import ArticleList from '../components/article-list.js';
 import TopDecks from '../components/top-decks.js';
 import { useContext } from 'react';
-import Link from 'next/link';
 import { ThemeContext } from '../components/theme-context.js';
 
 const index = () => {
