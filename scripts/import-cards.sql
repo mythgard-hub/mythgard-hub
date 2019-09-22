@@ -34,7 +34,7 @@ select
   id
   ,name
   ,rules
-  ,string_to_array(upper(supertype), ',')::mythgard.cardType[]
+  ,string_to_array(trim(upper(supertype)), ',')::mythgard.cardType[]
   ,subtype
   ,REGEXP_REPLACE(atk, '[^0-9]' ,'-1')::integer
   ,REGEXP_REPLACE(def, '[^0-9]' ,'-1')::integer

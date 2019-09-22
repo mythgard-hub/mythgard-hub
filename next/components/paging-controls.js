@@ -64,7 +64,7 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
 }
 
 PagingControls.defaultProps = {
-  pageSize: 20
+  pageSize: 12
 };
 
 PagingControls.propTypes = {
