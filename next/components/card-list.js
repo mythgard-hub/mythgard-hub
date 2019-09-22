@@ -11,18 +11,18 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
   return (
     <>
       <style jsx>{`
-        ul {
+        .cardList {
           list-style: none;
           display: flex;
           flex-wrap: wrap;
         }
-        ul li {
+        :global(.cardListItem) {
           margin-right: 17px;
           margin-bottom: 17px;
         }
 
         @media only screen and (max-width: 600px) {
-          ul {
+          .cardList {
             padding: 0;
           }
         }
