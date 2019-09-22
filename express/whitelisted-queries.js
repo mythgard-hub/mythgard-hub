@@ -6,6 +6,7 @@ const deckPreviewsFragment = `
     essenceCost
     votes
     deck{
+      id
       author {
         username
         id
@@ -407,6 +408,7 @@ module.exports = [
         numfactions: $numFactions
       ) {
         nodes {
+          id
           name
           author {
             username
