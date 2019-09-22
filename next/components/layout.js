@@ -52,9 +52,17 @@ function Layout({ title, desc, children }) {
               background: url(${process.env.MG_CDN}/backgrounds/BG-RightSide.png);
               background-size: cover;
             }
+
+            :global(.hideOnNotMobile) {
+              display: none;
+            }
           }
 
           @media only screen and (max-width: 600px) {
+            :global(.hideOnMobile) {
+              display: none;
+            }
+
             .container {
               padding: 0 20px;
               border-left: none;

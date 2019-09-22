@@ -33,10 +33,16 @@ export default function CardSearchForm(props) {
       <style jsx>{`
         .cardSearchForm {
           display: flex;
+          flex-wrap: wrap;
+          align-items: flex-top;
         }
 
         .colLeft {
           max-width: 555px;
+        }
+
+        .colRight {
+          max-width: 328px;
         }
       `}</style>
       <div className="colLeft">

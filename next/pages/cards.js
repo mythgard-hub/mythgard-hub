@@ -28,8 +28,13 @@ class CardsPage extends Component {
               padding-left: 0;
             }
           `}</style>
-          <SomeCards filters={this.state.searchQuery} />
+          <div className="hideOnMobile">
+            <SomeCards filters={this.state.searchQuery} />
+          </div>
         </CardSearchForm>
+        <div className="hideOnNotMobile">
+          <SomeCards filters={this.state.searchQuery} />
+        </div>
       </Layout>
     );
   }
