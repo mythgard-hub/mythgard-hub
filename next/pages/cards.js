@@ -27,12 +27,18 @@ class CardsPage extends Component {
             :global(.cardList) {
               padding-left: 0;
             }
+
+            @media only screen and (max-width: 925) {
+              :global(.cardList) {
+                min-width: 535px;
+              }
+            }
           `}</style>
-          <div className="hideOnMobile">
+          <div className="hideOnTablet">
             <SomeCards filters={this.state.searchQuery} />
           </div>
         </CardSearchForm>
-        <div className="hideOnNotMobile">
+        <div className="hideOnNotTablet">
           <SomeCards filters={this.state.searchQuery} />
         </div>
       </Layout>

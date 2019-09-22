@@ -4,6 +4,18 @@ import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
 import CardSearchFilters from './card-search-filters.js';
 import SearchFormText from './search-form-text.js';
+import SliderSwitch from './slider-switch';
+
+const widthSupportsTwoColumn = () => {
+  if (!process.browser) {
+    return true;
+  }
+  const w = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+  );
+  return w >= 925;
+};
 
 export default function CardSearchForm(props) {
   const { onSubmit } = props;
@@ -14,6 +26,7 @@ export default function CardSearchForm(props) {
   const [strengths, setStrengths] = useState([]);
   const [defenses, setDefenses] = useState([]);
   const [rarities, setRarities] = useState([]);
+  const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
 
   const handleSubmit = e => {
     e && e.preventDefault();
@@ -32,28 +45,31 @@ export default function CardSearchForm(props) {
     <div className="cardSearchForm">
       <style jsx>{`
         .cardSearchForm {
-          padding-top: 30px;
           display: flex;
           flex-wrap: wrap;
           align-items: flex-top;
+          justify-content: space-between;
         }
 
         :global(.searchFormText input) {
           width: 360px;
         }
 
-        .colLeft {
-          max-width: 555px;
+        .colLeft,
+        .colRight {
+          padding-top: 30px;
         }
 
-        .colRight {
-          max-width: 328px;
+        .colLeft {
+          max-width: 535px;
         }
 
         .colLeftUpper {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
+          justify-content: space-between;
+          padding-right: 40px;
         }
       `}</style>
       <div className="colLeft">
@@ -85,18 +101,42 @@ export default function CardSearchForm(props) {
         {props.children}
       </div>
       <div className="colRight">
-        <CardSearchFilters
-          manaCosts={manaCosts}
-          strengths={strengths}
-          healths={defenses}
-          rarities={rarities}
-          types={supertypes}
-          setCardManaCosts={setManaCosts}
-          setCardStrengths={setStrengths}
-          setCardHealths={setDefenses}
-          setCardRarities={setRarities}
-          setSupertypes={setSupertypes}
-        />
+        <span className={!viewFilters || 'hideOnNotTablet'}>
+          <SliderSwitch
+            rightSlider="View More Filters"
+            checked={viewFilters}
+            onChange={() => {
+              setViewFilters(prev => !prev);
+            }}
+            onClickLabel={setViewFilters}
+          />
+        </span>
+        {viewFilters && (
+          <>
+            <CardSearchFilters
+              manaCosts={manaCosts}
+              strengths={strengths}
+              healths={defenses}
+              rarities={rarities}
+              types={supertypes}
+              setCardManaCosts={setManaCosts}
+              setCardStrengths={setStrengths}
+              setCardHealths={setDefenses}
+              setCardRarities={setRarities}
+              setSupertypes={setSupertypes}
+            />
+            <span className="hideOnNotTablet">
+              <SliderSwitch
+                rightSlider="View Filters"
+                checked={viewFilters}
+                onChange={() => {
+                  setViewFilters(prev => !prev);
+                }}
+                onClickLabel={setViewFilters}
+              />
+            </span>
+          </>
+        )}
       </div>
     </div>
   );
@@ -104,5 +144,5 @@ export default function CardSearchForm(props) {
 
 CardSearchForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  children: PropTypes.object
+  children: PropTypes.any
 };
