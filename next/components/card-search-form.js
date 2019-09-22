@@ -32,9 +32,14 @@ export default function CardSearchForm(props) {
     <div className="cardSearchForm">
       <style jsx>{`
         .cardSearchForm {
+          padding-top: 30px;
           display: flex;
           flex-wrap: wrap;
           align-items: flex-top;
+        }
+
+        :global(.searchFormText input) {
+          width: 360px;
         }
 
         .colLeft {
@@ -44,27 +49,39 @@ export default function CardSearchForm(props) {
         .colRight {
           max-width: 328px;
         }
+
+        .colLeftUpper {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+        }
       `}</style>
       <div className="colLeft">
-        <SearchFormText
-          value={text}
-          placeholder={'Name or Rules Text'}
-          name="text"
-          maxLength="100"
-          cyName="cardSearchText"
-          onChange={handleInputChangeHooks(setText)}
-          label="Card Search"
-        />
-        <FactionFilters
-          factions={factions}
-          onFactionClick={newFactions => setFactions(newFactions)}
-        />
-        <input
-          data-cy="cardSearchSubmit"
-          type="submit"
-          value="Search"
-          onClick={handleSubmit}
-        />
+        <div className="colLeftUpper">
+          <div className="colLeftUpperLeft">
+            <SearchFormText
+              value={text}
+              placeholder={'Name or Rules Text'}
+              name="text"
+              maxLength="100"
+              cyName="cardSearchText"
+              onChange={handleInputChangeHooks(setText)}
+              label="Card Search"
+            />
+            <FactionFilters
+              factions={factions}
+              onFactionClick={newFactions => setFactions(newFactions)}
+            />
+          </div>
+          <div className="colLeftUpperRight">
+            <input
+              data-cy="cardSearchSubmit"
+              type="submit"
+              value="Apply"
+              onClick={handleSubmit}
+            />
+          </div>
+        </div>
         {props.children}
       </div>
       <div className="colRight">
