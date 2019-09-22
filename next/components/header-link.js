@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';

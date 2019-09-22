@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
@@ -26,7 +26,26 @@ export default function CardSearchForm(props) {
   const [strengths, setStrengths] = useState([]);
   const [defenses, setDefenses] = useState([]);
   const [rarities, setRarities] = useState([]);
+  const [clearFilters, setClearFilters] = useState(false);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
+
+  useEffect(() => {
+    if (clearFilters) {
+      handleSubmit();
+      setClearFilters(false);
+    }
+  });
+
+  const handleClearFilters = () => {
+    setText('');
+    setFactions([]);
+    setSupertypes([]);
+    setManaCosts([]);
+    setStrengths([]);
+    setDefenses([]);
+    setRarities([]);
+    setClearFilters(true);
+  };
 
   const handleSubmit = e => {
     e && e.preventDefault();
@@ -97,6 +116,9 @@ export default function CardSearchForm(props) {
               value="Apply"
               onClick={handleSubmit}
             />
+            <button data-cy="cardSearchClear" onClick={handleClearFilters}>
+              Clear
+            </button>
           </div>
         </div>
         {props.children}
