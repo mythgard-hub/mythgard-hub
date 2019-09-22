@@ -64,4 +64,10 @@ insert into mythgard.card_faction (card_id, faction_id)
     from t
     left join mythgard.faction on lower(faction.name) = lower(t.facTwo);
 
+truncate table mythgard.card_spawn;
+insert into mythgard.card_spawn (card_id, spawn_id)
+  select id, CAST(unnest(string_to_array(spawns, ',')) AS INTEGER)
+    from t
+    where spawns <> '';
+
 DROP TABLE t;

@@ -38,6 +38,14 @@ INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem)
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Cairnhenge', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 
+CREATE TABLE mythgard.card_spawn (
+  card_id int CONSTRAINT spawner_card_id_fkey REFERENCES mythgard.card (id),
+  spawn_id int CONSTRAINT spawnee_card_id_fkey REFERENCES mythgard.card (id),
+  PRIMARY KEY (card_id, spawn_id)
+);
+
+INSERT INTO mythgard.card_spawn (card_id, spawn_id) VALUES (2, 6), (2,7);
+
 CREATE TABLE mythgard.essence_costs (
   rarity Mythgard.rarity,
   essence integer
