@@ -29,43 +29,57 @@ export default function CardSearchForm(props) {
   };
 
   return (
-    <>
-      <br />
-      <SearchFormText
-        value={text}
-        placeholder={'Name or Rules Text'}
-        name="text"
-        maxLength="100"
-        cyName="cardSearchText"
-        onChange={handleInputChangeHooks(setText)}
-        label="Card Search"
-      />
-      <FactionFilters
-        factions={factions}
-        onFactionClick={newFactions => setFactions(newFactions)}
-      />
-      <CardSearchFilters
-        manaCosts={manaCosts}
-        strengths={strengths}
-        healths={defenses}
-        rarities={rarities}
-        types={supertypes}
-        setCardManaCosts={setManaCosts}
-        setCardStrengths={setStrengths}
-        setCardHealths={setDefenses}
-        setCardRarities={setRarities}
-        setSupertypes={setSupertypes}
-      />
-      <input
-        data-cy="cardSearchSubmit"
-        type="submit"
-        value="Search"
-        onClick={handleSubmit}
-      />
-    </>
+    <div className="cardSearchForm">
+      <style jsx>{`
+        .cardSearchForm {
+          display: flex;
+        }
+
+        .colLeft {
+          max-width: 555px;
+        }
+      `}</style>
+      <div className="colLeft">
+        <SearchFormText
+          value={text}
+          placeholder={'Name or Rules Text'}
+          name="text"
+          maxLength="100"
+          cyName="cardSearchText"
+          onChange={handleInputChangeHooks(setText)}
+          label="Card Search"
+        />
+        <FactionFilters
+          factions={factions}
+          onFactionClick={newFactions => setFactions(newFactions)}
+        />
+        <input
+          data-cy="cardSearchSubmit"
+          type="submit"
+          value="Search"
+          onClick={handleSubmit}
+        />
+        {props.children}
+      </div>
+      <div className="colRight">
+        <CardSearchFilters
+          manaCosts={manaCosts}
+          strengths={strengths}
+          healths={defenses}
+          rarities={rarities}
+          types={supertypes}
+          setCardManaCosts={setManaCosts}
+          setCardStrengths={setStrengths}
+          setCardHealths={setDefenses}
+          setCardRarities={setRarities}
+          setSupertypes={setSupertypes}
+        />
+      </div>
+    </div>
   );
 }
 
 CardSearchForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  children: PropTypes.object
 };

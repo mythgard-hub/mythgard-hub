@@ -22,8 +22,14 @@ class CardsPage extends Component {
         desc="Browse and search for Mythgard cards"
       >
         <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
-        <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
-        <SomeCards filters={this.state.searchQuery} />
+        <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)}>
+          <style jsx>{`
+            :global(.cardList) {
+              padding-left: 0;
+            }
+          `}</style>
+          <SomeCards filters={this.state.searchQuery} />
+        </CardSearchForm>
       </Layout>
     );
   }
