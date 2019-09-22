@@ -11,6 +11,8 @@
 # Step 3 remove script and sync to s3
 # aws s3 sync . s3://cards.mythgardhub.com --acl public-read
 # You may want these extra args: --exclude "core/*.png" --include "core/m/*"
+# This is what you probably want:
+# aws s3 sync . s3://cards.mythgardhub.com --acl public-read --exclude "core/*.png" --include "core/m/*" --include "core/s/*"
 # You probably aren't touching the originals so this is likely a decent idea as it will
 # save time and bandwidth, and prevent accidentally doing something bad to a full-size.
 # Repeat for /core/s dir as well.
