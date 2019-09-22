@@ -6,7 +6,7 @@ import Layout from '../components/layout';
 import { singleDeckQuery } from '../lib/deck-queries';
 
 export default withRouter(({ router }) => {
-  const { error, data } = useQuery(singleDeckQuery, {
+  const { error, loading, data } = useQuery(singleDeckQuery, {
     variables: { id: parseInt(router.query.id, 10) }
   });
 
@@ -14,6 +14,8 @@ export default withRouter(({ router }) => {
 
   if (error) {
     pageElement = <ErrorMessage message={error.message} />;
+  } else if (loading) {
+    pageElement = <div>Loading...</div>;
   } else if (data && data.deck) {
     pageElement = <Deck deck={data.deck} />;
   } else {
