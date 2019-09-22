@@ -4,6 +4,8 @@ import PageBanner from '../components/page-banner';
 import { Component } from 'react';
 import CardSearchForm from '../components/card-search-form';
 
+export const twoColMinWidth = 925;
+
 class CardsPage extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +30,7 @@ class CardsPage extends Component {
               padding-left: 0;
             }
 
-            @media only screen and (max-width: 925) {
+            @media only screen and (max-width: ${twoColMinWidth}px) {
               :global(.cardList) {
                 min-width: 535px;
               }

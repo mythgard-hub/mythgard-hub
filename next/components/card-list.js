@@ -33,13 +33,13 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
             return;
           }
           return (
-            <li key={card.id ? card.id : index}>
+            <span key={card.id ? card.id : index}>
               <CardListItem
                 card={card}
                 onClick={onCardClick}
                 options={options}
               />
-            </li>
+            </span>
           );
         })}
       </ul>
