@@ -27,10 +27,14 @@ export default {
   cardSearchSubmit: '[data-cy="cardSearchSubmit"]',
 
   superTypePicker: '[data-cy="cardSearch_supertype"]',
+  superTypePickerBtn:
+    '[data-cy="cardSearch_supertype"] [data-cy="imgFilterBtn"]',
   manaPicker: '[data-cy="cardSearch_manaCost"]',
   strengthPicker: '[data-cy="cardSearch_strength"]',
   defensePicker: '[data-cy="cardSearch_defense"]',
+  defensePickerBtn: '[data-cy="cardSearch_defense"] [data-cy="numFilterBtn"]',
   rarityPicker: '[data-cy="cardSearch_rarity"]',
+  rarityPickerBtn: '[data-cy="cardSearch_rarity"] [data-cy="imgFilterBtn"]',
 
   // decks page
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
