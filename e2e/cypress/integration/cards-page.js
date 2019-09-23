@@ -4,10 +4,10 @@ import {
   factionFilter,
   cardListCard,
   getPagingTotalAsInt,
-  superTypePicker,
+  superTypePickerBtn,
   strengthPicker,
-  defensePicker,
-  rarityPicker,
+  defensePickerBtn,
+  rarityPickerBtn,
   manaPicker
 } from '../page-objects/all.js';
 describe('Cards Page', function() {
@@ -57,14 +57,14 @@ describe('Cards Page', function() {
         expect(length).to.equal(allCardsLength);
 
         // basic test - supertype filter
-        cy.get(`${superTypePicker} img:first`).click();
+        cy.get(`${superTypePickerBtn}:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(length).to.be.below(allCardsLength);
 
-        cy.get(`${superTypePicker} img:first`).click();
+        cy.get(`${superTypePickerBtn}:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
@@ -108,7 +108,7 @@ describe('Cards Page', function() {
         expect(allCardsLength).to.equal(length);
 
         // basic test - defense filter
-        cy.get(`${defensePicker} img`)
+        cy.get(defensePickerBtn)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
@@ -116,7 +116,7 @@ describe('Cards Page', function() {
       })
       .then(length => {
         expect(allCardsLength).to.be.above(length);
-        cy.get(`${defensePicker} img`)
+        cy.get(defensePickerBtn)
           .eq(1)
           .click();
         cy.get(cardSearchSubmit).click();
@@ -126,18 +126,37 @@ describe('Cards Page', function() {
         expect(allCardsLength).to.equal(length);
 
         // basic test - rarity filter
-        cy.get(`${rarityPicker} img:first`).click();
+        cy.get(`${rarityPickerBtn}:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(allCardsLength).to.be.above(length);
-        cy.get(`${rarityPicker} img:first`).click();
+        cy.get(`${rarityPickerBtn}:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(allCardsLength).to.equal(length);
+
+        // basic test - clear filters
+        cy.get(`${rarityPickerBtn}:first`).click();
+        cy.get(`${superTypePickerBtn}:first`).click();
+        cy.get(cardSearchSubmit).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(allCardsLength).to.be.above(length);
+        cy.get('[data-cy="cardSearchClear"]').click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(allCardsLength).to.equal(length);
+        cy.get(`${rarityPickerBtn}:first`).should('not.have.class', 'selected');
+        cy.get(`${superTypePickerBtn}:first`).should(
+          'not.have.class',
+          'selected'
+        );
       });
   });
 });

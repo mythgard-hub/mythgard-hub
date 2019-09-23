@@ -11,18 +11,18 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
   return (
     <>
       <style jsx>{`
-        ul {
+        .cardList {
           list-style: none;
           display: flex;
           flex-wrap: wrap;
         }
-        ul li {
+        .cardListItem {
           margin-right: 17px;
           margin-bottom: 17px;
         }
 
         @media only screen and (max-width: 600px) {
-          ul {
+          .cardList {
             padding: 0;
           }
         }
@@ -33,7 +33,7 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
             return;
           }
           return (
-            <li key={card.id ? card.id : index}>
+            <li key={card.id ? card.id : index} className="cardListItem">
               <CardListItem
                 card={card}
                 onClick={onCardClick}

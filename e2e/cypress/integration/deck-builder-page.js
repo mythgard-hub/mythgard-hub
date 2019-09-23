@@ -6,9 +6,10 @@ import {
   factionFilter,
   deckCardRow,
   cardSearchText,
-  superTypePicker,
+  superTypePickerBtn,
   manaPicker,
   rarityPicker,
+  rarityPickerBtn,
   getPagingTotalAsInt,
   leftSlider,
   rightSlider
@@ -74,14 +75,14 @@ describe('Deck builder page', () => {
 
         // basic test - rarity filter
         cy.get(rightSlider).click();
-        cy.get(`${rarityPicker} img:first`).click();
+        cy.get(`${rarityPickerBtn}:first`).click();
         cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
         cy.get(rightSlider).click();
-        cy.get(`${rarityPicker} img:first`).click();
+        cy.get(`${rarityPickerBtn}:first`).click();
         cy.get(leftSlider).click();
         return getPagingTotalAsInt();
       })
@@ -110,7 +111,7 @@ describe('Deck builder page', () => {
 
         // basic test - supertype filter
         cy.get(rightSlider).click();
-        cy.get(`${superTypePicker} img`)
+        cy.get(superTypePickerBtn)
           .eq(1)
           .click();
         cy.get(leftSlider).click();
@@ -119,7 +120,7 @@ describe('Deck builder page', () => {
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
         cy.get(rightSlider).click();
-        cy.get(`${superTypePicker} img`)
+        cy.get(superTypePickerBtn)
           .eq(1)
           .click();
         cy.get(leftSlider).click();

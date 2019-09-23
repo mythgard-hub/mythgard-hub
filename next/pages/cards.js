@@ -4,6 +4,8 @@ import PageBanner from '../components/page-banner';
 import { Component } from 'react';
 import CardSearchForm from '../components/card-search-form';
 
+export const twoColMinWidth = 925;
+
 class CardsPage extends Component {
   constructor(props) {
     super(props);
@@ -22,8 +24,25 @@ class CardsPage extends Component {
         desc="Browse and search for Mythgard cards"
       >
         <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
-        <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)} />
-        <SomeCards filters={this.state.searchQuery} />
+        <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)}>
+          <style jsx>{`
+            :global(.cardList) {
+              padding-left: 0;
+            }
+
+            @media only screen and (max-width: ${twoColMinWidth}px) {
+              :global(.cardList) {
+                min-width: 535px;
+              }
+            }
+          `}</style>
+          <div className="hideOnTablet">
+            <SomeCards filters={this.state.searchQuery} />
+          </div>
+        </CardSearchForm>
+        <div className="hideOnNotTablet">
+          <SomeCards filters={this.state.searchQuery} />
+        </div>
       </Layout>
     );
   }
