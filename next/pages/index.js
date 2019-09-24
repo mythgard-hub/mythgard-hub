@@ -32,7 +32,7 @@ const index = () => {
           border-bottom: ${theme.border};
         }
 
-        .npgBanner {
+        .newPlayerGuideBanner {
           clear: both;
           margin-top: 15px;
           float: left;
@@ -41,13 +41,13 @@ const index = () => {
           width: 874px;
         }
 
-        .npgBannerImage {
+        .newPlayerGuideBannerImage {
           z-index: -1;
           float: left;
           margin-bottom: 1px;
         }
 
-        .npgBannerText {
+        .newPlayerGuideBannerText {
           color: ${theme.fontColorHeading};
           font-size: 2em;
           font-weight: 700;
@@ -56,13 +56,13 @@ const index = () => {
           vertical-align: middle;
         }
 
-        .mb {
+        .bannerLink {
           color: ${theme.fontColorHeading};
           text-decoration: none;
         }
 
-        a.mb:hover {
-          color: ${mgColors.orange}
+        a.bannerLink:hover {
+          color: ${mgColors.orange};
         }
 
         @media only screen and (max-width: 600px) {
@@ -76,18 +76,18 @@ const index = () => {
           }
         }
       `}</style>
-      <div className="npgBanner">
+      <div className="newPlayerGuideBanner">
         <Link href="/new-player-guide">
-          <a className="mb">
+          <a className="bannerLink">
             <img
-              className="npgBannerImage"
+              className="newPlayerGuideBannerImage"
               src="https://cdn.mythgardhub.com/banner/Banner_Bulwark.jpg"
             />
           </a>
         </Link>
-        <div className="npgBannerText">
+        <div className="newPlayerGuideBannerText">
           <Link href="/new-player-guide">
-            <a className="mb">New Player Guide</a>
+            <a className="bannerLink">New Player Guide</a>
           </Link>
         </div>
       </div>
