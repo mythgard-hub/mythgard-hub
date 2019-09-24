@@ -9,8 +9,8 @@ CREATE TEMPORARY TABLE t (
 insert into mythgard.power (id, name, rules)
 select
   id,
-  name,
-  rules
+  trim(name),
+  trim(rules)
   from t
 ON CONFLICT (id) DO UPDATE
 SET name = excluded.name
