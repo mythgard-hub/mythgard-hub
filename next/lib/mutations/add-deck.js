@@ -8,7 +8,7 @@ const addDeckMutation = gql`
     $authorId: Int
   ) {
     createDeck(
-       input: {
+      input: {
         deck: {
           name: $name
           pathId: $pathId
