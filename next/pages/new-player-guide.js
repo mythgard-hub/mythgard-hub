@@ -16,15 +16,18 @@ function NewPlayerGuide() {
           a {
             color: ${mgColors.orange};
           }
+
           a:hover {
             color: ${theme.fontColorSelected};
           }
+
           ul {
             margin-top: 0;
             padding: 0;
             list-style-type: none;
             margin-left: 25px;
           }
+
           figure {
             margin: 0;
           }
