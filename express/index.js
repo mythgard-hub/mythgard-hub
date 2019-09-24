@@ -17,7 +17,6 @@ app.use(helmet());
 
 app.use(express.json());
 app.use('/graphql', async (req, res, next) => {
-  return next();
   const queries = req.body.map(b => b.query);
   const allQueriesOk = queries.reduce((acc, query) => {
     const hash = hashQuery(query);

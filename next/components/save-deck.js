@@ -7,8 +7,29 @@ import Link from 'next/link';
 import UserContext from '../components/user-context';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
+import updateDeckAndRemoveCards from '../lib/mutations/update-deck-and-remove-cards';
 
-const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
+const saveDeckWithCards = (apolloClient, deckId, deckInProgress, authorId) => {
+  if (Number.isInteger(deckId)) {
+    return updateDeckWithCards(apolloClient, deckId, deckInProgress);
+  } else {
+    return createDeckWithCards(apolloClient, deckInProgress, authorId);
+  }
+};
+
+const updateDeckWithCards = (apolloClient, deckId, deckInProgress) => {
+  return updateDeckAndRemoveCards(apolloClient, deckId, deckInProgress)
+    .then(() =>
+      addCardsToDBDeck(
+        apolloClient,
+        deckId,
+        Object.values(deckInProgress.mainDeck)
+      )
+    )
+    .then(() => deckId);
+};
+
+const createDeckWithCards = (apolloClient, deckInProgress, authorId) => {
   let deckId;
   return createNewEmptyDeck(apolloClient, deckInProgress, authorId)
     .then(({ data }) => {
@@ -22,7 +43,7 @@ const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
     .then(() => deckId);
 };
 
-export default function SaveDeck({ deckInProgress }) {
+export default function SaveDeck({ deckId, deckInProgress }) {
   const { user } = useContext(UserContext);
 
   const handleSubmit = (e, client) => {
@@ -30,16 +51,18 @@ export default function SaveDeck({ deckInProgress }) {
 
     if (!user || !user.id) {
       alert(
-        'Only logged in users can save deck. Please export your work, log in and come back.'
+        'Only logged in users can save a deck. Please export your work or log in and come back.'
       );
       return;
     }
 
     if (!validateState()) return;
 
-    saveDeckWithCards(client, deckInProgress, user.id).then(deckId => {
-      Router.push(`/deck?id=${deckId}`);
-    });
+    saveDeckWithCards(client, deckId, deckInProgress, user.id).then(
+      savedDeckId => {
+        Router.push(`/deck?id=${savedDeckId}`);
+      }
+    );
   };
 
   const validateState = () => {
@@ -67,7 +90,7 @@ export default function SaveDeck({ deckInProgress }) {
               handleSubmit(e, client);
             }}
           >
-            Save
+            {Number.isInteger(deckId) ? 'Update' : 'Save'}
           </button>
         )}
       </ApolloConsumer>

@@ -21,23 +21,25 @@ const initialSearchFilters = {
 };
 
 const getInitialProps = async ({ query }) => {
-  const { id } = query;
   // `null` instead of `undefined` to match sessionStorage.getItem('cantfind')
-  return { deckId: id || null };
+  let deckId = parseInt(query.id, 10);
+  deckId = Number.isInteger(deckId) ? deckId : null;
+  return { deckId };
 };
 
 const loadDeckFromSessionStorage = setDeckInProgress => {
   try {
     const d = JSON.parse(sessionStorage.getItem('deckInProgress'));
     if (!d) return;
-    const deckProperties = Object.keys(initializeDeckBuilder());
-    const isValidDeck = deckProperties.reduce((isValid, key) => {
-      return isValid && d.hasOwnProperty(key);
-    });
+    const allProperties = Object.keys(initializeDeckBuilder());
+    const savedDeckProperties = Object.keys(d);
+    const isValidDeck = savedDeckProperties.reduce((isValid, key) => {
+      return isValid && allProperties.includes(key);
+    }, true);
     if (isValidDeck) {
       setDeckInProgress(d);
+      return true;
     }
-    return true;
   } catch (err) {
     console.error(err);
   }
@@ -51,20 +53,19 @@ const loadDeckFromServer = (
   setIsError
 ) => {
   // noop if we don't have a legit deck id
-  const id = parseInt(deckId, 10);
-  if (!Number.isInteger(id)) return;
+  if (!Number.isInteger(deckId)) return;
 
   const deckPromise = apolloClient.query({
     query: singleDeckQuery,
     variables: {
-      id
+      id: deckId
     }
   });
 
   const cardsPromise = apolloClient.query({
     query: deckCardsQuery,
     variables: {
-      id
+      id: deckId
     }
   });
 
@@ -130,7 +131,9 @@ function DeckBuilderPage({ deckId }) {
         loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
       }
     } else {
-      if (Number.isInteger(parseInt(deckId, 10))) {
+      sessionStorage.removeItem('deckInProgressId');
+      sessionStorage.removeItem('deckInProgress');
+      if (Number.isInteger(deckId)) {
         loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
       } else {
         // Needed in case you hit the deck builder tab while editing an existing

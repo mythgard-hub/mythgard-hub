@@ -119,6 +119,24 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
+CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards
+(
+  _id integer,
+  _name varchar(255),
+  _path_id integer,
+  _power_id integer
+)
+RETURNS mythgard.deck as $$
+  DELETE FROM mythgard.card_deck
+    WHERE deck_id = _id;
+  UPDATE mythgard.deck
+    SET name = _name,
+        path_id = _path_id,
+        power_id = _power_id
+    WHERE id = _id
+    RETURNING *
+$$ LANGUAGE sql VOLATILE;
+
 CREATE TABLE mythgard.deck_vote (
   id SERIAL PRIMARY KEY,
   deck_id integer,
