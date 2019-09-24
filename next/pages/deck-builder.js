@@ -22,7 +22,8 @@ const initialSearchFilters = {
 
 const getInitialProps = async ({ query }) => {
   const { id } = query;
-  return { deckId: id };
+  // `null` instead of `undefined` to match sessionStorage.getItem('cantfind')
+  return { deckId: id || null };
 };
 
 const loadDeckFromSessionStorage = setDeckInProgress => {
@@ -123,8 +124,8 @@ function DeckBuilderPage({ deckId }) {
   // local/session storage, we need to make sure the code that loads/unloads a
   // previously worked on decks is not run during an SSR.
   useEffect(() => {
-    const storedDeckId = sessionStorage.getItem('storedDeckId');
-    if (storedDeckId === deckId) {
+    const storedDeckId = sessionStorage.getItem('deckInProgressId');
+    if ('' + storedDeckId === '' + deckId) {
       if (!loadDeckFromSessionStorage(setDeckInProgress)) {
         loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
       }
@@ -224,6 +225,7 @@ function DeckBuilderPage({ deckId }) {
             )}
           </div>
           <DeckBuilderSidebar
+            deckId={deckId}
             deckInProgress={deckInProgress}
             setDeckInProgress={setDeckInProgress}
           />

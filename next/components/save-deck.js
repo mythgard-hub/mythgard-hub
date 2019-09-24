@@ -87,6 +87,7 @@ export default function SaveDeck({ deckInProgress }) {
 }
 
 SaveDeck.propTypes = {
+  deckId: PropTypes.number,
   deckInProgress: PropTypes.shape({
     deckName: PropTypes.string,
     deckPath: PropTypes.shape({

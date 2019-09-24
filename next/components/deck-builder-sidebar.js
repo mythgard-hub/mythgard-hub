@@ -8,7 +8,7 @@ import SaveDeck from '../components/save-deck';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 
 export default function DeckBuilderSidebar(props) {
-  const { deckInProgress, setDeckInProgress } = props;
+  const { deckId, deckInProgress, setDeckInProgress } = props;
   const [mainDeckInput, setMainDeckInput] = useState('');
 
   const updateDeckName = e => {
@@ -72,7 +72,7 @@ export default function DeckBuilderSidebar(props) {
         updateImportedDeck={updateImportedDeck}
       />
       <DeckExport deckInProgress={deckInProgress} />
-      <SaveDeck deckInProgress={deckInProgress} />
+      <SaveDeck deckId={deckId} deckInProgress={deckInProgress} />
       <button onClick={() => setDeckInProgress(initializeDeckBuilder())}>
         Clear Deck
       </button>
@@ -92,6 +92,7 @@ export default function DeckBuilderSidebar(props) {
 }
 
 DeckBuilderSidebar.propTypes = {
+  deckId: PropTypes.number,
   deckInProgress: PropTypes.shape({
     deckName: PropTypes.string,
     deckPath: PropTypes.shape({
