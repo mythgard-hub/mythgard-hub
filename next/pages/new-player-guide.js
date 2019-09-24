@@ -48,7 +48,11 @@ function NewPlayerGuide() {
         <br />
         <div className="toc_column">
           This article was produced in collaboration with{' '}
-          <a href="https://teamrankstar.com/" target="_blank">
+          <a
+            href="https://teamrankstar.com/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             Team Rankstar
           </a>
           <div className="article_title">Mythgard New Player Guide</div>
