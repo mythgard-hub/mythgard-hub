@@ -5,12 +5,12 @@ import TopDecks from '../components/top-decks.js';
 import { useContext } from 'react';
 import Link from 'next/link';
 import { ThemeContext } from '../components/theme-context.js';
+import { mgColors } from '../lib/theme.js';
 
 const index = () => {
   const theme = useContext(ThemeContext);
   return (
     <Layout>
-      <PageBanner image={PageBanner.IMG_HOME_TOP}></PageBanner>
       <style jsx>{`
         .homePageColumns {
           display: flex;
@@ -32,6 +32,39 @@ const index = () => {
           border-bottom: ${theme.border};
         }
 
+        .npgBanner {
+          clear: both;
+          margin-top: 15px;
+          float: left;
+          border-top: ${theme.border};
+          border-bottom: ${theme.border};
+          width: 874px;
+        }
+
+        .npgBannerImage {
+          z-index: -1;
+          float: left;
+          margin-bottom: 1px;
+        }
+
+        .npgBannerText {
+          color: ${theme.fontColorHeading};
+          font-size: 2em;
+          font-weight: 700;
+          margin-top: 25px;
+          text-align: right;
+          vertical-align: middle;
+        }
+
+        .mb {
+          color: ${theme.fontColorHeading};
+          text-decoration: none;
+        }
+
+        a.mb:hover {
+          color: ${mgColors.orange}
+        }
+
         @media only screen and (max-width: 600px) {
           .mg-column {
             width: 100%;
@@ -43,6 +76,21 @@ const index = () => {
           }
         }
       `}</style>
+      <div className="npgBanner">
+        <Link href="/new-player-guide">
+          <a className="mb">
+            <img
+              className="npgBannerImage"
+              src="https://cdn.mythgardhub.com/banner/Banner_Bulwark.jpg"
+            />
+          </a>
+        </Link>
+        <div className="npgBannerText">
+          <Link href="/new-player-guide">
+            <a className="mb">New Player Guide</a>
+          </Link>
+        </div>
+      </div>
       <div className="homePageColumns">
         <div className="mg-column">
           <h2>Top Articles</h2>
