@@ -87,6 +87,10 @@ class MyApp extends App {
           <HooksApolloProvider client={apolloClient}>
             <Head>
               <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+              <link
+                href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,600,600i,700,700i&display=swap"
+                rel="stylesheet"
+              ></link>
               <meta charSet="utf-8" />
               <meta
                 name="viewport"

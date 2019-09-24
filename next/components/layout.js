@@ -87,18 +87,6 @@ function Layout({ title, desc, children }) {
             margin: 0;
           }
 
-          h1 {
-            color: ${theme.fontColorHeading};
-            text-transform: uppercase;
-          }
-
-          h2 {
-            font-style: italic;
-            font-weight: bold;
-            font-size: 1.2em;
-            text-transform: uppercase;
-          }
-
           a {
             color: ${theme.fontColor};
           }
@@ -189,6 +177,78 @@ function Layout({ title, desc, children }) {
             text-transform: uppercase;
             padding-right: 20px;
             font-weight: bold;
+          }
+
+          p {
+            margin-bottom: 10px;
+            line-height: 1.3em;
+            font-family: 'Vollkorn', serif;
+            font-weight: 400;
+          }
+
+          h1 {
+            color: ${theme.fontColorHeading};
+            font-size: 1.8em;
+            text-transform: uppercase;
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+
+          h2 {
+            margin-top: 7px;
+            margin-bottom: 10px;
+          }
+
+          h3 {
+            margin-top: 10px;
+            font-weight: 600;
+            margin-bottom: 7px;
+          }
+
+          h4 {
+            font-weight: 600;
+            margin-bottom: 7px;
+          }
+
+          .article_title {
+            color: ${theme.fontColorHeading};
+            font-size: 2.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+          }
+
+          .toc_column {
+            margin: auto;
+          }
+
+          table.toc {
+            width: 100%;
+            margin-top: 25px;
+          }
+
+          table.toc td {
+            vertical-align: top;
+          }
+
+          .articles_column {
+            width: 77%;
+            border: solid 0px white;
+            margin: auto;
+          }
+
+          img.article {
+            width: 90%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 15px;
+            margin-bottom: 5px;
+          }
+
+          .article_caption {
+            display: block;
+            text-align: center;
+            margin-bottom: 25px;
           }
 
           @media only screen and (max-width: 600px) {
