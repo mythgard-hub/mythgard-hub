@@ -45,6 +45,7 @@ function ImageFilterGroup({ images, selected, onChange, cyName }) {
       `}</style>
       {images.map(i => (
         <div
+          data-cy="imgFilterBtn"
           onClick={() => onClick(i)}
           key={i.key}
           className={`row ${selected.indexOf(i.key) > -1 ? 'selected' : null}`}

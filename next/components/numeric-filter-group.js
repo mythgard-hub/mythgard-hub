@@ -70,6 +70,7 @@ export default function NumericFilterGroup({ cyName, selected, onChange }) {
           key={i.key}
           src={i.link}
           className={selected.indexOf(i.label) > -1 ? 'selected' : null}
+          data-cy="numFilterBtn"
           onClick={() => onClick(i)}
         />
       ))}

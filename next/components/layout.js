@@ -6,6 +6,8 @@ import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 import Footer from './footer';
 
+const tabletMaxWidth = 925;
+
 function Layout({ title, desc, children }) {
   const theme = useContext(ThemeContext);
   return (
@@ -59,6 +61,18 @@ function Layout({ title, desc, children }) {
               padding: 0 20px;
               border-left: none;
               border-right: none;
+            }
+          }
+
+          @media only screen and (min-width: ${tabletMaxWidth + 1}px) {
+            :global(.hideOnNotTablet) {
+              display: none;
+            }
+          }
+
+          @media only screen and (max-width: ${tabletMaxWidth}px) {
+            :global(.hideOnTablet) {
+              display: none;
             }
           }
         `}</style>

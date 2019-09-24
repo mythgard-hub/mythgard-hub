@@ -12,7 +12,7 @@ export default function SearchFormText(props) {
   } = props;
 
   return (
-    <label className="input-label">
+    <label className="input-label searchFormText">
       <style jsx>{`
         input {
           margin: 10px 0;

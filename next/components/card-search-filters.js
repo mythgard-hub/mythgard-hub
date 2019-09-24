@@ -23,11 +23,6 @@ export default function CardSearchFilters(props) {
   return (
     <div className="additional-filters">
       <style jsx>{`
-        .additional-filters {
-          margin-left: 35px;
-          margin-right: 35px;
-          margin-bottom: 35px;
-        }
         hr {
           margin-bottom: 10px;
           margin-left: 0;

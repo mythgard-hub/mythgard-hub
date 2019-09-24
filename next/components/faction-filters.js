@@ -57,7 +57,7 @@ class FactionFilters extends React.Component {
           }
         `}</style>
         <ul>
-          {FACTION_NAMES.map((f, index) => (
+          {FACTION_NAMES.map(f => (
             <li key={f}>
               <FactionFilter
                 faction={f}
@@ -68,8 +68,8 @@ class FactionFilters extends React.Component {
             </li>
           ))}
         </ul>
-        <div className="factions-slider">
-          {isOnlyFactionsSetter && (
+        {isOnlyFactionsSetter && (
+          <div className="factions-slider">
             <SliderSwitch
               leftSlider="Has Selected"
               rightSlider="Only Selected"
@@ -77,8 +77,8 @@ class FactionFilters extends React.Component {
               onChange={onIsOnlyFactionClick}
               onClickLabel={isOnlyFactionsSetter}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   }

@@ -6,3 +6,10 @@ export const RARITY_IMAGES = {
   rare: `${cdn}Filter-Icons_0000s_0000s_0002_R.png`,
   mythic: `${cdn}Filter-Icons_0000s_0000s_0003_M.png`
 };
+
+export const getRarityImage = rarity => {
+  if (!rarity) {
+    rarity = 'common';
+  }
+  return RARITY_IMAGES[rarity.toLowerCase()];
+};
