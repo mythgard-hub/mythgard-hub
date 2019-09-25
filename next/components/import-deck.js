@@ -74,6 +74,7 @@ export default function ImportDeck({
         .import-deck-textarea {
           margin-top: 10px;
           margin-bottom: 10px;
+          max-width: 100%;
         }
       `}</style>
       <textarea
