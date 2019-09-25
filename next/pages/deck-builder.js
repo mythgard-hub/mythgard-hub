@@ -1,12 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useApolloClient } from 'react-apollo-hooks';
 import Layout from '../components/layout';
-import {
-  initializeDeckBuilder as initDeck,
-  loadDeckFromSessionStorage,
-  loadDeckFromServer,
-  useStateDeck
-} from '../lib/deck-utils';
+import { loadExistingDeck, useStateDeck } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
 import PageBanner from '../components/page-banner';
 import FactionFilters from '../components/faction-filters';
@@ -16,6 +10,7 @@ import SliderSwitch from '../components/slider-switch';
 import DeckBuilderCardDisplay from '../components/deck-builder-card-display';
 import ErrorMessage from '../components/error-message';
 import PropTypes from 'prop-types';
+import { useApolloClient } from 'react-apollo-hooks';
 
 const init = {
   cardSearchText: '',
@@ -34,30 +29,18 @@ function DeckBuilderPage({ deckId }) {
   const [currentTab, setTab] = useState('');
   const [viewFilters, setViewFilters] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [deckInProgress, setDeckInProgress] = useStateDeck(deckId);
 
+  const [deckInProgress, setDeckInProgress] = useStateDeck(deckId);
   const client = useApolloClient();
 
-  // `useEffect` will not run on the server. As long as we're using
-  // local/session storage, we need to make sure the code that loads/unloads a
-  // previously worked on decks is not run during an SSR.
   useEffect(() => {
-    const storedDeckId = sessionStorage.getItem('deckInProgressId');
-    if ('' + storedDeckId === '' + deckId) {
-      if (!loadDeckFromSessionStorage(setDeckInProgress)) {
-        loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
-      }
-    } else {
-      sessionStorage.removeItem('deckInProgressId');
-      sessionStorage.removeItem('deckInProgress');
-      if (Number.isInteger(deckId)) {
-        loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
-      } else {
-        // Needed in case you hit the deck builder tab while editing an existing
-        // deck.
-        setDeckInProgress(initDeck());
-      }
-    }
+    loadExistingDeck(
+      deckId,
+      deckInProgress,
+      setDeckInProgress,
+      setIsError,
+      client
+    );
   }, [deckId]);
 
   const handleClearFilters = useCallback(() => {

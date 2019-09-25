@@ -108,3 +108,32 @@ export const useStateDeck = deckId => {
   };
   return [deckInProgress, setDeckInProgress];
 };
+
+// Do not run on server. Please run inside useEffect.
+// `useEffect` will not run on the server. As long as we're using
+// local/session storage, we need to make sure the code that loads/unloads a
+// previously worked on decks is not run during an SSR.
+export const loadExistingDeck = (
+  deckId,
+  deckInProgress,
+  setDeckInProgress,
+  setIsError,
+  client
+) => {
+  const storedDeckId = sessionStorage.getItem('deckInProgressId');
+  if (`${storedDeckId}` === `${deckId}`) {
+    if (!loadDeckFromSessionStorage(setDeckInProgress)) {
+      loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
+    }
+  } else {
+    sessionStorage.removeItem('deckInProgressId');
+    sessionStorage.removeItem('deckInProgress');
+    if (Number.isInteger(deckId)) {
+      loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
+    } else {
+      // Needed in case you hit the deck builder tab while editing an existing
+      // deck.
+      setDeckInProgress(initializeDeckBuilder());
+    }
+  }
+};
