@@ -1,4 +1,7 @@
 import { singleDeckQuery, deckCardsQuery } from '../lib/deck-queries';
+import updateDeckAndRemoveCards from '../lib/mutations/update-deck-and-remove-cards';
+import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
+import createNewEmptyDeck from '../lib/mutations/add-deck';
 import { useState } from 'react';
 
 export const initializeDeckBuilder = () => {
@@ -136,4 +139,43 @@ export const loadExistingDeck = (
       setDeckInProgress(initializeDeckBuilder());
     }
   }
+};
+
+export const saveDeckWithCards = (
+  apolloClient,
+  deckId,
+  deckInProgress,
+  authorId
+) => {
+  if (Number.isInteger(deckId)) {
+    return updateDeckWithCards(apolloClient, deckId, deckInProgress);
+  } else {
+    return createDeckWithCards(apolloClient, deckInProgress, authorId);
+  }
+};
+
+const updateDeckWithCards = (apolloClient, deckId, deckInProgress) => {
+  return updateDeckAndRemoveCards(apolloClient, deckId, deckInProgress)
+    .then(() =>
+      addCardsToDBDeck(
+        apolloClient,
+        deckId,
+        Object.values(deckInProgress.mainDeck)
+      )
+    )
+    .then(() => deckId);
+};
+
+const createDeckWithCards = (apolloClient, deckInProgress, authorId) => {
+  let deckId;
+  return createNewEmptyDeck(apolloClient, deckInProgress, authorId)
+    .then(({ data }) => {
+      deckId = data.createDeck.deck.id;
+      return addCardsToDBDeck(
+        apolloClient,
+        deckId,
+        Object.values(deckInProgress.mainDeck)
+      );
+    })
+    .then(() => deckId);
 };

@@ -3,45 +3,8 @@ import PropTypes from 'prop-types';
 import { ApolloConsumer } from 'react-apollo';
 import Router from 'next/router';
 import Link from 'next/link';
-
+import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
-import createNewEmptyDeck from '../lib/mutations/add-deck';
-import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
-import updateDeckAndRemoveCards from '../lib/mutations/update-deck-and-remove-cards';
-
-const saveDeckWithCards = (apolloClient, deckId, deckInProgress, authorId) => {
-  if (Number.isInteger(deckId)) {
-    return updateDeckWithCards(apolloClient, deckId, deckInProgress);
-  } else {
-    return createDeckWithCards(apolloClient, deckInProgress, authorId);
-  }
-};
-
-const updateDeckWithCards = (apolloClient, deckId, deckInProgress) => {
-  return updateDeckAndRemoveCards(apolloClient, deckId, deckInProgress)
-    .then(() =>
-      addCardsToDBDeck(
-        apolloClient,
-        deckId,
-        Object.values(deckInProgress.mainDeck)
-      )
-    )
-    .then(() => deckId);
-};
-
-const createDeckWithCards = (apolloClient, deckInProgress, authorId) => {
-  let deckId;
-  return createNewEmptyDeck(apolloClient, deckInProgress, authorId)
-    .then(({ data }) => {
-      deckId = data.createDeck.deck.id;
-      return addCardsToDBDeck(
-        apolloClient,
-        deckId,
-        Object.values(deckInProgress.mainDeck)
-      );
-    })
-    .then(() => deckId);
-};
 
 export default function SaveDeck({ deckId, deckInProgress }) {
   const { user } = useContext(UserContext);
@@ -113,10 +76,6 @@ SaveDeck.propTypes = {
   deckId: PropTypes.number,
   deckInProgress: PropTypes.shape({
     deckName: PropTypes.string,
-    deckPath: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string
-    }),
     deckPath: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
