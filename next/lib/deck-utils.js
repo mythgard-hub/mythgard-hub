@@ -148,13 +148,13 @@ export const saveDeckWithCards = (
   authorId
 ) => {
   if (Number.isInteger(deckId)) {
-    return updateDeckWithCards(apolloClient, deckId, deckInProgress);
+    return _updateDeckWithCards(apolloClient, deckId, deckInProgress);
   } else {
-    return createDeckWithCards(apolloClient, deckInProgress, authorId);
+    return _createDeckWithCards(apolloClient, deckInProgress, authorId);
   }
 };
 
-const updateDeckWithCards = (apolloClient, deckId, deckInProgress) => {
+const _updateDeckWithCards = (apolloClient, deckId, deckInProgress) => {
   return updateDeckAndRemoveCards(apolloClient, deckId, deckInProgress)
     .then(() =>
       addCardsToDBDeck(
@@ -166,7 +166,7 @@ const updateDeckWithCards = (apolloClient, deckId, deckInProgress) => {
     .then(() => deckId);
 };
 
-const createDeckWithCards = (apolloClient, deckInProgress, authorId) => {
+const _createDeckWithCards = (apolloClient, deckInProgress, authorId) => {
   let deckId;
   return createNewEmptyDeck(apolloClient, deckInProgress, authorId)
     .then(({ data }) => {
