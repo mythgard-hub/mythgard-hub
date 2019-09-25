@@ -5,6 +5,7 @@ import TopDecks from '../components/top-decks.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import { mgColors } from '../lib/theme.js';
+import Link from 'next/link';
 
 const index = () => {
   const theme = useContext(ThemeContext);
