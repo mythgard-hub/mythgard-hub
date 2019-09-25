@@ -4,7 +4,8 @@ import Layout from '../components/layout';
 import {
   initializeDeckBuilder as initDeck,
   loadDeckFromSessionStorage,
-  loadDeckFromServer
+  loadDeckFromServer,
+  useStateDeck
 } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
 import PageBanner from '../components/page-banner';
@@ -32,17 +33,8 @@ function DeckBuilderPage({ deckId }) {
   const [factions, setFactions] = useState(init.factions);
   const [currentTab, setTab] = useState('');
   const [viewFilters, setViewFilters] = useState(false);
-  const [deckInProgress, _setDeckInProgress] = useState(initDeck());
-
   const [isError, setIsError] = useState(false);
-
-  // Sync our edits locally as they're made. This let's us re-populate a deck
-  // after a page refresh or a sequence of redirects.
-  const setDeckInProgress = d => {
-    _setDeckInProgress(d);
-    sessionStorage.setItem('deckInProgressId', JSON.stringify(deckId));
-    sessionStorage.setItem('deckInProgress', JSON.stringify(d));
-  };
+  const [deckInProgress, setDeckInProgress] = useStateDeck(deckId);
 
   const client = useApolloClient();
 
@@ -63,7 +55,7 @@ function DeckBuilderPage({ deckId }) {
       } else {
         // Needed in case you hit the deck builder tab while editing an existing
         // deck.
-        setDeckInProgress(initializeDeckBuilder());
+        setDeckInProgress(initDeck());
       }
     }
   }, [deckId]);

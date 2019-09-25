@@ -1,4 +1,5 @@
 import { singleDeckQuery, deckCardsQuery } from '../lib/deck-queries';
+import { useState } from 'react';
 
 export const initializeDeckBuilder = () => {
   return {
@@ -92,4 +93,18 @@ export const loadDeckFromServer = (
       console.error(reason);
       setIsError(true);
     });
+};
+
+export const useStateDeck = deckId => {
+  const [deckInProgress, _setDeckInProgress] = useState(
+    initializeDeckBuilder()
+  );
+  // Sync our edits locally as they're made. This let's us re-populate a deck
+  // after a page refresh or a sequence of redirects.
+  const setDeckInProgress = d => {
+    _setDeckInProgress(d);
+    sessionStorage.setItem('deckInProgressId', JSON.stringify(deckId));
+    sessionStorage.setItem('deckInProgress', JSON.stringify(d));
+  };
+  return [deckInProgress, setDeckInProgress];
 };
