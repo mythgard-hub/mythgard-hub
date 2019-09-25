@@ -39,8 +39,11 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
         .deck-card-link,
         .deck-card-link:hover,
         .deck-card-link:focus {
-          color: ${theme.fontColor};
+          color: ${theme.cardTableName};
           text-decoration: none;
+          text-transform: uppercase;
+          font-weight: 700;
+          font-size: 0.8em;
         }
       `}</style>
       {!onlyTable && (
@@ -70,7 +73,7 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
                     <a className="deck-card-link">{deckCard.card.name}</a>
                   </Link>
                 </td>
-                <td>x{deckCard.quantity}</td>
+                <td>&times;{deckCard.quantity}</td>
                 {deleteCard && (
                   <td
                     data-cy="deckDeleteCard"
