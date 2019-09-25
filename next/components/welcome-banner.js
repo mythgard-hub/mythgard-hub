@@ -59,7 +59,7 @@ export default function WelcomeBanner() {
 
       <a
         className="welcome-banner-link"
-        href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}
+        href={`mailto:${process.env.EMAIL_MG_CONTACT}`}
       >
         Contact
       </a>
