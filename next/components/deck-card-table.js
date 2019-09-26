@@ -96,11 +96,8 @@ DeckCardsTable.propTypes = {
   onlyTable: PropTypes.bool,
   deleteCard: PropTypes.func,
   deck: PropTypes.shape({
+    deckPower: PropTypes.string,
     deckName: PropTypes.string,
-    deckPath: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string
-    }),
     deckPath: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
