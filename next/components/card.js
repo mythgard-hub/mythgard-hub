@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import GemCost from './gem-cost.js';
+import ManaCost from './mana-cost.js';
 import { imagePathMedium as getImagePath } from '../lib/card.js';
 import { getRarityImage } from '../constants/rarities.js';
 import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
@@ -127,7 +127,7 @@ export default function Card({ card }) {
               <div className="card-detail-label">Cost</div>
               <hr />
               <div className="card-detail-text">
-                {card.mana} <GemCost costString={card.gem} />
+                {card.mana} <ManaCost costString={card.gem} />
               </div>
             </li>
             <li className="card-detail">
