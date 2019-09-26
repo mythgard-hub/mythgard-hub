@@ -22,6 +22,7 @@ export const getCardsQuery = () => {
               or: [
                 { name: { includesInsensitive: $searchText } }
                 { rules: { includesInsensitive: $searchText } }
+                { subtype: { includesInsensitive: $searchText } }
               ]
             }
             {
