@@ -2,7 +2,7 @@ import React from 'react';
 import { FACTION_IMAGES } from '../constants/factions';
 import PropTypes from 'prop-types';
 
-function ManaCost({ costString }) {
+function GemCost({ costString }) {
   if (!costString) {
     return null;
   }
@@ -44,8 +44,8 @@ function ManaCost({ costString }) {
   );
 }
 
-ManaCost.propTypes = {
+GemCost.propTypes = {
   costString: PropTypes.string.isRequired
 };
 
-export default ManaCost;
+export default GemCost;
