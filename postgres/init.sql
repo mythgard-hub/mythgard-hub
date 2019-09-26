@@ -51,7 +51,7 @@ CREATE TABLE mythgard.essence_costs (
   essence integer
 );
 
-insert into mythgard.essence_costs (rarity, essence) values ('MYTHIC', 1000);
+insert into mythgard.essence_costs (rarity, essence) values ('MYTHIC', 2400);
 insert into mythgard.essence_costs (rarity, essence) values ('RARE', 500);
 insert into mythgard.essence_costs (rarity, essence) values ('UNCOMMON', 100);
 insert into mythgard.essence_costs (rarity, essence) values ('COMMON', 50);
@@ -231,12 +231,12 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
-CREATE VIEW mythgard.deck_preview as
+CREATE OR REPLACE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
          deck.name as deck_name,
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
-         sum(essence_costs.essence)::int as essence_cost,
+         sum(essence_costs.essence * card_deck.quantity)::int as essence_cost,
          count(deck_vote)::int as votes
   FROM mythgard.deck
   JOIN mythgard.card_deck
