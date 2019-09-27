@@ -39,6 +39,14 @@ function ArticleList({ max }) {
       description:
         'Control decks are in it for the long haul.  Traditionally, they play a patient, defensive game...',
       date: new Date('2019-09-22T17:24:18.280Z')
+    },
+    {
+      title: 'The Many Uses of Impel',
+      url:
+        'https://teamdgn.net/2019/09/27/the-many-uses-of-impel/',
+      description:
+        'Why Should You Use Impel? Some of you may think, “Wow, Impel doesn’t give me immediate value or combat benefits, movement can’t have that much impact!”  Well in Mythgard...',
+      date: new Date('2019-09-27T17:24:18.280Z')
     }
   ];
 
