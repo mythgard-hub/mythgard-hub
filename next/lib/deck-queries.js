@@ -160,7 +160,7 @@ export const deckCardsQuery = gql`
 
 export const allDecksQuery = gql`
   query decks {
-    decks {
+    decks(orderBy: CREATED_ASC) {
       nodes {
         id
         name

@@ -243,7 +243,7 @@ module.exports = [
 
   `
   query decks {
-    decks {
+    decks(orderBy: CREATED_ASC) {
       nodes {
         id
         name
