@@ -66,10 +66,18 @@ export default function DeckList({ decks }) {
                   <div className="deckAuthor">by {author}</div>
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
-                  <FactionsIndicator factions={deckMetaData[index].factions} />
+                  {deckMetaData[index] && (
+                    <FactionsIndicator
+                      factions={deckMetaData[index].factions}
+                    />
+                  )}
                 </td>
                 <td className="mana">
-                  <EssenceIndicator essence={deckMetaData[index].essenceCost} />
+                  {deckMetaData[index] && (
+                    <EssenceIndicator
+                      essence={deckMetaData[index].essenceCost}
+                    />
+                  )}
                 </td>
                 <td className="modifiedDate">
                   <span>
