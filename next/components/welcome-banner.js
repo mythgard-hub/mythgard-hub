@@ -23,7 +23,6 @@ export default function WelcomeBanner() {
           background-color: ${theme.welcomeBannerBackground};
           display: flex;
           align-items: center;
-          justify-content: space-between;
         }
 
         .welcome-banner-link:before {
@@ -50,6 +49,16 @@ export default function WelcomeBanner() {
           color: ${theme.fontColor};
         }
 
+        .welcome-message {
+          color: ${theme.background};
+          font-weight: 600;
+          margin-left: 20px;
+        }
+
+        .spacer {
+          flex-grow: 1;
+        }
+
         @media only screen and (max-width: 600px) {
           .welcome-banner {
             min-width: 100%;
@@ -63,6 +72,11 @@ export default function WelcomeBanner() {
       >
         Contact
       </a>
+      <span className="welcome-message">
+        Welcome to the Mythgard Hub Beta Launch
+      </span>
+
+      <span className="spacer"></span>
 
       {!user && (
         <a href="/auth/google" className="welcome-banner-link">
