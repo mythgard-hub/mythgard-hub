@@ -63,6 +63,10 @@ export default function WelcomeBanner() {
           .welcome-banner {
             min-width: 100%;
           }
+
+          .welcome-message {
+            display: none;
+          }
         }
       `}</style>
 
