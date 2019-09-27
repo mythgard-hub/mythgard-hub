@@ -25,10 +25,10 @@ class Header extends React.Component {
             display: flex;
             position: relative;
             margin-right: 15px;
+            align-items: center;
           }
           .header .home .wordmark {
             width: 205px;
-            vertical-align: middle;
           }
           .header .home .crownIcon {
             width: 80px;
@@ -36,6 +36,19 @@ class Header extends React.Component {
             position: relative;
             top: -3px;
             left: -5px;
+          }
+
+          .wordmarkWrapper {
+            height: 26px;
+            position: relative;
+          }
+
+          .wordmarkWrapper:after {
+            content: 'BETA';
+            top: -20px;
+            right: -33px;
+            position: absolute;
+            color: #ce0000;
           }
 
           @media only screen and (max-width: 600px) {
@@ -58,11 +71,13 @@ class Header extends React.Component {
               src={`${cdn}/mgh/MGH_CrownLogo_150.png`}
               alt="mythgard logo"
             />
-            <img
-              className="wordmark"
-              src={`${cdn}/mgh/MGH_wordmark.svg`}
-              alt="mythgard wordmark"
-            />
+            <picture className="wordmarkWrapper">
+              <img
+                className="wordmark"
+                src={`${cdn}/mgh/MGH_wordmark.svg`}
+                alt="mythgard wordmark"
+              />
+            </picture>
           </a>
         </Link>
         <HeaderLink route="/cards" cyName="cards">

@@ -94,10 +94,18 @@ export const executeCardQuery = (
   strengthEnums,
   defenseEnums
 ) => {
-  const [manaCosts, manaCostGTE] = intEnumsToGQLVars(manaCostEnums);
+  let [manaCosts, manaCostGTE] = intEnumsToGQLVars(manaCostEnums);
   const [strengths, strengthGTE] = intEnumsToGQLVars(strengthEnums);
   const [defenses, defenseGTE] = intEnumsToGQLVars(defenseEnums);
   const query = getCardsQuery();
+
+  // always search for X cost cards if searching for mana costs
+  if (manaCosts && manaCosts.length) {
+    manaCosts = [...manaCosts, -1];
+  } else if (manaCostGTE) {
+    manaCosts = [-1];
+  }
+
   return useQuery(query, {
     variables: {
       searchText: text || null,

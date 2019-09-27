@@ -80,7 +80,7 @@ function Layout({ title, desc, children }) {
           <title>{title}</title>
           <meta name="description" key="desc" content={desc} />
           <link
-            href="https://fonts.googleapis.com/css?family=Exo+2:400,600,700&display=swap"
+            href="https://fonts.googleapis.com/css?family=Exo+2:300,300i,400,400i,600,600i,700,700i&display=swap"
             rel="stylesheet"
           />
         </Head>
@@ -104,8 +104,8 @@ function Layout({ title, desc, children }) {
           p {
             margin-bottom: 10px;
             line-height: 1.3em;
-            font-family: 'Vollkorn', serif;
-            font-weight: 400;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 300;
           }
 
           h1 {

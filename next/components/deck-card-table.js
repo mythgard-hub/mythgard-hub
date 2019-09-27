@@ -126,7 +126,7 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
             const color = backgroundColor ? theme.cardTableName : 'inherit';
             return (
               <tr key={deckCard.card.id} data-cy="deckCardRow">
-                <td>{deckCard.card.mana}</td>
+                <td>{deckCard.card.mana < 0 ? 'X' : deckCard.card.mana}</td>
                 <td>
                   <GemDot gems={deckCard.card.gem} />
                 </td>
@@ -163,7 +163,7 @@ DeckCardsTable.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPath: PropTypes.shape({
+    deckPower: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),
