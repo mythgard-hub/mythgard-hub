@@ -28,17 +28,27 @@ function TournamentsPage() {
       `}</style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
       <div className="announcement">
-
-        <img className="announcementCrownLogo" src="https://cdn.mythgardhub.com/identity/MGH_CrownLogo.png">
+        <img
+          className="announcementCrownLogo"
+          src="https://cdn.mythgardhub.com/identity/MGH_CrownLogo.png"
+        />
 
         <content>
-        <h2>Thank you for your interest in Mythgard Events!</h2>
-        <p>As <strong>Community</strong> and <strong>Official</strong> competitive scenes and special events develop you will be able to find all of the information and results for them right here.
-        If you are running a tournament, tournament series, or special community-driven event and would like to have the info and results on <strong>Mythgard Hub</strong>, please contact us at {' '}<a href="mailto: Tournaments@mythgardhub.com"><strong>Tournaments@mythgardhub.com</strong></a>{' '} with the details.</p>
-
-      </content>
+          <h2>Thank you for your interest in Mythgard Events!</h2>
+          <p>
+            As <strong>Community</strong> and <strong>Official</strong>{' '}
+            competitive scenes and special events develop you will be able to
+            find all of the information and results for them right here. If you
+            are running a tournament, tournament series, or special
+            community-driven event and would like to have the info and results
+            on <strong>Mythgard Hub</strong>, please contact us at{' '}
+            <a href="mailto: Tournaments@mythgardhub.com">
+              <strong>Tournaments@mythgardhub.com</strong>
+            </a>{' '}
+            with the details.
+          </p>
+        </content>
       </div>
-
     </Layout>
   );
 }
