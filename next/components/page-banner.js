@@ -33,7 +33,7 @@ function PageBanner({ children, image }) {
   );
 }
 
-PageBanner.IMG_ARTICLES = `${process.env.MG_CDN}/banner/Banner_Decks.jpg`;
+PageBanner.IMG_ARTICLES = `${process.env.MG_CDN}/banner/Banner_Articles.jpg`;
 PageBanner.IMG_CARDS = `${process.env.MG_CDN}/banner/Banner_Cards.jpg`;
 PageBanner.IMG_DECKS = `${process.env.MG_CDN}/banner/Banner_Decks.jpg`;
 PageBanner.IMG_DECK_BUILDER = `${process.env.MG_CDN}/banner/Banner_DeckBuilder.jpg`;
