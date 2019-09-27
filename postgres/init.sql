@@ -244,9 +244,9 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
   JOIN mythgard.card
     ON card_deck.card_id = card.id
   LEFT JOIN mythgard.card_faction
-    ON card.id = card_faction.id
+    ON (card.id = card_faction.card_id and card_faction.faction_id is not null)
   LEFT JOIN mythgard.faction
-    On faction.id = card_faction.id
+    On faction.id = card_faction.faction_id
   LEFT JOIN mythgard.essence_costs
     On essence_costs.rarity = card.rarity
   LEFT JOIN mythgard.deck_vote
