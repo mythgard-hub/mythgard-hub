@@ -242,8 +242,9 @@ module.exports = [
 `,
 
   `
-  query decks {
-    decks(orderBy: CREATED_DESC) {
+  query decks($first:Int, $offset:Int) {
+    decks(orderBy: CREATED_DESC, first:$first, offset:$offset ) {
+      totalCount
       nodes {
         id
         name
@@ -251,21 +252,6 @@ module.exports = [
           username
         }
         modified
-        cardDecks {
-          nodes {
-            quantity
-            card {
-              mana
-              cardFactions {
-                nodes {
-                  faction {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
         deckPreviews {
           ${deckPreviewsFragment}
         }
@@ -390,6 +376,8 @@ module.exports = [
       $faction5: Int
       $faction6: Int
       $numFactions: Int
+      $first: Int
+      $offset: Int
     ) {
       searchDecks(
         deckname: $deckName
@@ -407,7 +395,10 @@ module.exports = [
         faction5: $faction5
         faction6: $faction6
         numfactions: $numFactions
+        first: $first
+        offset: $offset
       ) {
+        totalCount
         nodes {
           id
           name
