@@ -31,6 +31,11 @@ export default function AllDecks() {
         currentPage={currentPage}
         setPage={setPage}
       />
+      <style jsx>{`
+        :global(.mg-paging) {
+          margin-top: 20px;
+        }
+      `}</style>
       <PagingControls
         currentPage={currentPage}
         setPage={setPage}
