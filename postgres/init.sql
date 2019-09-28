@@ -119,6 +119,20 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
+ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
+CREATE POLICY deck_admin_all ON mythgard.deck TO admin USING (true) WITH CHECK (true);
+CREATE POLICY deck_all_view ON mythgard.deck FOR SELECT USING (true);
+CREATE POLICY deck_all_create ON mythgard.deck FOR INSERT WITH CHECK (true);
+CREATE POLICY deckupdate_if_author
+  ON mythgard.deck
+  FOR UPDATE
+  USING ("author_id" = mythgard.current_user_id())
+  WITH CHECK ("author_id" = mythgard.current_user_id());
+CREATE POLICY deckdelete_if_author
+  ON mythgard.deck
+  FOR DELETE
+  USING ("author_id" = mythgard.current_user_id());
+
 CREATE TABLE mythgard.deck_vote (
   id SERIAL PRIMARY KEY,
   deck_id integer,
