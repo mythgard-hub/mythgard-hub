@@ -6,7 +6,7 @@ import DeckList from './deck-list';
 import { allDecksQuery } from '../lib/deck-queries';
 import PagingControls from './paging-controls.js';
 
-const pageSize = 3;
+const pageSize = 50;
 
 export default function AllDecks() {
   const [currentPage, setPage] = useState(0);
