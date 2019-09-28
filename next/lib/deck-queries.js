@@ -159,8 +159,8 @@ export const deckCardsQuery = gql`
 `;
 
 export const allDecksQuery = gql`
-  query decks {
-    decks(orderBy: CREATED_DESC) {
+  query decks($first:Int, $offset:Int) {
+    decks(orderBy: CREATED_DESC, first:$first, offset:$offset ) {
       nodes {
         id
         name
@@ -168,21 +168,6 @@ export const allDecksQuery = gql`
           username
         }
         modified
-        cardDecks {
-          nodes {
-            quantity
-            card {
-              mana
-              cardFactions {
-                nodes {
-                  faction {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
         deckPreviews {
           ${deckPreviewsFragment}
         }
