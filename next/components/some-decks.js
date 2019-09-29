@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 import { useDeckSearchQuery } from '../lib/deck-queries';
+import { useState } from 'react';
+import PagingControls from './paging-controls.js';
+
+const pageSize = 50;
 
 export default function SomeDecks(props) {
+  const [currentPage, setPage] = useState(0);
   const {
     authorName,
     name: deckName,
@@ -19,13 +24,35 @@ export default function SomeDecks(props) {
     updatedTime,
     cardIds,
     factionNames,
-    isOnlyFactions
+    isOnlyFactions,
+    first: pageSize,
+    offset: currentPage * pageSize
   });
 
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading</div>;
 
-  return <DeckList decks={data.searchDecks.nodes} />;
+  if (data && !data.searchDecks) return <div>No decks found</div>;
+
+  const totalCount = data.searchDecks.totalCount;
+
+  return (
+    <>
+      <DeckList decks={data.searchDecks.nodes} />
+
+      <style jsx>{`
+        :global(.mg-paging) {
+          margin-top: 20px;
+        }
+      `}</style>
+      <PagingControls
+        currentPage={currentPage}
+        setPage={setPage}
+        pageSize={pageSize}
+        itemCount={totalCount}
+      ></PagingControls>
+    </>
+  );
 }
 
 SomeDecks.propTypes = {
