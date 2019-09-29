@@ -7,6 +7,7 @@ import Link from 'next/link';
 import UserContext from '../components/user-context';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
+import { initializeDeckBuilder } from '../lib/deck-utils';
 
 const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
   let deckId;
@@ -22,23 +23,17 @@ const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
     .then(() => deckId);
 };
 
-export default function SaveDeck({ deckInProgress }) {
+export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
   const { user } = useContext(UserContext);
 
   const handleSubmit = (e, client) => {
     e && e.preventDefault();
 
-    if (!user || !user.id) {
-      alert(
-        'Only logged in users can save deck. Please export your work, log in and come back.'
-      );
-      return;
-    }
-
     if (!validateState()) return;
 
     saveDeckWithCards(client, deckInProgress, user.id).then(deckId => {
       Router.push(`/deck?id=${deckId}`);
+      setDeckInProgress(initializeDeckBuilder());
     });
   };
 
@@ -106,5 +101,6 @@ SaveDeck.propTypes = {
       })
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  setDeckInProgress: PropTypes.func.isRequired
 };
