@@ -81,7 +81,10 @@ export default function DeckBuilderSidebar(props) {
         updateImportedDeck={updateImportedDeck}
       />
       <DeckExport deckInProgress={deckInProgress} />
-      <SaveDeck deckInProgress={deckInProgress} />
+      <SaveDeck
+        deckInProgress={deckInProgress}
+        setDeckInProgress={setDeckInProgress}
+      />
       <button onClick={clearDeck}>Clear Deck</button>
       <div className="deck-in-progress" data-cy="deckInProgress">
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
