@@ -34,6 +34,16 @@ export default function DeckBuilderSidebar(props) {
     0
   );
 
+  const clearDeck = () => {
+    const confirmation = confirm(
+      'Are you sure you want to clear the deck? This action cannot be undone.'
+    );
+
+    if (confirmation) {
+      setDeckInProgress(initializeDeckBuilder());
+    }
+  };
+
   return (
     <div className="deck-builder-actions">
       <style jsx>{`
@@ -73,9 +83,7 @@ export default function DeckBuilderSidebar(props) {
       />
       <DeckExport deckInProgress={deckInProgress} />
       <SaveDeck deckInProgress={deckInProgress} />
-      <button onClick={() => setDeckInProgress(initializeDeckBuilder())}>
-        Clear Deck
-      </button>
+      <button onClick={clearDeck}>Clear Deck</button>
       <div className="deck-in-progress" data-cy="deckInProgress">
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
         <EditDeckName

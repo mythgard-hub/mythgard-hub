@@ -65,6 +65,23 @@ export default function ImportDeck({
   if (!paths) return <div>No paths in our database</div>;
   if (!powers) return <div>No powers in our database</div>;
 
+  const onClick = () => {
+    const confirmation = confirm(
+      'Are you sure you want to import? This will replace the current deck.'
+    );
+
+    if (confirmation) {
+      handleImport(
+        mainDeckInput,
+        currentMainDeck,
+        updateImportedDeck,
+        cards,
+        paths,
+        powers
+      );
+    }
+  };
+
   return (
     <div className="import-deck-container">
       <style jsx>{`
@@ -87,19 +104,7 @@ export default function ImportDeck({
         onChange={handleInputChange}
         placeholder="Paste deck from Mythgard..."
       />
-      <button
-        onClick={() =>
-          handleImport(
-            mainDeckInput,
-            currentMainDeck,
-            updateImportedDeck,
-            cards,
-            paths,
-            powers
-          )
-        }
-        data-cy="importDeckButton"
-      >
+      <button onClick={onClick} data-cy="importDeckButton">
         Import
       </button>
     </div>

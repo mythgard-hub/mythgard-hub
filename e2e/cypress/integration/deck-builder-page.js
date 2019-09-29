@@ -154,6 +154,9 @@ describe('Deck builder page', () => {
   });
 
   it('should export a deck', function() {
+    cy.on('window:confirm', () => {
+      return true;
+    });
     const input = [
       'name: my deck',
       'path: my path',
