@@ -326,13 +326,37 @@ describe('Import utility methods', () => {
       ].join('\n');
 
       const result = convertImportToDeck(input, '', allCards);
+      const mainDeck = Object.values(result.mainDeck);
 
       expect(result.errors.length).toEqual(0);
       expect(result.deckCoverArt).toEqual('');
       expect(result.deckName).toEqual('my deck');
       expect(result.deckPath).toEqual('my path');
       expect(result.deckPower).toEqual('my power');
-      expect(Object.values(result.mainDeck).length).toEqual(1);
+      expect(mainDeck.length).toEqual(1);
+      expect(mainDeck[0].quantity).toEqual(1);
+    });
+
+    it('Should convert an import to a deck in progress - duplicate lines', function() {
+      const input = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        'coverart: ',
+        '1 card name',
+        '3 card name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+      const mainDeck = Object.values(result.mainDeck);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(mainDeck.length).toEqual(1);
+      expect(mainDeck[0].quantity).toEqual(4);
     });
 
     it('Should convert an import to a deck in progress - multiple cards', function() {
