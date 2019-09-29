@@ -179,10 +179,14 @@ export const convertImportToDeck = (
     mainDeckLines.slice(spliceIndex),
     allCards
   ).reduce((acc, curr) => {
-    acc[`${curr.card.id}`] = {
-      quantity: curr.quantity,
+    const id = `${curr.card.id}`;
+    const existingQuantity = (acc[id] && acc[id].quantity) || 0;
+
+    acc[id] = {
+      quantity: existingQuantity + curr.quantity,
       card: curr.card
     };
+
     return acc;
   }, {});
   importedDeck.sideboard = formatCardLines(sideboardLines, allCards);
