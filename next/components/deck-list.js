@@ -53,7 +53,10 @@ export default function DeckList({ decks }) {
             const classNames = `deckListRow ${index % 2 ? 'zebraRow' : ''}`;
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
-            const modified = new Date(deck.modified);
+
+            const deckModifiedMeta =
+              deckMetaData[index] && deckMetaData[index].deckCreated;
+            const modified = new Date(deck.modified || deckModifiedMeta);
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
