@@ -42,8 +42,7 @@ function ArticleList({ max }) {
     },
     {
       title: 'The Many Uses of Impel',
-      url:
-        'https://teamdgn.net/2019/09/27/the-many-uses-of-impel/',
+      url: 'https://teamdgn.net/2019/09/27/the-many-uses-of-impel/',
       description:
         'Why Should You Use Impel? Some of you may think, “Wow, Impel doesn’t give me immediate value or combat benefits, movement can’t have that much impact!”  Well in Mythgard...',
       date: new Date('2019-09-27T17:24:18.280Z')
