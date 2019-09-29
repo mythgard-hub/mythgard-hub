@@ -119,7 +119,7 @@ CREATE POLICY deckupdate_if_author
   FOR UPDATE
   USING ("author_id" = mythgard.current_user_id())
   WITH CHECK ("author_id" = mythgard.current_user_id());
--- Rows can only be updated by their author
+-- Rows can only be deleted by their author
 CREATE POLICY deckdelete_if_author
   ON mythgard.deck
   FOR DELETE
