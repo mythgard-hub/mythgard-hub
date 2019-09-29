@@ -138,7 +138,8 @@ describe('Deck builder page', () => {
       'power: my power',
       'coverart: myself',
       '1 Dragon',
-      '2 Imp'
+      '2 Imp',
+      '5 Imp'
     ].join('\n');
 
     cy.get('[data-cy="importDeckTextarea"]').type(input);
