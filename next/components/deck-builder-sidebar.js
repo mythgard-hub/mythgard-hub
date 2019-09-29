@@ -75,7 +75,6 @@ export default function DeckBuilderSidebar(props) {
       <h2 className="build-deck-title">Import Deck from Mythgard</h2>
       <ImportDeck
         mainDeckInput={mainDeckInput}
-        currentMainDeck={deckInProgress.mainDeck}
         handleInputChange={e => {
           setMainDeckInput(e.target.value);
         }}

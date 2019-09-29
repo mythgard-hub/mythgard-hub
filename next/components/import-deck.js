@@ -5,12 +5,10 @@ import allPathsQuery from '../lib/queries/paths-query';
 import allPowersQuery from '../lib/queries/powers-query';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import { convertImportToDeck } from '../lib/import-utils';
-import { addCardToDeck } from '../lib/deck-utils';
 import ErrorMessage from './error-message.js';
 
 const handleImport = (
   mainDeckInput,
-  currentMainDeck,
   updateImportedDeck,
   allCards,
   allPaths,
@@ -24,17 +22,11 @@ const handleImport = (
     allPowers
   );
 
-  // Upsert the previous cards to deck
-  Object.values(currentMainDeck).forEach(card => {
-    importedDeck.mainDeck = addCardToDeck(importedDeck.mainDeck, card);
-  });
-
   updateImportedDeck(importedDeck);
 };
 
 export default function ImportDeck({
   mainDeckInput,
-  currentMainDeck,
   handleInputChange,
   updateImportedDeck
 }) {
@@ -71,14 +63,7 @@ export default function ImportDeck({
     );
 
     if (confirmation) {
-      handleImport(
-        mainDeckInput,
-        currentMainDeck,
-        updateImportedDeck,
-        cards,
-        paths,
-        powers
-      );
+      handleImport(mainDeckInput, updateImportedDeck, cards, paths, powers);
     }
   };
 
