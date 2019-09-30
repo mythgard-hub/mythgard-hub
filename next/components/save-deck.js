@@ -84,14 +84,8 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
 SaveDeck.propTypes = {
   deckInProgress: PropTypes.shape({
     deckName: PropTypes.string,
-    deckPath: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string
-    }),
-    deckPath: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string
-    }),
+    deckPath: PropTypes.string,
+    deckPower: PropTypes.string,
     deckCoverArt: PropTypes.string,
     mainDeck: PropTypes.shape({
       quantity: PropTypes.number,
