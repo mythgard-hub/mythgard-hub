@@ -2,6 +2,11 @@ DROP SCHEMA IF EXISTS mythgard CASCADE;
 
 CREATE SCHEMA mythgard;
 
+CREATE OR REPLACE FUNCTION mythgard.current_user_id()
+RETURNS integer as $$
+  SELECT nullif(current_setting('jwt.claims.userId', true), '')::integer;
+$$ language sql stable;
+
 CREATE TYPE mythgard.rarity AS ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC');
 
 CREATE TYPE mythgard.cardType AS ENUM ('MINION', 'SPELL', 'ENCHANTMENT', 'ARTIFACT', 'ITEM', 'BRAND');
@@ -101,6 +106,28 @@ INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('c
 INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', '2019-05-1 00:00:00');
 INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', '2019-01-1 00:00:00');
 
+ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
+-- Admin users can make any changes and read all rows
+CREATE POLICY deck_admin_all ON mythgard.deck TO admin USING (true) WITH CHECK (true);
+-- Non-admins can read all rows
+CREATE POLICY deck_all_view ON mythgard.deck FOR SELECT USING (true);
+-- Only create a deck for yourself
+CREATE POLICY deck_insert_if_author
+  ON mythgard.deck
+  FOR INSERT
+  WITH CHECK ("author_id" = mythgard.current_user_id());
+-- Rows can only be updated by their author
+CREATE POLICY deck_update_if_author
+  ON mythgard.deck
+  FOR UPDATE
+  USING ("author_id" = mythgard.current_user_id())
+  WITH CHECK ("author_id" = mythgard.current_user_id());
+-- Rows can only be updated by their author
+CREATE POLICY deck_delete_if_author
+  ON mythgard.deck
+  FOR DELETE
+  USING ("author_id" = mythgard.current_user_id());
+
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
   quantity integer,
@@ -155,11 +182,6 @@ RETURNS mythgard.account as $$
     ON CONFLICT (google_id) DO UPDATE SET email = _email
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
-
-CREATE OR REPLACE FUNCTION mythgard.current_user_id()
-RETURNS integer as $$
-  SELECT nullif(current_setting('jwt.claims.userId', true), '')::integer;
-$$ language sql stable;
 
 ALTER TABLE mythgard.account ENABLE ROW LEVEL SECURITY;
 
