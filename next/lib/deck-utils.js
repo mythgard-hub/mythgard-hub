@@ -1,8 +1,10 @@
+import { RARITY_MAX_CARDS } from '../constants/rarities';
+
 export const initializeDeckBuilder = () => {
   return {
     deckName: '',
-    deckPath: '',
-    deckPower: '',
+    deckPath: {},
+    deckPower: {},
     deckCoverArt: '',
     mainDeck: {},
     sideboard: [],
@@ -22,8 +24,16 @@ export const addCardToDeck = (deck, card) => {
 
   newDeck[card.card.id] = {
     ...newDeck[card.card.id],
-    quantity: oldQuantity + card.quantity
+    quantity: getQuantity(card.card, oldQuantity, card.quantity)
   };
 
   return newDeck;
+};
+
+export const getQuantity = (card, oldQuantity, newQuantity) => {
+  const rarity = (card && card.rarity && card.rarity.toLowerCase()) || 'common';
+  const max = RARITY_MAX_CARDS[rarity] || 1;
+  const desiredQuantity = oldQuantity + newQuantity;
+
+  return Math.min(desiredQuantity, max);
 };
