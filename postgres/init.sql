@@ -111,16 +111,19 @@ ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
 CREATE POLICY deck_admin_all ON mythgard.deck TO admin USING (true) WITH CHECK (true);
 -- Non-admins can read all rows
 CREATE POLICY deck_all_view ON mythgard.deck FOR SELECT USING (true);
--- Non-admins can create
-CREATE POLICY deck_all_create ON mythgard.deck FOR INSERT WITH CHECK (true);
+-- Only create a deck for yourself
+CREATE POLICY deck_insert_if_author
+  ON mythgard.deck
+  FOR INSERT
+  WITH CHECK ("author_id" = mythgard.current_user_id());
 -- Rows can only be updated by their author
-CREATE POLICY deckupdate_if_author
+CREATE POLICY deck_update_if_author
   ON mythgard.deck
   FOR UPDATE
   USING ("author_id" = mythgard.current_user_id())
   WITH CHECK ("author_id" = mythgard.current_user_id());
 -- Rows can only be updated by their author
-CREATE POLICY deckdelete_if_author
+CREATE POLICY deck_delete_if_author
   ON mythgard.deck
   FOR DELETE
   USING ("author_id" = mythgard.current_user_id());
