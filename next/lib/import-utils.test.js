@@ -9,11 +9,11 @@ import {
 import { META_KEYS } from '../constants/deck';
 
 const allCards = [
-  { id: 1, name: 'card' },
-  { id: 2, name: 'cards' },
-  { id: 3, name: 'card name' },
-  { id: 4, name: 'other card name' },
-  { id: 5, name: 'weird  card  name' }
+  { id: 1, rarity: 'COMMON', name: 'card' },
+  { id: 2, rarity: 'COMMON', name: 'cards' },
+  { id: 3, rarity: 'COMMON', name: 'card name' },
+  { id: 4, rarity: 'COMMON', name: 'other card name' },
+  { id: 5, rarity: 'COMMON', name: 'weird  card  name' }
 ];
 
 const allPowers = [
@@ -137,9 +137,15 @@ describe('Import utility methods', () => {
 
   describe('Test formatCardLines', () => {
     const expected = [
-      { quantity: 1, card: { id: 3, name: 'card name' } },
-      { quantity: 2, card: { id: 4, name: 'other card name' } },
-      { quantity: 3, card: { id: 5, name: 'weird  card  name' } }
+      { quantity: 1, card: { id: 3, rarity: 'COMMON', name: 'card name' } },
+      {
+        quantity: 2,
+        card: { id: 4, rarity: 'COMMON', name: 'other card name' }
+      },
+      {
+        quantity: 3,
+        card: { id: 5, rarity: 'COMMON', name: 'weird  card  name' }
+      }
     ];
 
     it('should format the line for each card - multiple valid lines', function() {
@@ -337,6 +343,27 @@ describe('Import utility methods', () => {
       expect(mainDeck[0].quantity).toEqual(1);
     });
 
+    it('Should convert an import to a deck in progress - more than max', function() {
+      const input = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        'coverart: ',
+        '5 card name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+      const mainDeck = Object.values(result.mainDeck);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(mainDeck.length).toEqual(1);
+      expect(mainDeck[0].quantity).toEqual(4);
+    });
+
     it('Should convert an import to a deck in progress - duplicate lines', function() {
       const input = [
         'name: my deck',
@@ -344,6 +371,28 @@ describe('Import utility methods', () => {
         'power: my power',
         'coverart: ',
         '1 card name',
+        '3 card name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+      const mainDeck = Object.values(result.mainDeck);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(mainDeck.length).toEqual(1);
+      expect(mainDeck[0].quantity).toEqual(4);
+    });
+
+    it('Should convert an import to a deck in progress - duplicate lines more than max', function() {
+      const input = [
+        'name: my deck',
+        'path: my path',
+        'power: my power',
+        'coverart: ',
+        '2 card name',
         '3 card name'
       ].join('\n');
 
