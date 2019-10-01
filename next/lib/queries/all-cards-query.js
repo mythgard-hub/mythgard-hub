@@ -8,6 +8,7 @@ const cardsQuery = gql`
         name
         mana
         gem
+        rarity
         cardFactions {
           nodes {
             faction {
