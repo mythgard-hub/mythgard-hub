@@ -103,8 +103,8 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
-INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', '2019-05-1 00:00:00');
-INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', '2019-01-1 00:00:00');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', current_date - interval '1 month');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', current_date - interval '9 month');
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows
@@ -312,7 +312,7 @@ CREATE INDEX author_name_index ON mythgard.account
 -- faction5    int or null - id of a faction that deck must contain
 -- faction6    int or null - id of a faction that deck must contain
 -- numFactions int or null - number of specified factions. Omit to allow more factions than specifed.
-create function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
+create or replace function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
   returns setof mythgard.deck as $$
 
     SELECT deck.* FROM mythgard.deck
@@ -330,19 +330,19 @@ create function mythgard.search_decks(deckName varchar(255), authorName varchar(
     intersect
 
     -- cards filter
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card1 is null or card.id = card1
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card2 is null or card.id = card2
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card3 is null or card.id = card3
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card4 is null or card.id = card4
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card5 is null or card.id = card5
 
     intersect
