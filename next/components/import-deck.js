@@ -77,6 +77,7 @@ export default function ImportDeck({
           margin-top: 10px;
           margin-bottom: 10px;
           max-width: 100%;
+          width: 100%;
         }
       `}</style>
       <textarea
