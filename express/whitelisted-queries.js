@@ -138,6 +138,7 @@ module.exports = [
         name
         mana
         gem
+        rarity
         cardFactions {
           nodes {
             faction {
