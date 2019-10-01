@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 import { dateToDeltaString } from '../lib/time';
 
-function Article({ title, url, description, date }) {
+function Article({ title, url, author, description, date }) {
   const theme = useContext(ThemeContext);
   const timeMsg = dateToDeltaString(date);
   return (
@@ -21,8 +21,12 @@ function Article({ title, url, description, date }) {
         .article-link {
           text-decoration: none;
           color: ${theme.fontColorAccent};
-          font-weight: bold;
+          font-weight: 600;
           font-size: 1.1em;
+        }
+
+        .article-author {
+          font-weight: 600;
         }
 
         .article-date {
@@ -33,6 +37,7 @@ function Article({ title, url, description, date }) {
         <a className="article-link" href={url}>
           {title}
         </a>
+        by <div className="article-author">{author}</div>
         <div className="article-date">{timeMsg}</div>
         <hr className="bgrad" />
         <div className="article-desc">{description}</div>
@@ -44,6 +49,7 @@ function Article({ title, url, description, date }) {
 Article.propTypes = {
   title: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   date: PropTypes.instanceOf(Date).isRequired
 };
