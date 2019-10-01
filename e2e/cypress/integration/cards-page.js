@@ -157,6 +157,7 @@ describe('Cards Page', function() {
           'setup for clear button test'
         );
         cy.get('[data-cy="cardSearchClear"]').click();
+        cy.wait(500);
         return getPagingTotalAsInt();
       })
       .then(length => {
