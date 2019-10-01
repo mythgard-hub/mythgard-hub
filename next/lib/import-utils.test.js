@@ -454,8 +454,8 @@ describe('Import utility methods', () => {
       expect(result.errors.length).toEqual(1);
       expect(result.deckCoverArt).toEqual('');
       expect(result.deckName).toEqual('');
-      expect(result.deckPath).toEqual('');
-      expect(result.deckPower).toEqual('');
+      expect(result.deckPath).toEqual({});
+      expect(result.deckPower).toEqual({});
       expect(Object.values(result.mainDeck).length).toEqual(0);
     });
   });
