@@ -28,9 +28,6 @@ const index = () => {
         }
 
         .homePageColumns h2 {
-          font-size: 1.2em;
-          font-weight: 700;
-          font-style: italic;
           text-align: center;
           border-bottom: ${theme.border};
         }
