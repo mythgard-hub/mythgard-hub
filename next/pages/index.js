@@ -94,12 +94,20 @@ const index = () => {
       <div className="homePageColumns">
         <div className="mg-column">
           <div className="columnHeader">Top Articles</div>
+<<<<<<< HEAD
           <hr class="orangeGrade">
+=======
+          <hr class="orangeGrade"?
+>>>>>>> 69a5848a80b333c3214376effd74cb20e2f3f3ea
           <ArticleList max={3} />
         </div>
         <div className="mg-column">
           <div className="columnHeader">Featured Decks</div>
+<<<<<<< HEAD
           <hr class="orangeGrade">
+=======
+          <hr class="orangeGrade"?
+>>>>>>> 69a5848a80b333c3214376effd74cb20e2f3f3ea
           <TopDecks />
         </div>
       </div>
