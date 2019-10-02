@@ -37,7 +37,7 @@ function Article({ title, url, author, description, date }) {
         <a className="article-link" href={url}>
           {title}
         </a>
-        by <div className="article-author">{author}</div>
+        <br>by&nbsp;<span className="article-author">{author}</span>
         <div className="article-date">{timeMsg}</div>
         <hr className="bgrad" />
         <div className="article-desc">{description}</div>
