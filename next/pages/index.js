@@ -93,11 +93,13 @@ const index = () => {
       </div>
       <div className="homePageColumns">
         <div className="mg-column">
-          <columnHeader>Top Articles</columnHeader>
+          <div className="columnHeader">Top Articles</div>
+          <hr class="orangeGrade"?
           <ArticleList max={3} />
         </div>
         <div className="mg-column">
-          <columnHeader>Featured Decks</columnHeader>
+          <div className="columnHeader">Featured Decks</div>
+          <hr class="orangeGrade"?
           <TopDecks />
         </div>
       </div>
