@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import GemCost from './gem-cost.js';
 import { imagePathMedium as getImagePath } from '../lib/card.js';
 import { getRarityImage } from '../constants/rarities.js';
-import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
+import { SUPERTYPES, SUPERTYPE_IMAGES } from '../constants/supertypes.js';
 
 const firstLetterUppercase = str => {
   return !str || str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -168,10 +168,16 @@ export default function Card({ card }) {
             </li>
             {(card.atk || card.def) && (
               <li className="card-detail">
-                <div className="card-detail-label">Attack/Health</div>
+                <div className="card-detail-label">
+                  {supertype === SUPERTYPES.artifact
+                    ? 'Durability'
+                    : 'Attack / Health'}
+                </div>
                 <hr />
                 <div className="card-detail-text">
-                  {card.atk}/{card.def}
+                  {supertype === SUPERTYPES.artifact
+                    ? card.def
+                    : `${card.atk}/${card.def}`}
                 </div>
               </li>
             )}
