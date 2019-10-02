@@ -7,7 +7,7 @@ export default function EssenceIndicator({ essence }) {
   const theme = useContext(ThemeContext);
   const iconUrl = `${process.env.MG_CDN}/filters/essence.png`;
 
-  if (!essence) return null;
+  if (!essence) return '';
 
   return (
     <span className="essenceIndicator">
