@@ -295,6 +295,9 @@ module.exports = [
       path {
         name
       }
+      deckPreviews {
+        ${deckPreviewsFragment}
+      }
     }
   }
 `,

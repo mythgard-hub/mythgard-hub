@@ -218,6 +218,9 @@ export const singleDeckQuery = gql`
       path {
         name
       }
+      deckPreviews {
+        ${deckPreviewsFragment}
+      }
     }
   }
 `;
