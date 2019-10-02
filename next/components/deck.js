@@ -93,6 +93,7 @@ Deck.propTypes = {
     name: PropTypes.string,
     cardDecks: PropTypes.array,
     power: PropTypes.shape({ name: PropTypes.string.isRequired }),
-    path: PropTypes.shape({ name: PropTypes.string.isRequired })
+    path: PropTypes.shape({ name: PropTypes.string.isRequired }),
+    author: PropTypes.shape({ username: PropTypes.string.isRequired })
   }).isRequired
 };
