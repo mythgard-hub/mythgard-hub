@@ -23,7 +23,7 @@ function TournamentsPage() {
         .announcementCrownLogo {
           float: right;
           margin-right: 50px;
-          margin-top: -20px;
+          margin-top: -10px;
           width: 180px;
         }
 
@@ -43,6 +43,7 @@ function TournamentsPage() {
         />
 
         <content>
+          <br>
           <h2>Thank you for your interest in Mythgard Events!</h2>
           <p>
             As <strong>Community</strong> and <strong>Official</strong>{' '}

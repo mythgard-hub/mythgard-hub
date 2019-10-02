@@ -28,6 +28,9 @@ const index = () => {
         }
 
         .homePageColumns h2 {
+          font-size: 1.2em;
+          font-weight: 700;
+          font-style: italic;
           text-align: center;
           border-bottom: ${theme.border};
         }
@@ -93,11 +96,11 @@ const index = () => {
       </div>
       <div className="homePageColumns">
         <div className="mg-column">
-          <h2>Top Articles</h2>
+          <columnHeader>Top Articles</columnHeader>
           <ArticleList max={3} />
         </div>
         <div className="mg-column">
-          <h2>Featured Decks</h2>
+          <columnHeader>Featured Decks</columnHeader>
           <TopDecks />
         </div>
       </div>

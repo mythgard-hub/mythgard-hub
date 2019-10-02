@@ -121,6 +121,15 @@ function Layout({ title, desc, children }) {
             margin-bottom: 10px;
           }
 
+          columnHeader {
+            margin-top: 7px;
+            margin-bottom: 10px;
+            font-size:1.2em;
+            font-weight: 700;
+            font-style: italic;
+            text-transform: uppercase;
+          }
+
           h3 {
             margin-top: 10px;
             font-weight: 600;
@@ -153,7 +162,18 @@ function Layout({ title, desc, children }) {
               right bottom,
               from(rgba(0, 0, 0, 0)),
               to(rgba(0, 0, 0, 1))
-            );
+            )
+
+            hr.orangeGrade {
+              // border = orange
+              border-top: ${theme.border};
+              -webkit-mask-image: -webkit-gradient(
+                linear,
+                left top,
+                right bottom,
+                from(rgba(0, 0, 0, 0)),
+                to(rgba(0, 0, 0, 1))
+              );
           }
 
           button,
