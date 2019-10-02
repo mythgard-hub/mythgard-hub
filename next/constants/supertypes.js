@@ -4,7 +4,9 @@ export const SUPERTYPES = {
   minion: 'MINION',
   spell: 'SPELL',
   enchantment: 'ENCHANTMENT',
-  artifact: 'ARTIFACT'
+  artifact: 'ARTIFACT',
+  item: 'ITEM',
+  brand: 'BRAND'
 };
 
 export const SUPERTYPE_IMAGES = {
