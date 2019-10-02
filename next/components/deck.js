@@ -6,6 +6,8 @@ import DeckDelete from './deck-delete';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import { deckCardsQuery } from '../lib/deck-queries';
 import DeckCardsTable from './deck-card-table';
+import EssenceIndicator from './essence-indicator.js';
+import FactionsIndicator from './factions-indicator.js';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -28,9 +30,16 @@ export default function Deck({ deck }) {
   if (loading) return <div>Loading</div>;
 
   const cards = data.deck ? data.deck.cardDecks.nodes : [];
-  const { power, path, author } = deck;
+  const { power, path, author, deckPreviews } = deck;
   const deckToExport = getDeckToExport(cards, deck.name, path, power);
   const authorName = (author && author.username) || 'unknown';
+  const metaData =
+    deckPreviews &&
+    deckPreviews.nodes &&
+    deckPreviews.nodes[0] &&
+    deckPreviews.nodes[0];
+  const essenceCost = metaData && metaData.essenceCost;
+  const factions = metaData && metaData.factions;
 
   return (
     <div className="deck-page-container">
@@ -53,10 +62,36 @@ export default function Deck({ deck }) {
           font-weight: bold;
           font-size: 24px;
           margin-bottom: 5px;
+          display: flex;
+          justify-content: space-between;
         }
 
         .deck-author {
           margin-bottom: 20px;
+        }
+
+        .deck-stats {
+          margin-left: 20px;
+          width: fit-content;
+          padding-bottom: 20px;
+        }
+
+        .coming-soon {
+          margin-top: 10px;
+          font-style: italic;
+        }
+
+        .stats-title {
+          text-transform: uppercase;
+          font-style: italic;
+          font-weight: bold;
+          font-size: 1em;
+          margin-top: 25px;
+          margin-bottom: 5px;
+        }
+
+        .factions-title {
+          margin-bottom: 8px;
         }
 
         @media only screen and (max-width: 600px) {
@@ -80,6 +115,12 @@ export default function Deck({ deck }) {
       <div className="deck-actions">
         <DeckExport deckInProgress={deckToExport} />
         <DeckDelete deck={deck} />
+        <div className="deck-stats">
+          <div className="stats-title">Essence</div>
+          <EssenceIndicator essence={essenceCost} />
+          <div className="stats-title factions-title">Factions</div>
+          <FactionsIndicator factions={factions} />
+        </div>
       </div>
     </div>
   );
