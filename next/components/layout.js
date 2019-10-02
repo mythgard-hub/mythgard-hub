@@ -162,8 +162,8 @@ function Layout({ title, desc, children }) {
               right bottom,
               from(rgba(0, 0, 0, 0)),
               to(rgba(0, 0, 0, 1))
-            )
-
+            );
+          }
             hr.orangeGrade {
               margin-top: 10px;
               margin-bottom: 12px;
