@@ -2,6 +2,11 @@ DROP SCHEMA IF EXISTS mythgard CASCADE;
 
 CREATE SCHEMA mythgard;
 
+CREATE OR REPLACE FUNCTION mythgard.current_user_id()
+RETURNS integer as $$
+  SELECT nullif(current_setting('jwt.claims.userId', true), '')::integer;
+$$ language sql stable;
+
 CREATE TYPE mythgard.rarity AS ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC');
 
 CREATE TYPE mythgard.cardType AS ENUM ('MINION', 'SPELL', 'ENCHANTMENT', 'ARTIFACT', 'ITEM', 'BRAND');
@@ -51,7 +56,7 @@ CREATE TABLE mythgard.essence_costs (
   essence integer
 );
 
-insert into mythgard.essence_costs (rarity, essence) values ('MYTHIC', 1000);
+insert into mythgard.essence_costs (rarity, essence) values ('MYTHIC', 2400);
 insert into mythgard.essence_costs (rarity, essence) values ('RARE', 500);
 insert into mythgard.essence_costs (rarity, essence) values ('UNCOMMON', 100);
 insert into mythgard.essence_costs (rarity, essence) values ('COMMON', 50);
@@ -98,8 +103,30 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
-INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', '2019-05-1 00:00:00');
-INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', '2019-01-1 00:00:00');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', current_date - interval '1 month');
+INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', current_date - interval '9 month');
+
+ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
+-- Admin users can make any changes and read all rows
+CREATE POLICY deck_admin_all ON mythgard.deck TO admin USING (true) WITH CHECK (true);
+-- Non-admins can read all rows
+CREATE POLICY deck_all_view ON mythgard.deck FOR SELECT USING (true);
+-- Only create a deck for yourself
+CREATE POLICY deck_insert_if_author
+  ON mythgard.deck
+  FOR INSERT
+  WITH CHECK ("author_id" = mythgard.current_user_id());
+-- Rows can only be updated by their author
+CREATE POLICY deck_update_if_author
+  ON mythgard.deck
+  FOR UPDATE
+  USING ("author_id" = mythgard.current_user_id())
+  WITH CHECK ("author_id" = mythgard.current_user_id());
+-- Rows can only be updated by their author
+CREATE POLICY deck_delete_if_author
+  ON mythgard.deck
+  FOR DELETE
+  USING ("author_id" = mythgard.current_user_id());
 
 CREATE TABLE mythgard.card_deck (
   id SERIAL PRIMARY KEY,
@@ -174,11 +201,6 @@ RETURNS mythgard.account as $$
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
 
-CREATE OR REPLACE FUNCTION mythgard.current_user_id()
-RETURNS integer as $$
-  SELECT nullif(current_setting('jwt.claims.userId', true), '')::integer;
-$$ language sql stable;
-
 ALTER TABLE mythgard.account ENABLE ROW LEVEL SECURITY;
 
 -- Admin users can make any changes and read all rows
@@ -249,12 +271,12 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
-CREATE VIEW mythgard.deck_preview as
+CREATE OR REPLACE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
          deck.name as deck_name,
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
-         sum(essence_costs.essence)::int as essence_cost,
+         sum(essence_costs.essence * card_deck.quantity)::int as essence_cost,
          count(deck_vote)::int as votes
   FROM mythgard.deck
   JOIN mythgard.card_deck
@@ -262,9 +284,9 @@ CREATE VIEW mythgard.deck_preview as
   JOIN mythgard.card
     ON card_deck.card_id = card.id
   LEFT JOIN mythgard.card_faction
-    ON card.id = card_faction.id
+    ON (card.id = card_faction.card_id and card_faction.faction_id is not null)
   LEFT JOIN mythgard.faction
-    On faction.id = card_faction.id
+    On faction.id = card_faction.faction_id
   LEFT JOIN mythgard.essence_costs
     On essence_costs.rarity = card.rarity
   LEFT JOIN mythgard.deck_vote
@@ -308,7 +330,7 @@ CREATE INDEX author_name_index ON mythgard.account
 -- faction5    int or null - id of a faction that deck must contain
 -- faction6    int or null - id of a faction that deck must contain
 -- numFactions int or null - number of specified factions. Omit to allow more factions than specifed.
-create function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
+create or replace function mythgard.search_decks(deckName varchar(255), authorName varchar(255), deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
   returns setof mythgard.deck as $$
 
     SELECT deck.* FROM mythgard.deck
@@ -326,19 +348,19 @@ create function mythgard.search_decks(deckName varchar(255), authorName varchar(
     intersect
 
     -- cards filter
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card1 is null or card.id = card1
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card2 is null or card.id = card2
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card3 is null or card.id = card3
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card4 is null or card.id = card4
     intersect
-    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id) left join mythgard.faction on (faction.id = card_faction.faction_id)
+    SELECT deck.* from mythgard.deck left join mythgard.card_deck on (deck.id = card_deck.deck_id) left join mythgard.card on (card.id = card_deck.card_id) left join mythgard.card_faction on (card.id = card_faction.card_id)
     where card5 is null or card.id = card5
 
     intersect

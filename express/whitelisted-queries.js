@@ -168,6 +168,7 @@ mutation UpdateDeckAndRemoveCards(
         name
         mana
         gem
+        rarity
         cardFactions {
           nodes {
             faction {
@@ -200,6 +201,7 @@ mutation UpdateDeckAndRemoveCards(
               or: [
                 { name: { includesInsensitive: $searchText } }
                 { rules: { includesInsensitive: $searchText } }
+                { subtype: { includesInsensitive: $searchText } }
               ]
             }
             {
@@ -271,8 +273,9 @@ mutation UpdateDeckAndRemoveCards(
 `,
 
   `
-  query decks {
-    decks {
+  query decks($first:Int, $offset:Int) {
+    decks(orderBy: CREATED_DESC, first:$first, offset:$offset ) {
+      totalCount
       nodes {
         id
         name
@@ -280,21 +283,6 @@ mutation UpdateDeckAndRemoveCards(
           username
         }
         modified
-        cardDecks {
-          nodes {
-            quantity
-            card {
-              mana
-              cardFactions {
-                nodes {
-                  faction {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
         deckPreviews {
           ${deckPreviewsFragment}
         }
@@ -421,6 +409,8 @@ mutation UpdateDeckAndRemoveCards(
       $faction5: Int
       $faction6: Int
       $numFactions: Int
+      $first: Int
+      $offset: Int
     ) {
       searchDecks(
         deckname: $deckName
@@ -438,7 +428,10 @@ mutation UpdateDeckAndRemoveCards(
         faction5: $faction5
         faction6: $faction6
         numfactions: $numFactions
+        first: $first
+        offset: $offset
       ) {
+        totalCount
         nodes {
           id
           name

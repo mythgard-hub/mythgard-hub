@@ -7,6 +7,13 @@ export const RARITY_IMAGES = {
   mythic: `${cdn}Filter-Icons_0000s_0000s_0003_M.png`
 };
 
+export const RARITY_MAX_CARDS = {
+  common: 4,
+  uncommon: 3,
+  rare: 2,
+  mythic: 1
+};
+
 export const getRarityImage = rarity => {
   if (!rarity) {
     rarity = 'common';

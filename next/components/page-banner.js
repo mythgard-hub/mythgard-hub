@@ -33,7 +33,7 @@ function PageBanner({ children, image }) {
   );
 }
 
-PageBanner.IMG_ARTICLES = `${process.env.MG_CDN}/banner/Banner_Decks.jpg`;
+PageBanner.IMG_ARTICLES = `${process.env.MG_CDN}/banner/Banner_Articles.jpg`;
 PageBanner.IMG_CARDS = `${process.env.MG_CDN}/banner/Banner_Cards.jpg`;
 PageBanner.IMG_DECKS = `${process.env.MG_CDN}/banner/Banner_Decks.jpg`;
 PageBanner.IMG_DECK_BUILDER = `${process.env.MG_CDN}/banner/Banner_DeckBuilder.jpg`;
@@ -42,6 +42,7 @@ PageBanner.IMG_PATCH_NOTES = `${process.env.MG_CDN}/banner/Banner_PatchNotes.jpg
 PageBanner.IMG_HOME_TOP = `${process.env.MG_CDN}/banner/Banner_Home_Top.jpg`;
 
 PageBanner.propTypes = {
+  children: PropTypes.any,
   image: PropTypes.oneOf([
     PageBanner.IMG_ARTICLES,
     PageBanner.IMG_CARDS,

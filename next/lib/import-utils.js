@@ -1,5 +1,5 @@
 import { META_KEYS } from '../constants/deck';
-import { initializeDeckBuilder } from './deck-utils';
+import { initializeDeckBuilder, getQuantity } from './deck-utils';
 
 // Get the line number where the meta information ends
 export const getSpliceIndex = lines => {
@@ -179,10 +179,18 @@ export const convertImportToDeck = (
     mainDeckLines.slice(spliceIndex),
     allCards
   ).reduce((acc, curr) => {
-    acc[`${curr.card.id}`] = {
-      quantity: curr.quantity,
+    const id = `${curr.card.id}`;
+    const quantity = getQuantity(
+      curr.card,
+      (acc[id] && acc[id].quantity) || 0,
+      curr.quantity
+    );
+
+    acc[id] = {
+      quantity,
       card: curr.card
     };
+
     return acc;
   }, {});
   importedDeck.sideboard = formatCardLines(sideboardLines, allCards);

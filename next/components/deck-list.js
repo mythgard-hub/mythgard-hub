@@ -53,7 +53,10 @@ export default function DeckList({ decks }) {
             const classNames = `deckListRow ${index % 2 ? 'zebraRow' : ''}`;
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
-            const modified = new Date(deck.modified);
+
+            const deckModifiedMeta =
+              deckMetaData[index] && deckMetaData[index].deckCreated;
+            const modified = new Date(deck.modified || deckModifiedMeta);
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
@@ -66,10 +69,18 @@ export default function DeckList({ decks }) {
                   <div className="deckAuthor">by {author}</div>
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
-                  <FactionsIndicator factions={deckMetaData[index].factions} />
+                  {deckMetaData[index] && (
+                    <FactionsIndicator
+                      factions={deckMetaData[index].factions}
+                    />
+                  )}
                 </td>
                 <td className="mana">
-                  <EssenceIndicator essence={deckMetaData[index].essenceCost} />
+                  {deckMetaData[index] && (
+                    <EssenceIndicator
+                      essence={deckMetaData[index].essenceCost}
+                    />
+                  )}
                 </td>
                 <td className="modifiedDate">
                   <span>

@@ -3,6 +3,7 @@ import updateDeckAndRemoveCards from '../lib/mutations/update-deck-and-remove-ca
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
 import { useState } from 'react';
+import { RARITY_MAX_CARDS } from '../constants/rarities';
 
 export const initializeDeckBuilder = () => {
   return {
@@ -28,7 +29,7 @@ export const addCardToDeck = (deck, card) => {
 
   newDeck[card.card.id] = {
     ...newDeck[card.card.id],
-    quantity: oldQuantity + card.quantity
+    quantity: getQuantity(card.card, oldQuantity, card.quantity)
   };
 
   return newDeck;
@@ -178,4 +179,12 @@ const _createDeckWithCards = (apolloClient, deckInProgress, authorId) => {
       );
     })
     .then(() => deckId);
+};
+
+export const getQuantity = (card, oldQuantity, newQuantity) => {
+  const rarity = (card && card.rarity && card.rarity.toLowerCase()) || 'common';
+  const max = RARITY_MAX_CARDS[rarity] || 1;
+  const desiredQuantity = oldQuantity + newQuantity;
+
+  return Math.min(desiredQuantity, max);
 };

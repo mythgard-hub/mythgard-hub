@@ -127,7 +127,8 @@ export default function Card({ card }) {
               <div className="card-detail-label">Cost</div>
               <hr />
               <div className="card-detail-text">
-                {card.mana} <GemCost costString={card.gem} />
+                {card.mana < 0 ? 'X' : card.mana}{' '}
+                <GemCost costString={card.gem} />
               </div>
             </li>
             <li className="card-detail">

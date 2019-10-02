@@ -34,6 +34,16 @@ export default function DeckBuilderSidebar(props) {
     0
   );
 
+  const clearDeck = () => {
+    const confirmation = confirm(
+      'Are you sure you want to clear the deck? This action cannot be undone.'
+    );
+
+    if (confirmation) {
+      setDeckInProgress(initializeDeckBuilder());
+    }
+  };
+
   return (
     <div className="deck-builder-actions">
       <style jsx>{`
@@ -65,17 +75,18 @@ export default function DeckBuilderSidebar(props) {
       <h2 className="build-deck-title">Import Deck from Mythgard</h2>
       <ImportDeck
         mainDeckInput={mainDeckInput}
-        currentMainDeck={deckInProgress.mainDeck}
         handleInputChange={e => {
           setMainDeckInput(e.target.value);
         }}
         updateImportedDeck={updateImportedDeck}
       />
       <DeckExport deckInProgress={deckInProgress} />
-      <SaveDeck deckId={deckId} deckInProgress={deckInProgress} />
-      <button onClick={() => setDeckInProgress(initializeDeckBuilder())}>
-        Clear Deck
-      </button>
+      <SaveDeck
+        deckId={deckId}
+        deckInProgress={deckInProgress}
+        setDeckInProgress={setDeckInProgress}
+      />
+      <button onClick={clearDeck}>Clear Deck</button>
       <div className="deck-in-progress" data-cy="deckInProgress">
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
         <EditDeckName
@@ -99,7 +110,7 @@ DeckBuilderSidebar.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPath: PropTypes.shape({
+    deckPower: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),

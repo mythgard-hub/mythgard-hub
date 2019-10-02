@@ -5,25 +5,24 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
+import { initializeDeckBuilder } from '../lib/deck-utils';
 
-export default function SaveDeck({ deckId, deckInProgress }) {
+export default function SaveDeck({
+  deckId,
+  deckInProgress,
+  setDeckInProgress
+}) {
   const { user } = useContext(UserContext);
 
   const handleSubmit = (e, client) => {
     e && e.preventDefault();
-
-    if (!user || !user.id) {
-      alert(
-        'Only logged in users can save a deck. Please export your work or log in and come back.'
-      );
-      return;
-    }
 
     if (!validateState()) return;
 
     saveDeckWithCards(client, deckId, deckInProgress, user.id).then(
       savedDeckId => {
         Router.push(`/deck?id=${savedDeckId}`);
+        setDeckInProgress(initializeDeckBuilder());
       }
     );
   };
@@ -89,5 +88,6 @@ SaveDeck.propTypes = {
       })
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  setDeckInProgress: PropTypes.func.isRequired
 };

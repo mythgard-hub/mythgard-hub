@@ -32,15 +32,15 @@ CREATE TEMPORARY TABLE t (
 insert into mythgard.card (id, name, rules, supertype, subtype, atk, def, mana, gem, rarity)
 select
   id
-  ,name
-  ,rules
+  ,trim(name)
+  ,trim(rules)
   ,string_to_array(trim(upper(supertype)), ',')::mythgard.cardType[]
-  ,subtype
+  ,trim(subtype)
   ,REGEXP_REPLACE(atk, '[^0-9]' ,'-1')::integer
   ,REGEXP_REPLACE(def, '[^0-9]' ,'-1')::integer
   ,REGEXP_REPLACE(manaCost, '[^0-9]' ,'-1')::integer
-  ,gemCost
-  ,UPPER(rarity)::mythgard.rarity
+  ,trim(gemCost)
+  ,UPPER(trim(rarity))::mythgard.rarity
   from t
 ON CONFLICT (id) DO UPDATE
 SET name = excluded.name
