@@ -54,6 +54,14 @@ export const loadDeckFromSessionStorage = setDeckInProgress => {
   return false;
 };
 
+export const clearDeckInProgress = setDeckInProgress => {
+  setDeckInProgress(initializeDeckBuilder());
+  // must come after setDeckInProgress, as setDeckInProgress
+  // automatically resets this.
+  sessionStorage.removeItem('deckInProgressId');
+  sessionStorage.removeItem('deckInProgress');
+};
+
 export const loadDeckFromServer = (
   apolloClient,
   deckId,

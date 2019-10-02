@@ -5,7 +5,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
-import { initializeDeckBuilder } from '../lib/deck-utils';
+import { clearDeckInProgress } from '../lib/deck-utils';
 
 export default function SaveDeck({
   deckId,
@@ -22,7 +22,7 @@ export default function SaveDeck({
     saveDeckWithCards(client, deckId, deckInProgress, user.id).then(
       savedDeckId => {
         Router.push(`/deck?id=${savedDeckId}`);
-        setDeckInProgress(initializeDeckBuilder());
+        clearDeckInProgress(setDeckInProgress);
       }
     );
   };
