@@ -81,7 +81,6 @@ export default function Deck({ deck }) {
         .deck-stats {
           width: 100%;
           margin-left: 20px;
-          width: fit-content;
           padding-bottom: 20px;
         }
 
