@@ -40,6 +40,14 @@ export default function Deck({ deck }) {
     deckPreviews.nodes[0];
   const essenceCost = metaData && metaData.essenceCost;
   const factions = metaData && metaData.factions;
+  const dateCreated =
+    metaData &&
+    metaData.deckCreated &&
+    new Date(metaData.deckCreated).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
 
   return (
     <div className="deck-page-container">
@@ -71,6 +79,7 @@ export default function Deck({ deck }) {
         }
 
         .deck-stats {
+          width: 100%;
           margin-left: 20px;
           width: fit-content;
           padding-bottom: 20px;
@@ -87,11 +96,11 @@ export default function Deck({ deck }) {
           font-weight: bold;
           font-size: 1em;
           margin-top: 25px;
-          margin-bottom: 5px;
+          margin-bottom: 3px;
         }
 
-        .factions-title {
-          margin-bottom: 8px;
+        .date-created {
+          text-transform: uppercase;
         }
 
         @media only screen and (max-width: 600px) {
@@ -122,6 +131,11 @@ export default function Deck({ deck }) {
           <div className="stats-title factions-title">Factions</div>
           <hr className="gradient-hr" />
           <FactionsIndicator factions={factions} />
+          <div className="stats-title factions-title">Deck Created</div>
+          <hr className="gradient-hr" />
+          <div className="date-created" data-cy="deckCreatedDate">
+            {dateCreated}
+          </div>
         </div>
       </div>
     </div>
