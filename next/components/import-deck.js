@@ -47,7 +47,7 @@ export default function ImportDeck({
   const error = cardsError || pathError || powerError;
   if (error) return <ErrorMessage message={error.message} />;
 
-  if (cardsLoading || pathLoading || powerLoading) return <div>Loading</div>;
+  if (cardsLoading || pathLoading || powerLoading) return <div>Loading...</div>;
 
   const cards = cardsData && cardsData.cards && cardsData.cards.nodes;
   const paths = pathData && pathData.paths && pathData.paths.nodes;

@@ -18,7 +18,7 @@ export default function AllDecks() {
   });
 
   if (error) return <ErrorMessage message="Error loading decks." />;
-  if (loading) return <div>Loading</div>;
+  if (loading) return <div>Loading...</div>;
 
   if (data && !data.decks) return <div>No decks found</div>;
 

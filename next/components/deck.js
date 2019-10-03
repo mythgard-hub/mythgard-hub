@@ -27,7 +27,7 @@ export default function Deck({ deck }) {
   });
 
   if (error) return <ErrorMessage message="Error loading decks." />;
-  if (loading) return <div>Loading</div>;
+  if (loading) return <div>Loading...</div>;
 
   const cards = data.deck ? data.deck.cardDecks.nodes : [];
   const { power, path, author, deckPreviews } = deck;
