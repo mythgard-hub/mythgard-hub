@@ -224,6 +224,20 @@ function Layout({ title, desc, children }) {
             font-weight: bold;
           }
 
+          .gradient-hr {
+            margin-bottom: 10px;
+            margin-left: 0;
+            width: 95%;
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(
+              to right,
+              ${theme.hrColorGradientLight},
+              ${theme.hrColorGradientLight},
+              ${theme.hrColorGradientDark}
+            );
+          }
+
           .article_title {
             color: ${theme.fontColorHeading};
             font-size: 2.7em;

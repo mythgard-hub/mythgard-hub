@@ -117,8 +117,10 @@ export default function Deck({ deck }) {
         <DeckDelete deck={deck} />
         <div className="deck-stats">
           <div className="stats-title">Essence</div>
+          <hr className="gradient-hr" />
           <EssenceIndicator essence={essenceCost} />
           <div className="stats-title factions-title">Factions</div>
+          <hr className="gradient-hr" />
           <FactionsIndicator factions={factions} />
         </div>
       </div>
