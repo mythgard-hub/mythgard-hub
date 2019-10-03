@@ -6,7 +6,7 @@ export default function FactionsIndicator({ factions }) {
     return '';
   }
   return (
-    <span className="factionsIndicator">
+    <span className="factionsIndicator" data-cy="factionsIndicator">
       <style jsx>{`
         img {
           max-height: 15px;
