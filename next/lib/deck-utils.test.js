@@ -1,4 +1,4 @@
-import { addCardToDeck, getQuantity } from './deck-utils';
+import { addCardToDeck, getQuantity, getCardCount } from './deck-utils';
 
 describe('Deck utility methods', () => {
   describe('Test addCardToDeck', () => {
@@ -201,6 +201,44 @@ describe('Deck utility methods', () => {
       expect(getQuantity(mythic, 3, 1)).toEqual(1);
       // this can't really happen but w\e
       expect(getQuantity(mythic, 5, 5)).toEqual(1);
+    });
+  });
+
+  describe('Test getCardCount', () => {
+    it('Should return the right number of cards - no cards', function() {
+      const none = {
+        mainDeck: {}
+      };
+
+      expect(getCardCount(none)).toEqual(0);
+    });
+
+    it('Should return the right number of cards - some cards', function() {
+      const one = {
+        mainDeck: {
+          1: { quantity: 7 }
+        }
+      };
+
+      const someCards = {
+        mainDeck: {
+          1: { quantity: 1 },
+          2: { quantity: 6 },
+          3: { quantity: 10 }
+        }
+      };
+
+      expect(getCardCount(one)).toEqual(7);
+      expect(getCardCount(someCards)).toEqual(17);
+    });
+
+    it('Should handle nonsense', function() {
+      expect(getCardCount(null)).toEqual(0);
+      expect(getCardCount([])).toEqual(0);
+      expect(getCardCount({})).toEqual(0);
+      expect(getCardCount(1)).toEqual(0);
+      expect(getCardCount('a')).toEqual(0);
+      expect(getCardCount({ mainDeck: 1 })).toEqual(0);
     });
   });
 });

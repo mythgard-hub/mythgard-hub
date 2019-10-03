@@ -37,3 +37,14 @@ export const getQuantity = (card, oldQuantity, newQuantity) => {
 
   return Math.min(desiredQuantity, max);
 };
+
+export const getCardCount = deck => {
+  try {
+    return Object.values(deck.mainDeck).reduce(
+      (count, card) => count + card.quantity,
+      0
+    );
+  } catch (e) {
+    return 0;
+  }
+};
