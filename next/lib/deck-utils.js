@@ -107,18 +107,9 @@ export const loadDeckFromServer = (
     });
 };
 
-export const useStateDeck = deckId => {
-  const [deckInProgress, _setDeckInProgress] = useState(
-    initializeDeckBuilder()
-  );
-  // Sync our edits locally as they're made. This let's us re-populate a deck
-  // after a page refresh or a sequence of redirects.
-  const setDeckInProgress = d => {
-    _setDeckInProgress(d);
-    sessionStorage.setItem('deckInProgressId', JSON.stringify(deckId));
-    sessionStorage.setItem('deckInProgress', JSON.stringify(d));
-  };
-  return [deckInProgress, setDeckInProgress];
+export const storeDeckInSessionStorage = (deckId, deck) => {
+  sessionStorage.setItem('deckInProgressId', JSON.stringify(deckId));
+  sessionStorage.setItem('deckInProgress', JSON.stringify(deck));
 };
 
 // Do not run on server. Please run inside useEffect.

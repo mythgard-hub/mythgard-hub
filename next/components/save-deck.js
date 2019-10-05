@@ -79,6 +79,10 @@ SaveDeck.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string
     }),
+    deckPower: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    }),
     deckCoverArt: PropTypes.string,
     mainDeck: PropTypes.shape({
       quantity: PropTypes.number,

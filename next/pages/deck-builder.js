@@ -1,6 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Layout from '../components/layout';
-import { loadExistingDeck, useStateDeck } from '../lib/deck-utils';
+import {
+  loadExistingDeck,
+  initializeDeckBuilder,
+  storeDeckInSessionStorage
+} from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
 import PageBanner from '../components/page-banner';
 import FactionFilters from '../components/faction-filters';
@@ -18,6 +22,20 @@ const initFilters = {
   cardManaCosts: [],
   supertypes: [],
   factions: []
+};
+
+const useStateDeck = deckId => {
+  const [deckInProgress, _setDeckInProgress] = useState(
+    initializeDeckBuilder()
+  );
+
+  // Sync our edits locally as they're made. This let's us re-populate a deck
+  // after a page refresh or a sequence of redirects.
+  const setDeckInProgress = d => {
+    _setDeckInProgress(d);
+    storeDeckInSessionStorage(deckId, d);
+  };
+  return [deckInProgress, setDeckInProgress];
 };
 
 function DeckBuilderPage({ deckId }) {
