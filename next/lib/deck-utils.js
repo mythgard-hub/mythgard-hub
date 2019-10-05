@@ -2,7 +2,6 @@ import { singleDeckQuery, deckCardsQuery } from '../lib/deck-queries';
 import updateDeckAndRemoveCards from '../lib/mutations/update-deck-and-remove-cards';
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
-import { useState } from 'react';
 import { RARITY_MAX_CARDS } from '../constants/rarities';
 
 export const initializeDeckBuilder = () => {
@@ -35,16 +34,19 @@ export const addCardToDeck = (deck, card) => {
   return newDeck;
 };
 
+export const isValidDeck = d => {
+  if (!d) return false;
+  const allProperties = Object.keys(initializeDeckBuilder());
+  const savedDeckProperties = Object.keys(d);
+  return savedDeckProperties.reduce((isValid, key) => {
+    return isValid && allProperties.includes(key);
+  }, true);
+};
+
 export const loadDeckFromSessionStorage = setDeckInProgress => {
   try {
     const d = JSON.parse(sessionStorage.getItem('deckInProgress'));
-    if (!d) return;
-    const allProperties = Object.keys(initializeDeckBuilder());
-    const savedDeckProperties = Object.keys(d);
-    const isValidDeck = savedDeckProperties.reduce((isValid, key) => {
-      return isValid && allProperties.includes(key);
-    }, true);
-    if (isValidDeck) {
+    if (isValidDeck(d)) {
       setDeckInProgress(d);
       return true;
     }
@@ -54,10 +56,15 @@ export const loadDeckFromSessionStorage = setDeckInProgress => {
   return false;
 };
 
-export const clearDeckInProgress = setDeckInProgress => {
-  setDeckInProgress(initializeDeckBuilder());
-  // must come after setDeckInProgress, as setDeckInProgress
-  // automatically resets this.
+export const clearDeckInProgress = setDeckInProgressAndSaveInStorage => {
+  setDeckInProgressAndSaveInStorage(initializeDeckBuilder());
+  resetDeckBuilderSavedState();
+};
+
+// The Deck Builder page maintains state more permanently than
+// other pages. Sometimes it needs to be cleared out, like before
+// editing another deck.
+export const resetDeckBuilderSavedState = () => {
   sessionStorage.removeItem('deckInProgressId');
   sessionStorage.removeItem('deckInProgress');
 };
