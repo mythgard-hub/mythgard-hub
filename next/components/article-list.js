@@ -25,14 +25,6 @@ function ArticleList({ max }) {
       author: 'noahc92',
       description:
         'A detailed resource for new players that helps fill in the holes of the tutorial',
-      date: new Date('2019-10-01T17:24:18.280Z')
-    },
-    {
-      title: 'Budget Decks for Mythgard - October 2019',
-      url: 'https://teamrankstar.com/budget-decks-for-mythgard-october-2019/',
-      author: 'noahc92',
-      description:
-        'A detailed resource for new players that helps fill in the holes of the tutorial',
       date: new Date('2019-09-29T17:24:18.280Z')
     },
     {
