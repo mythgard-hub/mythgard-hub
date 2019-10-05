@@ -12,7 +12,7 @@ import ErrorMessage from '../components/error-message';
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
 
-const init = {
+const initFilters = {
   cardSearchText: '',
   cardRarities: [],
   cardManaCosts: [],
@@ -21,11 +21,13 @@ const init = {
 };
 
 function DeckBuilderPage({ deckId }) {
-  const [cardSearchText, setCardSearchText] = useState(init.cardSearchText);
-  const [cardRarities, setCardRarities] = useState(init.cardRarities);
-  const [cardManaCosts, setCardManaCosts] = useState(init.cardManaCosts);
-  const [supertypes, setSupertypes] = useState(init.supertypes);
-  const [factions, setFactions] = useState(init.factions);
+  const [cardSearchText, setCardSearchText] = useState(
+    initFilters.cardSearchText
+  );
+  const [cardRarities, setCardRarities] = useState(initFilters.cardRarities);
+  const [cardManaCosts, setCardManaCosts] = useState(initFilters.cardManaCosts);
+  const [supertypes, setSupertypes] = useState(initFilters.supertypes);
+  const [factions, setFactions] = useState(initFilters.factions);
   const [currentTab, setTab] = useState('');
   const [viewFilters, setViewFilters] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -44,11 +46,11 @@ function DeckBuilderPage({ deckId }) {
   }, [deckId]);
 
   const handleClearFilters = useCallback(() => {
-    setCardSearchText(init.cardSearchText);
-    setCardRarities(init.cardRarities);
-    setCardManaCosts(init.cardManaCosts);
-    setSupertypes(init.supertypes);
-    setFactions(init.factions);
+    setCardSearchText(initFilters.cardSearchText);
+    setCardRarities(initFilters.cardRarities);
+    setCardManaCosts(initFilters.cardManaCosts);
+    setSupertypes(initFilters.supertypes);
+    setFactions(initFilters.factions);
   });
 
   return (
