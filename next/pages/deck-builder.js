@@ -51,16 +51,15 @@ const loadExistingDeck = (
   setIsError,
   client
 ) => {
-  const msg =
-    'We found a deck with unsaved changes. Discard them? This action cannot be undone. If you press cancel, the deck with unsaved changes will be loaded instead.';
+  const msg = `We found a deck with unsaved changes. Discard them? This action cannot be undone.
+
+If you press cancel, the deck with unsaved changes will be loaded instead.`;
   const storedDeckId = sessionStorage.getItem('deckInProgressId');
 
   // loading existing deck but deck in storage
   if (deckId && storedDeckId && hasValidDeckInStorage()) {
     if (confirm(msg)) {
       resetDeckBuilderSavedState();
-    } else {
-      // alert('Loading deck with unsaved changes.');
     }
   }
 
