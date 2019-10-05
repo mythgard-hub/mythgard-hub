@@ -4,6 +4,20 @@ import Article from './article';
 function ArticleList({ max }) {
   const list = [
     {
+      title: '7 things I wish I knew when I was first starting out in Mythgard',
+      url: 'https://mythgard-hub.github.io/7-things',
+      description:
+        'A detailed resource for new players that helps fill in the holes of the tutorial',
+      date: new Date('2019-09-27T17:24:18.280Z')
+    },
+    {
+      title: 'The Many Uses of Impel',
+      url: 'https://teamdgn.net/2019/09/27/the-many-uses-of-impel/',
+      description:
+        'Why Should You Use Impel? Some of you may think, “Wow, Impel doesn’t give me immediate value or combat benefits, movement can’t have that much impact!”  Well in Mythgard...',
+      date: new Date('2019-09-27T17:24:18.280Z')
+    },
+    {
       title: 'Budget Decks For Mythgard September 2019',
       url: 'https://teamrankstar.com/budget-decks-for-mythgard-september-2019/',
       description:
@@ -39,13 +53,6 @@ function ArticleList({ max }) {
       description:
         'Control decks are in it for the long haul.  Traditionally, they play a patient, defensive game...',
       date: new Date('2019-09-22T17:24:18.280Z')
-    },
-    {
-      title: 'The Many Uses of Impel',
-      url: 'https://teamdgn.net/2019/09/27/the-many-uses-of-impel/',
-      description:
-        'Why Should You Use Impel? Some of you may think, “Wow, Impel doesn’t give me immediate value or combat benefits, movement can’t have that much impact!”  Well in Mythgard...',
-      date: new Date('2019-09-27T17:24:18.280Z')
     }
   ];
 
