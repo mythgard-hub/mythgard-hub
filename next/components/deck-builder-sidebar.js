@@ -5,7 +5,10 @@ import DeckExport from '../components/deck-export';
 import DeckCardTable from '../components/deck-card-table';
 import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
-import { initializeDeckBuilder } from '../lib/deck-utils';
+import {
+  initializeDeckBuilder,
+  resetDeckBuilderSavedState
+} from '../lib/deck-utils';
 
 export default function DeckBuilderSidebar(props) {
   const { deckId, deckInProgress, setDeckInProgress } = props;
@@ -41,6 +44,7 @@ export default function DeckBuilderSidebar(props) {
 
     if (confirmation) {
       setDeckInProgress(initializeDeckBuilder());
+      resetDeckBuilderSavedState();
     }
   };
 

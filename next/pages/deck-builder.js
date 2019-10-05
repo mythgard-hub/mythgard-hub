@@ -1,9 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Layout from '../components/layout';
 import {
-  loadExistingDeck,
   initializeDeckBuilder,
-  storeDeckInSessionStorage
+  storeDeckInSessionStorage,
+  loadDeckFromSessionStorage,
+  loadDeckFromServer,
+  hasValidDeckInStorage,
+  resetDeckBuilderSavedState
 } from '../lib/deck-utils';
 import DeckBuilderSearchForm from '../components/deck-builder-search-form';
 import PageBanner from '../components/page-banner';
@@ -36,6 +39,36 @@ const useStateDeck = deckId => {
     storeDeckInSessionStorage(deckId, d);
   };
   return [deckInProgress, setDeckInProgress];
+};
+
+// `useEffect` will not run on the server. As long as we're using
+// local/session storage, we need to make sure the code that loads/unloads a
+// previously worked on decks is not run during an SSR.
+const loadExistingDeck = (
+  deckId,
+  deckInProgress,
+  setDeckInProgress,
+  setIsError,
+  client
+) => {
+  const msg =
+    'We found a deck with unsaved changes. Discard them? This action cannot be undone. If you press cancel, the deck with unsaved changes will be loaded instead.';
+  const storedDeckId = sessionStorage.getItem('deckInProgressId');
+
+  // loading existing deck but deck in storage
+  if (deckId && storedDeckId && hasValidDeckInStorage()) {
+    if (confirm(msg)) {
+      resetDeckBuilderSavedState();
+    } else {
+      // alert('Loading deck with unsaved changes.');
+    }
+  }
+
+  if (deckId) {
+    loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
+  } else {
+    loadDeckFromSessionStorage(setDeckInProgress);
+  }
 };
 
 function DeckBuilderPage({ deckId }) {
