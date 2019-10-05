@@ -54,6 +54,7 @@ const loadExistingDeck = (
   const msg = `We found a deck with unsaved changes. Discard them? This action cannot be undone.
 
 If you press cancel, the deck with unsaved changes will be loaded instead.`;
+
   const storedDeckId = sessionStorage.getItem('deckInProgressId');
 
   // loading existing deck but deck in storage
@@ -65,8 +66,9 @@ If you press cancel, the deck with unsaved changes will be loaded instead.`;
 
   if (deckId) {
     loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
+    return true;
   } else {
-    loadDeckFromSessionStorage(setDeckInProgress);
+    return loadDeckFromSessionStorage(setDeckInProgress);
   }
 };
 
@@ -81,18 +83,23 @@ function DeckBuilderPage({ deckId }) {
   const [currentTab, setTab] = useState('');
   const [viewFilters, setViewFilters] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [editingExisting, setEditingExisting] = useState(false);
 
   const [deckInProgress, setDeckInProgress] = useStateDeck(deckId);
   const client = useApolloClient();
 
   useEffect(() => {
-    loadExistingDeck(
-      deckId,
-      deckInProgress,
-      setDeckInProgress,
-      setIsError,
-      client
-    );
+    if (
+      loadExistingDeck(
+        deckId,
+        deckInProgress,
+        setDeckInProgress,
+        setIsError,
+        client
+      )
+    ) {
+      setEditingExisting(true);
+    }
   }, [deckId]);
 
   const handleClearFilters = useCallback(() => {
@@ -140,12 +147,20 @@ function DeckBuilderPage({ deckId }) {
       {!isError && (
         <div className="deck-builder-panels">
           <div className="deck-builder-card-selection">
-            <DeckBuilderSearchForm
-              text={cardSearchText}
-              setTab={setTab}
-              setText={setCardSearchText}
-              onClearFilters={handleClearFilters}
-            />
+            <div>
+              {editingExisting && (
+                <h2 className="currentlyEditingMsg">
+                  Currently Editing &quot;
+                  {deckInProgress.deckName || 'untitled'}&quot;
+                </h2>
+              )}
+              <DeckBuilderSearchForm
+                text={cardSearchText}
+                setTab={setTab}
+                setText={setCardSearchText}
+                onClearFilters={handleClearFilters}
+              />
+            </div>
             <FactionFilters factions={factions} onFactionClick={setFactions} />
             <SliderSwitch
               leftSlider="View Cards"
