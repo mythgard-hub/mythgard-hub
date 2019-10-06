@@ -25,7 +25,8 @@ CREATE TABLE mythgard.card (
   def integer,
   mana integer,
   gem varchar(10),
-  rarity mythgard.rarity default 'COMMON'
+  rarity mythgard.rarity default 'COMMON',
+  original_name varchar(255)
 );
 
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
@@ -42,6 +43,8 @@ INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem)
   VALUES ('Harmony Beast', 'friendly', 'beast', '3', '3', '1', 'YY');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Cairnhenge', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
+  INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype, original_name)
+  VALUES ('Ghul', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}', 'Ghūl');
 
 CREATE TABLE mythgard.card_spawn (
   card_id int CONSTRAINT spawner_card_id_fkey REFERENCES mythgard.card (id),
