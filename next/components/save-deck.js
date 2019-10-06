@@ -5,7 +5,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
-import { clearDeckInProgress } from '../lib/deck-utils';
+import { clearDeckInProgress, getCardCount } from '../lib/deck-utils';
 
 export default function SaveDeck({
   deckId,

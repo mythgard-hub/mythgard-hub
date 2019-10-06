@@ -7,7 +7,8 @@ import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
 import {
   initializeDeckBuilder,
-  resetDeckBuilderSavedState
+  resetDeckBuilderSavedState,
+  getCardCount
 } from '../lib/deck-utils';
 
 export default function DeckBuilderSidebar(props) {
