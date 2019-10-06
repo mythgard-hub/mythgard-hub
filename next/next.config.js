@@ -6,6 +6,7 @@ module.exports = {
     EMAIL_MG_EVENTS: process.env.EMAIL_MG_EVENTS,
     EMAIL_MG_BUSINESS: process.env.EMAIL_MG_BUSINESS,
     DISCORD_INVITE_URL: process.env.DISCORD_INVITE_URL,
+    TWITTER_URL: process.env.TWITTER_URL,
     JWT_COOKIE_NAME: process.env.JWT_COOKIE_NAME,
     MG_CDN: process.env.MG_CDN,
     MG_CARDS_CDN: process.env.MG_CARDS_CDN,

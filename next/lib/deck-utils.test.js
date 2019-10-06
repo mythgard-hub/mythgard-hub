@@ -1,4 +1,4 @@
-import { addCardToDeck } from './deck-utils';
+import { addCardToDeck, getQuantity } from './deck-utils';
 
 describe('Deck utility methods', () => {
   describe('Test addCardToDeck', () => {
@@ -8,14 +8,16 @@ describe('Deck utility methods', () => {
           quantity: 1,
           card: {
             id: 1,
-            name: 'card 1'
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         },
         2: {
-          quantity: 4,
+          quantity: 2,
           card: {
             id: 2,
-            name: 'card 2'
+            name: 'card 2',
+            rarity: 'COMMON'
           }
         }
       };
@@ -24,15 +26,17 @@ describe('Deck utility methods', () => {
         quantity: 1,
         card: {
           id: 1,
-          name: 'card 1'
+          name: 'card 1',
+          rarity: 'COMMON'
         }
       };
 
       const input2 = {
-        quantity: 3,
+        quantity: 1,
         card: {
           id: 1,
-          name: 'card 1'
+          name: 'card 1',
+          rarity: 'COMMON'
         }
       };
 
@@ -41,31 +45,35 @@ describe('Deck utility methods', () => {
           quantity: 2,
           card: {
             id: 1,
-            name: 'card 1'
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         },
         2: {
-          quantity: 4,
+          quantity: 2,
           card: {
             id: 2,
-            name: 'card 2'
+            name: 'card 2',
+            rarity: 'COMMON'
           }
         }
       };
 
       const expected2 = {
         1: {
-          quantity: 5,
+          quantity: 3,
           card: {
             id: 1,
-            name: 'card 1'
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         },
         2: {
-          quantity: 4,
+          quantity: 2,
           card: {
             id: 2,
-            name: 'card 2'
+            name: 'card 2',
+            rarity: 'COMMON'
           }
         }
       };
@@ -79,8 +87,9 @@ describe('Deck utility methods', () => {
         3: {
           quantity: 1,
           card: {
-            id: 1,
-            name: 'card 1'
+            id: 3,
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         }
       };
@@ -89,7 +98,8 @@ describe('Deck utility methods', () => {
         quantity: 1,
         card: {
           id: 1,
-          name: 'card 1'
+          name: 'card 1',
+          rarity: 'COMMON'
         }
       };
 
@@ -97,7 +107,8 @@ describe('Deck utility methods', () => {
         quantity: 1,
         card: {
           id: 2,
-          name: 'card 2'
+          name: 'card 2',
+          rarity: 'COMMON'
         }
       };
 
@@ -105,15 +116,17 @@ describe('Deck utility methods', () => {
         3: {
           quantity: 1,
           card: {
-            id: 1,
-            name: 'card 1'
+            id: 3,
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         },
         1: {
           quantity: 1,
           card: {
             id: 1,
-            name: 'card 1'
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         }
       };
@@ -122,28 +135,72 @@ describe('Deck utility methods', () => {
         3: {
           quantity: 1,
           card: {
-            id: 1,
-            name: 'card 1'
+            id: 3,
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         },
         1: {
           quantity: 1,
           card: {
             id: 1,
-            name: 'card 1'
+            name: 'card 1',
+            rarity: 'COMMON'
           }
         },
         2: {
           quantity: 1,
           card: {
             id: 2,
-            name: 'card 2'
+            name: 'card 2',
+            rarity: 'COMMON'
           }
         }
       };
 
       expect(addCardToDeck(deck, input1)).toEqual(exptected1);
       expect(addCardToDeck(exptected1, input2)).toEqual(exptected2);
+    });
+  });
+
+  describe('Test addCardToDeck', () => {
+    it('Should return the right quantities depending on the rarity', function() {
+      const common = { rarity: 'COMMON' };
+      const uncommon = { rarity: 'UNCOMMON' };
+      const rare = { rarity: 'RARE' };
+      const mythic = { rarity: 'MYTHIC' };
+
+      expect(getQuantity(common, 0, 1)).toEqual(1);
+      expect(getQuantity(common, 2, 1)).toEqual(3);
+      expect(getQuantity(common, 2, 1)).toEqual(3);
+      expect(getQuantity(common, 0, 4)).toEqual(4);
+      expect(getQuantity(common, 4, 1)).toEqual(4);
+      // this can't really happen but w\e
+      expect(getQuantity(common, 5, 5)).toEqual(4);
+
+      expect(getQuantity(uncommon, 0, 1)).toEqual(1);
+      expect(getQuantity(uncommon, 1, 1)).toEqual(2);
+      expect(getQuantity(uncommon, 2, 1)).toEqual(3);
+      expect(getQuantity(uncommon, 0, 3)).toEqual(3);
+      expect(getQuantity(uncommon, 3, 1)).toEqual(3);
+      // this can't really happen but w\e
+      expect(getQuantity(uncommon, 5, 5)).toEqual(3);
+
+      expect(getQuantity(rare, 0, 1)).toEqual(1);
+      expect(getQuantity(rare, 1, 1)).toEqual(2);
+      expect(getQuantity(rare, 2, 1)).toEqual(2);
+      expect(getQuantity(rare, 0, 3)).toEqual(2);
+      expect(getQuantity(rare, 3, 1)).toEqual(2);
+      // this can't really happen but w\e
+      expect(getQuantity(rare, 5, 5)).toEqual(2);
+
+      expect(getQuantity(mythic, 0, 1)).toEqual(1);
+      expect(getQuantity(mythic, 1, 1)).toEqual(1);
+      expect(getQuantity(mythic, 2, 1)).toEqual(1);
+      expect(getQuantity(mythic, 0, 3)).toEqual(1);
+      expect(getQuantity(mythic, 3, 1)).toEqual(1);
+      // this can't really happen but w\e
+      expect(getQuantity(mythic, 5, 5)).toEqual(1);
     });
   });
 });

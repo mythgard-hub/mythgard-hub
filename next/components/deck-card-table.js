@@ -163,7 +163,7 @@ DeckCardsTable.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPower: PropTypes.shape({
+    deckPath: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),

@@ -69,8 +69,10 @@ const factionNamesToVars = (names, hasOnly) => {
 
 export const getDeckSearchVars = vars => {
   return {
-    authorName: vars.authorName,
+    first: vars.first,
+    offset: vars.offset,
     deckName: vars.deckName,
+    authorName: vars.authorName,
     deckModified: daysAgoToGraphQLTimestamp(vars.updatedTime),
     ...cardIdsToVars(vars.cardIds),
     ...factionNamesToVars(vars.factionNames, vars.isOnlyFactions)
@@ -95,6 +97,8 @@ const deckSearchQuery = gql`
       $faction5: Int
       $faction6: Int
       $numFactions: Int
+      $first: Int
+      $offset: Int
     ) {
       searchDecks(
         deckname: $deckName
@@ -112,7 +116,10 @@ const deckSearchQuery = gql`
         faction5: $faction5
         faction6: $faction6
         numfactions: $numFactions
+        first: $first
+        offset: $offset
       ) {
+        totalCount
         nodes {
           id
           name
@@ -159,8 +166,9 @@ export const deckCardsQuery = gql`
 `;
 
 export const allDecksQuery = gql`
-  query decks {
-    decks(orderBy: CREATED_ASC) {
+  query decks($first:Int, $offset:Int) {
+    decks(orderBy: CREATED_DESC, first:$first, offset:$offset ) {
+      totalCount
       nodes {
         id
         name
@@ -168,21 +176,6 @@ export const allDecksQuery = gql`
           username
         }
         modified
-        cardDecks {
-          nodes {
-            quantity
-            card {
-              mana
-              cardFactions {
-                nodes {
-                  faction {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
         deckPreviews {
           ${deckPreviewsFragment}
         }

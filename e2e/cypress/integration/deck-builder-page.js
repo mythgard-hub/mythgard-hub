@@ -138,7 +138,8 @@ describe('Deck builder page', () => {
       'power: my power',
       'coverart: myself',
       '1 Dragon',
-      '2 Imp'
+      '2 Imp',
+      '5 Imp'
     ].join('\n');
 
     cy.get('[data-cy="importDeckTextarea"]').type(input);
@@ -154,6 +155,9 @@ describe('Deck builder page', () => {
   });
 
   it('should export a deck', function() {
+    cy.on('window:confirm', () => {
+      return true;
+    });
     const input = [
       'name: my deck',
       'path: my path',
