@@ -164,14 +164,19 @@ function Layout({ title, desc, children }) {
               to(rgba(0, 0, 0, 1))
             );
           }
-          
-            hr.orangeGrade {
-              margin-top: 10px;
-              margin-bottom: 12px;
-              border: 0;
-              height: 1px;
-              background-image: linear-gradient(to right, rgba(241, 129, 11, 0), rgba(241, 129, 11, 1), rgba(241, 129, 11, 0));
-            }
+
+          hr.orangeGrade {
+            margin-top: 10px;
+            margin-bottom: 12px;
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(
+              to right,
+              rgba(241, 129, 11, 0),
+              rgba(241, 129, 11, 1),
+              rgba(241, 129, 11, 0)
+            );
+          }
 
           button,
           input[type='submit'],
