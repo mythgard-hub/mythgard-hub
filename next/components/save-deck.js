@@ -25,6 +25,7 @@ const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
 
 export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
   const { user } = useContext(UserContext);
+  const cardCount = getCardCount(deckInProgress);
 
   const handleSubmit = (e, client) => {
     e && e.preventDefault();
@@ -38,7 +39,9 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
   };
 
   const validateState = () => {
-    return Boolean(deckInProgress.deckName);
+    return Boolean(
+      deckInProgress.deckName && (cardCount >= 40) & (cardCount <= 200)
+    );
   };
 
   // If user is not logged in, they must do so before saving
@@ -52,8 +55,6 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
       </Link>
     );
   } else {
-    const cardCount = getCardCount(deckInProgress);
-
     let errorMessage = null;
     if (cardCount < 40) {
       errorMessage = 'A deck must have at least 40 cards';
