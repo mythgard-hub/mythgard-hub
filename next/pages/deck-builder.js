@@ -46,6 +46,8 @@ const clearSessionStorageMsg = `We found a deck with unsaved changes. Discard th
 
 If you press cancel, the deck with unsaved changes will be loaded instead.`;
 
+const userWantsToDiscardChanges = () => confirm(clearSessionStorageMsg);
+
 // `useEffect` will not run on the server. As long as we're using
 // local/session storage, we need to make sure the code that loads/unloads a
 // previously worked on decks is not run during an SSR.
@@ -73,21 +75,18 @@ const loadExistingDeck = (
   // We have a deck id in the URL
   //  L No deck in session storage
   //    = Load the deck from server
-  //  L Unsaved deck in session storage
-  //    L Session storage deck has same id as URL
-  //      L User wants to discard changes
-  //        = Clear storage, load deck from server
-  //      L User wants to keep changes
-  //        = Load deck from storage, leave url alone
-  //    L Session storage deck has different id from URL
-  //      L User wants to discard changes
-  //        = Clear storage, load deck from server
-  //      L User wants to keep changes
-  //        = Update url and deck with session storage version
+  //  L else
+  //    L User wants to discard changes
+  //      = Clear storage, load deck from server
+  //    L else
+  //      L Session storage deck has same id as URL
+  //          = Load deck from storage, leave url alone
+  //      L Session storage deck has different id from URL
+  //          = Update url and deck with session storage version
   // No deck id in url
   //  L no deck in session storage
   //    = clean slate
-  //  L Unsaved deck in session storage
+  //  L else
   //    L deck in storage has an id
   //      = Update url and deck with session storage version
   //    L deck in storage has no id
@@ -95,52 +94,32 @@ const loadExistingDeck = (
   const urlHasId = deckId && deckId > 0;
   const noDeckInStorage = !hasValidDeckInStorage();
   const deckIdInUrlEqualsStorageDeckId = storedDeckIdOrNaN === deckId;
+  const deckInStorageHasId = storedDeckIdOrNaN > 0;
 
   if (urlHasId) {
-    if (noDeckInStorage) {
+    if (noDeckInStorage || userWantsToDiscardChanges()) {
+      // Load the deck from server
+      resetDeckBuilderSavedState();
       return loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
     } else if (deckIdInUrlEqualsStorageDeckId) {
-      if (confirm(clearSessionStorageMsg)) {
-        resetDeckBuilderSavedState();
-        return loadDeckFromServer(
-          client,
-          deckId,
-          setDeckInProgress,
-          setIsError
-        );
-      } else {
-        return loadDeckFromSessionStorage(setDeckInProgress);
-      }
+      // Load deck from storage, leave url alone
+      return loadDeckFromSessionStorage(setDeckInProgress);
     } else {
-      if (confirm(clearSessionStorageMsg)) {
-        resetDeckBuilderSavedState();
-        return loadDeckFromServer(
-          client,
-          deckId,
-          setDeckInProgress,
-          setIsError
-        );
-      } else {
-        Router.push(
-          `/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`
-        );
-        return false;
-      }
-    }
-  } else {
-    if (noDeckInStorage) {
-      resetDeckBuilderSavedState();
+      // Update url and deck with session storage version
+      Router.push(`/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`);
       return false;
-    } else {
-      if (storedDeckIdOrNaN > 0) {
-        Router.push(
-          `/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`
-        );
-        return false;
-      } else {
-        return loadDeckFromSessionStorage(setDeckInProgress);
-      }
     }
+  } else if (noDeckInStorage) {
+    // clean slate
+    resetDeckBuilderSavedState();
+    return false;
+  } else if (deckInStorageHasId) {
+    // update url and deck with session storage version
+    Router.push(`/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`);
+    return false;
+  } else {
+    // load deck from storage, leave url alone
+    return loadDeckFromSessionStorage(setDeckInProgress);
   }
 };
 
