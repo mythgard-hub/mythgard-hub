@@ -13,7 +13,7 @@ function ArticleList({ max }) {
     },
     {
       title: '7 things I wish I knew when I was first starting out in Mythgard',
-      url: 'https://mythgard-hub.github.io/7-things',
+      url: '/7-things',
       author: 'AgitatedBadger',
       description:
         'A detailed resource for new players that helps fill in the holes of the tutorial',
@@ -28,7 +28,7 @@ function ArticleList({ max }) {
       date: new Date('2019-09-29T17:24:18.280Z')
     },
     {
-      title: 'Lore Broker's Files: Chapter 1',
+      title: "Lore Broker's Files: Chapter 1",
       url: 'https://teamrankstar.com/budget-decks-for-mythgard-october-2019/',
       author: 'The Mantid Man',
       description:
