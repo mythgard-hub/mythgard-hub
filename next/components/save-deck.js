@@ -5,24 +5,6 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
-import createNewEmptyDeck from '../lib/mutations/add-deck';
-import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
-import { getCardCount } from '../lib/deck-utils';
-import { DECK_SIZES } from '../constants/deck';
-
-const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
-  let deckId;
-  return createNewEmptyDeck(apolloClient, deckInProgress, authorId)
-    .then(({ data }) => {
-      deckId = data.createDeck.deck.id;
-      return addCardsToDBDeck(
-        apolloClient,
-        deckId,
-        Object.values(deckInProgress.mainDeck)
-      );
-    })
-    .then(() => deckId);
-};
 import { clearDeckInProgress } from '../lib/deck-utils';
 
 export default function SaveDeck({
