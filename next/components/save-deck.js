@@ -3,27 +3,15 @@ import PropTypes from 'prop-types';
 import { ApolloConsumer } from 'react-apollo';
 import Router from 'next/router';
 import Link from 'next/link';
-
+import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
-import createNewEmptyDeck from '../lib/mutations/add-deck';
-import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
-import { initializeDeckBuilder } from '../lib/deck-utils';
+import { clearDeckInProgress } from '../lib/deck-utils';
 
-const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
-  let deckId;
-  return createNewEmptyDeck(apolloClient, deckInProgress, authorId)
-    .then(({ data }) => {
-      deckId = data.createDeck.deck.id;
-      return addCardsToDBDeck(
-        apolloClient,
-        deckId,
-        Object.values(deckInProgress.mainDeck)
-      );
-    })
-    .then(() => deckId);
-};
-
-export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
+export default function SaveDeck({
+  deckId,
+  deckInProgress,
+  setDeckInProgress
+}) {
   const { user } = useContext(UserContext);
 
   const handleSubmit = (e, client) => {
@@ -31,10 +19,12 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
 
     if (!validateState()) return;
 
-    saveDeckWithCards(client, deckInProgress, user.id).then(deckId => {
-      Router.push(`/deck?id=${deckId}`);
-      setDeckInProgress(initializeDeckBuilder());
-    });
+    saveDeckWithCards(client, deckId, deckInProgress, user.id).then(
+      savedDeckId => {
+        Router.push(`/deck?id=${savedDeckId}`);
+        clearDeckInProgress(setDeckInProgress);
+      }
+    );
   };
 
   const validateState = () => {
@@ -62,7 +52,7 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
               handleSubmit(e, client);
             }}
           >
-            Save
+            {Number.isInteger(deckId) ? 'Update' : 'Save'}
           </button>
         )}
       </ApolloConsumer>
@@ -82,13 +72,14 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
 }
 
 SaveDeck.propTypes = {
+  deckId: PropTypes.number,
   deckInProgress: PropTypes.shape({
     deckName: PropTypes.string,
     deckPath: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPath: PropTypes.shape({
+    deckPower: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),

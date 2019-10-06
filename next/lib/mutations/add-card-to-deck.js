@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { deckCardsQuery } from '../deck-queries';
 
 const addCardDeck = gql`
   mutation CreateCardDeck($deckId: Int!, $cardId: Int!, $quantity: Int!) {
@@ -26,7 +27,13 @@ const addCardsToDBDeck = (apolloClient, deckId, deckCards) => {
           quantity: deckCard.quantity,
           cardId: deckCard.card.id,
           deckId
-        }
+        },
+        refetchQueries: [
+          {
+            query: deckCardsQuery,
+            variables: { id: deckId }
+          }
+        ]
       });
     })
   );
