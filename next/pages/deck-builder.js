@@ -70,27 +70,24 @@ const loadExistingDeck = (
     10
   );
 
-  // Several permutations to handle!
+  // Slightly finicky algorithm...
   //
   // We have a deck id in the URL
-  //  L No deck in session storage
-  //    = Load the deck from server
-  //  L else
-  //    L User wants to discard changes
-  //      = Clear storage, load deck from server
+  //    L No deck in session storage, or user wants to discard it
+  //        = Clear storage, load deck from server
+  //    L else (user wants to keep storage version)
+  //        L Session storage deck has same id as URL
+  //            = Load deck from storage, leave url alone
+  //        L Session storage deck has different id from URL
+  //            = Update url and deck with session storage version
+  // L else
+  //    L no deck in session storage
+  //        = clean slate
   //    L else
-  //      L Session storage deck has same id as URL
-  //          = Load deck from storage, leave url alone
-  //      L Session storage deck has different id from URL
-  //          = Update url and deck with session storage version
-  // No deck id in url
-  //  L no deck in session storage
-  //    = clean slate
-  //  L else
-  //    L deck in storage has an id
-  //      = Update url and deck with session storage version
-  //    L deck in storage has no id
-  //      = load deck from storage, leave url alone
+  //        L deck in storage has an id
+  //            = Update url and deck with session storage version
+  //        L deck in storage has no id
+  //            = load deck from storage, leave url alone
   const urlHasId = deckId && deckId > 0;
   const noDeckInStorage = !hasValidDeckInStorage();
   const deckIdInUrlEqualsStorageDeckId = storedDeckIdOrNaN === deckId;
@@ -100,7 +97,8 @@ const loadExistingDeck = (
     if (noDeckInStorage || userWantsToDiscardChanges()) {
       // Load the deck from server
       resetDeckBuilderSavedState();
-      return loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
+      loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
+      return true;
     } else if (deckIdInUrlEqualsStorageDeckId) {
       // Load deck from storage, leave url alone
       return loadDeckFromSessionStorage(setDeckInProgress);
@@ -141,6 +139,9 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
 
   const onClear = () => {
     setEditingExisting(false);
+    if (deckId) {
+      Router.push('/deck-builder');
+    }
   };
 
   useEffect(() => {
