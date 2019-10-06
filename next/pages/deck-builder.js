@@ -42,6 +42,10 @@ const useStateDeck = deckId => {
   return [deckInProgress, setDeckInProgress];
 };
 
+const clearSessionStorageMsg = `We found a deck with unsaved changes. Discard them? This action cannot be undone.
+
+If you press cancel, the deck with unsaved changes will be loaded instead.`;
+
 // `useEffect` will not run on the server. As long as we're using
 // local/session storage, we need to make sure the code that loads/unloads a
 // previously worked on decks is not run during an SSR.
@@ -50,40 +54,97 @@ const loadExistingDeck = (
   deckInProgress,
   setDeckInProgress,
   setIsError,
-  client
+  client,
+  useSessionStorage
 ) => {
-  const msg = `We found a deck with unsaved changes. Discard them? This action cannot be undone.
+  // used when we already know we want to use the deck in session
+  // storage regardless of URL (see algorithm below)
+  if (useSessionStorage) {
+    return loadDeckFromSessionStorage(setDeckInProgress);
+  }
 
-If you press cancel, the deck with unsaved changes will be loaded instead.`;
+  const storedDeckIdOrNaN = parseInt(
+    sessionStorage.getItem('deckInProgressId'),
+    10
+  );
 
-  const storedDeckId = sessionStorage.getItem('deckInProgressId');
+  // Several permutations to handle!
+  //
+  // We have a deck id in the URL
+  //  L No deck in session storage
+  //    = Load the deck from server
+  //  L Unsaved deck in session storage
+  //    L Session storage deck has same id as URL
+  //      L User wants to discard changes
+  //        = Clear storage, load deck from server
+  //      L User wants to keep changes
+  //        = Load deck from storage, leave url alone
+  //    L Session storage deck has different id from URL
+  //      L User wants to discard changes
+  //        = Clear storage, load deck from server
+  //      L User wants to keep changes
+  //        = Update url and deck with session storage version
+  // No deck id in url
+  //  L no deck in session storage
+  //    = clean slate
+  //  L Unsaved deck in session storage
+  //    L deck in storage has an id
+  //      = Update url and deck with session storage version
+  //    L deck in storage has no id
+  //      = load deck from storage, leave url alone
+  const urlHasId = deckId && deckId > 0;
+  const noDeckInStorage = !hasValidDeckInStorage();
+  const deckIdInUrlEqualsStorageDeckId = storedDeckIdOrNaN === deckId;
 
-  // loading specific deck id but a deck was found in storage
-  if (deckId && hasValidDeckInStorage()) {
-    if (confirm(msg)) {
-      // they want to blow out deck in storage. Proceed.
-      resetDeckBuilderSavedState();
-    } else {
-      // check if deck in storage has an id yet
-      if (parseInt(storedDeckId, 10) > 0) {
-        Router.push(`/deck-builder?id=${storedDeckId}`);
-        return;
+  if (urlHasId) {
+    if (noDeckInStorage) {
+      return loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
+    } else if (deckIdInUrlEqualsStorageDeckId) {
+      if (confirm(clearSessionStorageMsg)) {
+        resetDeckBuilderSavedState();
+        return loadDeckFromServer(
+          client,
+          deckId,
+          setDeckInProgress,
+          setIsError
+        );
       } else {
-        Router.push('/deck-builder');
-        return;
+        return loadDeckFromSessionStorage(setDeckInProgress);
+      }
+    } else {
+      if (confirm(clearSessionStorageMsg)) {
+        resetDeckBuilderSavedState();
+        return loadDeckFromServer(
+          client,
+          deckId,
+          setDeckInProgress,
+          setIsError
+        );
+      } else {
+        Router.push(
+          `/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`
+        );
+        return false;
+      }
+    }
+  } else {
+    if (noDeckInStorage) {
+      resetDeckBuilderSavedState();
+      return false;
+    } else {
+      if (storedDeckIdOrNaN > 0) {
+        Router.push(
+          `/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`
+        );
+        return false;
+      } else {
+        return loadDeckFromSessionStorage(setDeckInProgress);
       }
     }
   }
-
-  if (deckId) {
-    loadDeckFromServer(client, deckId, setDeckInProgress, setIsError);
-    return true;
-  } else {
-    return loadDeckFromSessionStorage(setDeckInProgress);
-  }
 };
 
-function DeckBuilderPage({ deckId }) {
+function DeckBuilderPage({ deckId, useSessionStorage }) {
   const [cardSearchText, setCardSearchText] = useState(
     initFilters.cardSearchText
   );
@@ -110,7 +171,8 @@ function DeckBuilderPage({ deckId }) {
         deckInProgress,
         setDeckInProgress,
         setIsError,
-        client
+        client,
+        useSessionStorage
       )
     ) {
       setEditingExisting(true);
@@ -225,11 +287,16 @@ DeckBuilderPage.getInitialProps = async ({ query }) => {
   // `null` instead of `undefined` to match sessionStorage.getItem('cantfind')
   let deckId = parseInt(query.id, 10);
   deckId = Number.isInteger(deckId) ? deckId : null;
-  return { deckId };
+  let useSessionStorage = parseInt(query.useSessionStorage, 10);
+  useSessionStorage = Number.isInteger(useSessionStorage)
+    ? useSessionStorage
+    : 0;
+  return { deckId, useSessionStorage };
 };
 
 DeckBuilderPage.propTypes = {
-  deckId: PropTypes.number
+  deckId: PropTypes.number,
+  useSessionStorage: PropTypes.number
 };
 
 export default DeckBuilderPage;
