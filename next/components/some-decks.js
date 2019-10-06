@@ -6,7 +6,7 @@ import { useDeckSearchQuery } from '../lib/deck-queries';
 import { useState } from 'react';
 import PagingControls from './paging-controls.js';
 
-const pageSize = 2;
+const pageSize = 50;
 
 export default function SomeDecks(props) {
   const [currentPage, setPage] = useState(0);
