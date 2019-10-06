@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import Router from 'next/router';
 import Layout from '../components/layout';
 import {
   initializeDeckBuilder,
@@ -57,10 +58,20 @@ If you press cancel, the deck with unsaved changes will be loaded instead.`;
 
   const storedDeckId = sessionStorage.getItem('deckInProgressId');
 
-  // loading existing deck but deck in storage
-  if (deckId && storedDeckId && hasValidDeckInStorage()) {
+  // loading specific deck id but a deck was found in storage
+  if (deckId && hasValidDeckInStorage()) {
     if (confirm(msg)) {
+      // they want to blow out deck in storage. Proceed.
       resetDeckBuilderSavedState();
+    } else {
+      // check if deck in storage has an id yet
+      if (parseInt(storedDeckId, 10) > 0) {
+        Router.push(`/deck-builder?id=${storedDeckId}`);
+        return;
+      } else {
+        Router.push('/deck-builder');
+        return;
+      }
     }
   }
 
@@ -87,6 +98,10 @@ function DeckBuilderPage({ deckId }) {
 
   const [deckInProgress, setDeckInProgress] = useStateDeck(deckId);
   const client = useApolloClient();
+
+  const onClear = () => {
+    setEditingExisting(false);
+  };
 
   useEffect(() => {
     if (
@@ -198,6 +213,7 @@ function DeckBuilderPage({ deckId }) {
             deckId={deckId}
             deckInProgress={deckInProgress}
             setDeckInProgress={setDeckInProgress}
+            onClear={onClear}
           />
         </div>
       )}

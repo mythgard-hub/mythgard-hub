@@ -37,7 +37,7 @@ export default function DeckBuilderSidebar(props) {
     0
   );
 
-  const clearDeck = () => {
+  const clearDeck = onClear => {
     const confirmation = confirm(
       'Are you sure you want to clear the deck? This action cannot be undone.'
     );
@@ -45,6 +45,7 @@ export default function DeckBuilderSidebar(props) {
     if (confirmation) {
       setDeckInProgress(initializeDeckBuilder());
       resetDeckBuilderSavedState();
+      onClear();
     }
   };
 
@@ -90,7 +91,7 @@ export default function DeckBuilderSidebar(props) {
         deckInProgress={deckInProgress}
         setDeckInProgress={setDeckInProgress}
       />
-      <button onClick={clearDeck}>Clear Deck</button>
+      <button onClick={() => clearDeck(props.onClear)}>Clear Deck</button>
       <div className="deck-in-progress" data-cy="deckInProgress">
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
         <EditDeckName
@@ -128,5 +129,6 @@ DeckBuilderSidebar.propTypes = {
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
   }),
+  onClear: PropTypes.func,
   setDeckInProgress: PropTypes.func
 };
