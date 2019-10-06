@@ -44,7 +44,7 @@ function NewPlayerGuide() {
             padding: 10px;
           }
         `}</style>
-        <PageBanner image={PageBanner.IMG_ARTICLES}>Articles</PageBanner>
+        <PageBanner image={PageBanner.IMG_ARTICLES}>Media</PageBanner>
         <br />
         <div className="toc_column">
           This article was produced in collaboration with{' '}
