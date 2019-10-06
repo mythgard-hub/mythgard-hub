@@ -5,7 +5,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
-import { clearDeckInProgress } from '../lib/deck-utils';
+import { clearDeckInProgress, getCardCount } from '../lib/deck-utils';
 
 export default function SaveDeck({
   deckId,
@@ -13,6 +13,7 @@ export default function SaveDeck({
   setDeckInProgress
 }) {
   const { user } = useContext(UserContext);
+  const cardCount = getCardCount(deckInProgress);
 
   const handleSubmit = (e, client) => {
     e && e.preventDefault();
@@ -28,7 +29,10 @@ export default function SaveDeck({
   };
 
   const validateState = () => {
-    return Boolean(deckInProgress.deckName);
+    return Boolean(
+      deckInProgress.deckName &&
+        (cardCount >= DECK_SIZES.MIN) & (cardCount <= DECK_SIZES.MAX)
+    );
   };
 
   // If user is not logged in, they must do so before saving
@@ -42,10 +46,19 @@ export default function SaveDeck({
       </Link>
     );
   } else {
+    let errorMessage = null;
+    if (cardCount < DECK_SIZES.MIN) {
+      errorMessage = `A deck must have at least ${DECK_SIZES.MIN} cards`;
+    } else if (cardCount > DECK_SIZES.MAX) {
+      errorMessage = `A deck can have a maximum of ${DECK_SIZES.MAX} cards`;
+    }
+
     saveButton = (
       <ApolloConsumer>
         {client => (
           <button
+            disabled={errorMessage}
+            title={errorMessage}
             type="submit"
             data-cy="saveDeck"
             onClick={e => {

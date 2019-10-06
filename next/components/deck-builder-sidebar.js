@@ -7,7 +7,8 @@ import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
 import {
   initializeDeckBuilder,
-  resetDeckBuilderSavedState
+  resetDeckBuilderSavedState,
+  getCardCount
 } from '../lib/deck-utils';
 
 export default function DeckBuilderSidebar(props) {
@@ -32,11 +33,7 @@ export default function DeckBuilderSidebar(props) {
   };
 
   const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
-  const cardCount = Object.values(deckInProgress.mainDeck).reduce(
-    (count, card) => count + card.quantity,
-    0
-  );
-
+  const cardCount = getCardCount(deckInProgress);
   const clearDeck = onClear => {
     const confirmation = confirm(
       'Are you sure you want to clear the deck? This action cannot be undone.'
