@@ -7,9 +7,10 @@ import { onCurrentPage } from '../lib/paging.js';
 export default function CardList({ onCardClick, cards, pageSize, options }) {
   const [currentPage, setPage] = useState(0);
   const { withPaging } = options;
+  const cardListRef = React.createRef();
 
   return (
-    <>
+    <div ref={cardListRef}>
       <style jsx>{`
         .cardList {
           list-style: none;
@@ -48,9 +49,10 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
           currentPage={currentPage}
           setPage={setPage}
           itemCount={cards.length}
+          cardListRef={cardListRef}
         ></PagingControls>
       )}
-    </>
+    </div>
   );
 }
 
