@@ -34,14 +34,14 @@ const getUsername = () => {
   switch (faker.random.number(1)) {
     case 0:
       name =
-        faker.name.firstName() +
+        ucfirst(faker.name.firstName()) +
         'Of' +
-        faker.company.bsNoun() +
+        ucfirst(faker.company.bsNoun()) +
         faker.random.number(1000);
       break;
     case 1:
       name =
-        faker.name.lastName() +
+        ucfirst(faker.name.lastName()) +
         'Who' +
         ucfirst(faker.company.bsBuzz() + 's') +
         ucfirst(faker.hacker.noun()) +

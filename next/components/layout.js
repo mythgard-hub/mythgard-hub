@@ -176,6 +176,11 @@ function Layout({ title, desc, children }) {
             text-align: center;
           }
 
+          a.button:hover,
+          a.button:focus {
+            color: ${theme.hoverColor};
+          }
+
           button:disabled {
             color: ${theme.fontColorDisabled};
             border: ${theme.buttonBorderDisabled};
@@ -344,7 +349,7 @@ function Layout({ title, desc, children }) {
 
 Layout.defaultProps = {
   title: 'Mythgard Hub',
-  desc: 'Your hub for Mythgard decks, cards, tournaments, and articles'
+  desc: 'Your hub for Mythgard decks, cards, tournaments, and media'
 };
 
 Layout.propTypes = {

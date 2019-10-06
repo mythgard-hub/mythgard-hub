@@ -49,11 +49,11 @@ function NewPlayerGuide() {
         <br />
 
         <div className="toc_column">
-          This article by guest writer <strong>Skysong</strong> was orignally published on reddit
+          This article by guest writer <strong>AgitatedBadger</strong> was orignally published on reddit
 
           <div className="article_title">7 things I wish I knew when I was first starting out in Mythgard</div>
           <span style={{ fontStyle: 'italic' }}>October 1, 2019 </span>
-          by <span style={{ color: '#F1810B' }}>Skysong</span>
+          by <span style={{ color: '#F1810B' }}>AgitatedBadger</span>
 
         </div>
 

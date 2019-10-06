@@ -4,6 +4,7 @@ import AllPowers from '../components/all-powers';
 import ImportedDeckErrors from '../components/imported-deck-errors';
 import TabGroup from '../components/tab-group';
 import { addCardToDeck } from '../lib/deck-utils';
+import PropTypes from 'prop-types';
 
 export default function DeckBuilderCardDisplay(props) {
   const {
@@ -81,3 +82,15 @@ export default function DeckBuilderCardDisplay(props) {
     </div>
   );
 }
+
+DeckBuilderCardDisplay.propTypes = {
+  currentTab: PropTypes.string,
+  setTab: PropTypes.func,
+  deckInProgress: PropTypes.object,
+  setDeckInProgress: PropTypes.func,
+  cardSearchText: PropTypes.string,
+  cardRarities: PropTypes.array,
+  cardManaCosts: PropTypes.array,
+  supertypes: PropTypes.array,
+  factions: PropTypes.array
+};

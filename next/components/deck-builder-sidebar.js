@@ -5,10 +5,13 @@ import DeckExport from '../components/deck-export';
 import DeckCardTable from '../components/deck-card-table';
 import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
-import { initializeDeckBuilder, getCardCount } from '../lib/deck-utils';
+import {
+  initializeDeckBuilder,
+  resetDeckBuilderSavedState
+} from '../lib/deck-utils';
 
 export default function DeckBuilderSidebar(props) {
-  const { deckInProgress, setDeckInProgress } = props;
+  const { deckId, deckInProgress, setDeckInProgress } = props;
   const [mainDeckInput, setMainDeckInput] = useState('');
 
   const updateDeckName = e => {
@@ -30,13 +33,15 @@ export default function DeckBuilderSidebar(props) {
 
   const updateImportedDeck = importedDeck => setDeckInProgress(importedDeck);
   const cardCount = getCardCount(deckInProgress);
-  const clearDeck = () => {
+  const clearDeck = onClear => {
     const confirmation = confirm(
       'Are you sure you want to clear the deck? This action cannot be undone.'
     );
 
     if (confirmation) {
       setDeckInProgress(initializeDeckBuilder());
+      resetDeckBuilderSavedState();
+      onClear();
     }
   };
 
@@ -78,10 +83,11 @@ export default function DeckBuilderSidebar(props) {
       />
       <DeckExport deckInProgress={deckInProgress} />
       <SaveDeck
+        deckId={deckId}
         deckInProgress={deckInProgress}
         setDeckInProgress={setDeckInProgress}
       />
-      <button onClick={clearDeck}>Clear Deck</button>
+      <button onClick={() => clearDeck(props.onClear)}>Clear Deck</button>
       <div className="deck-in-progress" data-cy="deckInProgress">
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
         <EditDeckName
@@ -98,13 +104,14 @@ export default function DeckBuilderSidebar(props) {
 }
 
 DeckBuilderSidebar.propTypes = {
+  deckId: PropTypes.number,
   deckInProgress: PropTypes.shape({
     deckName: PropTypes.string,
     deckPath: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPath: PropTypes.shape({
+    deckPower: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),
@@ -118,5 +125,6 @@ DeckBuilderSidebar.propTypes = {
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
   }),
+  onClear: PropTypes.func,
   setDeckInProgress: PropTypes.func
 };

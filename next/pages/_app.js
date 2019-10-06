@@ -79,7 +79,7 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, apolloClient, apolloState, ...pageProps } = this.props;
     const { user } = this.state;
     return (
       <Container>

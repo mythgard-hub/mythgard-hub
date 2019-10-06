@@ -3,7 +3,6 @@ import Layout from '../components/layout';
 import UserContext from '../components/user-context';
 import { ApolloConsumer } from 'react-apollo';
 import updateUsername from '../lib/mutations/update-username';
-import Link from 'next/link';
 import UserDecks from '../components/user-decks';
 
 const cdn = process.env.MG_CDN;
