@@ -30,7 +30,7 @@ export default function SomeDecks(props) {
   });
 
   if (error) return <ErrorMessage message="Error loading decks." />;
-  if (loading) return <div>Loading</div>;
+  if (loading) return <div>Loading...</div>;
 
   if (data && !data.searchDecks) return <div>No decks found</div>;
 
