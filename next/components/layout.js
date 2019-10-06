@@ -185,6 +185,11 @@ function Layout({ title, desc, children }) {
             color: ${theme.hoverColor};
           }
 
+          button:disabled:hover {
+            color: ${theme.fontColorDisabled};
+            cursor: initial;
+          }
+
           input[type='text'],
           select,
           textarea {
