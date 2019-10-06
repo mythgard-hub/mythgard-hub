@@ -429,6 +429,48 @@ describe('Import utility methods', () => {
       expect(Object.values(result.mainDeck).length).toEqual(3);
     });
 
+    it('Should convert an import to a deck in progress - meta valus capital letters', function() {
+      const input = [
+        'Name: my deck',
+        'Path: my path',
+        'Power: my power',
+        'Coverart: myself',
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('myself');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(Object.values(result.mainDeck).length).toEqual(3);
+    });
+
+    it('Should convert an import to a deck in progress - meta valus upper case', function() {
+      const input = [
+        'NAME: my deck',
+        'PATH: my path',
+        'POWER: my power',
+        'COVERART: myself',
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('myself');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(Object.values(result.mainDeck).length).toEqual(3);
+    });
+
     it('Should convert an import to a deck in progress - partial meta information', function() {
       const input = [
         'name: my deck',

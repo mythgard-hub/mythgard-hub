@@ -28,7 +28,10 @@ export const extractMetaValue = (lines, metaname, metaValues) => {
     while (index < lines.length) {
       const currSplit = lines[index].split(':');
 
-      if (currSplit[0] === metaname && currSplit[1]) {
+      if (
+        currSplit[0].toLowerCase() === metaname.toLowerCase() &&
+        currSplit[1]
+      ) {
         const metaValue = currSplit[1].trim();
 
         if (metaValues) {
