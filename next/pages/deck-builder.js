@@ -104,7 +104,9 @@ const loadExistingDeck = (
       return loadDeckFromSessionStorage(setDeckInProgress);
     } else {
       // Update url and deck with session storage version
-      Router.push(`/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`);
+      Router.replace(
+        `/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`
+      );
       return false;
     }
   } else if (noDeckInStorage) {
@@ -113,7 +115,7 @@ const loadExistingDeck = (
     return false;
   } else if (deckInStorageHasId) {
     // update url and deck with session storage version
-    Router.push(`/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`);
+    Router.replace(`/deck-builder?id=${storedDeckIdOrNaN}&useSessionStorage=1`);
     return false;
   } else {
     // load deck from storage, leave url alone
@@ -140,7 +142,7 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
   const onClear = () => {
     setEditingExisting(false);
     if (deckId) {
-      Router.push('/deck-builder');
+      Router.replace('/deck-builder');
     }
   };
 
