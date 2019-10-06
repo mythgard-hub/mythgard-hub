@@ -49,7 +49,7 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
           currentPage={currentPage}
           setPage={setPage}
           itemCount={cards.length}
-          cardListRef={cardListRef}
+          listRef={cardListRef}
         ></PagingControls>
       )}
     </div>

@@ -7,17 +7,14 @@ function PagingControls({
   pageSize,
   itemCount,
   setPage,
-  cardListRef
+  listRef
 }) {
   const showNext = hasNextPage(currentPage, pageSize, itemCount);
   const showPrev = hasPrevPage(currentPage);
   const scrollToTopOfList = () => {
     window.scrollTo({
-      behavior: cardListRef && cardListRef.current ? 'smooth' : 'auto',
-      top:
-        cardListRef && cardListRef.current
-          ? cardListRef.current.offsetTop - 70
-          : 0
+      behavior: listRef && listRef.current ? 'smooth' : 'auto',
+      top: listRef && listRef.current ? listRef.current.offsetTop - 70 : 0
     });
   };
 
@@ -93,7 +90,7 @@ PagingControls.propTypes = {
   pageSize: PropTypes.number.isRequired,
   itemCount: PropTypes.number.isRequired,
   setPage: PropTypes.func.isRequired,
-  cardListRef: PropTypes.string
+  listRef: PropTypes.string
 };
 
 export default PagingControls;
