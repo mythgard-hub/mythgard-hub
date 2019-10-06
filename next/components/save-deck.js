@@ -8,6 +8,7 @@ import UserContext from '../components/user-context';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 import { initializeDeckBuilder, getCardCount } from '../lib/deck-utils';
+import { DECK_SIZES } from '../constants/deck';
 
 const saveDeckWithCards = (apolloClient, deckInProgress, authorId) => {
   let deckId;
@@ -40,7 +41,8 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
 
   const validateState = () => {
     return Boolean(
-      deckInProgress.deckName && (cardCount >= 40) & (cardCount <= 200)
+      deckInProgress.deckName &&
+        (cardCount >= DECK_SIZES.MIN) & (cardCount <= DECK_SIZES.MAX)
     );
   };
 
@@ -56,10 +58,10 @@ export default function SaveDeck({ deckInProgress, setDeckInProgress }) {
     );
   } else {
     let errorMessage = null;
-    if (cardCount < 40) {
-      errorMessage = 'A deck must have at least 40 cards';
-    } else if (cardCount > 200) {
-      errorMessage = 'A deck can have a maximum of 200 cards';
+    if (cardCount < DECK_SIZES.MIN) {
+      errorMessage = `A deck must have at least ${DECK_SIZES.MIN} cards`;
+    } else if (cardCount > DECK_SIZES.MAX) {
+      errorMessage = `A deck can have a maximum of ${DECK_SIZES.MAX} cards`;
     }
 
     saveButton = (
