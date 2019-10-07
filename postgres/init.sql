@@ -25,8 +25,7 @@ CREATE TABLE mythgard.card (
   def integer,
   mana integer,
   gem varchar(10),
-  rarity mythgard.rarity default 'COMMON',
-  original_name varchar(255)
+  rarity mythgard.rarity default 'COMMON'
 );
 
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
