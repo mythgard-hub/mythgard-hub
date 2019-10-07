@@ -13,7 +13,8 @@ const allCards = [
   { id: 2, rarity: 'COMMON', name: 'cards' },
   { id: 3, rarity: 'COMMON', name: 'card name' },
   { id: 4, rarity: 'COMMON', name: 'other card name' },
-  { id: 5, rarity: 'COMMON', name: 'weird  card  name' }
+  { id: 5, rarity: 'COMMON', name: 'weird  card  name' },
+  { id: 5, rarity: 'COMMON', name: 'Ghul' }
 ];
 
 const allPowers = [
@@ -464,6 +465,19 @@ describe('Import utility methods', () => {
       expect(result.deckPath).toEqual('');
       expect(result.deckPower).toEqual('');
       expect(Object.values(result.mainDeck).length).toEqual(3);
+    });
+
+    it('Should convert an import to a deck in progress - cards with accents', function() {
+      const input = ['2 ghūl'].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('');
+      expect(result.deckPath).toEqual('');
+      expect(result.deckPower).toEqual('');
+      expect(Object.values(result.mainDeck).length).toEqual(1);
     });
 
     it('Should convert an import to a deck in progress - empty lines', function() {
