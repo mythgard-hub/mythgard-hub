@@ -2,6 +2,7 @@ import { useQuery } from 'react-apollo-hooks';
 import PropTypes from 'prop-types';
 import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
+import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
 import { initializeDeckBuilder } from '../lib/deck-utils';
 import { deckCardsQuery } from '../lib/deck-queries';
@@ -122,6 +123,7 @@ export default function Deck({ deck }) {
       </div>
       <div className="deck-actions">
         <DeckExport deckInProgress={deckToExport} />
+        <DeckEdit deck={deck} />
         <DeckDelete deck={deck} />
         <div className="deck-stats">
           <div className="stats-title">Essence</div>
@@ -147,6 +149,7 @@ Deck.propTypes = {
     name: PropTypes.string,
     cardDecks: PropTypes.array,
     power: PropTypes.shape({ name: PropTypes.string.isRequired }),
-    path: PropTypes.shape({ name: PropTypes.string.isRequired })
+    path: PropTypes.shape({ name: PropTypes.string.isRequired }),
+    author: PropTypes.shape({ username: PropTypes.string.isRequired })
   }).isRequired
 };

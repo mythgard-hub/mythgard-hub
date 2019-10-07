@@ -176,6 +176,11 @@ function Layout({ title, desc, children }) {
             text-align: center;
           }
 
+          a.button:hover,
+          a.button:focus {
+            color: ${theme.hoverColor};
+          }
+
           button:disabled {
             color: ${theme.fontColorDisabled};
             border: ${theme.buttonBorderDisabled};
@@ -183,6 +188,11 @@ function Layout({ title, desc, children }) {
 
           button:hover {
             color: ${theme.hoverColor};
+          }
+
+          button:disabled:hover {
+            color: ${theme.fontColorDisabled};
+            cursor: initial;
           }
 
           input[type='text'],

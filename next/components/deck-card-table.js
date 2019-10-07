@@ -123,7 +123,7 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
           </tr>
           {sortedCards.map(deckCard => {
             const backgroundColor = cardMainColor(deckCard.card, theme);
-            const color = backgroundColor ? theme.cardTableName : 'inherit';
+            const color = backgroundColor ? theme.cardTableName : 'white';
             return (
               <tr key={deckCard.card.id} data-cy="deckCardRow">
                 <td>{deckCard.card.mana < 0 ? 'X' : deckCard.card.mana}</td>

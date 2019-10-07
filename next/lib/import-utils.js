@@ -1,5 +1,6 @@
 import { META_KEYS } from '../constants/deck';
 import { initializeDeckBuilder, getQuantity } from './deck-utils';
+import { latinise } from '../lib/string-normalizer';
 
 // Get the line number where the meta information ends
 export const getSpliceIndex = lines => {
@@ -59,11 +60,13 @@ export const formatCardLines = (cardLines, allCards) => {
     .map(line => {
       try {
         const split = line.trim().split(' ');
-        const lineCardName = split
-          .slice(1)
-          .join(' ')
-          .toLowerCase()
-          .trim();
+        const lineCardName = latinise(
+          split
+            .slice(1)
+            .join(' ')
+            .toLowerCase()
+            .trim()
+        );
         const lineCardQuantity = parseInt(split[0], 10);
 
         // Make sure the line has a valid format
@@ -78,7 +81,7 @@ export const formatCardLines = (cardLines, allCards) => {
 
         // make sure this card exists in our database and get its ID
         const existingCard = allCards.find(c => {
-          return c.name.toLowerCase() === lineCardName;
+          return latinise(c.name.toLowerCase()) === lineCardName;
         });
 
         // If the card doesn't exist, we'll just get rid of it
