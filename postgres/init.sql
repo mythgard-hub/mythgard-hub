@@ -53,13 +53,15 @@ INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 5', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
-  VALUES ('Common 6', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
+  VALUES ('Common 6', 'rock', 'Earth Enchantment', '1', 'Y', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 7', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 8', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 9', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
+  INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
+  VALUES ('Ghul', 'rock', 'Earth Enchantment', '1', 'R', 'RARE', '{MINION}');
 
 CREATE TABLE mythgard.card_spawn (
   card_id int CONSTRAINT spawner_card_id_fkey REFERENCES mythgard.card (id),
@@ -303,7 +305,7 @@ CREATE TABLE mythgard.card_faction (
 );
 
 INSERT INTO mythgard.card_faction("card_id","faction_id")
-  VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 1), (8, 2), (9, 3), (10, 4), (11, 5), (12, 6), (13, 1), (14, 1), (15, 1), (16, 1);
+  VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 1), (8, 2), (9, 3), (10, 4), (11, 5), (12, 6), (13, 1), (14, 1), (15, 1), (16, 1), (17, 2);
 
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
