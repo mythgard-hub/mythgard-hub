@@ -18,14 +18,15 @@ export default function AllDecks() {
   });
 
   if (error) return <ErrorMessage message="Error loading decks." />;
-  if (loading) return <div>Loading</div>;
+  if (loading) return <div>Loading...</div>;
 
   if (data && !data.decks) return <div>No decks found</div>;
 
   const totalCount = data.decks.totalCount;
+  const listRef = React.createRef();
 
   return (
-    <>
+    <div ref={listRef}>
       <DeckList
         decks={data.decks.nodes}
         currentPage={currentPage}
@@ -37,11 +38,12 @@ export default function AllDecks() {
         }
       `}</style>
       <PagingControls
+        listRef={listRef}
         currentPage={currentPage}
         setPage={setPage}
         pageSize={pageSize}
         itemCount={totalCount}
       ></PagingControls>
-    </>
+    </div>
   );
 }

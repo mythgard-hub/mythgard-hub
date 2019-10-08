@@ -107,6 +107,36 @@ module.exports = [
 `,
 
   `
+mutation UpdateDeckAndRemoveCards(
+    $id: Int!
+    $name: String!
+    $pathId: Int
+    $powerId: Int
+  ) {
+    updateDeckAndRemoveCards(
+      input: { _id: $id, _name: $name, _pathId: $pathId, _powerId: $powerId }
+    ) {
+      deck {
+        id
+        name
+        author {
+          id
+          username
+        }
+        path {
+          id
+          name
+        }
+        power {
+          id
+          name
+        }
+      }
+    }
+  }
+`,
+
+  `
   query powers {
     powers {
       nodes {
@@ -290,10 +320,15 @@ module.exports = [
         username
       }
       power {
+        id
         name
       }
       path {
+        id
         name
+      }
+      deckPreviews {
+        ${deckPreviewsFragment}
       }
     }
   }

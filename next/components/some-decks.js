@@ -30,14 +30,15 @@ export default function SomeDecks(props) {
   });
 
   if (error) return <ErrorMessage message="Error loading decks." />;
-  if (loading) return <div>Loading</div>;
+  if (loading) return <div>Loading...</div>;
 
   if (data && !data.searchDecks) return <div>No decks found</div>;
 
   const totalCount = data.searchDecks.totalCount;
+  const listRef = React.createRef();
 
   return (
-    <>
+    <div ref={listRef}>
       <DeckList decks={data.searchDecks.nodes} />
 
       <style jsx>{`
@@ -46,12 +47,13 @@ export default function SomeDecks(props) {
         }
       `}</style>
       <PagingControls
+        listRef={listRef}
         currentPage={currentPage}
         setPage={setPage}
         pageSize={pageSize}
         itemCount={totalCount}
       ></PagingControls>
-    </>
+    </div>
   );
 }
 

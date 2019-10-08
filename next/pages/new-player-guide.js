@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { mgColors } from '../lib/theme.js';
 import { ThemeContext } from '../components/theme-context';
 import PageBanner from '../components/page-banner';
+import { DECK_SIZES } from '../constants/deck';
 
 function NewPlayerGuide() {
   const theme = useContext(ThemeContext);
@@ -44,7 +45,7 @@ function NewPlayerGuide() {
             padding: 10px;
           }
         `}</style>
-        <PageBanner image={PageBanner.IMG_ARTICLES}>Articles</PageBanner>
+        <PageBanner image={PageBanner.IMG_ARTICLES}>Media</PageBanner>
         <br />
         <div className="toc_column">
           This article was produced in collaboration with{' '}
@@ -1339,7 +1340,8 @@ function NewPlayerGuide() {
           <p>
             In the deck editor you can create/edit/copy/delete your decks as
             well as view/copy your current featured decks. A deck must contain a
-            minimum of 40 cards and can not contain more than 200.
+            minimum of {DECK_SIZES.MIN} cards and can not contain more than{' '}
+            {DECK_SIZES.MAX}.
           </p>
 
           <h3>

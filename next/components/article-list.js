@@ -4,6 +4,46 @@ import Article from './article';
 function ArticleList({ max }) {
   const list = [
     {
+      title: 'Fast Lane: Thrift Shop',
+      url: 'https://teamdgn.net/2019/10/02/fast-lane-thrift-shop/',
+      author: '14ierophant',
+      description:
+        'Ever since middle school, I have been a die hard fan of control in CCGs. I love drawing cards, I love canceling and limiting my opponent’s options, and I love the slow burn of...',
+      date: new Date('2019-10-02T17:24:18.280Z')
+    },
+    {
+      title: '7 things I wish I knew when I was first starting out in Mythgard',
+      url: '/7-things',
+      author: 'AgitatedBadger',
+      description:
+        'A detailed resource for new players that helps fill in the holes of the tutorial',
+      date: new Date('2019-10-01T17:24:18.280Z')
+    },
+    {
+      title: 'Budget Decks for Mythgard - October 2019',
+      url: 'https://teamrankstar.com/budget-decks-for-mythgard-october-2019/',
+      author: 'noahc92',
+      description:
+        'A detailed resource for new players that helps fill in the holes of the tutorial',
+      date: new Date('2019-09-29T17:24:18.280Z')
+    },
+    {
+      title: "Lore Broker's Files: Chapter 1",
+      url: 'https://teamrankstar.com/budget-decks-for-mythgard-october-2019/',
+      author: 'The Mantid Man',
+      description:
+        'The first episode in a brand new series from Team Rankstar that covers the lore of Mythgard in short, easy to take in chunks.',
+      date: new Date('2019-09-29T17:24:18.280Z')
+    },
+    {
+      title: 'The Many Uses of Impel',
+      url: 'https://teamdgn.net/2019/09/27/the-many-uses-of-impel/',
+      author: 'NowayitsJ',
+      description:
+        'Why Should You Use Impel? Some of you may think, “Wow, Impel doesn’t give me immediate value or combat benefits, movement can’t have that much impact!”  Well in Mythgard...',
+      date: new Date('2019-09-27T17:24:18.280Z')
+    },
+    {
       title: 'Budget Decks For Mythgard September 2019',
       url: 'https://teamrankstar.com/budget-decks-for-mythgard-september-2019/',
       author: 'noahc92',
@@ -44,14 +84,6 @@ function ArticleList({ max }) {
       description:
         'Control decks are in it for the long haul.  Traditionally, they play a patient, defensive game...',
       date: new Date('2019-09-22T17:24:18.280Z')
-    },
-    {
-      title: 'The Many Uses of Impel',
-      url: 'https://teamdgn.net/2019/09/27/the-many-uses-of-impel/',
-      author: 'NowayitsJ',
-      description:
-        'Why Should You Use Impel? Some of you may think, “Wow, Impel doesn’t give me immediate value or combat benefits, movement can’t have that much impact!”  Well in Mythgard...',
-      date: new Date('2019-09-27T17:24:18.280Z')
     }
   ];
 

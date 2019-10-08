@@ -92,7 +92,7 @@ class Header extends React.Component {
         <HeaderLink cyName="events" route="/events">
           Events
         </HeaderLink>
-        <HeaderLink route="/articles">Articles</HeaderLink>
+        <HeaderLink route="/articles">Media</HeaderLink>
       </div>
     );
   }

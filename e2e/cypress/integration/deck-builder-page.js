@@ -139,19 +139,15 @@ describe('Deck builder page', () => {
       'coverart: myself',
       '1 Dragon',
       '2 Imp',
-      '5 Imp'
+      '5 Imp',
+      '1 ghūl'
     ].join('\n');
 
     cy.get('[data-cy="importDeckTextarea"]').type(input);
     cy.get('[data-cy="importDeckButton"]').click();
 
     cy.get('[data-cy="deckTitle"]').should('have.value', 'my deck');
-    cy.get(deckCardRow).should('have.length', 2);
-
-    cy.get('[data-cy="importDeckButton"]').click();
-
-    cy.get('[data-cy="deckTitle"]').should('have.value', 'my deck');
-    cy.get(deckCardRow).should('have.length', 2);
+    cy.get(deckCardRow).should('have.length', 3);
   });
 
   it('should export a deck', function() {

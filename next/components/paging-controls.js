@@ -2,9 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { hasNextPage, hasPrevPage, rangeMin, rangeMax } from '../lib/paging.js';
 
-function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
+function PagingControls({
+  currentPage,
+  pageSize,
+  itemCount,
+  setPage,
+  listRef
+}) {
   const showNext = hasNextPage(currentPage, pageSize, itemCount);
   const showPrev = hasPrevPage(currentPage);
+  const scrollToTopOfList = () => {
+    window.scrollTo({
+      behavior: listRef && listRef.current ? 'smooth' : 'auto',
+      top: listRef && listRef.current ? listRef.current.offsetTop - 70 : 0
+    });
+  };
 
   return (
     <div className="mg-paging">
@@ -41,7 +53,10 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
       <button
         className="mgPrevious"
         disabled={!showPrev}
-        onClick={() => setPage(currentPage - 1)}
+        onClick={() => {
+          scrollToTopOfList();
+          setPage(currentPage - 1);
+        }}
       >
         Previous
       </button>
@@ -55,7 +70,10 @@ function PagingControls({ currentPage, pageSize, itemCount, setPage }) {
       <button
         disabled={!showNext}
         className="mgNext"
-        onClick={() => setPage(currentPage + 1)}
+        onClick={() => {
+          scrollToTopOfList();
+          setPage(currentPage + 1);
+        }}
       >
         Next
       </button>
@@ -71,7 +89,8 @@ PagingControls.propTypes = {
   currentPage: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
   itemCount: PropTypes.number.isRequired,
-  setPage: PropTypes.func.isRequired
+  setPage: PropTypes.func.isRequired,
+  listRef: PropTypes.string
 };
 
 export default PagingControls;

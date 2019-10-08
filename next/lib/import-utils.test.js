@@ -13,7 +13,8 @@ const allCards = [
   { id: 2, rarity: 'COMMON', name: 'cards' },
   { id: 3, rarity: 'COMMON', name: 'card name' },
   { id: 4, rarity: 'COMMON', name: 'other card name' },
-  { id: 5, rarity: 'COMMON', name: 'weird  card  name' }
+  { id: 5, rarity: 'COMMON', name: 'weird  card  name' },
+  { id: 5, rarity: 'COMMON', name: 'Ghul' }
 ];
 
 const allPowers = [
@@ -429,6 +430,48 @@ describe('Import utility methods', () => {
       expect(Object.values(result.mainDeck).length).toEqual(3);
     });
 
+    it('Should convert an import to a deck in progress - meta valus capital letters', function() {
+      const input = [
+        'Name: my deck',
+        'Path: my path',
+        'Power: my power',
+        'Coverart: myself',
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('myself');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(Object.values(result.mainDeck).length).toEqual(3);
+    });
+
+    it('Should convert an import to a deck in progress - meta valus upper case', function() {
+      const input = [
+        'NAME: my deck',
+        'PATH: my path',
+        'POWER: my power',
+        'COVERART: myself',
+        '1 card name',
+        '2 other card name',
+        '3 weird  card  name'
+      ].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('myself');
+      expect(result.deckName).toEqual('my deck');
+      expect(result.deckPath).toEqual('my path');
+      expect(result.deckPower).toEqual('my power');
+      expect(Object.values(result.mainDeck).length).toEqual(3);
+    });
+
     it('Should convert an import to a deck in progress - partial meta information', function() {
       const input = [
         'name: my deck',
@@ -464,6 +507,19 @@ describe('Import utility methods', () => {
       expect(result.deckPath).toEqual('');
       expect(result.deckPower).toEqual('');
       expect(Object.values(result.mainDeck).length).toEqual(3);
+    });
+
+    it('Should convert an import to a deck in progress - cards with accents', function() {
+      const input = ['2 ghūl'].join('\n');
+
+      const result = convertImportToDeck(input, '', allCards);
+
+      expect(result.errors.length).toEqual(0);
+      expect(result.deckCoverArt).toEqual('');
+      expect(result.deckName).toEqual('');
+      expect(result.deckPath).toEqual('');
+      expect(result.deckPower).toEqual('');
+      expect(Object.values(result.mainDeck).length).toEqual(1);
     });
 
     it('Should convert an import to a deck in progress - empty lines', function() {

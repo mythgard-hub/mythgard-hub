@@ -213,10 +213,15 @@ export const singleDeckQuery = gql`
         username
       }
       power {
+        id
         name
       }
       path {
+        id
         name
+      }
+      deckPreviews {
+        ${deckPreviewsFragment}
       }
     }
   }

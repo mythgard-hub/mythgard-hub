@@ -198,6 +198,11 @@ function Layout({ title, desc, children }) {
             text-align: center;
           }
 
+          a.button:hover,
+          a.button:focus {
+            color: ${theme.hoverColor};
+          }
+
           button:disabled {
             color: ${theme.fontColorDisabled};
             border: ${theme.buttonBorderDisabled};
@@ -205,6 +210,11 @@ function Layout({ title, desc, children }) {
 
           button:hover {
             color: ${theme.hoverColor};
+          }
+
+          button:disabled:hover {
+            color: ${theme.fontColorDisabled};
+            cursor: initial;
           }
 
           input[type='text'],
@@ -244,6 +254,20 @@ function Layout({ title, desc, children }) {
             text-transform: uppercase;
             padding-right: 20px;
             font-weight: bold;
+          }
+
+          .gradient-hr {
+            margin-bottom: 10px;
+            margin-left: 0;
+            width: 95%;
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(
+              to right,
+              ${theme.hrColorGradientLight},
+              ${theme.hrColorGradientLight},
+              ${theme.hrColorGradientDark}
+            );
           }
 
           .article_title {
@@ -347,7 +371,7 @@ function Layout({ title, desc, children }) {
 
 Layout.defaultProps = {
   title: 'Mythgard Hub',
-  desc: 'Your hub for Mythgard decks, cards, tournaments, and articles'
+  desc: 'Your hub for Mythgard decks, cards, tournaments, and media'
 };
 
 Layout.propTypes = {
