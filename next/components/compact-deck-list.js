@@ -3,8 +3,11 @@ import ErrorMessage from './error-message.js';
 import DeckPreview from './deck-preview.js';
 import PropTypes from 'prop-types';
 import { deckPreviewsToDecks } from '../lib/deck-queries.js';
+import { ThemeContext } from '../components/theme-context.js';
+import { useContext } from 'react';
 
 function CompactDeckList(props) {
+  const theme = useContext(ThemeContext);
   const { loading, error, data, cyData } = props;
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading...</div>;
@@ -18,6 +21,10 @@ function CompactDeckList(props) {
         .deckList {
           list-style: none;
           padding: 0;
+        }
+
+        :global(.deckPreview) {
+          background-color: ${theme.panelBackground};
         }
 
         @media only screen and (max-width: 600px) {
