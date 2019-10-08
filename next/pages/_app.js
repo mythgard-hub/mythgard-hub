@@ -79,7 +79,7 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, apolloClient, apolloState, ...pageProps } = this.props;
     const { user } = this.state;
     return (
       <Container>
@@ -87,10 +87,6 @@ class MyApp extends App {
           <HooksApolloProvider client={apolloClient}>
             <Head>
               <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-              <link
-                href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i&display=swap"
-                rel="stylesheet"
-              ></link>
               <meta charSet="utf-8" />
               <meta
                 name="viewport"

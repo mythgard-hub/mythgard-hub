@@ -5,7 +5,7 @@ import ArticleList from '../components/article-list';
 const ArticlesPage = () => {
   return (
     <Layout>
-      <PageBanner image={PageBanner.IMG_ARTICLES}>Articles</PageBanner>
+      <PageBanner image={PageBanner.IMG_ARTICLES}>Media</PageBanner>
       <br />
       <ArticleList />
     </Layout>

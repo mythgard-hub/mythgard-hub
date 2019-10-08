@@ -80,7 +80,7 @@ function Layout({ title, desc, children }) {
           <title>{title}</title>
           <meta name="description" key="desc" content={desc} />
           <link
-            href="https://fonts.googleapis.com/css?family=Exo+2:400,600,700&display=swap"
+            href="https://fonts.googleapis.com/css?family=Exo+2:300,300i,400,400i,600,600i,700,700i&display=swap"
             rel="stylesheet"
           />
         </Head>
@@ -104,8 +104,8 @@ function Layout({ title, desc, children }) {
           p {
             margin-bottom: 10px;
             line-height: 1.3em;
-            font-family: 'Vollkorn', serif;
-            font-weight: 400;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 300;
           }
 
           h1 {
@@ -176,6 +176,11 @@ function Layout({ title, desc, children }) {
             text-align: center;
           }
 
+          a.button:hover,
+          a.button:focus {
+            color: ${theme.hoverColor};
+          }
+
           button:disabled {
             color: ${theme.fontColorDisabled};
             border: ${theme.buttonBorderDisabled};
@@ -222,6 +227,20 @@ function Layout({ title, desc, children }) {
             text-transform: uppercase;
             padding-right: 20px;
             font-weight: bold;
+          }
+
+          .gradient-hr {
+            margin-bottom: 10px;
+            margin-left: 0;
+            width: 95%;
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(
+              to right,
+              ${theme.hrColorGradientLight},
+              ${theme.hrColorGradientLight},
+              ${theme.hrColorGradientDark}
+            );
           }
 
           .article_title {
@@ -325,7 +344,7 @@ function Layout({ title, desc, children }) {
 
 Layout.defaultProps = {
   title: 'Mythgard Hub',
-  desc: 'Your hub for Mythgard decks, cards, tournaments, and articles'
+  desc: 'Your hub for Mythgard decks, cards, tournaments, and media'
 };
 
 Layout.propTypes = {

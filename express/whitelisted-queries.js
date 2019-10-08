@@ -107,6 +107,36 @@ module.exports = [
 `,
 
   `
+mutation UpdateDeckAndRemoveCards(
+    $id: Int!
+    $name: String!
+    $pathId: Int
+    $powerId: Int
+  ) {
+    updateDeckAndRemoveCards(
+      input: { _id: $id, _name: $name, _pathId: $pathId, _powerId: $powerId }
+    ) {
+      deck {
+        id
+        name
+        author {
+          id
+          username
+        }
+        path {
+          id
+          name
+        }
+        power {
+          id
+          name
+        }
+      }
+    }
+  }
+`,
+
+  `
   query powers {
     powers {
       nodes {
@@ -138,6 +168,7 @@ module.exports = [
         name
         mana
         gem
+        rarity
         cardFactions {
           nodes {
             faction {
@@ -170,6 +201,7 @@ module.exports = [
               or: [
                 { name: { includesInsensitive: $searchText } }
                 { rules: { includesInsensitive: $searchText } }
+                { subtype: { includesInsensitive: $searchText } }
               ]
             }
             {
@@ -241,8 +273,9 @@ module.exports = [
 `,
 
   `
-  query decks {
-    decks {
+  query decks($first:Int, $offset:Int) {
+    decks(orderBy: CREATED_DESC, first:$first, offset:$offset ) {
+      totalCount
       nodes {
         id
         name
@@ -250,21 +283,6 @@ module.exports = [
           username
         }
         modified
-        cardDecks {
-          nodes {
-            quantity
-            card {
-              mana
-              cardFactions {
-                nodes {
-                  faction {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
         deckPreviews {
           ${deckPreviewsFragment}
         }
@@ -302,10 +320,15 @@ module.exports = [
         username
       }
       power {
+        id
         name
       }
       path {
+        id
         name
+      }
+      deckPreviews {
+        ${deckPreviewsFragment}
       }
     }
   }
@@ -389,6 +412,8 @@ module.exports = [
       $faction5: Int
       $faction6: Int
       $numFactions: Int
+      $first: Int
+      $offset: Int
     ) {
       searchDecks(
         deckname: $deckName
@@ -406,7 +431,10 @@ module.exports = [
         faction5: $faction5
         faction6: $faction6
         numfactions: $numFactions
+        first: $first
+        offset: $offset
       ) {
+        totalCount
         nodes {
           id
           name

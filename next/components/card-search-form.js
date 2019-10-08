@@ -121,7 +121,7 @@ export default function CardSearchForm(props) {
           <div className="colLeftUpperLeft">
             <SearchFormText
               value={text}
-              placeholder={'Name or Rules Text'}
+              placeholder={'Name, Subtype, or Rules Text'}
               name="text"
               maxLength="100"
               cyName="cardSearchText"

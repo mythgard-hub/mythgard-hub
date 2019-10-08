@@ -5,12 +5,10 @@ import allPathsQuery from '../lib/queries/paths-query';
 import allPowersQuery from '../lib/queries/powers-query';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import { convertImportToDeck } from '../lib/import-utils';
-import { addCardToDeck } from '../lib/deck-utils';
 import ErrorMessage from './error-message.js';
 
 const handleImport = (
   mainDeckInput,
-  currentMainDeck,
   updateImportedDeck,
   allCards,
   allPaths,
@@ -24,17 +22,11 @@ const handleImport = (
     allPowers
   );
 
-  // Upsert the previous cards to deck
-  Object.values(currentMainDeck).forEach(card => {
-    importedDeck.mainDeck = addCardToDeck(importedDeck.mainDeck, card);
-  });
-
   updateImportedDeck(importedDeck);
 };
 
 export default function ImportDeck({
   mainDeckInput,
-  currentMainDeck,
   handleInputChange,
   updateImportedDeck
 }) {
@@ -55,7 +47,7 @@ export default function ImportDeck({
   const error = cardsError || pathError || powerError;
   if (error) return <ErrorMessage message={error.message} />;
 
-  if (cardsLoading || pathLoading || powerLoading) return <div>Loading</div>;
+  if (cardsLoading || pathLoading || powerLoading) return <div>Loading...</div>;
 
   const cards = cardsData && cardsData.cards && cardsData.cards.nodes;
   const paths = pathData && pathData.paths && pathData.paths.nodes;
@@ -64,6 +56,16 @@ export default function ImportDeck({
   if (!cards) return <div>No cards in our database</div>;
   if (!paths) return <div>No paths in our database</div>;
   if (!powers) return <div>No powers in our database</div>;
+
+  const onClick = () => {
+    const confirmation = confirm(
+      'Are you sure you want to import? This will replace the current deck.'
+    );
+
+    if (confirmation) {
+      handleImport(mainDeckInput, updateImportedDeck, cards, paths, powers);
+    }
+  };
 
   return (
     <div className="import-deck-container">
@@ -74,6 +76,8 @@ export default function ImportDeck({
         .import-deck-textarea {
           margin-top: 10px;
           margin-bottom: 10px;
+          max-width: 100%;
+          width: 100%;
         }
       `}</style>
       <textarea
@@ -86,19 +90,7 @@ export default function ImportDeck({
         onChange={handleInputChange}
         placeholder="Paste deck from Mythgard..."
       />
-      <button
-        onClick={() =>
-          handleImport(
-            mainDeckInput,
-            currentMainDeck,
-            updateImportedDeck,
-            cards,
-            paths,
-            powers
-          )
-        }
-        data-cy="importDeckButton"
-      >
+      <button onClick={onClick} data-cy="importDeckButton">
         Import
       </button>
     </div>

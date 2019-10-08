@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
 import { cardMainColor } from '../lib/card';
+import { FACTION_COLORS } from '../constants/factions';
 
 export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
   const theme = useContext(ThemeContext);
@@ -11,6 +12,67 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
   const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
   const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
   const colspan = deleteCard ? 3 : 2;
+
+  /**
+   * Returns a score that can be used to sort cards by faction. Note that
+   * this score should only be used to compare cards with the same number
+   * of factions.
+   */
+  const factionSortScore = card => {
+    const colorOrder = {
+      [FACTION_COLORS.blue]: 32,
+      [FACTION_COLORS.yellow]: 16,
+      [FACTION_COLORS.red]: 8,
+      [FACTION_COLORS.green]: 4,
+      [FACTION_COLORS.orange]: 2,
+      [FACTION_COLORS.purple]: 1
+    };
+    const factionNames = card.cardFactions.nodes
+      .filter(Boolean)
+      .map(n => n.faction.name.toLowerCase());
+    return Object.keys(colorOrder).reduce((acc, curr) => {
+      if (factionNames.indexOf(curr) === -1) {
+        return acc;
+      }
+      return acc + colorOrder[curr];
+    }, 0);
+  };
+
+  const sortCards = (a, b) => {
+    const aCard = a.card;
+    const bCard = b.card;
+
+    // Cards with one faction come before cards with multiple factions
+    const aCardFactions = aCard.cardFactions.nodes.filter(Boolean);
+    const bCardFactions = bCard.cardFactions.nodes.filter(Boolean);
+    if (aCardFactions.length !== bCardFactions.length) {
+      return aCardFactions.length - bCardFactions.length;
+    }
+
+    // Next, cards are sorted by faction
+    // Single: Blue, Yellow, Red, Green, Orange, Purple
+    // Multi: BY, BR, BG, BO, BP, YR, YG, YO, YP, RG, RO, RP, GO, GP, OP
+    // Cards that receive the higher score should come first
+    const aCardScore = factionSortScore(aCard);
+    const bCardScore = factionSortScore(bCard);
+    if (aCardScore !== bCardScore) {
+      return bCardScore - aCardScore;
+    }
+
+    // Within color, sort by mana cost
+    if (aCard.mana !== bCard.mana) {
+      return aCard.mana - bCard.mana;
+    }
+
+    // Lastly, sort alphabetically
+    const aName = aCard.name.toLowerCase();
+    const bName = bCard.name.toLowerCase();
+    if (aName < bName) return -1;
+    if (aName > bName) return 1;
+    return 0;
+  };
+
+  const sortedCards = deckCards.sort(sortCards);
 
   return (
     <div className="deck-card-table-container">
@@ -39,8 +101,11 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
         .deck-card-link,
         .deck-card-link:hover,
         .deck-card-link:focus {
-          color: ${theme.fontColor};
+          color: ${theme.cardTableName};
           text-decoration: none;
+          text-transform: uppercase;
+          font-weight: 700;
+          font-size: 0.8em;
         }
       `}</style>
       {!onlyTable && (
@@ -56,12 +121,12 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
             <td colSpan={2}>Power</td>
             <td colSpan={colspan}>{power}</td>
           </tr>
-          {deckCards.map(deckCard => {
+          {sortedCards.map(deckCard => {
             const backgroundColor = cardMainColor(deckCard.card, theme);
             const color = backgroundColor ? theme.cardTableName : 'inherit';
             return (
               <tr key={deckCard.card.id} data-cy="deckCardRow">
-                <td>{deckCard.card.mana}</td>
+                <td>{deckCard.card.mana < 0 ? 'X' : deckCard.card.mana}</td>
                 <td>
                   <GemDot gems={deckCard.card.gem} />
                 </td>
@@ -70,7 +135,7 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
                     <a className="deck-card-link">{deckCard.card.name}</a>
                   </Link>
                 </td>
-                <td>x{deckCard.quantity}</td>
+                <td>&times;{deckCard.quantity}</td>
                 {deleteCard && (
                   <td
                     data-cy="deckDeleteCard"

@@ -23,19 +23,6 @@ export default function CardSearchFilters(props) {
   return (
     <div className="additional-filters">
       <style jsx>{`
-        hr {
-          margin-bottom: 10px;
-          margin-left: 0;
-          width: 95%;
-          border: 0;
-          height: 1px;
-          background-image: linear-gradient(
-            to right,
-            ${theme.hrColorGradientLight},
-            ${theme.hrColorGradientLight},
-            ${theme.hrColorGradientDark}
-          );
-        }
         .filter-title {
           text-transform: uppercase;
           font-style: italic;
@@ -60,7 +47,7 @@ export default function CardSearchFilters(props) {
       {manaCosts && (
         <>
           <div className="filter-title first-title">Mana Cost</div>
-          <hr />
+          <hr className="gradient-hr" />
           <NumericFilterGroup
             cyName="cardSearch_manaCost"
             onChange={setCardManaCosts}
@@ -72,7 +59,7 @@ export default function CardSearchFilters(props) {
       {strengths && (
         <>
           <div className="filter-title middle-title">Strength</div>
-          <hr />
+          <hr className="gradient-hr" />
           <NumericFilterGroup
             cyName="cardSearch_strength"
             onChange={setCardStrengths}
@@ -84,7 +71,7 @@ export default function CardSearchFilters(props) {
       {healths && (
         <>
           <div className="filter-title middle-title">Health/Durability</div>
-          <hr />
+          <hr className="gradient-hr" />
           <NumericFilterGroup
             cyName="cardSearch_defense"
             onChange={setCardHealths}
@@ -96,7 +83,7 @@ export default function CardSearchFilters(props) {
       {types && (
         <>
           <div className="filter-title middle-title">Type</div>
-          <hr />
+          <hr className="gradient-hr" />
           <SupertypeFilter
             cyName="cardSearch_supertype"
             selected={types}
@@ -108,7 +95,7 @@ export default function CardSearchFilters(props) {
       {rarities && (
         <>
           <div className="filter-title last-title">Rarity</div>
-          <hr />
+          <hr className="gradient-hr" />
           <RarityFilter
             cyName="cardSearch_rarity"
             selected={rarities}
