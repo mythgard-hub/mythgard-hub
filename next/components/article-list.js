@@ -24,7 +24,7 @@ function ArticleList({ max }) {
       url: 'https://teamrankstar.com/budget-decks-for-mythgard-october-2019/',
       author: 'noahc92',
       description:
-        'October! What a fun month…. trick-or-treaters, spoopy memes, budget decks…. October truly has it all. Let’s sit down to enjoy some candy and talk about what this article is...',
+        'October! What a fun month... trick-or-treaters, spoopy memes, budget decks... October truly has it all. Let’s sit down to enjoy some candy and talk about what this article is...',
       date: new Date('2019-09-29T17:24:18.280Z')
     },
     {
