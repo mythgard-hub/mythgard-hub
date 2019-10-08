@@ -11,7 +11,6 @@ export const mgColors = {
   mediumGray: '#333333',
   grayBlue: '#1C2D35',
   lightBlue: '#458A9E',
-  darkBlue: '#1C2D35',
   lightGreen: '#B4E185',
   green: '#30B170',
   red: '#DC1919',
