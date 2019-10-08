@@ -12,6 +12,7 @@ function Article({ title, url, author, description, date }) {
         .article {
           padding: 9px 12px;
           border: ${theme.borderAccent};
+          background-color: ${theme.panelBackground};
         }
 
         .article {
