@@ -46,7 +46,8 @@ export const themes = {
     orangeFactionColor: mgColors.darkOrange,
     greenFactionColor: mgColors.green,
     purpleFactionColor: mgColors.purple,
-    cardTableName: mgColors.mediumGray
+    cardTableName: mgColors.mediumGray,
+    panelBackground: mgColors.grayBlue
   }
 };
 
