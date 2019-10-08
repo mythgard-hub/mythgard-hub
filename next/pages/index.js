@@ -29,7 +29,6 @@ const index = () => {
 
         .homePageColumns h2 {
           text-align: center;
-          border-bottom: ${theme.border};
         }
 
         .newPlayerGuideBanner {
@@ -93,11 +92,13 @@ const index = () => {
       </div>
       <div className="homePageColumns">
         <div className="mg-column">
-          <h2>Top Media</h2>
+          <h2 className="columnHeader">Top Media</h2>
+          <hr className="orangeGrade" />
           <ArticleList max={3} />
         </div>
         <div className="mg-column">
-          <h2>Featured Decks</h2>
+          <h2 className="columnHeader">Featured Decks</h2>
+          <hr className="orangeGrade" />
           <TopDecks />
         </div>
       </div>

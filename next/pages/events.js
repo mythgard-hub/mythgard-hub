@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../components/layout';
 import AllTournaments from '../components/all-tournaments';
 import PageBanner from '../components/page-banner';
-import { mgColors } from '../lib/theme'
+import { mgColors } from '../lib/theme';
 
 function TournamentsPage() {
   return (
@@ -23,7 +23,7 @@ function TournamentsPage() {
         .announcementCrownLogo {
           float: right;
           margin-right: 50px;
-          margin-top: -20px;
+          margin-top: -10px;
           width: 180px;
         }
 
@@ -32,7 +32,7 @@ function TournamentsPage() {
           text-decoration: none;
         }
         a:hover {
-          color: ${mgColors.blue}
+          color: ${mgColors.blue};
         }
       `}</style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
@@ -43,6 +43,7 @@ function TournamentsPage() {
         />
 
         <content>
+          <br />
           <h2>Thank you for your interest in Mythgard Events!</h2>
           <p>
             As <strong>Community</strong> and <strong>Official</strong>{' '}
