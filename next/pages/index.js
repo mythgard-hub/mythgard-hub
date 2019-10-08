@@ -115,11 +115,11 @@ const index = () => {
         }
       `}</style>
       <div className="patchNotes">
-        <a href="https://www.mythgardgame.com/permalink/patch-notes-v0-16-1">
+        <a href="https://www.mythgardgame.com/permalink/patch-notes-v0-16-2">
           <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
             Latest Patch Notes
             <br />
-            <span className="patchNotes__v">v</span>0.16.1
+            <span className="patchNotes__v">v</span>0.16.2
           </PageBanner>
         </a>
       </div>
