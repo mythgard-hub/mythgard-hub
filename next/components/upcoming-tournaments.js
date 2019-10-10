@@ -8,7 +8,7 @@ import { formatDate } from '../lib/graphql-utils.js';
 const tournamentsQuery = gql`
   query tournaments($now: Date) {
     tournaments(
-      orderBy: DATE_DESC
+      orderBy: DATE_ASC
       first: 3
       filter: { date: { greaterThanOrEqualTo: $now } }
     ) {
@@ -45,6 +45,16 @@ export default function AllTournaments() {
                 display: flex;
                 justify-content: space-between;
               }
+
+              .upcoming-tournaments li {
+                flex-grow: 1;
+                margin-left: 5px;
+              }
+
+              .upcoming-tournaments > li:first-of-type {
+                margin-left: 0;
+              }
+
             `}</style>
             {data.tournaments.nodes.map(tourney => (
               <li key={tourney.id} data-cy="upcomingTournamentListItem">
