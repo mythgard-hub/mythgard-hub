@@ -1,5 +1,7 @@
 import React from 'react';
 import Layout from '../components/layout';
+import UpcomingTournaments from '../components/upcoming-tournaments.js';
+import CompletedTournaments from '../components/completed-tournaments.js';
 import AllTournaments from '../components/all-tournaments';
 import PageBanner from '../components/page-banner';
 import { mgColors } from '../lib/theme';
@@ -58,6 +60,10 @@ function TournamentsPage() {
             with the details.
           </p>
         </content>
+        <h1>Upcoming Events</h1>
+        <UpcomingTournaments />
+        <h1>Completed Events</h1>
+        <CompletedTournaments />
       </div>
     </Layout>
   );
