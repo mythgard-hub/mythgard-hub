@@ -311,6 +311,16 @@ function Layout({ title, desc, children }) {
             margin-bottom: 25px;
           }
 
+          .external-link::after {
+            background-image: url('https://cdn.mythgardhub.com/icons/newWindow.svg');
+            background-size: 12px 12px;
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 5px;
+            content: '';
+          }
+
           @media only screen and (max-width: 600px) {
             input[type='text'],
             select {
