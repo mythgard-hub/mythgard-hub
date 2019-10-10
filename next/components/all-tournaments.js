@@ -11,6 +11,7 @@ const tournamentsQuery = gql`
         id
         name
         date
+        url
       }
     }
   }
@@ -19,11 +20,11 @@ const tournamentsQuery = gql`
 export default function AllTournaments() {
   return (
     <Query query={tournamentsQuery}>
-      {({ loading, error, data: { tournaments } }) => {
+      {({ loading, error, data }) => {
         if (error) return <ErrorMessage message="Error loading tournaments." />;
         if (loading) return <div>Loading...</div>;
 
-        return <TournamentList tournaments={tournaments.nodes} />;
+        return <TournamentList tournaments={data.tournaments.nodes} />;
       }}
     </Query>
   );

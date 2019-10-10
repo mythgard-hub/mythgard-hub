@@ -24,6 +24,7 @@ module.exports = [
         id
         name
         date
+        url
       }
     }
   }
