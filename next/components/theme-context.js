@@ -7,6 +7,7 @@ export const themes = {
     backgroundLight: mgColors.blackPearlLight,
     fontColor: mgColors.white,
     fontColorAccent: mgColors.orange,
+    fontColorSubtle: mgColors.lightBlue,
     fontColorSelected: mgColors.blue,
     fontColorDisabled: mgColors.mediumLightGray,
     sectionBackground: mgColors.mediumGray,

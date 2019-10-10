@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { useQuery } from 'react-apollo-hooks';
-import { useQuery as useOfficialQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
+import { formatDate } from './graphql-utils.js';
 
 const deckPreviewsFragment = `
     nodes {
@@ -23,8 +23,7 @@ const deckPreviewsFragment = `
 export const daysAgoToGraphQLTimestamp = daysAgoString => {
   const daysAgoInt = parseInt(daysAgoString, 10);
   const daysAgoDate = new Date(Date.now() - daysAgoInt * 1000 * 60 * 60 * 24);
-  const isoDate = daysAgoDate.toISOString();
-  return isoDate.slice(0, isoDate.indexOf('T'));
+  return formatDate(daysAgoDate);
 };
 
 // [1,2,3] => { card1: 1, card2: 2, card3: 3 }
@@ -137,7 +136,7 @@ const deckSearchQuery = gql`
   `;
 
 export const useDeckSearchQuery = (vars, onCompleted) => {
-  return useOfficialQuery(deckSearchQuery, {
+  return useQuery(deckSearchQuery, {
     variables: getDeckSearchVars(vars),
     onCompleted
   });
