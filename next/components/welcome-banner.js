@@ -77,7 +77,7 @@ export default function WelcomeBanner() {
         Contact
       </a>
       <span className="welcome-message">
-        Welcome to the Mythgard Hub Beta Launch
+        Welcome to the Mythgard Hub Beta Launch - NEW: Decks are now editable for registered accounts
       </span>
 
       <span className="spacer"></span>
