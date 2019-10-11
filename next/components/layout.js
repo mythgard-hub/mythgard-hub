@@ -149,6 +149,15 @@ function Layout({ title, desc, children }) {
             color: ${theme.fontColorSelected};
           }
 
+          .accent {
+            color: ${theme.fontColorAccent};
+            text-decoration: none;
+          }
+
+          .bold {
+            font-weight: bold;
+          }
+
           hr {
             border: none;
             border-top: ${theme.border};
