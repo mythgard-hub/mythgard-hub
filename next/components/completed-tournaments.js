@@ -2,8 +2,8 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
-import TournamentList from './tournament-list';
 import { formatDate } from '../lib/graphql-utils.js';
+import LargeTable from './large-table.js';
 
 const tournamentsQuery = gql`
   query tournaments($now: Date) {
@@ -31,7 +31,32 @@ export default function AllTournaments() {
         if (error) return <ErrorMessage message="Error loading tournaments." />;
         if (loading) return <div>Loading...</div>;
 
-        return <TournamentList tournaments={data.tournaments.nodes} />;
+        return (
+          <LargeTable>
+            <tbody>
+              {data.tournaments.nodes.map((tourney, index) => {
+                const classNames = index % 2 ? 'zebraRow' : '';
+                return (
+                  <tr key={index} className={classNames} data-cy="deckListItem">
+                    <td>
+                      <a href={tourney.url} className="accent bold">
+                        {tourney.name}
+                      </a>
+                    </td>
+                    <td>{tourney.organizer}</td>
+                    <td>
+                      {new Date(tourney.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </LargeTable>
+        );
       }}
     </Query>
   );
