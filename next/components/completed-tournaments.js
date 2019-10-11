@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import { formatDate } from '../lib/graphql-utils.js';
 import LargeTable from './large-table.js';
+import Link from 'next/link';
 
 const tournamentsQuery = gql`
   query tournaments($now: Date) {
@@ -39,9 +40,12 @@ export default function AllTournaments() {
                 return (
                   <tr key={index} className={classNames} data-cy="deckListItem">
                     <td>
-                      <a href={tourney.url} className="accent bold">
-                        {tourney.name}
-                      </a>
+                      <Link
+                        href={`/event?id=${tourney.id}`}
+                        className="accent bold"
+                      >
+                        <a>{tourney.name}</a>
+                      </Link>
                     </td>
                     <td>{tourney.organizer}</td>
                     <td>
