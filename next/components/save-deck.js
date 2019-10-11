@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
 import { clearDeckInProgress, getCardCount } from '../lib/deck-utils';
+import { DECK_SIZES } from '../constants/deck.js';
 
 export default function SaveDeck({
   deckId,
