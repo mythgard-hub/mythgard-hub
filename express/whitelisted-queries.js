@@ -18,18 +18,6 @@ const deckPreviewsFragment = `
 // whitespace doesn't matter here.
 module.exports = [
   `
-  query tournaments {
-    tournaments(orderBy: DATE_DESC) {
-      nodes {
-        id
-        name
-        date
-        url
-      }
-    }
-  }
-`,
-  `
   mutation UpdateAccountUsername($accountId: Int!, $username: String!) {
     updateAccount(
       input: {
@@ -293,25 +281,6 @@ mutation UpdateDeckAndRemoveCards(
 `,
 
   `
-  query($id: Int!) {
-    tournament(id: $id) {
-      tournamentDecks(orderBy: RANK_ASC, first: 8) {
-        nodes {
-          rank
-          deck {
-            id
-            name
-            author {
-              username
-            }
-          }
-        }
-      }
-    }
-  }
-`,
-
-  `
   query deck($id: Int!) {
     deck(id: $id) {
       id
@@ -357,16 +326,6 @@ mutation UpdateDeckAndRemoveCards(
     }
   }
 `,
-
-  `
-  query tournament($id: Int!) {
-    tournament(id: $id) {
-      id
-      name
-    }
-  }
-`,
-
   `
   query card($id: Int!) {
     card(id: $id) {
@@ -460,5 +419,76 @@ mutation UpdateDeckAndRemoveCards(
       }
     }
   }
+  `,
+  // tournaments
   `
+query tournaments($now: Date) {
+  tournaments(orderBy: DATE_DESC, filter: { date: { lessThan: $now } }) {
+    nodes {
+      id
+      name
+      organizer
+      date
+      url
+    }
+  }
+}
+`,
+  `
+  query tournaments($now: Date) {
+    tournaments(
+      orderBy: DATE_ASC
+      first: 3
+      filter: { date: { greaterThanOrEqualTo: $now } }
+    ) {
+      nodes {
+        id
+        name
+        organizer
+        date
+        url
+      }
+    }
+  }
+
+`,
+  `
+  query tournament($id: Int!) {
+    tournament(id: $id) {
+      id
+      name
+      url
+      date
+      organizer
+      tournamentDecks {
+        nodes {
+          rank
+          deck {
+            name
+            id
+            author {
+              username
+            }
+            deckPreviews {
+              nodes {
+                deckName
+                deckCreated
+                factions
+                essenceCost
+                votes
+                deck {
+                  id
+                  author {
+                    username
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
 ];
