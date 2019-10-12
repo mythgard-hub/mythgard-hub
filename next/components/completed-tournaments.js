@@ -5,8 +5,9 @@ import { formatDate } from '../lib/graphql-utils.js';
 import LargeTable from './large-table.js';
 import Link from 'next/link';
 import { completedTournaments as tournamentsQuery } from '../lib/tournament-queries.js';
+import { dbDateToDisplayDate } from '../lib/time.js';
 
-export default function AllTournaments() {
+export default function CompletedTournaments() {
   return (
     <Query
       query={tournamentsQuery}
@@ -23,6 +24,9 @@ export default function AllTournaments() {
             <tbody>
               {data.tournaments.nodes.map((tourney, index) => {
                 const classNames = index % 2 ? 'zebraRow' : '';
+                if (!tourney) {
+                  return;
+                }
                 return (
                   <tr key={index} className={classNames} data-cy="deckListItem">
                     <td data-cy="completedTourneyName">
@@ -31,13 +35,7 @@ export default function AllTournaments() {
                       </Link>
                     </td>
                     <td>{tourney.organizer}</td>
-                    <td>
-                      {new Date(tourney.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                      })}
-                    </td>
+                    <td>{dbDateToDisplayDate(tourney.date)}</td>
                   </tr>
                 );
               })}
