@@ -93,9 +93,10 @@ export default withRouter(({ router }) => {
           }
           h2 {
             margin-bottom: 0;
+            margin-top: 20px;
           }
           h3 {
-            margin: 0;
+            margin: 0 0 20px;
           }
         `}
       </style>
