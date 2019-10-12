@@ -126,6 +126,7 @@ const deckSearchQuery = gql`
           author {
             username
           }
+          modified
           deckPreviews {
             ${deckPreviewsFragment}
           }
