@@ -471,18 +471,8 @@ query tournaments($now: Date) {
             }
             deckPreviews {
               nodes {
-                deckName
-                deckCreated
                 factions
                 essenceCost
-                votes
-                deck {
-                  id
-                  author {
-                    username
-                    id
-                  }
-                }
               }
             }
           }
