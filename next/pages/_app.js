@@ -5,6 +5,7 @@ import Router from 'next/router';
 import withApolloClient from '../components/with-apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as HooksApolloProvider } from 'react-apollo-hooks';
+import { ApolloProvider as ApolloReactHooksProvider } from '@apollo/react-hooks';
 import { pageview, USE_GOOGLE_ANALYTICS } from '../lib/gtag';
 import UserContext from '../components/user-context';
 import redirect from '../lib/redirect';
@@ -85,32 +86,40 @@ class MyApp extends App {
       <Container>
         <ApolloProvider client={apolloClient}>
           <HooksApolloProvider client={apolloClient}>
-            <Head>
-              <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-              <meta charSet="utf-8" />
-              <meta
-                name="viewport"
-                key="viewport"
-                content="width=device-width, initial-scale=1"
-              />
+            <ApolloReactHooksProvider client={apolloClient}>
+              <Head>
+                <link
+                  rel="icon"
+                  type="image/x-icon"
+                  href="/static/favicon.ico"
+                />
+                <meta charSet="utf-8" />
+                <meta
+                  name="viewport"
+                  key="viewport"
+                  content="width=device-width, initial-scale=1"
+                />
 
-              <meta
-                property="og:title"
-                content="Mythgard Hub | Community Hub for Mythgard Card Game"
-              />
-              <meta property="og:site_name" content="Mythgard Hub" />
-              <meta
-                property="og:description"
-                content="A fan-built site for Mythgard including decklists, a card database and more."
-              />
-              <meta property="og:url" content="https://mythgardhub.com/" />
-              <meta property="og:type" content="article" />
-              <meta property="og:image" content={`${cdn}/mgh/og-image.jpg`} />
-              <meta property="og:image:type" content="image/png" />
-            </Head>
-            <UserContext.Provider value={{ user, updateUser: this.updateUser }}>
-              <Component {...pageProps} />
-            </UserContext.Provider>
+                <meta
+                  property="og:title"
+                  content="Mythgard Hub | Community Hub for Mythgard Card Game"
+                />
+                <meta property="og:site_name" content="Mythgard Hub" />
+                <meta
+                  property="og:description"
+                  content="A fan-built site for Mythgard including decklists, a card database and more."
+                />
+                <meta property="og:url" content="https://mythgardhub.com/" />
+                <meta property="og:type" content="article" />
+                <meta property="og:image" content={`${cdn}/mgh/og-image.jpg`} />
+                <meta property="og:image:type" content="image/png" />
+              </Head>
+              <UserContext.Provider
+                value={{ user, updateUser: this.updateUser }}
+              >
+                <Component {...pageProps} />
+              </UserContext.Provider>
+            </ApolloReactHooksProvider>
           </HooksApolloProvider>
         </ApolloProvider>
       </Container>
