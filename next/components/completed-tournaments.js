@@ -25,7 +25,7 @@ export default function AllTournaments() {
                 const classNames = index % 2 ? 'zebraRow' : '';
                 return (
                   <tr key={index} className={classNames} data-cy="deckListItem">
-                    <td>
+                    <td data-cy="completedTourneyName">
                       <Link href={`/event?id=${tourney.id}`}>
                         <a className="accent bold">{tourney.name}</a>
                       </Link>
