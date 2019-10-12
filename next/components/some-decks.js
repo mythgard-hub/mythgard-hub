@@ -18,16 +18,19 @@ export default function SomeDecks(props) {
     factionNames,
     isOnlyFactions
   } = props.search;
-  const { loading, error, data } = useDeckSearchQuery({
-    authorName,
-    deckName,
-    updatedTime,
-    cardIds,
-    factionNames,
-    isOnlyFactions,
-    first: pageSize,
-    offset: currentPage * pageSize
-  });
+  const { loading, error, data } = useDeckSearchQuery(
+    {
+      authorName,
+      deckName,
+      updatedTime,
+      cardIds,
+      factionNames,
+      isOnlyFactions,
+      first: pageSize,
+      offset: currentPage * pageSize
+    },
+    () => scrollToTopOfList(listRef)
+  );
 
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading...</div>;
@@ -47,7 +50,6 @@ export default function SomeDecks(props) {
         }
       `}</style>
       <PagingControls
-        listRef={listRef}
         currentPage={currentPage}
         setPage={setPage}
         pageSize={pageSize}

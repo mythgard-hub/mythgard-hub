@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
+import { useQuery as useOfficialQuery } from '@apollo/react-hooks';
 
 const deckPreviewsFragment = `
     nodes {
@@ -134,8 +135,11 @@ const deckSearchQuery = gql`
     }
   `;
 
-export const useDeckSearchQuery = vars => {
-  return useQuery(deckSearchQuery, { variables: getDeckSearchVars(vars) });
+export const useDeckSearchQuery = (vars, onCompleted) => {
+  return useOfficialQuery(deckSearchQuery, {
+    variables: getDeckSearchVars(vars),
+    onCompleted
+  });
 };
 
 export const deckCardsQuery = gql`
