@@ -12,10 +12,12 @@ function PagingControls({
   const showNext = hasNextPage(currentPage, pageSize, itemCount);
   const showPrev = hasPrevPage(currentPage);
   const scrollToTopOfList = () => {
-    window.scrollTo({
-      behavior: listRef && listRef.current ? 'smooth' : 'auto',
-      top: listRef && listRef.current ? listRef.current.offsetTop - 70 : 0
-    });
+    if (listRef.current.offsetTop) {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: listRef.current.offsetTop - 70
+      });
+    }
   };
 
   return (
