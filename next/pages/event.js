@@ -3,55 +3,16 @@ import React from 'react';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
 import ErrorMessage from '../components/error-message';
 import LargeTable from '../components/large-table.js';
 import FactionsIndicator from '../components/factions-indicator.js';
 import EssenceIndicator from '../components/essence-indicator.js';
 import { dbDateToDisplayDate } from '../lib/time.js';
+import { tournamentWithResultsQuery as tourneyQuery } from '../lib/tournament-queries.js';
 
-const tourneyQuery = gql`
-  query tournament($id: Int!) {
-    tournament(id: $id) {
-      id
-      name
-      url
-      date
-      organizer
-      tournamentDecks {
-        nodes {
-          rank
-          deck {
-            name
-            id
-            author {
-              username
-            }
-            deckPreviews {
-              nodes {
-                deckName
-                deckCreated
-                factions
-                essenceCost
-                votes
-                deck {
-                  id
-                  author {
-                    username
-                    id
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
+// Copied from stackoverflow, so untested.
 function ordinalized(i) {
-  var j = i % 10,
+  const j = i % 10,
     k = i % 100;
   if (j == 1 && k != 11) {
     return i + 'st';

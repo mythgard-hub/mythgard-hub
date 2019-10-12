@@ -1,27 +1,9 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import ErrorMessage from './error-message';
 import FeaturedTournament from './featured-tournament.js';
 import { formatDate } from '../lib/graphql-utils.js';
-
-const tournamentsQuery = gql`
-  query tournaments($now: Date) {
-    tournaments(
-      orderBy: DATE_ASC
-      first: 3
-      filter: { date: { greaterThanOrEqualTo: $now } }
-    ) {
-      nodes {
-        id
-        name
-        organizer
-        date
-        url
-      }
-    }
-  }
-`;
+import { upcomingTournaments as tournamentsQuery } from '../lib/tournament-queries.js';
 
 export default function AllTournaments() {
   return (
