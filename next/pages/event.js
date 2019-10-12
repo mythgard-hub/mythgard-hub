@@ -62,7 +62,7 @@ export default withRouter(({ router }) => {
         `}
       </style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
-      <h2>{tournament.name}</h2>
+      <h2 data-cy="tourneyName">{tournament.name}</h2>
       <h3 className="subtle">{dbDateToDisplayDate(tournament.date)}</h3>
       <h1>Results & Decks</h1>
       <LargeTable>
@@ -73,7 +73,7 @@ export default withRouter(({ router }) => {
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>{ordinalized(tourneyDeck.rank)}</td>
-                <td className="nameCell">
+                <td className="nameCell" data-cy="tourneyTop8Name">
                   <b>{deck.name}</b> piloted by{' '}
                   <span className="accent">{deck.author.username}</span>
                 </td>
