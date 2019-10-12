@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { hasNextPage, hasPrevPage, rangeMin, rangeMax } from '../lib/paging.js';
+import { scrollToTopOfList } from '../lib/navigation-utils.js';
 
 function PagingControls({
   currentPage,
@@ -11,14 +12,6 @@ function PagingControls({
 }) {
   const showNext = hasNextPage(currentPage, pageSize, itemCount);
   const showPrev = hasPrevPage(currentPage);
-  const scrollToTopOfList = () => {
-    if (listRef.current.offsetTop) {
-      window.scrollTo({
-        behavior: 'smooth',
-        top: listRef.current.offsetTop - 70
-      });
-    }
-  };
 
   return (
     <div className="mg-paging">
@@ -56,7 +49,7 @@ function PagingControls({
         className="mgPrevious"
         disabled={!showPrev}
         onClick={() => {
-          scrollToTopOfList();
+          scrollToTopOfList(listRef);
           setPage(currentPage - 1);
         }}
       >
@@ -73,7 +66,7 @@ function PagingControls({
         disabled={!showNext}
         className="mgNext"
         onClick={() => {
-          scrollToTopOfList();
+          scrollToTopOfList(listRef);
           setPage(currentPage + 1);
         }}
       >
