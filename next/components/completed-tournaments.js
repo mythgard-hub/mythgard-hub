@@ -40,11 +40,8 @@ export default function AllTournaments() {
                 return (
                   <tr key={index} className={classNames} data-cy="deckListItem">
                     <td>
-                      <Link
-                        href={`/event?id=${tourney.id}`}
-                        className="accent bold"
-                      >
-                        <a>{tourney.name}</a>
+                      <Link href={`/event?id=${tourney.id}`}>
+                        <a className="accent bold">{tourney.name}</a>
                       </Link>
                     </td>
                     <td>{tourney.organizer}</td>

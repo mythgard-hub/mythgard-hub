@@ -8,6 +8,10 @@ function TournamentsPage() {
   return (
     <Layout title="Mythgard Hub | Events" desc="Browse Mythgard Events">
       <style jsx>{`
+        p {
+          font-size: 13px;
+        }
+
         .announcement {
           padding-left: 20px;
           padding-left: 20px;

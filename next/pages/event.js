@@ -8,6 +8,7 @@ import ErrorMessage from '../components/error-message';
 import LargeTable from '../components/large-table.js';
 import FactionsIndicator from '../components/factions-indicator.js';
 import EssenceIndicator from '../components/essence-indicator.js';
+import { dbDateToDisplayDate } from '../lib/time.js';
 
 const tourneyQuery = gql`
   query tournament($id: Int!) {
@@ -15,6 +16,7 @@ const tourneyQuery = gql`
       id
       name
       url
+      date
       organizer
       tournamentDecks {
         nodes {
@@ -84,11 +86,22 @@ export default withRouter(({ router }) => {
 
   return (
     <Layout title={pageTitle} desc="Winners and decklists">
-      <style jsx>{`
-        .nameCell {
-          text-align: left;
-        `}</style>
+      <style jsx>
+        {`
+          .nameCell {
+            text-align: left;
+          }
+          h2 {
+            margin-bottom: 0;
+          }
+          h3 {
+            margin: 0;
+          }
+        `}
+      </style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
+      <h2>{tournament.name}</h2>
+      <h3 className="subtle">{dbDateToDisplayDate(tournament.date)}</h3>
       <h1>Results & Decks</h1>
       <LargeTable>
         <tbody>
@@ -99,7 +112,8 @@ export default withRouter(({ router }) => {
               <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>{ordinalized(tourneyDeck.rank)}</td>
                 <td className="nameCell">
-                  {deck.name} piloted by {deck.author.username}
+                  <b>{deck.name}</b> piloted by{' '}
+                  <span className="accent">{deck.author.username}</span>
                 </td>
                 <td>
                   <FactionsIndicator
