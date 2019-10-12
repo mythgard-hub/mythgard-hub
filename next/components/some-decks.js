@@ -5,6 +5,7 @@ import DeckList from './deck-list';
 import { useDeckSearchQuery } from '../lib/deck-queries';
 import { useState } from 'react';
 import PagingControls from './paging-controls.js';
+import { scrollToTopOfList } from '../lib/navigation-utils';
 
 const pageSize = 50;
 
