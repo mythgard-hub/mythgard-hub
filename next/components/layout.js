@@ -154,6 +154,11 @@ function Layout({ title, desc, children }) {
             text-decoration: none;
           }
 
+          .subtle {
+            color: ${theme.fontColorSubtle};
+            text-decoration: none;
+          }
+
           .bold {
             font-weight: bold;
           }
