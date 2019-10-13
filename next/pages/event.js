@@ -45,16 +45,9 @@ export default withRouter(({ router }) => {
     return;
   }
 
+  const { tournament } = data;
   const tournamentDecks =
-    tournament &&
-    tournament.tournamentDecks &&
-    tournament.tournamentDecks.nodes;
-
-  if (tournamentDecks) {
-    tournamentDecks.sort((a, b) => {
-      return a.rank > b.rank;
-    });
-  }
+    (tournament.tournamentDecks && tournament.tournamentDecks.nodes) || [];
 
   const pageTitle = `Mythgard Hub | Results for ${tournament.name}`;
 
@@ -64,29 +57,33 @@ export default withRouter(({ router }) => {
     ) : (
       <LargeTable>
         <tbody>
-          {tournamentDecks.map((tourneyDeck, index) => {
-            const { deck } = tourneyDeck;
-            const classNames = index % 2 ? 'zebraRow' : '';
-            return (
-              <tr key={index} className={classNames} data-cy="deckListItem">
-                <td>{ordinalized(tourneyDeck.rank)}</td>
-                <td className="nameCell" data-cy="tourneyTop8Name">
-                  <b>{deck.name}</b> piloted by{' '}
-                  <span className="accent">{deck.author.username}</span>
-                </td>
-                <td>
-                  <FactionsIndicator
-                    factions={deck.deckPreviews.nodes[0].factions}
-                  />
-                </td>
-                <td>
-                  <EssenceIndicator
-                    essence={deck.deckPreviews.nodes[0].essenceCost}
-                  />
-                </td>
-              </tr>
-            );
-          })}
+          {tournamentDecks
+            .sort((a, b) => {
+              return a.rank > b.rank;
+            })
+            .map((tourneyDeck, index) => {
+              const { deck } = tourneyDeck;
+              const classNames = index % 2 ? 'zebraRow' : '';
+              return (
+                <tr key={index} className={classNames} data-cy="deckListItem">
+                  <td>{ordinalized(tourneyDeck.rank)}</td>
+                  <td className="nameCell" data-cy="tourneyTop8Name">
+                    <b>{deck.name}</b> piloted by{' '}
+                    <span className="accent">{deck.author.username}</span>
+                  </td>
+                  <td>
+                    <FactionsIndicator
+                      factions={deck.deckPreviews.nodes[0].factions}
+                    />
+                  </td>
+                  <td>
+                    <EssenceIndicator
+                      essence={deck.deckPreviews.nodes[0].essenceCost}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </LargeTable>
     );
