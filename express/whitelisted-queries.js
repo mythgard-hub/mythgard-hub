@@ -401,6 +401,7 @@ mutation UpdateDeckAndRemoveCards(
           author {
             username
           }
+          modified
           deckPreviews {
             ${deckPreviewsFragment}
           }
