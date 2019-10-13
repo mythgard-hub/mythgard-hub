@@ -45,7 +45,6 @@ export default withRouter(({ router }) => {
     return;
   }
 
-  const { tournament } = data;
   const tournamentDecks =
     (tournament.tournamentDecks && tournament.tournamentDecks.nodes) || [];
 
