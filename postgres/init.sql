@@ -280,7 +280,8 @@ CREATE TABLE mythgard.tournament_deck (
   tournament_id integer,
   deck_id integer,
   FOREIGN KEY (tournament_id)
-    REFERENCES mythgard.tournament (id),
+    REFERENCES mythgard.tournament (id)
+    ON DELETE CASCADE,
   FOREIGN KEY (deck_id)
     REFERENCES mythgard.deck (id)
     ON DELETE CASCADE

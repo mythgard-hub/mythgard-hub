@@ -42,7 +42,7 @@ export default withRouter(({ router }) => {
 
   if (!tournament) {
     Router.replace('/events');
-    return;
+    return null;
   }
 
   const tournamentDecks =
