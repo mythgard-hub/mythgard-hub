@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { hasNextPage, hasPrevPage, rangeMin, rangeMax } from '../lib/paging.js';
-import { scrollToTopOfElement } from '../lib/ui-utils.js/index.js';
+import { scrollToTopOfElement } from '../lib/ui-utils';
 
 function PagingControls({
   currentPage,
