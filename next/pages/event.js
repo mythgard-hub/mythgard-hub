@@ -2,7 +2,7 @@ import { withRouter } from 'next/router';
 import React from 'react';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../components/error-message';
 import LargeTable from '../components/large-table.js';
 import FactionsIndicator from '../components/factions-indicator.js';
@@ -46,14 +46,46 @@ export default withRouter(({ router }) => {
   }
 
   const tournamentDecks =
-    tournament && tournamentDecks && tournament.decks.nodes;
-  if (tournamentDecks) {
-    tournamentDecks.sort((a, b) => {
-      return a.rank > b.rank;
-    });
-  }
+    (tournament.tournamentDecks && tournament.tournamentDecks.nodes) || [];
 
   const pageTitle = `Mythgard Hub | Results for ${tournament.name}`;
+
+  const tournamentDecksTable =
+    !tournamentDecks || !tournamentDecks.length ? (
+      'No decks found'
+    ) : (
+      <LargeTable>
+        <tbody>
+          {tournamentDecks
+            .sort((a, b) => {
+              return a.rank > b.rank;
+            })
+            .map((tourneyDeck, index) => {
+              const { deck } = tourneyDeck;
+              const classNames = index % 2 ? 'zebraRow' : '';
+              return (
+                <tr key={index} className={classNames} data-cy="deckListItem">
+                  <td>{ordinalized(tourneyDeck.rank)}</td>
+                  <td className="nameCell" data-cy="tourneyTop8Name">
+                    <b>{deck.name}</b> piloted by{' '}
+                    <span className="accent">{deck.author.username}</span>
+                  </td>
+                  <td>
+                    <FactionsIndicator
+                      factions={deck.deckPreviews.nodes[0].factions}
+                    />
+                  </td>
+                  <td>
+                    <EssenceIndicator
+                      essence={deck.deckPreviews.nodes[0].essenceCost}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </LargeTable>
+    );
 
   return (
     <Layout title={pageTitle} desc="Winners and decklists">
@@ -74,34 +106,8 @@ export default withRouter(({ router }) => {
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
       <h2 data-cy="tourneyName">{tournament.name}</h2>
       <h3 className="subtle">{dbDateToDisplayDate(tournament.date)}</h3>
-      <h1>Results & Decks</h1>
-      <LargeTable>
-        <tbody>
-          {tournamentDecks.map((tourneyDeck, index) => {
-            const { deck } = tourneyDeck;
-            const classNames = index % 2 ? 'zebraRow' : '';
-            return (
-              <tr key={index} className={classNames} data-cy="deckListItem">
-                <td>{ordinalized(tourneyDeck.rank)}</td>
-                <td className="nameCell" data-cy="tourneyTop8Name">
-                  <b>{deck.name}</b> piloted by{' '}
-                  <span className="accent">{deck.author.username}</span>
-                </td>
-                <td>
-                  <FactionsIndicator
-                    factions={deck.deckPreviews.nodes[0].factions}
-                  />
-                </td>
-                <td>
-                  <EssenceIndicator
-                    essence={deck.deckPreviews.nodes[0].essenceCost}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </LargeTable>
+      <h1>Results &amp; Decks</h1>
+      {tournamentDecksTable}
     </Layout>
   );
 });
