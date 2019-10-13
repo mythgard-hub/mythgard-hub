@@ -2,7 +2,7 @@ import { withRouter } from 'next/router';
 import React from 'react';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../components/error-message';
 import LargeTable from '../components/large-table.js';
 import FactionsIndicator from '../components/factions-indicator.js';
@@ -47,6 +47,7 @@ export default withRouter(({ router }) => {
 
   const tournamentDecks =
     tournament && tournamentDecks && tournament.decks.nodes;
+
   if (tournamentDecks) {
     tournamentDecks.sort((a, b) => {
       return a.rank > b.rank;
@@ -55,26 +56,10 @@ export default withRouter(({ router }) => {
 
   const pageTitle = `Mythgard Hub | Results for ${tournament.name}`;
 
-  return (
-    <Layout title={pageTitle} desc="Winners and decklists">
-      <style jsx>
-        {`
-          .nameCell {
-            text-align: left;
-          }
-          h2 {
-            margin-bottom: 0;
-            margin-top: 20px;
-          }
-          h3 {
-            margin: 0 0 20px;
-          }
-        `}
-      </style>
-      <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
-      <h2 data-cy="tourneyName">{tournament.name}</h2>
-      <h3 className="subtle">{dbDateToDisplayDate(tournament.date)}</h3>
-      <h1>Results & Decks</h1>
+  const tournamentDecksTable =
+    !tournamentDecks || !tournamentDecks.length ? (
+      'No decks found'
+    ) : (
       <LargeTable>
         <tbody>
           {tournamentDecks.map((tourneyDeck, index) => {
@@ -102,6 +87,29 @@ export default withRouter(({ router }) => {
           })}
         </tbody>
       </LargeTable>
+    );
+
+  return (
+    <Layout title={pageTitle} desc="Winners and decklists">
+      <style jsx>
+        {`
+          .nameCell {
+            text-align: left;
+          }
+          h2 {
+            margin-bottom: 0;
+            margin-top: 20px;
+          }
+          h3 {
+            margin: 0 0 20px;
+          }
+        `}
+      </style>
+      <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
+      <h2 data-cy="tourneyName">{tournament.name}</h2>
+      <h3 className="subtle">{dbDateToDisplayDate(tournament.date)}</h3>
+      <h1>Results &amp; Decks</h1>
+      {tournamentDecksTable}
     </Layout>
   );
 });
