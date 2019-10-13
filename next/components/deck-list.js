@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
 import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
+import LargeTable from './large-table.js';
 
 export default function DeckList({ decks }) {
   const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
@@ -12,24 +13,6 @@ export default function DeckList({ decks }) {
   return (
     <div>
       <style jsx>{`
-        .deckListTable {
-          width: 100%;
-          border-collapse: collapse;
-        }
-        .deckListRow {
-          border-top: ${theme.border};
-        }
-        .deckListRow td {
-          padding: 15px 10px 15px 10px;
-        }
-        .zebraRow {
-          background-color: ${theme.zebraRowBackground};
-        }
-        img {
-          max-height: 15px;
-          vertical-align: top;
-          margin-right: 5px;
-        }
         .deckName :global(a) {
           color: ${theme.deckNameColor};
           font-size: 20px;
@@ -47,10 +30,10 @@ export default function DeckList({ decks }) {
           text-align: center;
         }
       `}</style>
-      <table className="deckListTable">
+      <LargeTable>
         <tbody>
           {decks.map((deck, index) => {
-            const classNames = `deckListRow ${index % 2 ? 'zebraRow' : ''}`;
+            const classNames = index % 2 ? 'zebraRow' : '';
             const author =
               deck && deck.author ? deck.author.username : 'unknown';
 
@@ -95,7 +78,7 @@ export default function DeckList({ decks }) {
             );
           })}
         </tbody>
-      </table>
+      </LargeTable>
     </div>
   );
 }

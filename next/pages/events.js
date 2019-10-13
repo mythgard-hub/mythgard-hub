@@ -1,13 +1,17 @@
 import React from 'react';
 import Layout from '../components/layout';
-import AllTournaments from '../components/all-tournaments';
+import UpcomingTournaments from '../components/upcoming-tournaments.js';
+import CompletedTournaments from '../components/completed-tournaments.js';
 import PageBanner from '../components/page-banner';
-import { mgColors } from '../lib/theme';
 
 function TournamentsPage() {
   return (
     <Layout title="Mythgard Hub | Events" desc="Browse Mythgard Events">
       <style jsx>{`
+        p {
+          font-size: 13px;
+        }
+
         .announcement {
           padding-left: 20px;
           padding-left: 20px;
@@ -20,19 +24,15 @@ function TournamentsPage() {
           text-align: left;
         }
 
+        h1 {
+          margin: 20px 0;
+        }
+
         .announcementCrownLogo {
           float: right;
           margin-right: 50px;
           margin-top: -10px;
           width: 180px;
-        }
-
-        a {
-          color: ${mgColors.orange};
-          text-decoration: none;
-        }
-        a:hover {
-          color: ${mgColors.blue};
         }
       `}</style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
@@ -52,12 +52,16 @@ function TournamentsPage() {
             are running a tournament, tournament series, or special
             community-driven event and would like to have the info and results
             on <strong>Mythgard Hub</strong>, please contact us at{' '}
-            <a href="mailto: Tournaments@mythgardhub.com">
+            <a className="accent" href="mailto: Tournaments@mythgardhub.com">
               <strong>Tournaments@mythgardhub.com</strong>
             </a>{' '}
             with the details.
           </p>
         </content>
+        <h1>Upcoming Events</h1>
+        <UpcomingTournaments />
+        <h1>Completed Events</h1>
+        <CompletedTournaments />
       </div>
     </Layout>
   );

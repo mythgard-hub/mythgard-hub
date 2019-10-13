@@ -21,3 +21,11 @@ export const dateToDeltaString = date => {
 
   return timeMsg;
 };
+
+export const dbDateToDisplayDate = dateStr => {
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+};

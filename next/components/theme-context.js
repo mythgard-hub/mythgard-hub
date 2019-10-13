@@ -7,6 +7,7 @@ export const themes = {
     backgroundLight: mgColors.blackPearlLight,
     fontColor: mgColors.white,
     fontColorAccent: mgColors.orange,
+    fontColorSubtle: mgColors.lightBlue,
     fontColorSelected: mgColors.blue,
     fontColorDisabled: mgColors.mediumLightGray,
     sectionBackground: mgColors.mediumGray,
@@ -35,7 +36,7 @@ export const themes = {
     hoverColor: mgColors.blue,
     switchColor: mgColors.lightGreen,
     hrColorGradientLight: mgColors.blue,
-    hrColorGradientDark: mgColors.darkBlue,
+    hrColorGradientDark: mgColors.grayBlue,
     footerBackgroundColor: mgColors.grayBlue,
     footerLinkColor: mgColors.orange,
     footerTextColor: mgColors.mediumLighterGray,
@@ -46,7 +47,8 @@ export const themes = {
     orangeFactionColor: mgColors.darkOrange,
     greenFactionColor: mgColors.green,
     purpleFactionColor: mgColors.purple,
-    cardTableName: mgColors.mediumGray
+    cardTableName: mgColors.mediumGray,
+    panelBackground: mgColors.grayBlue
   }
 };
 

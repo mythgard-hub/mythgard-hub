@@ -265,12 +265,14 @@ CREATE POLICY accountupdate_if_author
 CREATE TABLE mythgard.tournament (
   id SERIAL PRIMARY KEY,
   name varchar(255),
+  url text,
+  organizer varchar(255),
   date date
 );
 
-INSERT INTO mythgard.tournament("id", "name", "date")
-VALUES (1, 'The Battle of Deimos', '2019-07-26'),
-  (2, 'The Iron Rain', '3000-01-01');
+INSERT INTO mythgard.tournament("id", "name", "date", "url", "organizer")
+VALUES (1, 'The Battle of Deimos', '2019-07-26', 'http://www.mythgardhub.com', 'mgh'),
+  (2, 'The Iron Rain', '3000-01-01', 'http://www.mythgardhub.com', 'rhino games');
 
 CREATE TABLE mythgard.tournament_deck (
   id SERIAL PRIMARY KEY,
