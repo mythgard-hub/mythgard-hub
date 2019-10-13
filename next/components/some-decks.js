@@ -5,6 +5,7 @@ import DeckList from './deck-list';
 import { useDeckSearchQuery } from '../lib/deck-queries';
 import { useState } from 'react';
 import PagingControls from './paging-controls.js';
+import { scrollToTopOfElement } from '../lib/ui-utils';
 
 const pageSize = 50;
 
@@ -18,16 +19,19 @@ export default function SomeDecks(props) {
     factionNames,
     isOnlyFactions
   } = props.search;
-  const { loading, error, data } = useDeckSearchQuery({
-    authorName,
-    deckName,
-    updatedTime,
-    cardIds,
-    factionNames,
-    isOnlyFactions,
-    first: pageSize,
-    offset: currentPage * pageSize
-  });
+  const { loading, error, data } = useDeckSearchQuery(
+    {
+      authorName,
+      deckName,
+      updatedTime,
+      cardIds,
+      factionNames,
+      isOnlyFactions,
+      first: pageSize,
+      offset: currentPage * pageSize
+    },
+    () => scrollToTopOfElement(listRef)
+  );
 
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading...</div>;
@@ -47,7 +51,6 @@ export default function SomeDecks(props) {
         }
       `}</style>
       <PagingControls
-        listRef={listRef}
         currentPage={currentPage}
         setPage={setPage}
         pageSize={pageSize}
