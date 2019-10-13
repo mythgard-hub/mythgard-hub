@@ -5,7 +5,7 @@ import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 import { allDecksQuery } from '../lib/deck-queries';
 import PagingControls from './paging-controls.js';
-import { scrollToTopOfList } from '../lib/navigation-utils';
+import { scrollToTopOfElement } from '../lib/ui-utils';
 
 const pageSize = 50;
 
@@ -24,7 +24,7 @@ export default function AllDecks() {
           dataLoaded.current = true;
         }, 1000);
       } else {
-        scrollToTopOfList(listRef);
+        scrollToTopOfElement(listRef);
       }
     }
   });

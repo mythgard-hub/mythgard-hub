@@ -5,7 +5,7 @@ import DeckList from './deck-list';
 import { useDeckSearchQuery } from '../lib/deck-queries';
 import { useState } from 'react';
 import PagingControls from './paging-controls.js';
-import { scrollToTopOfList } from '../lib/navigation-utils';
+import { scrollToTopOfElement } from '../lib/ui-utils';
 
 const pageSize = 50;
 
@@ -30,7 +30,7 @@ export default function SomeDecks(props) {
       first: pageSize,
       offset: currentPage * pageSize
     },
-    () => scrollToTopOfList(listRef)
+    () => scrollToTopOfElement(listRef)
   );
 
   if (error) return <ErrorMessage message="Error loading decks." />;
