@@ -9,6 +9,7 @@ import FactionsIndicator from '../components/factions-indicator.js';
 import EssenceIndicator from '../components/essence-indicator.js';
 import { dbDateToDisplayDate } from '../lib/time.js';
 import { tournamentWithResultsQuery as tourneyQuery } from '../lib/tournament-queries.js';
+import Router from 'next/router';
 
 // Copied from stackoverflow, so untested.
 function ordinalized(i) {
@@ -38,10 +39,19 @@ export default withRouter(({ router }) => {
   }
 
   const { tournament } = data;
-  const tournamentDecks = tournament.tournamentDecks.nodes;
-  tournamentDecks.sort((a, b) => {
-    return a.rank > b.rank;
-  });
+
+  if (!tournament) {
+    Router.replace('/events');
+    return;
+  }
+
+  const tournamentDecks =
+    tournament && tournamentDecks && tournament.decks.nodes;
+  if (tournamentDecks) {
+    tournamentDecks.sort((a, b) => {
+      return a.rank > b.rank;
+    });
+  }
 
   const pageTitle = `Mythgard Hub | Results for ${tournament.name}`;
 
