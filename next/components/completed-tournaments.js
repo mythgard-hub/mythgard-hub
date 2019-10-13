@@ -19,10 +19,15 @@ export default function CompletedTournaments() {
         if (error) return <ErrorMessage message="Error loading tournaments." />;
         if (loading) return <div>Loading...</div>;
 
+        const tourneys = data && data.tournaments && data.tournaments.nodes;
+        if (!(tourneys && tourneys.length)) {
+          return <div>No completed events found! </div>;
+        }
+
         return (
           <LargeTable>
             <tbody>
-              {data.tournaments.nodes.map((tourney, index) => {
+              {tourneys.map((tourney, index) => {
                 const classNames = index % 2 ? 'zebraRow' : '';
                 if (!tourney) {
                   return;

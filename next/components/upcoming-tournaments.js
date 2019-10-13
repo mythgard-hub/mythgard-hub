@@ -16,8 +16,9 @@ export default function UpcomingTournaments() {
       {({ loading, error, data }) => {
         if (error) return <ErrorMessage message="Error loading tournaments." />;
         if (loading) return <div>Loading...</div>;
-        if (!(data && data.tournaments && data.tournaments.nodes)) {
-          return;
+        const tourneys = data && data.tournaments && data.tournaments.nodes;
+        if (!(tourneys && tourneys.length)) {
+          return <div>No upcoming events found! </div>;
         }
 
         return (
@@ -41,7 +42,7 @@ export default function UpcomingTournaments() {
               }
 
             `}</style>
-            {data.tournaments.nodes.map((tourney, index) => (
+            {tourneys.map((tourney, index) => (
               <li
                 key={(tourney && tourney.id) || index}
                 data-cy="upcomingTournamentListItem"
