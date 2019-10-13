@@ -46,7 +46,9 @@ export default withRouter(({ router }) => {
   }
 
   const tournamentDecks =
-    tournament && tournamentDecks && tournament.decks.nodes;
+    tournament &&
+    tournament.tournamentDecks &&
+    tournament.tournamentDecks.nodes;
 
   if (tournamentDecks) {
     tournamentDecks.sort((a, b) => {
