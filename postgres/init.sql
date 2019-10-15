@@ -277,6 +277,7 @@ VALUES ('The Battle of Deimos', '2019-07-26', 'http://www.mythgardhub.com', 'mgh
 CREATE TABLE mythgard.tournament_deck (
   id SERIAL PRIMARY KEY,
   rank integer,
+  pilot varchar(255),
   tournament_id integer,
   deck_id integer,
   FOREIGN KEY (tournament_id)
@@ -287,8 +288,8 @@ CREATE TABLE mythgard.tournament_deck (
     ON DELETE CASCADE
 );
 
-INSERT INTO mythgard.tournament_deck("rank", "tournament_id", "deck_id")
-VALUES (1, 1, 1), (2, 1, 2);
+INSERT INTO mythgard.tournament_deck("rank", "tournament_id", "deck_id", "pilot")
+VALUES (1, 1, 1, 'lsv'), (2, 1, 2, 'pvdr');
 
 CREATE TABLE mythgard.faction (
   id SERIAL PRIMARY KEY,

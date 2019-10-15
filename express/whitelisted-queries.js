@@ -463,12 +463,10 @@ query tournaments($now: Date) {
       tournamentDecks {
         nodes {
           rank
+          pilot
           deck {
             name
             id
-            author {
-              username
-            }
             deckPreviews {
               nodes {
                 factions

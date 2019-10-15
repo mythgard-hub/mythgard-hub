@@ -1,5 +1,6 @@
 import { withRouter } from 'next/router';
 import React from 'react';
+import Link from 'next/link';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import { useQuery } from '@apollo/react-hooks';
@@ -62,23 +63,25 @@ export default withRouter(({ router }) => {
             })
             .map((tourneyDeck, index) => {
               const { deck } = tourneyDeck;
+              const deckPreview = deck.deckPreviews.nodes[0];
               const classNames = index % 2 ? 'zebraRow' : '';
               return (
                 <tr key={index} className={classNames} data-cy="deckListItem">
                   <td>{ordinalized(tourneyDeck.rank)}</td>
                   <td className="nameCell" data-cy="tourneyTop8Name">
-                    <b>{deck.name}</b> piloted by{' '}
-                    <span className="accent">{deck.author.username}</span>
+                    <Link href={`/deck?id=${deck.id}`}>
+                      <a>
+                        <b>{deck.name}</b>
+                      </a>
+                    </Link>{' '}
+                    piloted by{' '}
+                    <span className="accent">{tourneyDeck.pilot}</span>
                   </td>
                   <td>
-                    <FactionsIndicator
-                      factions={deck.deckPreviews.nodes[0].factions}
-                    />
+                    <FactionsIndicator factions={deckPreview.factions} />
                   </td>
                   <td>
-                    <EssenceIndicator
-                      essence={deck.deckPreviews.nodes[0].essenceCost}
-                    />
+                    <EssenceIndicator essence={deckPreview.essenceCost} />
                   </td>
                 </tr>
               );
