@@ -104,14 +104,18 @@ export default withRouter(({ router }) => {
           h3 {
             margin: 0 0 20px;
           }
-          a {
+          .tourneyLink {
             margin: 10px 0 0;
             float: right;
           }
         `}
       </style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
-      <a className="external-link accent bold" href={tournament.url}>
+      <a
+        className="external-link accent bold tourneyLink"
+        data-cy="tourneyLink"
+        href={tournament.url}
+      >
         Tournament Details
       </a>
       <h2 data-cy="tourneyName">{tournament.name}</h2>
