@@ -101,9 +101,16 @@ export default withRouter(({ router }) => {
           h3 {
             margin: 0 0 20px;
           }
+          a {
+            margin: 10px 0 0;
+            float: right;
+          }
         `}
       </style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
+      <a className="external-link accent bold" href={tournament.url}>
+        Tournament Details
+      </a>
       <h2 data-cy="tourneyName">{tournament.name}</h2>
       <h3 className="subtle">{dbDateToDisplayDate(tournament.date)}</h3>
       <h1>Results &amp; Decks</h1>

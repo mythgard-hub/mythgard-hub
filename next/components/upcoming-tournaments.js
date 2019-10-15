@@ -23,24 +23,23 @@ export default function UpcomingTournaments() {
   return (
     <ul data-cy="upcomingTournaments" className="upcoming-tournaments">
       <style jsx>{`
-              .upcoming-tournaments {
-                list-style: none;
-                margin: 0;
-                padding 0;
-                display: flex;
-                justify-content: space-between;
-              }
+        .upcoming-tournaments {
+          list-style: none;
+          margin: 0;
+          padding 0;
+          display: flex;
+          justify-content: space-between;
+        }
 
-              .upcoming-tournaments li {
-                flex-grow: 1;
-                margin-left: 5px;
-              }
+        .upcoming-tournaments li {
+          flex-grow: 1;
+          margin-left: 5px;
+        }
 
-              .upcoming-tournaments > li:first-of-type {
-                margin-left: 0;
-              }
-
-            `}</style>
+        .upcoming-tournaments > li:first-of-type {
+          margin-left: 0;
+        }
+      `}</style>
       {tourneys.map((tourney, index) => (
         <li
           key={(tourney && tourney.id) || index}
