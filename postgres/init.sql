@@ -270,7 +270,7 @@ CREATE TABLE mythgard.tournament (
   date date
 );
 
-INSERT INTO mythgard.tournament("id", "name", "date", "url", "organizer")
+INSERT INTO mythgard.tournament("name", "date", "url", "organizer")
 VALUES ('The Battle of Deimos', '2019-07-26', 'http://www.mythgardhub.com', 'mgh'),
   ('The Iron Rain', '3000-01-01', 'http://www.mythgardhub.com', 'rhino games');
 
