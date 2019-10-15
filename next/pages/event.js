@@ -70,7 +70,7 @@ export default withRouter(({ router }) => {
                   <td>{ordinalized(tourneyDeck.rank)}</td>
                   <td className="nameCell" data-cy="tourneyTop8Name">
                     <Link href={`/deck?id=${deck.id}`}>
-                      <a>
+                      <a data-cy="tourneyDeckLink">
                         <b>{deck.name}</b>
                       </a>
                     </Link>{' '}
