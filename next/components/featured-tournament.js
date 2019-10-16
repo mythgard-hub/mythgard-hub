@@ -13,8 +13,7 @@ function FeaturedTournament({ tournament: { name, organizer, date, url } }) {
           display: block;
           background-color: ${theme.panelBackground};
           padding: 10px;
-          min-width: 266px;
-          max-width: 300px;
+          width: 266px;
           text-align: center;
           font-size: 16px;
         }
@@ -37,7 +36,12 @@ function FeaturedTournament({ tournament: { name, organizer, date, url } }) {
           color: ${theme.fontColorSubtle};
         }
       `}</style>
-      <a className="external-link accent bold" href={url}>
+      <a
+        className="external-link accent bold"
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {name}
       </a>
       <div className="tournament-organizer">{organizer}</div>

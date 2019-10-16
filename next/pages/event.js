@@ -74,7 +74,8 @@ export default withRouter(({ router }) => {
                         <b>{deck.name}</b>
                       </a>
                     </Link>{' '}
-                    piloted by{' '}
+                    <br />
+                    <span className="pilotedBy">piloted by</span>{' '}
                     <span className="accent">{tourneyDeck.pilot}</span>
                   </td>
                   <td>
@@ -108,13 +109,25 @@ export default withRouter(({ router }) => {
             margin: 10px 0 0;
             float: right;
           }
+          .pilotedBy {
+            font-weight: 300;
+          }
+          .bannerLink {
+            text-decoration: none;
+          }
         `}
       </style>
-      <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
+      <Link href="/events">
+        <a className="bannerLink">
+          <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
+        </a>
+      </Link>
       <a
         className="external-link accent bold tourneyLink"
         data-cy="tourneyLink"
         href={tournament.url}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Tournament Details
       </a>
