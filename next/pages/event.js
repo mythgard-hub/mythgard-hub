@@ -56,6 +56,24 @@ export default withRouter(({ router }) => {
       'No decks found'
     ) : (
       <LargeTable>
+        <style jsx>{`
+          .pilotedBy {
+            font-weight: 300;
+          }
+
+          .nameCellInner {
+            display: inline-block;
+            text-align: left;
+          }
+
+          tr > td {
+            text-align: left;
+          }
+
+          tr > td:first-of-type {
+            max-width: 25px;
+          }
+        `}</style>
         <tbody>
           {tournamentDecks
             .sort((a, b) => {
@@ -69,14 +87,16 @@ export default withRouter(({ router }) => {
                 <tr key={index} className={classNames} data-cy="deckListItem">
                   <td>{ordinalized(tourneyDeck.rank)}</td>
                   <td className="nameCell" data-cy="tourneyTop8Name">
-                    <Link href={`/deck?id=${deck.id}`}>
-                      <a data-cy="tourneyDeckLink">
-                        <b>{deck.name}</b>
-                      </a>
-                    </Link>{' '}
-                    <br />
-                    <span className="pilotedBy">piloted by</span>{' '}
-                    <span className="accent">{tourneyDeck.pilot}</span>
+                    <span className="nameCellInner">
+                      <Link href={`/deck?id=${deck.id}`}>
+                        <a data-cy="tourneyDeckLink">
+                          <b>{deck.name}</b>
+                        </a>
+                      </Link>{' '}
+                      <br />
+                      <span className="pilotedBy">piloted by</span>{' '}
+                      <span className="accent">{tourneyDeck.pilot}</span>
+                    </span>
                   </td>
                   <td>
                     <FactionsIndicator factions={deckPreview.factions} />
@@ -108,9 +128,6 @@ export default withRouter(({ router }) => {
           .tourneyLink {
             margin: 10px 0 0;
             float: right;
-          }
-          .pilotedBy {
-            font-weight: 300;
           }
           .bannerLink {
             text-decoration: none;
