@@ -28,16 +28,16 @@ export default function UpcomingTournaments() {
           margin: 0;
           padding 0;
           display: flex;
-          justify-content: space-between;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
         }
 
         .upcoming-tournaments li {
-          flex-grow: 1;
-          margin-left: 5px;
+          margin: 10px 5px 0 0;
         }
 
-        .upcoming-tournaments > li:first-of-type {
-          margin-left: 0;
+        .upcoming-tournaments > li:last-of-type {
+          margin-right: 0;
         }
       `}</style>
       {tourneys.map((tourney, index) => (

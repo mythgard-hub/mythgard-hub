@@ -1,5 +1,6 @@
 import { withRouter } from 'next/router';
 import React from 'react';
+import Link from 'next/link';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import { useQuery } from '@apollo/react-hooks';
@@ -55,6 +56,24 @@ export default withRouter(({ router }) => {
       'No decks found'
     ) : (
       <LargeTable>
+        <style jsx>{`
+          .pilotedBy {
+            font-weight: 300;
+          }
+
+          .nameCellInner {
+            display: inline-block;
+            text-align: left;
+          }
+
+          tr > td {
+            text-align: left;
+          }
+
+          tr > td:first-of-type {
+            max-width: 25px;
+          }
+        `}</style>
         <tbody>
           {tournamentDecks
             .sort((a, b) => {
@@ -62,23 +81,28 @@ export default withRouter(({ router }) => {
             })
             .map((tourneyDeck, index) => {
               const { deck } = tourneyDeck;
+              const deckPreview = deck.deckPreviews.nodes[0];
               const classNames = index % 2 ? 'zebraRow' : '';
               return (
                 <tr key={index} className={classNames} data-cy="deckListItem">
                   <td>{ordinalized(tourneyDeck.rank)}</td>
                   <td className="nameCell" data-cy="tourneyTop8Name">
-                    <b>{deck.name}</b> piloted by{' '}
-                    <span className="accent">{deck.author.username}</span>
+                    <span className="nameCellInner">
+                      <Link href={`/deck?id=${deck.id}`}>
+                        <a data-cy="tourneyDeckLink">
+                          <b>{deck.name}</b>
+                        </a>
+                      </Link>{' '}
+                      <br />
+                      <span className="pilotedBy">piloted by</span>{' '}
+                      <span className="accent">{tourneyDeck.pilot}</span>
+                    </span>
                   </td>
                   <td>
-                    <FactionsIndicator
-                      factions={deck.deckPreviews.nodes[0].factions}
-                    />
+                    <FactionsIndicator factions={deckPreview.factions} />
                   </td>
                   <td>
-                    <EssenceIndicator
-                      essence={deck.deckPreviews.nodes[0].essenceCost}
-                    />
+                    <EssenceIndicator essence={deckPreview.essenceCost} />
                   </td>
                 </tr>
               );
@@ -101,14 +125,27 @@ export default withRouter(({ router }) => {
           h3 {
             margin: 0 0 20px;
           }
-          a {
+          .tourneyLink {
             margin: 10px 0 0;
             float: right;
           }
+          .bannerLink {
+            text-decoration: none;
+          }
         `}
       </style>
-      <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
-      <a className="external-link accent bold" href={tournament.url}>
+      <Link href="/events">
+        <a className="bannerLink">
+          <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
+        </a>
+      </Link>
+      <a
+        className="external-link accent bold tourneyLink"
+        data-cy="tourneyLink"
+        href={tournament.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Tournament Details
       </a>
       <h2 data-cy="tourneyName">{tournament.name}</h2>

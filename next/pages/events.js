@@ -14,7 +14,6 @@ function TournamentsPage() {
 
         .announcement {
           padding-left: 20px;
-          padding-left: 20px;
           padding-bottom: 10px;
         }
 
@@ -33,6 +32,17 @@ function TournamentsPage() {
           margin-right: 50px;
           margin-top: -10px;
           width: 180px;
+        }
+
+        @media only screen and (max-width: 600px) {
+          .announcement {
+            padding-left: 0;
+            padding-bottom: 0;
+          }
+
+          .announcement img {
+            display: none;
+          }
         }
       `}</style>
       <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
@@ -58,6 +68,8 @@ function TournamentsPage() {
             with the details.
           </p>
         </content>
+      </div>
+      <div>
         <h1>Upcoming Events</h1>
         <UpcomingTournaments />
         <h1>Completed Events</h1>
