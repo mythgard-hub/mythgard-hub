@@ -18,14 +18,14 @@ const widthSupportsTwoColumn = () => {
 };
 
 export default function CardSearchForm(props) {
-  const { onSubmit, initialValues } = props;
-  const [text, setText] = useState(initialValues.text);
-  const [factions, setFactions] = useState(initialValues.factions);
-  const [supertypes, setSupertypes] = useState(initialValues.supertypes);
-  const [manaCosts, setManaCosts] = useState(initialValues.manaCosts);
-  const [strengths, setStrengths] = useState(initialValues.strengths);
-  const [defenses, setDefenses] = useState(initialValues.defenses);
-  const [rarities, setRarities] = useState(initialValues.rarities);
+  const { onSubmit, searchQuery } = props;
+  const [text, setText] = useState(searchQuery.text);
+  const [factions, setFactions] = useState(searchQuery.factions);
+  const [supertypes, setSupertypes] = useState(searchQuery.supertypes);
+  const [manaCosts, setManaCosts] = useState(searchQuery.manaCosts);
+  const [strengths, setStrengths] = useState(searchQuery.strengths);
+  const [defenses, setDefenses] = useState(searchQuery.defenses);
+  const [rarities, setRarities] = useState(searchQuery.rarities);
   const [clearFilters, setClearFilters] = useState(false);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
 
@@ -37,14 +37,7 @@ export default function CardSearchForm(props) {
   });
 
   const handleClearFilters = () => {
-    setText(initialText);
-    setFactions(initialFactions);
-    setSupertypes(initialSuperTypes);
-    setManaCosts(initialManaCosts);
-    setStrengths(initialStrengths);
-    setDefenses(initialDefenses);
-    setRarities(initialRarities);
-    setClearFilters(true);
+    props.onClearFilters();
   };
 
   const handleSubmit = e => {
@@ -187,7 +180,8 @@ export default function CardSearchForm(props) {
 
 CardSearchForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  initialValues: PropTypes.shape({
+  onClearFilters: PropTypes.func.isRequired,
+  searchQuery: PropTypes.shape({
     text: PropTypes.string,
     factions: PropTypes.array,
     supertypes: PropTypes.array,
@@ -195,6 +189,6 @@ CardSearchForm.propTypes = {
     strengths: PropTypes.array,
     defenses: PropTypes.array,
     rarities: PropTypes.array
-  }),
+  }).isRequired,
   children: PropTypes.any
 };

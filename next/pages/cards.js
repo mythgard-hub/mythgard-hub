@@ -37,13 +37,22 @@ function CardsPage() {
     router.replace(`/cards?${pageParams}`);
   };
 
+  const clearFilters = () => {
+    setSearchQuery({ ...searchQueryDefaults });
+    router.replace(`/cards`);
+  };
+
   return (
     <Layout
       title="Mythgard Hub | Cards"
       desc="Browse and search for Mythgard cards"
     >
       <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
-      <CardSearchForm onSubmit={handleSearchSubmit} initialValues={searchQuery}>
+      <CardSearchForm
+        onSubmit={handleSearchSubmit}
+        searchQuery={searchQuery}
+        onClearFilters={clearFilters}
+      >
         <style jsx>{`
           :global(.cardList) {
             padding-left: 0;
