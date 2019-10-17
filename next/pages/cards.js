@@ -51,6 +51,7 @@ function CardsPage() {
       <CardSearchForm
         onSubmit={handleSearchSubmit}
         searchQuery={searchQuery}
+        defaultQuery={{ ...searchQueryDefaults }}
         onClearFilters={clearFilters}
       >
         <style jsx>{`

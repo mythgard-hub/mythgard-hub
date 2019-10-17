@@ -18,7 +18,7 @@ const widthSupportsTwoColumn = () => {
 };
 
 export default function CardSearchForm(props) {
-  const { onSubmit, searchQuery } = props;
+  const { onSubmit, searchQuery, defaultQuery } = props;
   const [text, setText] = useState(searchQuery.text);
   const [factions, setFactions] = useState(searchQuery.factions);
   const [supertypes, setSupertypes] = useState(searchQuery.supertypes);
@@ -37,6 +37,13 @@ export default function CardSearchForm(props) {
   });
 
   const handleClearFilters = () => {
+    setText(defaultQuery.text);
+    setFactions(defaultQuery.factions);
+    setSupertypes(defaultQuery.supertypes);
+    setManaCosts(defaultQuery.manaCosts);
+    setStrengths(defaultQuery.strengths);
+    setDefenses(defaultQuery.defenses);
+    setRarities(defaultQuery.rarities);
     props.onClearFilters();
   };
 
@@ -178,17 +185,20 @@ export default function CardSearchForm(props) {
   );
 }
 
+const queryPropType = PropTypes.shape({
+  text: PropTypes.string,
+  factions: PropTypes.array,
+  supertypes: PropTypes.array,
+  manaCosts: PropTypes.array,
+  strengths: PropTypes.array,
+  defenses: PropTypes.array,
+  rarities: PropTypes.array
+}).isRequired;
+
 CardSearchForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
-  searchQuery: PropTypes.shape({
-    text: PropTypes.string,
-    factions: PropTypes.array,
-    supertypes: PropTypes.array,
-    manaCosts: PropTypes.array,
-    strengths: PropTypes.array,
-    defenses: PropTypes.array,
-    rarities: PropTypes.array
-  }).isRequired,
+  searchQuery: queryPropType,
+  defaultQuery: queryPropType,
   children: PropTypes.any
 };
