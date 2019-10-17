@@ -3,14 +3,38 @@ import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import { useState } from 'react';
 import CardSearchForm from '../components/card-search-form';
+import { useRouter } from 'next/router';
 
 export const twoColMinWidth = 925;
 
+const searchQueryDefaults = {
+  text: '',
+  factions: [],
+  supertypes: [],
+  manaCosts: [],
+  strengths: [],
+  defenses: [],
+  rarities: []
+};
+
 function CardsPage() {
-  const [searchQuery, setSearchQuery] = useState({});
+  const router = useRouter();
+  const initialSearchQuery = { ...searchQueryDefaults };
+  for (const entry of Object.entries(router.query)) {
+    const [name, value] = entry;
+    if (value) {
+      initialSearchQuery[name] =
+        typeof searchQueryDefaults[name] !== 'object'
+          ? value
+          : value.split(',');
+    }
+  }
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
 
   const handleSearchSubmit = searchQuery => {
     setSearchQuery(searchQuery);
+    const pageParams = new URLSearchParams(searchQuery).toString();
+    router.replace(`/cards?${pageParams}`);
   };
 
   return (
@@ -19,7 +43,7 @@ function CardsPage() {
       desc="Browse and search for Mythgard cards"
     >
       <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
-      <CardSearchForm onSubmit={handleSearchSubmit.bind(this)}>
+      <CardSearchForm onSubmit={handleSearchSubmit} initialValues={searchQuery}>
         <style jsx>{`
           :global(.cardList) {
             padding-left: 0;

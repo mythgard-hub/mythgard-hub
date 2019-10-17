@@ -17,23 +17,15 @@ const widthSupportsTwoColumn = () => {
   return w >= 925;
 };
 
-const initialText = '';
-const initialFactions = [];
-const initialSuperTypes = [];
-const initialManaCosts = [];
-const initialStrengths = [];
-const initialDefenses = [];
-const initialRarities = [];
-
 export default function CardSearchForm(props) {
-  const { onSubmit } = props;
-  const [text, setText] = useState(initialText);
-  const [factions, setFactions] = useState(initialFactions);
-  const [supertypes, setSupertypes] = useState(initialSuperTypes);
-  const [manaCosts, setManaCosts] = useState(initialManaCosts);
-  const [strengths, setStrengths] = useState(initialStrengths);
-  const [defenses, setDefenses] = useState(initialDefenses);
-  const [rarities, setRarities] = useState(initialRarities);
+  const { onSubmit, initialValues } = props;
+  const [text, setText] = useState(initialValues.text);
+  const [factions, setFactions] = useState(initialValues.factions);
+  const [supertypes, setSupertypes] = useState(initialValues.supertypes);
+  const [manaCosts, setManaCosts] = useState(initialValues.manaCosts);
+  const [strengths, setStrengths] = useState(initialValues.strengths);
+  const [defenses, setDefenses] = useState(initialValues.defenses);
+  const [rarities, setRarities] = useState(initialValues.rarities);
   const [clearFilters, setClearFilters] = useState(false);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
 
@@ -195,5 +187,14 @@ export default function CardSearchForm(props) {
 
 CardSearchForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({
+    text: PropTypes.string,
+    factions: PropTypes.array,
+    supertypes: PropTypes.array,
+    manaCosts: PropTypes.array,
+    strengths: PropTypes.array,
+    defenses: PropTypes.array,
+    rarities: PropTypes.array
+  }),
   children: PropTypes.any
 };
