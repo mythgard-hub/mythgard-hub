@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
@@ -26,15 +26,7 @@ export default function CardSearchForm(props) {
   const [strengths, setStrengths] = useState(searchQuery.strengths);
   const [defenses, setDefenses] = useState(searchQuery.defenses);
   const [rarities, setRarities] = useState(searchQuery.rarities);
-  const [clearFilters, setClearFilters] = useState(false);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
-
-  useEffect(() => {
-    if (clearFilters) {
-      handleSubmit();
-      setClearFilters(false);
-    }
-  });
 
   const handleClearFilters = () => {
     setText(defaultQuery.text);
