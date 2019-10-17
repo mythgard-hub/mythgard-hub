@@ -1,51 +1,45 @@
 import SomeCards from '../components/some-cards.js';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
-import { Component } from 'react';
+import { useState } from 'react';
 import CardSearchForm from '../components/card-search-form';
 
 export const twoColMinWidth = 925;
 
-class CardsPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-  }
+function CardsPage() {
+  const [searchQuery, setSearchQuery] = useState({});
 
-  handleSearchSubmit(searchQuery) {
-    this.setState({ searchQuery });
-  }
+  const handleSearchSubmit = searchQuery => {
+    setSearchQuery(searchQuery);
+  };
 
-  render() {
-    return (
-      <Layout
-        title="Mythgard Hub | Cards"
-        desc="Browse and search for Mythgard cards"
-      >
-        <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
-        <CardSearchForm onSubmit={this.handleSearchSubmit.bind(this)}>
-          <style jsx>{`
+  return (
+    <Layout
+      title="Mythgard Hub | Cards"
+      desc="Browse and search for Mythgard cards"
+    >
+      <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
+      <CardSearchForm onSubmit={handleSearchSubmit.bind(this)}>
+        <style jsx>{`
+          :global(.cardList) {
+            padding-left: 0;
+          }
+
+          @media only screen and (max-width: ${twoColMinWidth}px) {
             :global(.cardList) {
-              padding-left: 0;
+              min-width: 535px;
             }
-
-            @media only screen and (max-width: ${twoColMinWidth}px) {
-              :global(.cardList) {
-                min-width: 535px;
-              }
-            }
-          `}</style>
-          <div className="hideOnTablet">
-            <SomeCards filters={this.state.searchQuery} />
-          </div>
-        </CardSearchForm>
-        <div className="hideOnNotTablet">
-          <SomeCards filters={this.state.searchQuery} />
+          }
+        `}</style>
+        <div className="hideOnTablet">
+          <SomeCards filters={searchQuery} />
         </div>
-      </Layout>
-    );
-  }
+      </CardSearchForm>
+      <div className="hideOnNotTablet">
+        <SomeCards filters={searchQuery} />
+      </div>
+    </Layout>
+  );
 }
 
 export default CardsPage;
