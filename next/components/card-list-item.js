@@ -29,14 +29,23 @@ export default function CardListItem({ card, onClick, options }) {
           display: inline-block;
           position: relative;
         }
-        // hover image
-        .imgWrapper:hover::before {
+        // bigger version of the image (hidden until hover)
+        .imgWrapper::before {
           content: url(${imgPathMedium});
           width: ${hoverImageWidth}px;
           position: absolute;
           top: -${hoverImageVerticalOffset}px;
           left: -${(hoverImageWidth - smallImageWidth) / 2}px;
           z-index: 2;
+          opacity: 0;
+        }
+
+        @media (hover: hover) {
+          // Show the hover image (but only on devices that have hover)
+          .imgWrapper:hover::before {
+            opacity: 1;
+            transition-delay: 0.7s;
+          }
         }
       `}</style>
       {onClick && (
