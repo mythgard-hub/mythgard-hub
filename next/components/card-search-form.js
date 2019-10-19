@@ -127,6 +127,7 @@ export default function CardSearchForm(props) {
               cyName="cardSearchText"
               onChange={handleInputChangeHooks(setText)}
               label="Card Search"
+              onSubmit={handleSubmit}
             />
             <FactionFilters
               factions={factions}

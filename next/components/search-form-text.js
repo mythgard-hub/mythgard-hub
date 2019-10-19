@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { submitOnEnter } from '../lib/form-utils';
 
 export default function SearchFormText(props) {
   const {
@@ -7,6 +8,7 @@ export default function SearchFormText(props) {
     name,
     cyName,
     onChange,
+    onSubmit,
     placeholder,
     maxLength
   } = props;
@@ -30,6 +32,7 @@ export default function SearchFormText(props) {
         className={name}
         onChange={onChange}
         maxLength={maxLength}
+        onKeyUp={e => submitOnEnter(e, onSubmit)}
       />
     </label>
   );
@@ -42,5 +45,6 @@ SearchFormText.propTypes = {
   cyName: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-  maxLength: PropTypes.string
+  maxLength: PropTypes.string,
+  onSubmit: PropTypes.func
 };

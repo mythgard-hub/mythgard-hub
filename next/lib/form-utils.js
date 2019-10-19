@@ -20,3 +20,16 @@ export function handleInputChangeHooks(setter) {
     return value;
   };
 }
+
+export function submitOnEnter(e, onSubmit) {
+  const enterKey = 13;
+
+  if (
+    e &&
+    e.keyCode &&
+    e.keyCode === enterKey &&
+    typeof onSubmit === 'function'
+  ) {
+    onSubmit(e);
+  }
+}
