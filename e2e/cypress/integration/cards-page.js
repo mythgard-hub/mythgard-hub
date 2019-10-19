@@ -2,7 +2,6 @@ import {
   cardSearchText,
   cardSearchSubmit,
   factionFilter,
-  cardListCard,
   getPagingTotalAsInt,
   superTypePickerBtn,
   strengthPicker,
@@ -34,6 +33,21 @@ describe('Cards Page', function() {
       })
       .then(length => {
         expect(length).to.be.below(allCardsLength, 'search text filter works');
+
+        cy.get(cardSearchText).clear();
+        cy.get(cardSearchSubmit).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        allCardsLength = length;
+        cy.get(cardSearchText).type('drag{enter}');
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(length).to.be.below(
+          allCardsLength,
+          'search submits when pressing enter'
+        );
 
         cy.get(cardSearchText).clear();
         cy.get(cardSearchSubmit).click();

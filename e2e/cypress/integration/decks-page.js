@@ -24,10 +24,23 @@ describe('Decks Page', function() {
   it('should search for decks', function() {
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckListItem"]').then(list => {
-      // test deck name search
+      // test deck name search - submit by clicking the submit button
       const initialListLength = list.length;
       cy.get('[data-cy="deckSearchDeckName"]').type('cat');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
+      cy.get(deckFactionsPicker).should('have.length', '1');
+      cy.get(deckEssencePicker).should('contain', '50');
+      cy.get('[data-cy="deckSearchDeckName"]').clear();
+      cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.get('[data-cy="deckListItem"]').should(
+        'have.length',
+        initialListLength
+      );
+
+      // test deck name search - submit on enter
+      cy.get('[data-cy="deckSearchDeckName"]').type('cat{enter}');
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
       cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
       cy.get(deckFactionsPicker).should('have.length', '1');
@@ -84,9 +97,22 @@ describe('Decks Page', function() {
             initialListLength
           );
 
-          // test deck author search
+          // test deck author search - submit by clicking the submit button
           cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv');
           cy.get('[data-cy="deckSearchSubmit"]').click();
+          return cy.get('[data-cy="deckListItem"]');
+        })
+        .then(cards => {
+          expect(cards.length).to.be.lessThan(initialListLength);
+          cy.get('[data-cy="deckSearchDeckAuthor"]').clear();
+          cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.get('[data-cy="deckListItem"]').should(
+            'have.length',
+            initialListLength
+          );
+
+          // test deck author search - submit by pressing enter
+          cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv{enter}');
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
