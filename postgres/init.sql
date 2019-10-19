@@ -392,9 +392,9 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
       LEFT JOIN mythgard.account ON (account.id = deck.author_id)
 
     -- deck name filter
-    WHERE (deckName is NULL or deckName = '' or to_tsvector('simple', deck.name) @@ to_tsquery('simple',deckName || ':*'))
+    WHERE (deckName is NULL or trim(deckName) = '' or to_tsvector('simple', deck.name) @@ to_tsquery('simple', replace(trim(deckName), ' ', ':* & ') || ':*'))
     -- author name filter
-    AND (authorName is NULL or authorName = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple',authorName || ':*'))
+    AND (authorName is NULL or trim(authorName) = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple', replace(trim(authorName), ' ', ':* & ') || ':*'))
     -- modification date filter
     AND (deckModified is NULL or deck.modified >= deckModified)
 
