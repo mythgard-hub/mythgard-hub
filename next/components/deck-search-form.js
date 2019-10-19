@@ -3,7 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message';
 import FactionFilters from './faction-filters.js';
 import PropTypes from 'prop-types';
-import { handleInputChangeHooks } from '../lib/form-utils.js';
+import { handleInputChangeHooks, submitOnEnter } from '../lib/form-utils.js';
 import CardSearch from './card-search';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import SearchFormText from './search-form-text';
@@ -145,6 +145,7 @@ export default function DeckSearchForm(props) {
             name="name"
             cyName="deckSearchDeckName"
             onChange={handleInputChangeHooks(name => changeState('name', name))}
+            onSubmit={e => submitOnEnter(e, handleSubmit)}
           />
           <SearchFormText
             label="Creator"
@@ -155,6 +156,7 @@ export default function DeckSearchForm(props) {
             onChange={handleInputChangeHooks(authorName =>
               changeState('authorName', authorName)
             )}
+            onSubmit={e => submitOnEnter(e, handleSubmit)}
           />
         </div>
         <div className="filter-column">
