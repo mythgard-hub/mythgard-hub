@@ -145,7 +145,7 @@ export default function DeckSearchForm(props) {
             name="name"
             cyName="deckSearchDeckName"
             onChange={handleInputChangeHooks(name => changeState('name', name))}
-            onSubmit={e => submitOnEnter(e, handleSubmit)}
+            onSubmit={handleSubmit}
           />
           <SearchFormText
             label="Creator"
@@ -156,7 +156,7 @@ export default function DeckSearchForm(props) {
             onChange={handleInputChangeHooks(authorName =>
               changeState('authorName', authorName)
             )}
-            onSubmit={e => submitOnEnter(e, handleSubmit)}
+            onSubmit={handleSubmit}
           />
         </div>
         <div className="filter-column">
