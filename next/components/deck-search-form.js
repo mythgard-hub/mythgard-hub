@@ -3,7 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from './error-message';
 import FactionFilters from './faction-filters.js';
 import PropTypes from 'prop-types';
-import { handleInputChangeHooks, submitOnEnter } from '../lib/form-utils.js';
+import { handleInputChangeHooks } from '../lib/form-utils.js';
 import CardSearch from './card-search';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import SearchFormText from './search-form-text';
