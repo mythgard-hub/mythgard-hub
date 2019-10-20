@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
-import { cardMainColor, imagePathSmall, IMAGE_SIZES } from '../lib/card';
+import { cardMainColor, imagePathSmall, formatManaCost } from '../lib/card';
 
 export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
   const theme = useContext(ThemeContext);
@@ -55,7 +55,7 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           }
         }
       `}</style>
-      <td>{card.mana < 0 ? 'X' : card.mana}</td>
+      <td>{formatManaCost(card)}</td>
       <td>
         <GemDot gems={card.gem} />
       </td>
