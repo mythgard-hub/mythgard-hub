@@ -56,14 +56,14 @@ describe('Cards Page', function() {
       .then(length => {
         expect(length).to.equal(allCardsLength, 'clearing text search works');
 
-        cy.get(`${factionFilter}:first`).click({ force: true });
+        cy.get(`${factionFilter}:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
       .then(length => {
         expect(length).to.be.below(allCardsLength, 'faction filter works');
 
-        cy.get(`${factionFilter}:first`).click({ force: true });
+        cy.get(`${factionFilter}:first`).click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
@@ -120,7 +120,7 @@ describe('Cards Page', function() {
         expect(allCardsLength).to.be.above(length, 'str filter works');
         cy.get(`${strengthPicker} img`)
           .eq(1)
-          .click({ force: true });
+          .click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })
@@ -138,7 +138,7 @@ describe('Cards Page', function() {
         expect(allCardsLength).to.be.above(length, 'defense filter works');
         cy.get(defensePickerBtn)
           .eq(1)
-          .click({ force: true });
+          .click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
       })

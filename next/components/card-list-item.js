@@ -27,17 +27,18 @@ export default function CardListItem({ card, onClick, options }) {
         // bigger version of the image (hidden until hover)
         .imgWrapper::before {
           content: url(${imgPathMedium});
-          width: ${IMAGE_SIZES.hoverImageWidth}px;
           position: absolute;
           top: -${IMAGE_SIZES.hoverImageVerticalOffset}px;
           left: -${(IMAGE_SIZES.hoverImageWidth - smallImageWidth) / 2}px;
           z-index: 2;
+          visibility: hidden;
           opacity: 0;
         }
 
         @media (hover: hover) {
           // Show the hover image (but only on devices that have hover)
           .imgWrapper:hover::before {
+            visibility: visible;
             opacity: 1;
             transition-delay: 0.7s;
           }
