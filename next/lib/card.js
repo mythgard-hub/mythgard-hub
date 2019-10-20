@@ -75,7 +75,7 @@ export const cardMainColor = (card, theme) => {
 };
 
 export const formatManaCost = card => {
-  if (!card || !card.mana) return '';
+  if (!card || (!card.mana && card.mana !== 0)) return '';
 
   return card.mana < 0 ? 'X' : card.mana;
 };
