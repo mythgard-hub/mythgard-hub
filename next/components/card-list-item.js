@@ -32,7 +32,6 @@ export default function CardListItem({ card, onClick, options }) {
         // bigger version of the image (hidden until hover)
         .imgWrapper::before {
           content: url(${imgPathMedium});
-          width: ${hoverImageWidth}px;
           position: absolute;
           top: -${hoverImageVerticalOffset}px;
           left: -${(hoverImageWidth - smallImageWidth) / 2}px;
