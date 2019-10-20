@@ -1,12 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { imagePathSmall, imagePathMedium } from '../lib/card.js';
-
-const smallImageWidthPortrait = 160;
-const smallImageWidthLandscape = 240;
-const hoverImageWidth = 320;
-const hoverImageVerticalOffset = 64;
+import { imagePathSmall, imagePathMedium, IMAGE_SIZES } from '../lib/card.js';
 
 export default function CardListItem({ card, onClick, options }) {
   options = options || {};
@@ -15,8 +10,8 @@ export default function CardListItem({ card, onClick, options }) {
   const imgPath = imagePathFn(card.name, card.set || undefined);
   const imgPathMedium = imagePathMedium(card.name, card.set || undefined);
   const smallImageWidth = options.isLandscape
-    ? smallImageWidthLandscape
-    : smallImageWidthPortrait;
+    ? IMAGE_SIZES.smallImageWidthLandscape
+    : IMAGE_SIZES.smallImageWidthPortrait;
 
   return (
     <>
@@ -29,23 +24,14 @@ export default function CardListItem({ card, onClick, options }) {
           display: inline-block;
           position: relative;
         }
-        // bigger version of the image (hidden until hover)
-        .imgWrapper::before {
+        // hover image
+        .imgWrapper:hover::before {
           content: url(${imgPathMedium});
-          width: ${hoverImageWidth}px;
+          width: ${IMAGE_SIZES.hoverImageWidth}px;
           position: absolute;
-          top: -${hoverImageVerticalOffset}px;
-          left: -${(hoverImageWidth - smallImageWidth) / 2}px;
+          top: -${IMAGE_SIZES.hoverImageVerticalOffset}px;
+          left: -${(IMAGE_SIZES.hoverImageWidth - smallImageWidth) / 2}px;
           z-index: 2;
-          opacity: 0;
-        }
-
-        @media (hover: hover) {
-          // Show the hover image (but only on devices that have hover)
-          .imgWrapper:hover::before {
-            opacity: 1;
-            transition-delay: 0.7s;
-          }
         }
       `}</style>
       {onClick && (

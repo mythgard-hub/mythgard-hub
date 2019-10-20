@@ -1,6 +1,13 @@
 import { FACTION_COLORS } from '../constants/factions';
 const cdn = process.env.MG_CARDS_CDN;
 
+export const IMAGE_SIZES = {
+  smallImageWidthPortrait: 160,
+  smallImageWidthLandscape: 240,
+  hoverImageWidth: 320,
+  hoverImageVerticalOffset: 64
+};
+
 const capitalize = s => {
   const rest = s.length > 1 ? s.slice(1) : '';
   return `${s[0].toUpperCase()}${rest}`;
