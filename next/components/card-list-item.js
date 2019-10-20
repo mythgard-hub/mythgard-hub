@@ -37,12 +37,14 @@ export default function CardListItem({ card, onClick, options }) {
           top: -${hoverImageVerticalOffset}px;
           left: -${(hoverImageWidth - smallImageWidth) / 2}px;
           z-index: 2;
+          visibility: hidden;
           opacity: 0;
         }
 
         @media (hover: hover) {
           // Show the hover image (but only on devices that have hover)
           .imgWrapper:hover::before {
+            visibility: visible;
             opacity: 1;
             transition-delay: 0.7s;
           }
