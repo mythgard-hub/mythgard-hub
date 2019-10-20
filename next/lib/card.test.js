@@ -1,4 +1,4 @@
-import { nameToImage } from './card.js';
+import { nameToImage, formatManaCost } from './card.js';
 
 describe('nameToImage', () => {
   it('handles empty string', function() {
@@ -49,5 +49,26 @@ describe('nameToImage', () => {
   it('handles three words', function() {
     const result = nameToImage('Xenagos the Reveler');
     expect(result).toEqual('Xenagos_The_Reveler');
+  });
+});
+
+describe('formatManaCost', () => {
+  it('gets a positive mana cost', function() {
+    expect(formatManaCost({ mana: 5 })).toEqual(5);
+    expect(formatManaCost({ mana: 0 })).toEqual(0);
+    expect(formatManaCost({ mana: 1 })).toEqual(1);
+    expect(formatManaCost({ mana: 15 })).toEqual(15);
+  });
+
+  it('gets a negative mana cost', function() {
+    expect(formatManaCost({ mana: -1 })).toEqual('X');
+    expect(formatManaCost({ mana: -10 })).toEqual('X');
+  });
+
+  it('gets nonsense data', function() {
+    expect(formatManaCost({ mana: 'a' })).toEqual('a');
+    expect(formatManaCost()).toEqual('');
+    expect(formatManaCost({})).toEqual('');
+    expect(formatManaCost(null)).toEqual('');
   });
 });

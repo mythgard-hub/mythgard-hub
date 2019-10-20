@@ -1,17 +1,15 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import { ThemeContext } from './theme-context';
-import GemDot from './gem-dot';
-import { cardMainColor } from '../lib/card';
 import { FACTION_COLORS } from '../constants/factions';
+import DeckCardsTableRow from './deck-card-table-row';
 
 export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
-  const theme = useContext(ThemeContext);
   const deckCards = deck && Object.values(deck.mainDeck);
   const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
   const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
   const colspan = deleteCard ? 3 : 2;
+  const theme = useContext(ThemeContext);
 
   /**
    * Returns a score that can be used to sort cards by faction. Note that
@@ -87,25 +85,11 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
         }
         td {
           padding: 2px 5px 5px 5px;
-          border: 1px solid #03080a;
+          border: ${theme.cardTableBorder};
         }
         .deck-title {
           font-size: 30px;
           margin: 0 0 20px 5px;
-        }
-        .deck-delete-card {
-          cursor: pointer;
-          text-align: center;
-          text-decoration: underline;
-        }
-        .deck-card-link,
-        .deck-card-link:hover,
-        .deck-card-link:focus {
-          color: ${theme.cardTableName};
-          text-decoration: none;
-          text-transform: uppercase;
-          font-weight: 700;
-          font-size: 0.8em;
         }
       `}</style>
       {!onlyTable && (
@@ -121,33 +105,14 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
             <td colSpan={2}>Power</td>
             <td colSpan={colspan}>{power}</td>
           </tr>
-          {sortedCards.map(deckCard => {
-            const backgroundColor = cardMainColor(deckCard.card, theme);
-            const color = backgroundColor ? theme.cardTableName : 'white';
-            return (
-              <tr key={deckCard.card.id} data-cy="deckCardRow">
-                <td>{deckCard.card.mana < 0 ? 'X' : deckCard.card.mana}</td>
-                <td>
-                  <GemDot gems={deckCard.card.gem} />
-                </td>
-                <td style={{ backgroundColor, color }}>
-                  <Link href={`/card?id=${deckCard.card.id}`}>
-                    <a className="deck-card-link">{deckCard.card.name}</a>
-                  </Link>
-                </td>
-                <td>&times;{deckCard.quantity}</td>
-                {deleteCard && (
-                  <td
-                    data-cy="deckDeleteCard"
-                    className="deck-delete-card"
-                    onClick={() => deleteCard(deckCard.card.id)}
-                  >
-                    &times;
-                  </td>
-                )}
-              </tr>
-            );
-          })}
+          {sortedCards.map((deckCard, i) => (
+            <DeckCardsTableRow
+              key={i}
+              card={deckCard.card}
+              quantity={deckCard.quantity}
+              deleteCard={deleteCard}
+            />
+          ))}
         </tbody>
       </table>
     </div>

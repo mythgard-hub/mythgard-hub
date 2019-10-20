@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import GemCost from './gem-cost.js';
-import { imagePathMedium as getImagePath } from '../lib/card.js';
+import {
+  imagePathMedium as getImagePath,
+  formatManaCost
+} from '../lib/card.js';
 import { getRarityImage } from '../constants/rarities.js';
 import { SUPERTYPES, SUPERTYPE_IMAGES } from '../constants/supertypes.js';
 
@@ -127,8 +130,7 @@ export default function Card({ card }) {
               <div className="card-detail-label">Cost</div>
               <hr />
               <div className="card-detail-text">
-                {card.mana < 0 ? 'X' : card.mana}{' '}
-                <GemCost costString={card.gem} />
+                {formatManaCost(card)} <GemCost costString={card.gem} />
               </div>
             </li>
             <li className="card-detail">
