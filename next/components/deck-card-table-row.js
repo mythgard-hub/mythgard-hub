@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
-import { cardMainColor, imagePathMedium, IMAGE_SIZES } from '../lib/card';
+import { cardMainColor, imagePathSmall, IMAGE_SIZES } from '../lib/card';
 
 export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
   const theme = useContext(ThemeContext);
   const backgroundColor = cardMainColor(card, theme);
   const color = backgroundColor ? theme.cardTableName : 'white';
-  const imgPathMedium = imagePathMedium(card.name, card.set || undefined);
+  const imagePath = imagePathSmall(card.name, card.set || undefined);
   const smallImageWidth = IMAGE_SIZES.smallImageWidthPortrait;
 
   return (
@@ -33,21 +33,25 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           font-weight: 700;
           font-size: 0.8em;
         }
-
+        .imgWrapper {
+          display: inline-block;
+          position: relative;
+        }
         // bigger version of the image (hidden until hover)
         .imgWrapper::before {
-          content: url(${imgPathMedium});
-          width: ${IMAGE_SIZES.hoverImageWidth}px;
+          content: url(${imagePath});
           position: absolute;
-          top: -${IMAGE_SIZES.hoverImageVerticalOffset}px;
-          left: -${(IMAGE_SIZES.hoverImageWidth - smallImageWidth) / 2}px;
+          top: 20px;
+          left: 50px;
           z-index: 2;
+          visibility: hidden;
           opacity: 0;
         }
 
         @media (hover: hover) {
           // Show the hover image (but only on devices that have hover)
           .imgWrapper:hover::before {
+            visibility: visible;
             opacity: 1;
             transition-delay: 0.7s;
           }
