@@ -23,6 +23,7 @@ export default function CardListItem({ card, onClick, options }) {
         .imgWrapper {
           display: inline-block;
           position: relative;
+          cursor: pointer;
         }
         // bigger version of the image (hidden until hover)
         .imgWrapper::before {
@@ -40,7 +41,7 @@ export default function CardListItem({ card, onClick, options }) {
           .imgWrapper:hover::before {
             visibility: visible;
             opacity: 1;
-            transition-delay: 0.7s;
+            transition-delay: 0.5s;
           }
         }
       `}</style>

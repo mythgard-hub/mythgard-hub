@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import FactionFilters from './faction-filters.js';
@@ -17,42 +17,26 @@ const widthSupportsTwoColumn = () => {
   return w >= 925;
 };
 
-const initialText = '';
-const initialFactions = [];
-const initialSuperTypes = [];
-const initialManaCosts = [];
-const initialStrengths = [];
-const initialDefenses = [];
-const initialRarities = [];
-
 export default function CardSearchForm(props) {
-  const { onSubmit } = props;
-  const [text, setText] = useState(initialText);
-  const [factions, setFactions] = useState(initialFactions);
-  const [supertypes, setSupertypes] = useState(initialSuperTypes);
-  const [manaCosts, setManaCosts] = useState(initialManaCosts);
-  const [strengths, setStrengths] = useState(initialStrengths);
-  const [defenses, setDefenses] = useState(initialDefenses);
-  const [rarities, setRarities] = useState(initialRarities);
-  const [clearFilters, setClearFilters] = useState(false);
+  const { onSubmit, searchQuery, defaultQuery } = props;
+  const [text, setText] = useState(searchQuery.text);
+  const [factions, setFactions] = useState(searchQuery.factions);
+  const [supertypes, setSupertypes] = useState(searchQuery.supertypes);
+  const [manaCosts, setManaCosts] = useState(searchQuery.manaCosts);
+  const [strengths, setStrengths] = useState(searchQuery.strengths);
+  const [defenses, setDefenses] = useState(searchQuery.defenses);
+  const [rarities, setRarities] = useState(searchQuery.rarities);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
 
-  useEffect(() => {
-    if (clearFilters) {
-      handleSubmit();
-      setClearFilters(false);
-    }
-  });
-
   const handleClearFilters = () => {
-    setText(initialText);
-    setFactions(initialFactions);
-    setSupertypes(initialSuperTypes);
-    setManaCosts(initialManaCosts);
-    setStrengths(initialStrengths);
-    setDefenses(initialDefenses);
-    setRarities(initialRarities);
-    setClearFilters(true);
+    setText(defaultQuery.text);
+    setFactions(defaultQuery.factions);
+    setSupertypes(defaultQuery.supertypes);
+    setManaCosts(defaultQuery.manaCosts);
+    setStrengths(defaultQuery.strengths);
+    setDefenses(defaultQuery.defenses);
+    setRarities(defaultQuery.rarities);
+    props.onClearFilters();
   };
 
   const handleSubmit = e => {
@@ -194,7 +178,20 @@ export default function CardSearchForm(props) {
   );
 }
 
+const queryPropType = PropTypes.shape({
+  text: PropTypes.string,
+  factions: PropTypes.array,
+  supertypes: PropTypes.array,
+  manaCosts: PropTypes.array,
+  strengths: PropTypes.array,
+  defenses: PropTypes.array,
+  rarities: PropTypes.array
+}).isRequired;
+
 CardSearchForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  onClearFilters: PropTypes.func.isRequired,
+  searchQuery: queryPropType,
+  defaultQuery: queryPropType,
   children: PropTypes.any
 };
