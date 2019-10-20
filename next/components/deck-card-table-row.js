@@ -40,8 +40,8 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
         .imgWrapper::before {
           content: url(${imagePath});
           position: absolute;
-          top: 20px;
-          left: 50px;
+          top: 50%;
+          left: 70%;
           z-index: 2;
           visibility: hidden;
           opacity: 0;
