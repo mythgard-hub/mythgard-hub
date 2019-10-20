@@ -34,8 +34,8 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           font-size: 0.8em;
         }
         .imgWrapper {
-          display: inline-block;
           position: relative;
+          cursor: pointer;
         }
         // bigger version of the image (hidden until hover)
         .imgWrapper::before {
@@ -60,12 +60,10 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
       <td>
         <GemDot gems={card.gem} />
       </td>
-      <td style={{ backgroundColor, color }}>
-        <div className="imgWrapper">
-          <Link href={`/card?id=${card.id}`}>
-            <a className="deck-card-link">{card.name}</a>
-          </Link>
-        </div>
+      <td style={{ backgroundColor, color }} className="imgWrapper">
+        <Link href={`/card?id=${card.id}`}>
+          <a className="deck-card-link">{card.name}</a>
+        </Link>
       </td>
       <td>&times;{quantity}</td>
       {deleteCard && (
