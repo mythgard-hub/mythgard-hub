@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { ThemeContext } from './theme-context';
 import { FACTION_COLORS } from '../constants/factions';
 import DeckCardsTableRow from './deck-card-table-row';
 
@@ -7,6 +9,7 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
   const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
   const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
   const colspan = deleteCard ? 3 : 2;
+  const theme = useContext(ThemeContext);
 
   /**
    * Returns a score that can be used to sort cards by faction. Note that
@@ -82,7 +85,7 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
         }
         td {
           padding: 2px 5px 5px 5px;
-          border: 1px solid #03080a;
+          border: ${theme.cardTableBorder};
         }
         .deck-title {
           font-size: 30px;

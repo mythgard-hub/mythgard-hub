@@ -10,14 +10,13 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
   const backgroundColor = cardMainColor(card, theme);
   const color = backgroundColor ? theme.cardTableName : 'white';
   const imagePath = imagePathSmall(card.name, card.set || undefined);
-  const smallImageWidth = IMAGE_SIZES.smallImageWidthPortrait;
 
   return (
     <tr key={card.id} data-cy="deckCardRow">
       <style jsx>{`
         td {
           padding: 2px 5px 5px 5px;
-          border: 1px solid #03080a;
+          border: ${theme.cardTableBorder};
         }
         .deck-delete-card {
           cursor: pointer;

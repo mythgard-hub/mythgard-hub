@@ -16,6 +16,7 @@ export const themes = {
     tabColor: mgColors.lightBlue,
     border: `1px solid ${mgColors.orange}`,
     borderAccent: `1px solid ${mgColors.blue}`,
+    cardTableBorder: `1px solid ${mgColors.darkGray}`,
     fontFamily: mgFonts.exo2,
     buttonBackground: mgColors.mediumGray,
     buttonBackgroundHover: mgColors.mediumLightGray,

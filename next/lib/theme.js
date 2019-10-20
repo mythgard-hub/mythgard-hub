@@ -9,6 +9,7 @@ export const mgColors = {
   mediumLighterGray: '#999999',
   mediumLightGray: '#505050',
   mediumGray: '#333333',
+  darkGray: '#03080A',
   grayBlue: '#1C2D35',
   lightBlue: '#458A9E',
   lightGreen: '#B4E185',
