@@ -53,7 +53,6 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           .imgWrapper:hover::before {
             visibility: visible;
             opacity: 1;
-            transition-delay: 0.7s;
           }
         }
       `}</style>
