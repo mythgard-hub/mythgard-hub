@@ -8,7 +8,7 @@ import DeckSearchFormUpdated from './deck-search-form-updated';
 
 const resetFilters = values => {
   return {
-    name: '',
+    name: values.name,
     cardValue: '',
     cardSelections: values.cardSelections,
     cardSuggestions: [],
