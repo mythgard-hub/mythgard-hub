@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-apollo-hooks';
-import ErrorMessage from './error-message';
 import FactionFilters from './faction-filters.js';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import CardSearch from './card-search';
-import allCardsQuery from '../lib/queries/all-cards-query';
 import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
 
@@ -13,7 +10,7 @@ const resetFilters = values => {
   return {
     name: '',
     cardValue: '',
-    cardSelections: [],
+    cardSelections: values.cardSelections,
     cardSuggestions: [],
     factionNames: values.factionNames,
     isOnlyFactions: values.isOnlyFactions,
@@ -23,7 +20,10 @@ const resetFilters = values => {
 };
 
 export default function DeckSearchForm(props) {
-  const { onSubmit, searchQuery, defaultQuery } = props;
+  const { onSubmit, searchQuery, defaultQuery, allCards } = props;
+  searchQuery.cardSelections = searchQuery.cardIds.map(id => {
+    return allCards.cards.nodes.find(c => c.id === id);
+  });
   const [filters, setFilters] = useState(resetFilters(searchQuery));
 
   const changeState = (filterName, value) => {
@@ -50,11 +50,8 @@ export default function DeckSearchForm(props) {
     onSubmit(defaultQuery);
   };
 
-  const { error, data } = useQuery(allCardsQuery);
-
   let cardSearchElement = null;
-  if (error) cardSearchElement = <ErrorMessage message={error.message} />;
-  if (data && data.cards) {
+  if (allCards && allCards.cards) {
     cardSearchElement = (
       <CardSearch
         suggestions={filters.cardSuggestions}
@@ -63,7 +60,7 @@ export default function DeckSearchForm(props) {
         }
         value={filters.cardValue}
         onChangeValue={cardValue => changeState('cardValue', cardValue)}
-        cards={data.cards.nodes}
+        cards={allCards.cards.nodes}
         selections={filters.cardSelections}
         disabled={filters.cardSelections.length > 4}
         onSelect={cardSelections =>
@@ -201,5 +198,8 @@ const queryProps = {
 DeckSearchForm.propTypes = {
   onSubmit: PropTypes.func,
   searchQuery: queryProps,
-  defaultQuery: queryProps
+  defaultQuery: queryProps,
+  allCards: PropTypes.shape({
+    cards: PropTypes.array
+  })
 };

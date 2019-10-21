@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import ErrorMessage from '../components/error-message';
 import DeckSearchForm from '../components/deck-search-form';
 import SomeDecks from '../components/some-decks';
 import PageBanner from '../components/page-banner';
 import Layout from '../components/layout';
 import { useRouter } from 'next/router';
+import { useQuery } from 'react-apollo-hooks';
+import allCardsQuery from '../lib/queries/all-cards-query';
 
 const searchQueryDefaults = {
   name: '',
@@ -26,7 +29,12 @@ export default function DecksPage() {
           : value.split(',');
     }
   }
+  initialSearchQuery.cardIds = initialSearchQuery.cardIds.map(i =>
+    parseInt(i, 10)
+  );
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
+
+  const { error, data, loading } = useQuery(allCardsQuery);
 
   const handleSearchSubmit = searchQuery => {
     setSearchQuery(searchQuery);
@@ -42,11 +50,16 @@ export default function DecksPage() {
         }
       `}</style>
       <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
-      <DeckSearchForm
-        onSubmit={handleSearchSubmit}
-        searchQuery={searchQuery}
-        defaultQuery={{ ...searchQueryDefaults }}
-      />
+
+      {error && <ErrorMessage message={error.message} />}
+      {!loading && (
+        <DeckSearchForm
+          onSubmit={handleSearchSubmit}
+          searchQuery={searchQuery}
+          defaultQuery={{ ...searchQueryDefaults }}
+          allCards={data}
+        />
+      )}
       <h1>Results</h1>
       <SomeDecks search={searchQuery} />
     </Layout>
