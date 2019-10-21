@@ -16,9 +16,9 @@ const resetFilters = values => {
     cardSelections: [],
     cardSuggestions: [],
     factionNames: values.factionNames,
-    isOnlyFactions: true,
-    updatedTime: '150',
-    authorName: ''
+    isOnlyFactions: values.isOnlyFactions,
+    updatedTime: values.updatedTime,
+    authorName: values.authorName
   };
 };
 
