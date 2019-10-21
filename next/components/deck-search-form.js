@@ -9,13 +9,13 @@ import allCardsQuery from '../lib/queries/all-cards-query';
 import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
 
-const resetFilters = () => {
+const resetFilters = values => {
   return {
     name: '',
     cardValue: '',
     cardSelections: [],
     cardSuggestions: [],
-    factionNames: [],
+    factionNames: values.factionNames,
     isOnlyFactions: true,
     updatedTime: '150',
     authorName: ''
@@ -23,8 +23,8 @@ const resetFilters = () => {
 };
 
 export default function DeckSearchForm(props) {
-  const { onSubmit } = props;
-  const [filters, setFilters] = useState(resetFilters());
+  const { onSubmit, searchQuery, defaultQuery } = props;
+  const [filters, setFilters] = useState(resetFilters(searchQuery));
 
   const changeState = (filterName, value) => {
     setFilters(prevFilters => ({
@@ -46,8 +46,8 @@ export default function DeckSearchForm(props) {
   };
 
   const handleClear = () => {
-    setFilters(resetFilters());
-    onSubmit({});
+    setFilters(resetFilters(defaultQuery));
+    onSubmit(defaultQuery);
   };
 
   const { error, data } = useQuery(allCardsQuery);
@@ -189,6 +189,17 @@ export default function DeckSearchForm(props) {
   );
 }
 
+const queryProps = {
+  name: PropTypes.string,
+  cardIds: PropTypes.array,
+  factionNames: PropTypes.array,
+  isOnlyFactions: PropTypes.bool,
+  updatedTime: PropTypes.string,
+  authorName: PropTypes.string
+};
+
 DeckSearchForm.propTypes = {
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  searchQuery: queryProps,
+  defaultQuery: queryProps
 };

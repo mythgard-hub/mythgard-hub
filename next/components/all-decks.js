@@ -18,7 +18,7 @@ export default function AllDecks() {
       first: pageSize,
       offset: currentPage * pageSize
     },
-    onCompleted: _ => {
+    onCompleted: () => {
       if (!dataLoaded.current) {
         setTimeout(() => {
           dataLoaded.current = true;
