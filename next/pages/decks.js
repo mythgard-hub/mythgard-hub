@@ -11,12 +11,14 @@ import allCardsQuery from '../lib/queries/all-cards-query';
 import queryToParams from '../lib/url-to-search-parameters.js';
 import { searchParamsPostProcessNumArray as postProcessNumArray } from '../lib/url-to-search-parameters.js';
 
+const defaultUpdatedTime = '150';
+
 const searchQueryDefaults = {
   name: '',
   cardIds: [],
   factionNames: [],
   isOnlyFactions: true,
-  updatedTime: '150',
+  updatedTime: defaultUpdatedTime,
   authorName: ''
 };
 
@@ -64,7 +66,7 @@ export default function DecksPage() {
       )}
       <h1>Results</h1>
       {hasQuery && <SomeDecks search={searchQuery} />}
-      {!hasQuery && <AllDecks />}
+      {!hasQuery && <AllDecks defaultDaysAgo={defaultUpdatedTime} />}
     </Layout>
   );
 }
