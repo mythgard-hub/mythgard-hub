@@ -23,7 +23,10 @@ const cardsErr = 'Error initializing deck seach';
 
 export default function DecksPage() {
   const router = useRouter();
-  const urlSearchQuery = queryToParams(searchQueryDefaults, router.query);
+  const urlSearchQuery = queryToParams(
+    { ...searchQueryDefaults },
+    router.query
+  );
   postProcessNumArray(urlSearchQuery, 'cardIds');
   const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
 
