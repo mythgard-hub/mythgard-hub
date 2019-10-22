@@ -16,13 +16,12 @@ describe('Decks Page', function() {
   it('works', function() {
     cy.get('[data-cy="deckListItem"] a:first').click();
     cy.location().should(location => {
-      expect(location.pathname).to.eq('/deck');
+      expect(location.pathname).to.eq('/deck', 'links to decks work');
     });
     cy.get(deckName).should('have.length', 1);
   });
 
   it('should search for decks', function() {
-    cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckListItem"]').then(list => {
       // test deck name search - submit by clicking the submit button
       const initialListLength = list.length;
@@ -61,7 +60,10 @@ describe('Decks Page', function() {
       cy.get('[data-cy="deckListItem"]')
         .then(cards => {
           lengthAfterOneFilter = cards.length;
-          expect(lengthAfterOneFilter).to.be.lessThan(initialListLength);
+          expect(lengthAfterOneFilter).to.be.lessThan(
+            initialListLength,
+            'filter by card name works'
+          );
           cy.get(`${cardSearch} input`).type('harm');
           cy.get(`${cardSearch} input`).type('{enter}');
           cy.get(cardSearchSelections).should('have.length', 2);
@@ -69,7 +71,10 @@ describe('Decks Page', function() {
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
-          expect(cards.length).to.be.lessThan(lengthAfterOneFilter);
+          expect(cards.length).to.be.lessThan(
+            lengthAfterOneFilter,
+            'filter by card name - another card'
+          );
         })
         .then(() => {
           cy.get(`${cardSearchSelections} button`).should('have.length', 2);
@@ -89,7 +94,10 @@ describe('Decks Page', function() {
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
-          expect(cards.length).to.be.lessThan(initialListLength);
+          expect(cards.length).to.be.lessThan(
+            initialListLength,
+            'faction search works'
+          );
           cy.get(`${factionFilter}:first`).click();
           cy.get('[data-cy="deckSearchSubmit"]').click();
           cy.get('[data-cy="deckListItem"]').should(
@@ -103,7 +111,10 @@ describe('Decks Page', function() {
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
-          expect(cards.length).to.be.lessThan(initialListLength);
+          expect(cards.length).to.be.lessThan(
+            initialListLength,
+            'author search works'
+          );
           cy.get('[data-cy="deckSearchDeckAuthor"]').clear();
           cy.get('[data-cy="deckSearchSubmit"]').click();
           cy.get('[data-cy="deckListItem"]').should(
@@ -153,7 +164,10 @@ describe('Decks Page', function() {
       cy.get('[data-cy="deckListItem"]')
         .then(cards => {
           lengthAfterOneFilter = cards.length;
-          expect(lengthAfterOneFilter).to.be.lessThan(initialListLength);
+          expect(lengthAfterOneFilter).to.be.lessThan(
+            initialListLength,
+            'filter by card name'
+          );
           cy.get(`${cardSearch} input`).type('harm');
           cy.get(`${cardSearch} input`).type('{enter}');
           cy.get(cardSearchSelections).should('have.length', 2);
@@ -161,7 +175,10 @@ describe('Decks Page', function() {
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
-          expect(cards.length).to.be.lessThan(lengthAfterOneFilter);
+          expect(cards.length).to.be.lessThan(
+            lengthAfterOneFilter,
+            'filter by another card name'
+          );
         })
         .then(() => {
           cy.get(`${cardSearchSelections} button`).should('have.length', 2);
@@ -180,7 +197,10 @@ describe('Decks Page', function() {
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
-          expect(cards.length).to.be.lessThan(initialListLength);
+          expect(cards.length).to.be.lessThan(
+            initialListLength,
+            'filter by factions'
+          );
           cy.get('[data-cy="deckSearchClear"]').click();
           cy.get('[data-cy="deckListItem"]').should(
             'have.length',
@@ -193,7 +213,10 @@ describe('Decks Page', function() {
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
-          expect(cards.length).to.be.lessThan(initialListLength);
+          expect(cards.length).to.be.lessThan(
+            initialListLength,
+            'filter by author'
+          );
           cy.get('[data-cy="deckSearchClear"]').click();
           cy.get('[data-cy="deckListItem"]').should(
             'have.length',
