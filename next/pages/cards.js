@@ -20,10 +20,7 @@ const searchQueryDefaults = {
 
 function CardsPage() {
   const router = useRouter();
-  const urlSearchQuery = queryToParams(
-    { ...searchQueryDefaults },
-    router.query
-  );
+  const urlSearchQuery = queryToParams(searchQueryDefaults, router.query);
   const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
 
   const handleSearchSubmit = searchQuery => {
