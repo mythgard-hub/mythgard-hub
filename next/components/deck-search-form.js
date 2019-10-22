@@ -21,9 +21,13 @@ const resetFilters = values => {
 
 export default function DeckSearchForm(props) {
   const { onSubmit, searchQuery, defaultQuery, allCards } = props;
-  searchQuery.cardSelections = searchQuery.cardIds.map(id => {
-    return allCards.cards.nodes.find(c => c.id === id);
-  });
+  searchQuery.cardSelections = searchQuery.cardIds.reduce((acc, id) => {
+    const cardMatch = allCards.cards.nodes.find(c => c.id === id);
+    if (cardMatch) {
+      acc.push(cardMatch);
+    }
+    return acc;
+  }, []);
   const [filters, setFilters] = useState(resetFilters(searchQuery));
 
   const changeState = (filterName, value) => {
@@ -46,7 +50,7 @@ export default function DeckSearchForm(props) {
   };
 
   const handleClear = () => {
-    setFilters(resetFilters(defaultQuery));
+    setFilters(resetFilters({ ...defaultQuery, cardSelections: [] }));
     onSubmit(defaultQuery);
   };
 
@@ -200,6 +204,8 @@ DeckSearchForm.propTypes = {
   searchQuery: queryProps,
   defaultQuery: queryProps,
   allCards: PropTypes.shape({
-    cards: PropTypes.array
+    cards: PropTypes.shape({
+      nodes: PropTypes.array
+    })
   })
 };

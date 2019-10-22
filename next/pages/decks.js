@@ -32,7 +32,8 @@ export default function DecksPage() {
   initialSearchQuery.cardIds = initialSearchQuery.cardIds.map(i =>
     parseInt(i, 10)
   );
-  initialSearchQuery.isOnlyFactions = `${initialSearchQuery}` === 'true';
+  initialSearchQuery.isOnlyFactions =
+    `${initialSearchQuery.isOnlyFactions}`.toLowerCase() === 'true';
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
 
   const { error, data, loading } = useQuery(allCardsQuery);
