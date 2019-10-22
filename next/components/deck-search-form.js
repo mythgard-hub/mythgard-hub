@@ -19,15 +19,24 @@ const resetFilters = values => {
   };
 };
 
-export default function DeckSearchForm(props) {
-  const { onSubmit, searchQuery, defaultQuery, allCards } = props;
-  searchQuery.cardSelections = searchQuery.cardIds.reduce((acc, id) => {
-    const cardMatch = allCards.cards.nodes.find(c => c.id === id);
+const serializeCards = cardArray => cardArray.map(c => c.id);
+
+const deserializeCards = (serializedCards, allCards) => {
+  return serializedCards.reduce((acc, id) => {
+    const cardMatch = allCards.find(c => c.id === id);
     if (cardMatch) {
       acc.push(cardMatch);
     }
     return acc;
   }, []);
+};
+
+export default function DeckSearchForm(props) {
+  const { onSubmit, searchQuery, defaultQuery, allCards } = props;
+  searchQuery.cardSelections = deserializeCards(
+    searchQuery.cardIds,
+    allCards.cards.nodes
+  );
   const [filters, setFilters] = useState(resetFilters(searchQuery));
 
   const changeState = (filterName, value) => {
@@ -39,9 +48,10 @@ export default function DeckSearchForm(props) {
 
   const handleSubmit = e => {
     e && e.preventDefault();
+    const serializedCards = serializeCards(filters.cardSelections);
     onSubmit({
       name: filters.name,
-      cardIds: filters.cardSelections.map(c => c.id),
+      cardIds: serializedCards,
       factionNames: filters.factionNames,
       isOnlyFactions: filters.isOnlyFactions,
       updatedTime: filters.updatedTime,
