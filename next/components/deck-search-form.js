@@ -190,14 +190,14 @@ export default function DeckSearchForm(props) {
   );
 }
 
-const queryProps = {
+const queryProps = PropTypes.shape({
   name: PropTypes.string,
   cardIds: PropTypes.array,
   factionNames: PropTypes.array,
   isOnlyFactions: PropTypes.bool,
   updatedTime: PropTypes.string,
   authorName: PropTypes.string
-};
+});
 
 DeckSearchForm.propTypes = {
   onSubmit: PropTypes.func,

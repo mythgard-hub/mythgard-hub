@@ -7,6 +7,8 @@ import Layout from '../components/layout';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-apollo-hooks';
 import allCardsQuery from '../lib/queries/all-cards-query';
+import queryToParams from '../lib/url-to-search-parameters.js';
+import { searchParamsPostProcessNumArray as postProcessNumArray } from '../lib/url-to-search-parameters.js';
 
 const searchQueryDefaults = {
   name: '',
@@ -17,24 +19,13 @@ const searchQueryDefaults = {
   authorName: ''
 };
 
+const cardsErr = 'Error initializing deck seach';
+
 export default function DecksPage() {
   const router = useRouter();
-  const initialSearchQuery = { ...searchQueryDefaults };
-  for (const entry of Object.entries(router.query)) {
-    const [name, value] = entry;
-    if (value) {
-      initialSearchQuery[name] =
-        typeof searchQueryDefaults[name] !== 'object'
-          ? value
-          : value.split(',');
-    }
-  }
-  initialSearchQuery.cardIds = initialSearchQuery.cardIds.map(i =>
-    parseInt(i, 10)
-  );
-  initialSearchQuery.isOnlyFactions =
-    `${initialSearchQuery.isOnlyFactions}`.toLowerCase() === 'true';
-  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
+  const urlSearchQuery = queryToParams(searchQueryDefaults, router.query);
+  postProcessNumArray(urlSearchQuery, 'cardIds');
+  const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
 
   const { error, data, loading } = useQuery(allCardsQuery);
 
@@ -53,7 +44,7 @@ export default function DecksPage() {
       `}</style>
       <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
 
-      {error && <ErrorMessage message={error.message} />}
+      {error && <ErrorMessage message={cardsErr} />}
       {!loading && (
         <DeckSearchForm
           onSubmit={handleSearchSubmit}
