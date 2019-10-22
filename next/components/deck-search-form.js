@@ -32,7 +32,13 @@ const deserializeCards = (serializedCards, allCards) => {
 };
 
 export default function DeckSearchForm(props) {
-  const { onSubmit, searchQuery, defaultQuery, allCards } = props;
+  const {
+    onSubmit,
+    searchQuery,
+    defaultQuery,
+    allCards,
+    onClearFilters
+  } = props;
   searchQuery.cardSelections = deserializeCards(
     searchQuery.cardIds,
     allCards.cards.nodes
@@ -61,7 +67,7 @@ export default function DeckSearchForm(props) {
 
   const handleClear = () => {
     setFilters(resetFilters({ ...defaultQuery, cardSelections: [] }));
-    onSubmit(defaultQuery);
+    onClearFilters();
   };
 
   let cardSearchElement = null;
@@ -217,5 +223,6 @@ DeckSearchForm.propTypes = {
     cards: PropTypes.shape({
       nodes: PropTypes.array
     })
-  })
+  }),
+  onClearFilters: PropTypes.func
 };

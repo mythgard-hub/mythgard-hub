@@ -35,6 +35,11 @@ export default function DecksPage() {
     router.replace(`/decks?${pageParams}`);
   };
 
+  const clearFilters = () => {
+    setSearchQuery({ ...searchQueryDefaults });
+    router.replace(`/decks`);
+  };
+
   return (
     <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
       <style jsx>{`
@@ -51,6 +56,7 @@ export default function DecksPage() {
           searchQuery={searchQuery}
           defaultQuery={{ ...searchQueryDefaults }}
           allCards={data}
+          onClearFilters={clearFilters}
         />
       )}
       <h1>Results</h1>
