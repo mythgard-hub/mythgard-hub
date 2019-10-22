@@ -3,6 +3,7 @@ import ErrorMessage from '../components/error-message';
 import DeckSearchForm from '../components/deck-search-form';
 import SomeDecks from '../components/some-decks';
 import PageBanner from '../components/page-banner';
+import AllDecks from '../components/all-decks.js';
 import Layout from '../components/layout';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-apollo-hooks';
@@ -40,6 +41,8 @@ export default function DecksPage() {
     router.replace(`/decks`);
   };
 
+  const hasQuery = Object.entries(router.query).length > 0;
+
   return (
     <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
       <style jsx>{`
@@ -60,7 +63,8 @@ export default function DecksPage() {
         />
       )}
       <h1>Results</h1>
-      <SomeDecks search={searchQuery} />
+      {hasQuery && <SomeDecks search={searchQuery} />}
+      {!hasQuery && <AllDecks />}
     </Layout>
   );
 }
