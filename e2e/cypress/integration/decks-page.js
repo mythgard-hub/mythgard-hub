@@ -173,6 +173,7 @@ describe('Decks Page', function() {
           cy.get(`${cardSearch} input`).type('{enter}');
           cy.get(cardSearchSelections).should('have.length', 2);
           cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.wait(500);
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
@@ -195,6 +196,7 @@ describe('Decks Page', function() {
           // test deck faction search
           cy.get(`${factionFilter}:first`).click();
           cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.wait(500);
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
@@ -211,6 +213,7 @@ describe('Decks Page', function() {
           // test deck author search
           cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv');
           cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.wait(500);
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
