@@ -57,6 +57,7 @@ describe('Decks Page', function() {
       cy.get(`${cardSearch} input`).type('{enter}');
       cy.get(cardSearchSelections).should('have.length', 1);
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]')
         .then(cards => {
           lengthAfterOneFilter = cards.length;
@@ -68,6 +69,7 @@ describe('Decks Page', function() {
           cy.get(`${cardSearch} input`).type('{enter}');
           cy.get(cardSearchSelections).should('have.length', 2);
           cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.wait(500);
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
@@ -91,6 +93,7 @@ describe('Decks Page', function() {
           // test deck faction search
           cy.get(`${factionFilter}:first`).click();
           cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.wait(500);
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
@@ -108,6 +111,7 @@ describe('Decks Page', function() {
           // test deck author search - submit by clicking the submit button
           cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv');
           cy.get('[data-cy="deckSearchSubmit"]').click();
+          cy.wait(500);
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
@@ -124,6 +128,7 @@ describe('Decks Page', function() {
 
           // test deck author search - submit by pressing enter
           cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv{enter}');
+          cy.wait(500);
           return cy.get('[data-cy="deckListItem"]');
         })
         .then(cards => {
