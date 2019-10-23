@@ -85,6 +85,7 @@ DeckCardsTableRow.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     mana: PropTypes.number,
-    gem: PropTypes.number
+    gem: PropTypes.string,
+    set: PropTypes.string
   })
 };

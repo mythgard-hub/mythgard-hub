@@ -1,27 +1,49 @@
 import React, { useState } from 'react';
-import AllDecks from '../components/all-decks';
+import ErrorMessage from '../components/error-message';
 import DeckSearchForm from '../components/deck-search-form';
 import SomeDecks from '../components/some-decks';
 import PageBanner from '../components/page-banner';
+import AllDecks from '../components/all-decks.js';
 import Layout from '../components/layout';
+import { useRouter } from 'next/router';
+import { useQuery } from 'react-apollo-hooks';
+import allCardsQuery from '../lib/queries/all-cards-query';
+import queryToParams from '../lib/url-to-search-parameters.js';
+import { searchParamsPostProcessNumArray as postProcessNumArray } from '../lib/url-to-search-parameters.js';
 
-const hasSearch = function(searchQuery) {
-  return (
-    searchQuery &&
-    (searchQuery.name ||
-      searchQuery.cardIds ||
-      searchQuery.factionNames ||
-      searchQuery.updatedTime ||
-      searchQuery.authorName)
-  );
+const defaultUpdatedTime = '150';
+
+const searchQueryDefaults = {
+  name: '',
+  cardIds: [],
+  factionNames: [],
+  isOnlyFactions: true,
+  updatedTime: defaultUpdatedTime,
+  authorName: ''
 };
 
+const cardsErr = 'Error initializing deck seach';
+
 export default function DecksPage() {
-  const [searchQuery, setSearchQuery] = useState({});
+  const router = useRouter();
+  const urlSearchQuery = queryToParams(searchQueryDefaults, router.query);
+  postProcessNumArray(urlSearchQuery, 'cardIds');
+  const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
+
+  const { error, data, loading } = useQuery(allCardsQuery);
 
   const handleSearchSubmit = searchQuery => {
     setSearchQuery(searchQuery);
+    const pageParams = new URLSearchParams(searchQuery).toString();
+    router.replace(`/decks?${pageParams}`);
   };
+
+  const clearFilters = () => {
+    setSearchQuery({ ...searchQueryDefaults });
+    router.replace(`/decks`);
+  };
+
+  const hasQuery = Object.entries(router.query).length > 0;
 
   return (
     <Layout title="Mythgard Hub | Decks" desc="Browse Mythgard decks">
@@ -31,13 +53,20 @@ export default function DecksPage() {
         }
       `}</style>
       <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
-      <DeckSearchForm onSubmit={handleSearchSubmit} />
-      <h1>Results</h1>
-      {hasSearch(searchQuery) ? (
-        <SomeDecks search={searchQuery} />
-      ) : (
-        <AllDecks />
+
+      {error && <ErrorMessage message={cardsErr} />}
+      {!loading && (
+        <DeckSearchForm
+          onSubmit={handleSearchSubmit}
+          searchQuery={searchQuery}
+          defaultQuery={{ ...searchQueryDefaults }}
+          allCards={data}
+          onClearFilters={clearFilters}
+        />
       )}
+      <h1>Results</h1>
+      {hasQuery && <SomeDecks search={searchQuery} />}
+      {!hasQuery && <AllDecks defaultDaysAgo={defaultUpdatedTime} />}
     </Layout>
   );
 }

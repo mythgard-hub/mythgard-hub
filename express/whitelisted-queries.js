@@ -262,8 +262,12 @@ mutation UpdateDeckAndRemoveCards(
 `,
 
   `
-  query decks($first:Int, $offset:Int) {
-    decks(orderBy: CREATED_DESC, first:$first, offset:$offset ) {
+  query decks($first:Int, $offset:Int, $modified:Datetime) {
+    decks(orderBy: CREATED_DESC, first:$first, offset:$offset, filter: {
+      modified: {
+        greaterThanOrEqualTo: $modified
+      }
+    }) {
       totalCount
       nodes {
         id
