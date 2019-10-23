@@ -161,6 +161,7 @@ describe('Decks Page', function() {
       cy.get(`${cardSearch} input`).type('{enter}');
       cy.get(cardSearchSelections).should('have.length', 1);
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]')
         .then(cards => {
           lengthAfterOneFilter = cards.length;
