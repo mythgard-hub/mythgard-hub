@@ -22,7 +22,7 @@ function Layout({ title, desc, children }) {
             font-family: ${theme.fontFamily};
             max-width: 960px;
             margin: auto;
-            min-height: 100%;
+            min-height: 100vh;
             background: ${theme.background};
           }
 
@@ -90,7 +90,6 @@ function Layout({ title, desc, children }) {
           html,
           body,
           #__next {
-            height: 97%;
             box-sizing: border-box;
           }
 
