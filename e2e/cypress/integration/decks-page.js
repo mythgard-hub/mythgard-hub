@@ -145,6 +145,7 @@ describe('Decks Page', function() {
 
   it('should search for decks with multiple words', function() {
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').then(list => {
       
       const initialListLength = list.length;
