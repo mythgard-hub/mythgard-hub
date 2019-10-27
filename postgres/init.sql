@@ -262,6 +262,19 @@ CREATE POLICY accountupdate_if_author
   USING ("id" = mythgard.current_user_id())
   WITH CHECK ("id" = mythgard.current_user_id());
 
+ALTER TABLE mythgard.deck_vote ENABLE ROW LEVEL SECURITY;
+
+-- Admin users can make any changes and read all rows
+CREATE POLICY deck_vote_admin_all ON mythgard.deck_vote TO admin USING (true) WITH CHECK (true);
+-- Non-admins can read all rows
+CREATE POLICY deck_vote_all_view ON mythgard.deck_vote FOR SELECT USING (true);
+-- Rows can only be updated by their author
+CREATE POLICY deck_vote_update_if_author
+  ON mythgard.deck_vote
+  FOR UPDATE
+  USING ("account_id" = mythgard.current_user_id())
+  WITH CHECK ("account_id" = mythgard.current_user_id());
+
 CREATE TABLE mythgard.tournament (
   id SERIAL PRIMARY KEY,
   name varchar(255),
