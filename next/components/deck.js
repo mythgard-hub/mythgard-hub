@@ -152,6 +152,15 @@ Deck.propTypes = {
     cardDecks: PropTypes.array,
     power: PropTypes.shape({ name: PropTypes.string.isRequired }),
     path: PropTypes.shape({ name: PropTypes.string.isRequired }),
-    author: PropTypes.shape({ username: PropTypes.string.isRequired })
+    author: PropTypes.shape({ username: PropTypes.string.isRequired }),
+    deckPreviews: PropTypes.shape({
+      nodes: PropTypes.arrayOf(
+        PropTypes.shape({
+          essenceCost: PropTypes.number,
+          factions: PropTypes.arrayOf(PropTypes.string),
+          deckCreated: PropTypes.string
+        })
+      )
+    })
   }).isRequired
 };
