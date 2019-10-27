@@ -4,6 +4,7 @@ import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
 import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
+<<<<<<< HEAD
 import {
   initializeDeckBuilder,
   getAuthor,
@@ -11,6 +12,10 @@ import {
   getDateCreated,
   getFactions
 } from '../lib/deck-utils';
+=======
+import DeckVote from './deck-vote';
+import { initializeDeckBuilder } from '../lib/deck-utils';
+>>>>>>> Start a deck voting component
 import { deckCardsQuery } from '../lib/deck-queries';
 import DeckCardsTable from './deck-card-table';
 import EssenceIndicator from './essence-indicator.js';
@@ -127,6 +132,7 @@ export default function Deck({ deck }) {
         <DeckExport deckInProgress={deckToExport} />
         <DeckEdit deck={deck} />
         <DeckDelete deck={deck} />
+        <DeckVote deck={deck} />
         <div className="deck-stats">
           <div className="stats-title">Essence</div>
           <hr className="gradient-hr" />
