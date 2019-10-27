@@ -12,3 +12,4 @@
 psql -h localhost -p 5433 -U postgres -d postgres -f import-cards.sql
 #psql -h localhost -p 5433 -U postgres -d postgres -f import-paths.sql
 #psql -h localhost -p 5433 -U postgres -d postgres -f import-powers.sql
+#psql -h localhost -p 5433 -U postgres -d postgres -f import-event-results.sql
