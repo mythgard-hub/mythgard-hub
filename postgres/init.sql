@@ -269,11 +269,14 @@ CREATE POLICY deck_vote_admin_all ON mythgard.deck_vote TO admin USING (true) WI
 -- Non-admins can read all rows
 CREATE POLICY deck_vote_all_view ON mythgard.deck_vote FOR SELECT USING (true);
 -- Rows can only be updated by their author
-CREATE POLICY deck_vote_update_if_author
+CREATE POLICY deck_vote_insert_if_author
   ON mythgard.deck_vote
-  FOR UPDATE
-  USING ("account_id" = mythgard.current_user_id())
+  FOR INSERT
   WITH CHECK ("account_id" = mythgard.current_user_id());
+CREATE POLICY deck_vote_delete_if_author
+  ON mythgard.deck_vote
+  FOR DELETE
+  USING ("account_id" = mythgard.current_user_id());
 
 CREATE TABLE mythgard.tournament (
   id SERIAL PRIMARY KEY,

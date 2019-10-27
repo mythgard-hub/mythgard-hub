@@ -1,33 +1,29 @@
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useState } from 'react';
-// import { ApolloContext } from 'react-apollo';
-// import deleteDeck from '../lib/mutations/delete-deck';
+import { ApolloContext } from 'react-apollo';
+import upvoteDeck from '../lib/mutations/deck-upvote.js';
 import UserContext from '../components/user-context';
 
 let messageTimeoutHandle;
 
 function DeckVote({ deck }) {
-  // const { client } = useContext(ApolloContext);
+  const { client } = useContext(ApolloContext);
   const { user } = useContext(UserContext);
   const [message, setMessage] = useState(null);
   const handleClick = useCallback(async () => {
-    const msg = `Are you sure? This action cannot be undone.`;
-    // Cypress will auto-confirm these dialogues
-    if (window.confirm(msg)) {
-      clearTimeout(messageTimeoutHandle);
-      let resp;
-      try {
-        // resp = await deleteDeck(client, deck.id);
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          console.error(err);
-        }
+    clearTimeout(messageTimeoutHandle);
+    let resp;
+    try {
+      resp = await upvoteDeck(client, deck.id, user.id);
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error(err);
       }
-      setMessage(resp ? 'Vote Successful' : 'Unable to vote');
-      messageTimeoutHandle = setTimeout(() => {
-        setMessage(null);
-      }, 2000);
     }
+    setMessage(resp ? 'Vote Successful' : 'Unable to vote');
+    messageTimeoutHandle = setTimeout(() => {
+      setMessage(null);
+    }, 2000);
   });
 
   const canVote = user && user.id !== deck.author.id;
