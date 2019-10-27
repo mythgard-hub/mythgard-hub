@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useContext, useState } from 'react';
 import { ApolloContext } from 'react-apollo';
 import upvoteDeck from '../lib/mutations/deck-upvote.js';
+// import removeDeckUpvote from '../lib/mutations/deck-remove-upvote.js';
 import UserContext from '../components/user-context';
 
 let messageTimeoutHandle;
