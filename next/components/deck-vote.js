@@ -37,16 +37,19 @@ const voteError = 'Error changing vote';
 
 function DeckVote({ deck }) {
   const { user } = useContext(UserContext);
-  const [upvoteDeck] = useMutation(upvoteDeckMutation, {
+  const [upvoteDeck, upvoteDeckState] = useMutation(upvoteDeckMutation, {
     update(cache, { data }) {
       cacheVote(cache, data.createDeckVote.deckVote.id, deck.id, user.id);
     }
   });
-  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation, {
-    update(cache) {
-      cacheVote(cache, 0, deck.id, user.id);
+  const [undoDeckUpvote, undoUpvoteDeckState] = useMutation(
+    removeDeckUpvoteMutation,
+    {
+      update(cache) {
+        cacheVote(cache, 0, deck.id, user.id);
+      }
     }
-  });
+  );
   const { data } = useQuery(deckVotesQuery, {
     variables: {
       deckId: deck.id,
@@ -98,6 +101,7 @@ function DeckVote({ deck }) {
   });
 
   const canVote = user && user.id !== deck.author.id;
+  const voteDisabled = upvoteDeckState.loading || undoUpvoteDeckState.loading;
 
   const votes =
     deck &&
@@ -116,8 +120,16 @@ function DeckVote({ deck }) {
       <span data-cy="deckVoteCount" className="voteCount">
         {votes + voteCountModifier}
       </span>
-      {canVote && !userDeckVote && <button onClick={handleUpvote}>Vote</button>}
-      {userDeckVote && <button onClick={handleRemoveVote}>Remove Vote</button>}
+      {canVote && !userDeckVote && (
+        <button disabled={voteDisabled} onClick={handleUpvote}>
+          Vote
+        </button>
+      )}
+      {userDeckVote && (
+        <button onClick={handleRemoveVote} disabled={voteDisabled}>
+          Remove Vote
+        </button>
+      )}
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </div>
   );
