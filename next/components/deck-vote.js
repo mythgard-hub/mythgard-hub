@@ -4,8 +4,8 @@ import upvoteDeckMutation from '../lib/mutations/deck-upvote.js';
 import removeDeckUpvoteMutation from '../lib/mutations/deck-remove-upvote.js';
 import UserContext from '../components/user-context';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-import { useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import ErrorMessage from './error-message.js';
 
 const deckVotesQuery = gql`
   query deckAccountVotes($deckId: Int!, $accountId: Int!) {
@@ -24,7 +24,7 @@ const deckVotesQuery = gql`
   }
 `;
 
-const updateCache = (cache, id, deckId, accountId) => {
+const cacheVote = (cache, id, deckId, accountId) => {
   const nodes = id ? [{ id, __typename: 'DeckVote' }] : [];
   cache.writeQuery({
     query: deckVotesQuery,
@@ -33,18 +33,18 @@ const updateCache = (cache, id, deckId, accountId) => {
   });
 };
 
-let messageTimeoutHandle;
+const voteError = 'Error changing vote';
 
 function DeckVote({ deck }) {
   const { user } = useContext(UserContext);
   const [upvoteDeck] = useMutation(upvoteDeckMutation, {
     update(cache, { data }) {
-      updateCache(cache, data.createDeckVote.deckVote.id, deck.id, user.id);
+      cacheVote(cache, data.createDeckVote.deckVote.id, deck.id, user.id);
     }
   });
   const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation, {
     update(cache) {
-      updateCache(cache, 0, deck.id, user.id);
+      cacheVote(cache, 0, deck.id, user.id);
     }
   });
   const { data } = useQuery(deckVotesQuery, {
@@ -55,11 +55,10 @@ function DeckVote({ deck }) {
   });
   const userDeckVote =
     data && data.deckVotes && data.deckVotes.nodes && data.deckVotes.nodes[0];
-  const [message, setMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [voteCountModifier, setVoteCountModifier] = useState(0);
 
   const handleUpvote = useCallback(async () => {
-    clearTimeout(messageTimeoutHandle);
     let resp;
     try {
       resp = await upvoteDeck({
@@ -73,15 +72,14 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
-    setVoteCountModifier(voteCountModifier + 1);
-    setMessage(resp ? 'Vote Successful' : 'Error voting');
-    messageTimeoutHandle = setTimeout(() => {
-      setMessage(null);
-    }, 2000);
+    if (!resp) {
+      setErrorMessage(voteError);
+    } else {
+      setVoteCountModifier(voteCountModifier + 1);
+    }
   });
 
   const handleRemoveVote = useCallback(async () => {
-    clearTimeout(messageTimeoutHandle);
     let resp;
     try {
       resp = await undoDeckUpvote({
@@ -92,11 +90,11 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
-    setVoteCountModifier(voteCountModifier - 1);
-    setMessage(resp ? 'Unvote Successful' : 'Error removing vote');
-    messageTimeoutHandle = setTimeout(() => {
-      setMessage(null);
-    }, 2000);
+    if (!resp) {
+      setErrorMessage(voteError);
+    } else {
+      setVoteCountModifier(voteCountModifier - 1);
+    }
   });
 
   const canVote = user && user.id !== deck.author.id;
@@ -120,7 +118,7 @@ function DeckVote({ deck }) {
       </span>
       {canVote && !userDeckVote && <button onClick={handleUpvote}>Vote</button>}
       {userDeckVote && <button onClick={handleRemoveVote}>Remove Vote</button>}
-      {message && <span>{message}</span>}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </div>
   );
 }
