@@ -26,8 +26,16 @@ let messageTimeoutHandle;
 
 function DeckVote({ deck }) {
   const { user } = useContext(UserContext);
-  const [upvoteDeck] = useMutation(upvoteDeckMutation);
-  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation);
+  const [upvoteDeck] = useMutation(upvoteDeckMutation, {
+    onCompleted() {
+      setExtraVote(1);
+    }
+  });
+  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation, {
+    onCompleted() {
+      setExtraVote(-1);
+    }
+  });
   const { data } = useQuery(deckVotesQuery, {
     variables: {
       deckId: deck.id,
@@ -37,6 +45,7 @@ function DeckVote({ deck }) {
   const userDeckVote =
     data && data.deckVotes && data.deckVotes.nodes && data.deckVotes.nodes[0];
   const [message, setMessage] = useState(null);
+  const [extraVote, setExtraVote] = useState(0);
 
   const handleUpvote = useCallback(async () => {
     clearTimeout(messageTimeoutHandle);
@@ -94,7 +103,7 @@ function DeckVote({ deck }) {
         }
       `}</style>
       <span data-cy="deckVoteCount" className="voteCount">
-        {votes}
+        {votes + extraVote}
       </span>
       {canVote && !userDeckVote && <button onClick={handleUpvote}>Vote</button>}
       {userDeckVote && <button onClick={handleRemoveVote}>Remove Vote</button>}
