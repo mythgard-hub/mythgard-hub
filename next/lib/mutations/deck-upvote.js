@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const upvoteDeckMutation = gql`
+export default gql`
   mutation upvoteDeck($deckId: Int, $accountId: Int) {
     createDeckVote(
       input: { deckVote: { deckId: $deckId, accountId: $accountId } }
@@ -11,15 +11,3 @@ const upvoteDeckMutation = gql`
     }
   }
 `;
-
-const upvoteDeck = (apolloClient, deckId, accountId) => {
-  return apolloClient.mutate({
-    mutation: upvoteDeckMutation,
-    variables: {
-      deckId,
-      accountId
-    }
-  });
-};
-
-export default upvoteDeck;

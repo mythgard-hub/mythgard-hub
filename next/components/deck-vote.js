@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useState } from 'react';
-import { ApolloContext } from 'react-apollo';
-import upvoteDeck from '../lib/mutations/deck-upvote.js';
-import removeDeckUpvote from '../lib/mutations/deck-remove-upvote.js';
+import upvoteDeckMutation from '../lib/mutations/deck-upvote.js';
+import removeDeckUpvoteMutation from '../lib/mutations/deck-remove-upvote.js';
 import UserContext from '../components/user-context';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 const deckVotesQuery = gql`
   query deckAccountVotes($deckId: Int!, $accountId: Int!) {
@@ -25,8 +25,9 @@ const deckVotesQuery = gql`
 let messageTimeoutHandle;
 
 function DeckVote({ deck }) {
-  const { client } = useContext(ApolloContext);
   const { user } = useContext(UserContext);
+  const [upvoteDeck] = useMutation(upvoteDeckMutation);
+  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation);
   const { data } = useQuery(deckVotesQuery, {
     variables: {
       deckId: deck.id,
@@ -41,7 +42,12 @@ function DeckVote({ deck }) {
     clearTimeout(messageTimeoutHandle);
     let resp;
     try {
-      resp = await upvoteDeck(client, deck.id, user.id);
+      resp = await upvoteDeck({
+        variables: {
+          deckId: deck.id,
+          accountId: user.id
+        }
+      });
     } catch (err) {
       if (process.env.NODE_ENV === 'development') {
         console.error(err);
@@ -57,7 +63,9 @@ function DeckVote({ deck }) {
     clearTimeout(messageTimeoutHandle);
     let resp;
     try {
-      resp = await removeDeckUpvote(client, userDeckVote.id);
+      resp = await undoDeckUpvote({
+        variables: { deckVoteId: userDeckVote.id }
+      });
     } catch (err) {
       if (process.env.NODE_ENV === 'development') {
         console.error(err);
