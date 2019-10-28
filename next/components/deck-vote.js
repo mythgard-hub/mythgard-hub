@@ -56,7 +56,7 @@ function DeckVote({ deck }) {
   const userDeckVote =
     data && data.deckVotes && data.deckVotes.nodes && data.deckVotes.nodes[0];
   const [message, setMessage] = useState(null);
-  const [extraVote, setExtraVote] = useState(0);
+  const [voteCountModifier, setVoteCountModifier] = useState(0);
 
   const handleUpvote = useCallback(async () => {
     clearTimeout(messageTimeoutHandle);
@@ -73,7 +73,7 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
-    setExtraVote(extraVote + 1);
+    setVoteCountModifier(voteCountModifier + 1);
     setMessage(resp ? 'Vote Successful' : 'Error voting');
     messageTimeoutHandle = setTimeout(() => {
       setMessage(null);
@@ -92,7 +92,7 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
-    setExtraVote(extraVote - 1);
+    setVoteCountModifier(voteCountModifier - 1);
     setMessage(resp ? 'Unvote Successful' : 'Error removing vote');
     messageTimeoutHandle = setTimeout(() => {
       setMessage(null);
@@ -116,7 +116,7 @@ function DeckVote({ deck }) {
         }
       `}</style>
       <span data-cy="deckVoteCount" className="voteCount">
-        {votes + extraVote}
+        {votes + voteCountModifier}
       </span>
       {canVote && !userDeckVote && <button onClick={handleUpvote}>Vote</button>}
       {userDeckVote && <button onClick={handleRemoveVote}>Remove Vote</button>}
