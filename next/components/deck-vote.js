@@ -6,6 +6,8 @@ import UserContext from '../components/user-context';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import ErrorMessage from './error-message.js';
+import { ThemeContext } from './theme-context';
+import { DECK_ICONS } from '../constants/deck.js';
 
 const deckVotesQuery = gql`
   query deckAccountVotes($deckId: Int!, $accountId: Int!) {
@@ -110,24 +112,59 @@ function DeckVote({ deck }) {
     deck.deckPreviews.nodes.length &&
     deck.deckPreviews.nodes[0].votes;
 
+  const theme = useContext(ThemeContext);
+
   return (
     <div className="deck-vote-container">
       <style jsx>{`
+        vertical-align: top;
         .deck-vote-container {
           margin-bottom: 10px;
         }
+        .voteCount {
+          display: inline-block;
+          padding: 10px;
+          border: ${theme.sectionBorder};
+          color: ${theme.fontColorSubtle};
+          min-width: 42px;
+          margin-right: 2px;
+        }
+        .voteButton {
+          padding: 0;
+          border: none;
+          margin: 0;
+          display: inline-block;
+        }
+        .voteButton img {
+          opacity: 0.5;
+        }
+        .voteButton.removeVote img {
+          opacity: 1;
+        }
+        .voteButton img,
+        .voteButton {
+          width: 41px;
+        }
       `}</style>
       <span data-cy="deckVoteCount" className="voteCount">
-        {votes + voteCountModifier}
+        +{votes + voteCountModifier}
       </span>
       {canVote && !userDeckVote && (
-        <button disabled={voteDisabled} onClick={handleUpvote}>
-          Vote
+        <button
+          disabled={voteDisabled}
+          onClick={handleUpvote}
+          className="voteButton"
+        >
+          <img src={DECK_ICONS.upvote} alt="" />
         </button>
       )}
       {userDeckVote && (
-        <button onClick={handleRemoveVote} disabled={voteDisabled}>
-          Remove Vote
+        <button
+          onClick={handleRemoveVote}
+          disabled={voteDisabled}
+          className="voteButton removeVote"
+        >
+          <img src={DECK_ICONS.upvote} alt="" />
         </button>
       )}
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
