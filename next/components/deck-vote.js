@@ -85,7 +85,9 @@ function DeckVote({ deck }) {
           margin-bottom: 10px;
         }
       `}</style>
-      <span className="voteCount">{votes}</span>
+      <span data-cy="deckVoteCount" className="voteCount">
+        {votes}
+      </span>
       {canVote && !userDeckVote && <button onClick={handleUpvote}>Vote</button>}
       {userDeckVote && <button onClick={handleRemoveVote}>Remove Vote</button>}
       {message && <span>{message}</span>}
