@@ -17,7 +17,9 @@ const deckVotesQuery = gql`
     ) {
       nodes {
         id
+        __typename
       }
+      __typename
     }
   }
 `;
@@ -26,8 +28,44 @@ let messageTimeoutHandle;
 
 function DeckVote({ deck }) {
   const { user } = useContext(UserContext);
-  const [upvoteDeck] = useMutation(upvoteDeckMutation);
-  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation);
+  const [upvoteDeck] = useMutation(upvoteDeckMutation, {
+    update(cache, { data }) {
+      const newData = {
+        deckVotes: {
+          nodes: [
+            { id: data.createDeckVote.deckVote.id, __typename: 'DeckVote' }
+          ],
+          __typename: 'DeckVotesConnection'
+        }
+      };
+      cache.writeQuery({
+        query: deckVotesQuery,
+        variables: {
+          deckId: deck.id,
+          accountId: user.id
+        },
+        data: newData
+      });
+    }
+  });
+  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation, {
+    update(cache) {
+      const newData = {
+        deckVotes: {
+          nodes: [],
+          __typename: 'DeckVotesConnection'
+        }
+      };
+      cache.writeQuery({
+        query: deckVotesQuery,
+        variables: {
+          deckId: deck.id,
+          accountId: user.id
+        },
+        data: newData
+      });
+    }
+  });
   const { data } = useQuery(deckVotesQuery, {
     variables: {
       deckId: deck.id,
@@ -54,7 +92,7 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
-    setExtraVote(1);
+    setExtraVote(extraVote + 1);
     setMessage(resp ? 'Vote Successful' : 'Error voting');
     messageTimeoutHandle = setTimeout(() => {
       setMessage(null);
@@ -73,7 +111,7 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
-    setExtraVote(-1);
+    setExtraVote(extraVote - 1);
     setMessage(resp ? 'Unvote Successful' : 'Error removing vote');
     messageTimeoutHandle = setTimeout(() => {
       setMessage(null);
