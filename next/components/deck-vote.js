@@ -26,16 +26,8 @@ let messageTimeoutHandle;
 
 function DeckVote({ deck }) {
   const { user } = useContext(UserContext);
-  const [upvoteDeck] = useMutation(upvoteDeckMutation, {
-    onCompleted() {
-      setExtraVote(1);
-    }
-  });
-  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation, {
-    onCompleted() {
-      setExtraVote(-1);
-    }
-  });
+  const [upvoteDeck] = useMutation(upvoteDeckMutation);
+  const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation);
   const { data } = useQuery(deckVotesQuery, {
     variables: {
       deckId: deck.id,
@@ -62,6 +54,7 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
+    setExtraVote(1);
     setMessage(resp ? 'Vote Successful' : 'Error voting');
     messageTimeoutHandle = setTimeout(() => {
       setMessage(null);
@@ -80,6 +73,7 @@ function DeckVote({ deck }) {
         console.error(err);
       }
     }
+    setExtraVote(-1);
     setMessage(resp ? 'Unvote Successful' : 'Error removing vote');
     messageTimeoutHandle = setTimeout(() => {
       setMessage(null);
