@@ -37,7 +37,7 @@ function DeckVote({ deck }) {
     data && data.deckVotes && data.deckVotes.nodes && data.deckVotes.nodes[0];
   const [message, setMessage] = useState(null);
 
-  const handleClick = useCallback(async () => {
+  const handleUpvote = useCallback(async () => {
     clearTimeout(messageTimeoutHandle);
     let resp;
     try {
@@ -86,7 +86,7 @@ function DeckVote({ deck }) {
         }
       `}</style>
       <span className="voteCount">{votes}</span>
-      {canVote && !userDeckVote && <button onClick={handleClick}>Vote</button>}
+      {canVote && !userDeckVote && <button onClick={handleUpvote}>Vote</button>}
       {userDeckVote && <button onClick={handleRemoveVote}>Remove Vote</button>}
       {message && <span>{message}</span>}
     </div>
