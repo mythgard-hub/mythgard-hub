@@ -24,46 +24,27 @@ const deckVotesQuery = gql`
   }
 `;
 
+const updateCache = (cache, id, deckId, accountId) => {
+  const nodes = id ? [{ id, __typename: 'DeckVote' }] : [];
+  cache.writeQuery({
+    query: deckVotesQuery,
+    variables: { deckId, accountId },
+    data: { deckVotes: { nodes, __typename: 'DeckVotesConnection' } }
+  });
+};
+
 let messageTimeoutHandle;
 
 function DeckVote({ deck }) {
   const { user } = useContext(UserContext);
   const [upvoteDeck] = useMutation(upvoteDeckMutation, {
     update(cache, { data }) {
-      const newData = {
-        deckVotes: {
-          nodes: [
-            { id: data.createDeckVote.deckVote.id, __typename: 'DeckVote' }
-          ],
-          __typename: 'DeckVotesConnection'
-        }
-      };
-      cache.writeQuery({
-        query: deckVotesQuery,
-        variables: {
-          deckId: deck.id,
-          accountId: user.id
-        },
-        data: newData
-      });
+      updateCache(cache, data.createDeckVote.deckVote.id, deck.id, user.id);
     }
   });
   const [undoDeckUpvote] = useMutation(removeDeckUpvoteMutation, {
     update(cache) {
-      const newData = {
-        deckVotes: {
-          nodes: [],
-          __typename: 'DeckVotesConnection'
-        }
-      };
-      cache.writeQuery({
-        query: deckVotesQuery,
-        variables: {
-          deckId: deck.id,
-          accountId: user.id
-        },
-        data: newData
-      });
+      updateCache(cache, 0, deck.id, user.id);
     }
   });
   const { data } = useQuery(deckVotesQuery, {
