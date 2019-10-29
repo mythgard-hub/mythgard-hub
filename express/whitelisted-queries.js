@@ -482,5 +482,41 @@ query tournaments($now: Date) {
       }
     }
   }
+`,
+  `
+  query deckAccountVotes($deckId: Int!, $accountId: Int!) {
+    deckVotes(
+      filter: {
+        deckId: { equalTo: $deckId }
+        accountId: { equalTo: $accountId }
+      }
+    ) {
+      nodes {
+        id
+        __typename
+      }
+      __typename
+    }
+  }
+`,
+  `
+  mutation upvoteDeck($deckId: Int, $accountId: Int) {
+    createDeckVote(
+      input: { deckVote: { deckId: $deckId, accountId: $accountId } }
+    ) {
+      deckVote {
+        id
+      }
+    }
+  }
+`,
+  `
+  mutation removeDeckUpvote($deckVoteId: Int!) {
+    deleteDeckVote(input: { id: $deckVoteId }) {
+      deckVote {
+        id
+      }
+    }
+  }
 `
 ];
