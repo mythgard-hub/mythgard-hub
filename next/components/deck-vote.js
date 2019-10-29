@@ -37,7 +37,7 @@ const cacheVote = (cache, id, deckId, accountId) => {
 
 const voteError = 'Error changing vote';
 
-function DeckVote({ deck }) {
+function DeckVote({ deck, className }) {
   const { user } = useContext(UserContext);
   const [upvoteDeck, upvoteDeckState] = useMutation(upvoteDeckMutation, {
     update(cache, { data }) {
@@ -115,7 +115,7 @@ function DeckVote({ deck }) {
   const theme = useContext(ThemeContext);
 
   return (
-    <div className="deck-vote-container">
+    <div className={`deck-vote-container ${className}`}>
       <style jsx>{`
         vertical-align: top;
         .deck-vote-container {
@@ -185,7 +185,8 @@ DeckVote.propTypes = {
         })
       )
     })
-  }).isRequired
+  }).isRequired,
+  className: PropTypes.string
 };
 
 export default DeckVote;

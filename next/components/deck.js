@@ -99,11 +99,15 @@ export default function Deck({ deck }) {
           flex-wrap: wrap;
         }
 
-        .deck-action + .deck-action {
+        :global(.deck-actions .deck-action + .deck-action) {
           margin-left: 10px;
         }
 
-        .deck-action {
+        :global(.deck-actions .deck-action) {
+          flex-grow: 999;
+        }
+
+        :global(.deck-actions .deck-action.no-grow) {
           flex-grow: 1;
         }
 
@@ -132,18 +136,10 @@ export default function Deck({ deck }) {
       <div className="spacer"></div>
       <div className="right-col">
         <div className="deck-actions">
-          <div className="deck-action">
-            <DeckExport deckInProgress={deckToExport} />
-          </div>
-          <div className="deck-action">
-            <DeckEdit deck={deck} />
-          </div>
-          <div className="deck-action">
-            <DeckDelete deck={deck} />
-          </div>
-          <div className="deck-action">
-            <DeckVote deck={deck} />
-          </div>
+          <DeckExport className="deck-action" deckInProgress={deckToExport} />
+          <DeckEdit className="deck-action" deck={deck} />
+          <DeckDelete className="deck-action" deck={deck} />
+          <DeckVote className="deck-action no-grow" deck={deck} />
         </div>
         <div className="deck-stats-container">
           <div className="deck-stats">
