@@ -102,7 +102,7 @@ function DeckVote({ deck, className }) {
     }
   });
 
-  const canVote = user && user.id !== deck.author.id;
+  const canVote = user && deck.author && user.id !== deck.author.id;
   const voteDisabled = upvoteDeckState.loading || undoUpvoteDeckState.loading;
 
   const votes =
