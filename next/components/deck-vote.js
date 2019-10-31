@@ -8,6 +8,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import ErrorMessage from './error-message.js';
 import { ThemeContext } from './theme-context';
 import { DECK_ICONS } from '../constants/deck.js';
+import Router from 'next/router';
 
 const deckVotesQuery = gql`
   query deckAccountVotes($deckId: Int!, $accountId: Int!) {
@@ -64,6 +65,10 @@ function DeckVote({ deck, className }) {
   const [voteCountModifier, setVoteCountModifier] = useState(0);
 
   const handleUpvote = useCallback(async () => {
+    if (!user) {
+      Router.push(`/auth/google`);
+      return;
+    }
     let resp;
     try {
       resp = await upvoteDeck({
@@ -102,7 +107,7 @@ function DeckVote({ deck, className }) {
     }
   });
 
-  const canVote = user && deck.author && user.id !== deck.author.id;
+  const isAuthor = user && deck.author && user.id === deck.author.id;
   const voteDisabled = upvoteDeckState.loading || undoUpvoteDeckState.loading;
 
   const votes =
@@ -149,20 +154,11 @@ function DeckVote({ deck, className }) {
       <span data-cy="deckVoteCount" className="voteCount">
         +{votes + voteCountModifier}
       </span>
-      {canVote && !userDeckVote && (
+      {!isAuthor && (
         <button
+          onClick={userDeckVote ? handleRemoveVote : handleUpvote}
           disabled={voteDisabled}
-          onClick={handleUpvote}
-          className="voteButton"
-        >
-          <img src={DECK_ICONS.upvote} alt="" />
-        </button>
-      )}
-      {userDeckVote && (
-        <button
-          onClick={handleRemoveVote}
-          disabled={voteDisabled}
-          className="voteButton removeVote"
+          className={`voteButton ${userDeckVote ? 'removeVote' : ''}`}
         >
           <img src={DECK_ICONS.upvote} alt="" />
         </button>
