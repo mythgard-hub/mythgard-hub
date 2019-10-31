@@ -31,7 +31,11 @@ CREATE POLICY deck_vote_all_view ON mythgard.deck_vote FOR SELECT USING (true);
 CREATE POLICY deck_vote_insert_if_author
   ON mythgard.deck_vote
   FOR INSERT
-  WITH CHECK ("account_id" = mythgard.current_user_id());
+  WITH CHECK ((account_id = mythgard.current_user_id())
+              AND
+              NOT EXISTS(select * from mythgard.deck
+                         where id = deck_vote.deck_id
+                         and author_id = mythgard.current_user_id()));
 CREATE POLICY deck_vote_delete_if_author
   ON mythgard.deck_vote
   FOR DELETE
