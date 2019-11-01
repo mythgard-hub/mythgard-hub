@@ -11,6 +11,7 @@ import {
   getDateCreated
 } from '../lib/deck-utils';
 import { singleDeckQuery } from '../lib/deck-queries';
+import PageBanner from '../components/page-banner';
 
 export default withRouter(({ router }) => {
   const { error, loading, data } = useQuery(singleDeckQuery, {
@@ -75,6 +76,7 @@ export default withRouter(({ router }) => {
           content="image/png"
         />
       </Head>
+      <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
       <Deck deck={data.deck} />
     </Layout>
   );

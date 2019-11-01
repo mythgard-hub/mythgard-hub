@@ -54,11 +54,13 @@ export default function Deck({ deck }) {
         .deck-details {
           width: 70%;
           padding-right: 20px;
-          padding-bottom: 50px;
+          padding-bottom: 20px;
+          margin-top: 20px;
         }
 
         .deck-actions {
           width: 30%;
+          margin-top: 20px;
         }
 
         .deck-name {
@@ -105,6 +107,12 @@ export default function Deck({ deck }) {
           .deck-details,
           .deck-actions {
             width: 100%;
+          }
+          .deck-details {
+            padding-right: 0;
+          }
+          .deck-stats {
+            margin-left: 0;
           }
         }
       `}</style>
