@@ -20,9 +20,9 @@ describe('Deck Page Metas', function() {
   });
   it('looks inside head tags', function() {
     cy.get('head title').should('contain', 'cats by lsv');
-    cy.get('head meta[name="description"]').should('have.attr', 'content', 'Standard Mythgard Deck, B, 50 Essence, Updated Oct 24, 2019');
-    cy.get('head meta[property="og:title"]').should('have.attr', 'content', 'cats by lsv | Mythgard Hub');
-    cy.get('head meta[property="og:description"]').should('have.attr', 'content', 'Standard Mythgard Deck, B, 50 Essence, Updated Oct 24, 2019');
+    cy.get('head meta[name="description"]').invoke('attr', 'content').should('contain', 'Standard Mythgard Deck, B, 50 Essence');
+    cy.get('head meta[property="og:title"]').invoke('attr', 'content').should('contain', 'cats by lsv');
+    cy.get('head meta[property="og:description"]').invoke('attr', 'content').should('contain', 'Standard Mythgard Deck, B, 50 Essence');
   });
 
 });
