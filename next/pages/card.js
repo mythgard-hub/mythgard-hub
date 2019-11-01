@@ -11,10 +11,7 @@ import {
   mainFaction,
   formatManaCost
 } from '../lib/card.js';
-
-const firstLetterUppercase = str => {
-  return !str || str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
+import { firstLetterUppercase } from '../lib/string-utils';
 
 export default withRouter(({ router }) => {
   const { loading, error, data } = useQuery(cardQuery, {
