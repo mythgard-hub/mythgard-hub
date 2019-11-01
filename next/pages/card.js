@@ -20,22 +20,38 @@ export default withRouter(({ router }) => {
   const { loading, error, data } = useQuery(cardQuery, {
     variables: { id: parseInt(router.query.id, 10) }
   });
-  if (loading) return <div>Loading...</div>;
-  if (error) return <ErrorMessage message={error.message} />;
+
+  if (loading)
+    return (
+      <Layout>
+        <div>Loading...</div>
+      </Layout>
+    );
+  if (error)
+    return (
+      <Layout>
+        <ErrorMessage message={error.message} />
+      </Layout>
+    );
   if (!data || !data.card)
-    return <ErrorMessage message={'Card does not exist!'} />;
+    return (
+      <Layout>
+        <ErrorMessage message={'Card does not exist!'} />
+      </Layout>
+    );
+
+  const title = `${data.card.name} | Mythgard Hub`;
+  const description = `${firstLetterUppercase(
+    mainFaction(data.card)
+  )}, ${formatManaCost(data.card)}${data.card.gem} ${data.card.rarity &&
+    firstLetterUppercase(data.card.rarity)} ${data.card.supertype &&
+    firstLetterUppercase(data.card.supertype.toString())}, ${data.card
+    .subtype && firstLetterUppercase(data.card.subtype)}, Core`;
 
   return (
-    <Layout
-      title={`Mythgard Hub | Cards | ${data.card.name}`}
-      desc={`Details and rulings for Mythgard card ${data.card.name}`}
-    >
+    <Layout title={title} desc={description}>
       <Head>
-        <meta
-          key="og:title"
-          property="og:title"
-          content={`${data.card.name} | Mythgard Hub`}
-        />
+        <meta key="og:title" property="og:title" content={title} />
         <meta
           key="og:site_name"
           property="og:site_name"
@@ -44,12 +60,7 @@ export default withRouter(({ router }) => {
         <meta
           key="og:description"
           property="og:description"
-          content={`${firstLetterUppercase(
-            mainFaction(data.card)
-          )}, ${formatManaCost(data.card)}${data.card.gem} ${data.card.rarity &&
-            firstLetterUppercase(data.card.rarity)} ${data.card.supertype &&
-            firstLetterUppercase(data.card.supertype.toString())}, ${data.card
-            .subtype && firstLetterUppercase(data.card.subtype)}, Core`}
+          content={description}
         />
         <meta
           key="og:url"

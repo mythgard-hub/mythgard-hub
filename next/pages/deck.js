@@ -4,57 +4,50 @@ import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from '../components/error-message';
 import Deck from '../components/deck';
 import Layout from '../components/layout';
+import {
+  getAuthor,
+  getColors,
+  getEssenceCost,
+  getDateCreated
+} from '../lib/deck-utils';
 import { singleDeckQuery } from '../lib/deck-queries';
 
 export default withRouter(({ router }) => {
   const { error, loading, data } = useQuery(singleDeckQuery, {
     variables: { id: parseInt(router.query.id, 10) }
   });
-  if (loading) return <div>Loading...</div>;
-  if (error) return <ErrorMessage message={error.message} />;
+
+  if (loading)
+    return (
+      <Layout>
+        <div>Loading...</div>
+      </Layout>
+    );
+  if (error)
+    return (
+      <Layout>
+        <ErrorMessage message={error.message} />
+      </Layout>
+    );
   if (!data || !data.deck)
-    return <ErrorMessage message={'Deck does not exist!'} />;
+    return (
+      <Layout>
+        <ErrorMessage message={'Deck does not exist!'} />
+      </Layout>
+    );
 
-  const authorName =
-    (data.deck.author && data.deck.author.username) || 'unknown';
-  const metaData =
-    data.deck.deckPreviews &&
-    data.deck.deckPreviews.nodes &&
-    data.deck.deckPreviews.nodes[0];
-  const essenceCost = metaData && metaData.essenceCost;
-  const dateCreated =
-    metaData &&
-    metaData.deckCreated &&
-    new Date(metaData.deckCreated).toLocaleDateString('en-UK', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+  const authorName = getAuthor(data.deck);
+  const essenceCost = getEssenceCost(data.deck);
+  const dateCreated = getDateCreated(data.deck);
+  const colors = getColors(data.deck);
 
-  const factions = metaData && metaData.factions;
-  const colors = factions
-    .map(faction =>
-      faction
-        .replace('norden', 'B')
-        .replace('aztlan', 'Y')
-        .replace('oberos', 'R')
-        .replace('dreni', 'G')
-        .replace('parsa', 'O')
-        .replace('harmony', 'P')
-    )
-    .join('');
+  const title = `${data.deck.name} by ${authorName} | Mythgard Hub`;
+  const description = `Standard Mythgard Deck, ${colors}, ${essenceCost} Essence, Updated ${dateCreated}`;
 
   return (
-    <Layout
-      title={`Mythgard Hub | Decks | ${data.deck.name}`}
-      desc={`Details for Mythgard deck ${data.deck.name}`}
-    >
+    <Layout title={title} desc={description}>
       <Head>
-        <meta
-          key="og:title"
-          property="og:title"
-          content={`${data.deck.name} by ${authorName} | Mythgard Hub`}
-        />
+        <meta key="og:title" property="og:title" content={title} />
         <meta
           key="og:site_name"
           property="og:site_name"
@@ -63,7 +56,7 @@ export default withRouter(({ router }) => {
         <meta
           key="og:description"
           property="og:description"
-          content={`Standard Mythgard Deck, ${colors}, ${essenceCost} Essence, Updated ${dateCreated}`}
+          content={description}
         />
         <meta
           key="og:url"

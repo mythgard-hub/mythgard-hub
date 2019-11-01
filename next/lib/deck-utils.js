@@ -180,3 +180,106 @@ export const getCardCount = deck => {
     return 0;
   }
 };
+
+/**
+ * Returns the author of the deck
+ * @param Deck deck
+ * @returns String
+ */
+export const getAuthor = deck => {
+  try {
+    return (deck.author && deck.author.username) || 'unknown';
+  } catch (e) {
+    return '';
+  }
+};
+
+/**
+ * Returns de metadata of the deck
+ * @param Deck deck
+ * @retrun {}
+ */
+export const getDeckMetadata = deck => {
+  try {
+    return (
+      deck.deckPreviews && deck.deckPreviews.nodes && deck.deckPreviews.nodes[0]
+    );
+  } catch (e) {
+    return null;
+  }
+};
+
+/**
+ * Returns the factions of the deck
+ * @param Deck deck
+ * @returns array
+ */
+export const getFactions = deck => {
+  try {
+    const metaData = getDeckMetadata(deck);
+    return metaData && metaData.factions;
+  } catch (e) {
+    return [];
+  }
+};
+
+/**
+ * Returns the date created of the deck
+ * @param Deck deck
+ * @returns String
+ */
+export const getDateCreated = deck => {
+  try {
+    const metaData = getDeckMetadata(deck);
+    return (
+      metaData &&
+      metaData.deckCreated &&
+      new Date(metaData.deckCreated).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    );
+  } catch (e) {
+    return '';
+  }
+};
+
+/**
+ * Returns the essence cost of the deck
+ * @param Deck deck
+ * @returns String
+ */
+export const getEssenceCost = deck => {
+  try {
+    const metaData = getDeckMetadata(deck);
+    return metaData && metaData.essenceCost;
+  } catch (e) {
+    return '';
+  }
+};
+
+/**
+ * Returns the colors (YGPBRO) of the deck
+ * @param Deck deck
+ * @returns String
+ */
+export const getColors = deck => {
+  try {
+    const metaData = getDeckMetadata(deck);
+    const factions = metaData && metaData.factions;
+    return factions
+      .map(faction =>
+        faction
+          .replace('norden', 'B')
+          .replace('aztlan', 'Y')
+          .replace('oberos', 'R')
+          .replace('dreni', 'G')
+          .replace('parsa', 'O')
+          .replace('harmony', 'P')
+      )
+      .join('');
+  } catch (e) {
+    return '';
+  }
+};
