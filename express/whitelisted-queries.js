@@ -317,7 +317,7 @@ mutation UpdateDeckAndRemoveCards(
 `,
   `
   query deckPreview {
-    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3, filter: {
+    deckPreviews(orderBy: DECK_CREATED_ASC, first: 4, filter: {
       deck: {
         deckFeatureds: {
           some: {
