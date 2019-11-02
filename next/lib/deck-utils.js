@@ -188,16 +188,16 @@ export const getCardCount = deck => {
  */
 export const getAuthor = deck => {
   try {
-    return (deck.author && deck.author.username) || 'unknown';
+    return deck.author.username;
   } catch (e) {
-    return '';
+    return 'unknown';
   }
 };
 
 /**
  * Returns de metadata of the deck
  * @param Deck deck
- * @retrun {}
+ * @returns {}
  */
 export const getDeckMetadata = deck => {
   try {
@@ -241,7 +241,7 @@ export const getDateCreated = deck => {
       })
     );
   } catch (e) {
-    return '';
+    return 'unknown';
   }
 };
 
