@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useContext } from 'react';
 import UserContext from '../components/user-context';
 
-function DeckEdit({ deck }) {
+function DeckEdit({ deck, className }) {
   const { user } = useContext(UserContext);
 
   // Users can only delete decks they authored
@@ -11,7 +11,7 @@ function DeckEdit({ deck }) {
     return null;
 
   return (
-    <div style={{ marginBottom: '10px' }}>
+    <div className={className} style={{ marginBottom: '10px' }}>
       <Link href={`/deck-builder?id=${deck.id}`}>
         <a className="button">Edit</a>
       </Link>
@@ -25,7 +25,8 @@ DeckEdit.propTypes = {
     author: PropTypes.shape({
       id: PropTypes.number
     })
-  }).isRequired
+  }).isRequired,
+  className: PropTypes.string
 };
 
 export default DeckEdit;

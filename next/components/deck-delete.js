@@ -6,7 +6,7 @@ import UserContext from '../components/user-context';
 
 let messageTimeoutHandle;
 
-function DeckDelete({ deck }) {
+function DeckDelete({ deck, className }) {
   const { client } = useContext(ApolloContext);
   const { user } = useContext(UserContext);
   const [message, setMessage] = useState(null);
@@ -34,7 +34,7 @@ function DeckDelete({ deck }) {
   if (!user || !deck || !deck.author || user.id !== deck.author.id) return null;
 
   return (
-    <div className="deck-delete-container">
+    <div className={`deck-delete-container ${className}`}>
       <style jsx>{`
         .deck-delete-container {
           margin-bottom: 10px;
@@ -52,7 +52,8 @@ DeckDelete.propTypes = {
     author: PropTypes.shape({
       id: PropTypes.number
     })
-  }).isRequired
+  }).isRequired,
+  className: PropTypes.string
 };
 
 export default DeckDelete;
