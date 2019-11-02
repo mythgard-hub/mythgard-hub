@@ -4,12 +4,9 @@ import {
   imagePathMedium as getImagePath,
   formatManaCost
 } from '../lib/card.js';
+import { firstLetterUppercase } from '../lib/string-utils';
 import { getRarityImage } from '../constants/rarities.js';
 import { SUPERTYPES, SUPERTYPE_IMAGES } from '../constants/supertypes.js';
-
-const firstLetterUppercase = str => {
-  return !str || str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
 
 export default function Card({ card }) {
   const imagePath = getImagePath(card.name, card.set);

@@ -101,18 +101,36 @@ class MyApp extends App {
                 />
 
                 <meta
+                  key="og:title"
                   property="og:title"
                   content="Mythgard Hub | Community Hub for Mythgard Card Game"
                 />
-                <meta property="og:site_name" content="Mythgard Hub" />
                 <meta
+                  key="og:site_name"
+                  property="og:site_name"
+                  content="Mythgard Hub"
+                />
+                <meta
+                  key="og:description"
                   property="og:description"
                   content="A fan-built site for Mythgard including decklists, a card database and more."
                 />
-                <meta property="og:url" content="https://mythgardhub.com/" />
-                <meta property="og:type" content="article" />
-                <meta property="og:image" content={`${cdn}/mgh/og-image.jpg`} />
-                <meta property="og:image:type" content="image/png" />
+                <meta
+                  key="og:url"
+                  property="og:url"
+                  content="https://mythgardhub.com/"
+                />
+                <meta key="og:type" property="og:type" content="article" />
+                <meta
+                  key="og:image"
+                  property="og:image"
+                  content={`${cdn}/mgh/og-image.jpg`}
+                />
+                <meta
+                  key="og:image:type"
+                  property="og:image:type"
+                  content="image/png"
+                />
               </Head>
               <UserContext.Provider
                 value={{ user, updateUser: this.updateUser }}
