@@ -106,14 +106,25 @@ export default function DeckSearchForm(props) {
           width: 100%;
         }
         .action-buttons {
-          width: 25%;
           float: right;
           display: flex;
           flex-direction: row;
           margin-top: 20px;
+          height: 35px;
+          align-items: center;
         }
         .action-buttons input {
           margin-right: 10px;
+        }
+        .action-buttons label {
+          display: flex;
+          margin: 0 0 0 10px;
+          flex-wrap: nowrap;
+          white-space: nowrap;
+          align-items: center;
+        }
+        .action-buttons label select {
+          margin-left: 10px;
         }
 
         @media only screen and (max-width: 600px) {
@@ -201,6 +212,12 @@ export default function DeckSearchForm(props) {
         <button type="button" onClick={handleClear} data-cy="deckSearchClear">
           Clear
         </button>
+        <label className="included-cards input-label">
+          Sort by
+          <select id="" name="">
+            <option value="">This value</option>
+          </select>
+        </label>
       </div>
     </form>
   );
