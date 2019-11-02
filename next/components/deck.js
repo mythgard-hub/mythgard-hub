@@ -49,6 +49,7 @@ export default function Deck({ deck }) {
     <div className="deck-page-container">
       <style jsx>{`
         .deck-page-container {
+          padding-top: 20px;
           display: flex;
           flex-wrap: wrap;
           justify-content: space-around;
