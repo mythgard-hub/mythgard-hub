@@ -144,6 +144,7 @@ describe('Decks Page', function() {
   });
 
   it('should search for decks with multiple words', function() {
+    cy.get('[data-cy="deckSearchClear"]').click();
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.wait(500);
@@ -273,6 +274,7 @@ describe('Decks Page', function() {
   });
 
   it('should search for decks and clear filters', function() {
+    cy.get('[data-cy="deckSearchClear"]').click();
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckListItem"]').then(list => {
       // test deck name search
