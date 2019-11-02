@@ -144,19 +144,23 @@ describe('Decks Page', function() {
   });
 
   it('should search for decks with multiple words', function() {
+    cy.get('[data-cy="deckSearchClear"]').click();
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.wait(500);
     cy.get('[data-cy="deckListItem"]').then(list => {
-      
       const initialListLength = list.length;
 
       // test deck name search - full name with spaces
       cy.get('[data-cy="deckSearchDeckName"]').type('norden aztlan');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
@@ -165,10 +169,13 @@ describe('Decks Page', function() {
       // test deck name search - first full word and start of the second
       cy.get('[data-cy="deckSearchDeckName"]').type('norden azt');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
@@ -177,10 +184,13 @@ describe('Decks Page', function() {
       // test deck name search - start of the first word and full second word
       cy.get('[data-cy="deckSearchDeckName"]').type('nor aztlan');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
@@ -189,10 +199,13 @@ describe('Decks Page', function() {
       // test deck name search - start of both words
       cy.get('[data-cy="deckSearchDeckName"]').type('nor azt');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
@@ -201,10 +214,13 @@ describe('Decks Page', function() {
       // test deck name search - full name with spaces (multiple spaces)
       cy.get('[data-cy="deckSearchDeckName"]').type(' nor   azt ');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
@@ -213,10 +229,13 @@ describe('Decks Page', function() {
       // test deck name search - first full word and start of the second (multiple spaces)
       cy.get('[data-cy="deckSearchDeckName"]').type(' norden azt ');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
@@ -225,10 +244,13 @@ describe('Decks Page', function() {
       // test deck name search - start of the first word and full second word (multiple spaces)
       cy.get('[data-cy="deckSearchDeckName"]').type('  nor  aztlan  ');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
@@ -237,19 +259,22 @@ describe('Decks Page', function() {
       // test deck name search - start of both words (multiple spaces)
       cy.get('[data-cy="deckSearchDeckName"]').type('  nor  azt   ');
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');      
+      cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+      
       cy.get('[data-cy="deckSearchDeckName"]').clear();
       cy.get('[data-cy="deckSearchSubmit"]').click();
+      cy.wait(500);
       cy.get('[data-cy="deckListItem"]').should(
         'have.length',
         initialListLength
       );
-      
     });
   });
 
   it('should search for decks and clear filters', function() {
+    cy.get('[data-cy="deckSearchClear"]').click();
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckListItem"]').then(list => {
       // test deck name search
