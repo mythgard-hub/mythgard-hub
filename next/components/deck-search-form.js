@@ -214,8 +214,13 @@ export default function DeckSearchForm(props) {
         </button>
         <label className="included-cards input-label">
           Sort by
-          <select id="" name="">
-            <option value="">This value</option>
+          <select
+            value={'newToOld'}
+            onChange={handleInputChangeHooks(sortBy =>
+              changeState('sortBy', sortBy)
+            )}
+          >
+            <option value="newToOld">Newest First</option>
           </select>
         </label>
       </div>
