@@ -53,7 +53,6 @@ const userWantsToDiscardChanges = () => confirm(clearSessionStorageMsg);
 // previously worked on decks is not run during an SSR.
 const loadExistingDeck = (
   deckId,
-  deckInProgress,
   setDeckInProgress,
   setIsError,
   client,
@@ -174,7 +173,7 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
       <style jsx>{`
         .deck-builder-card-selection {
           width: 100%;
-          padding-right: 25px;
+          padding-right: 15px;
         }
         .deck-builder-panels {
           display: flex;
@@ -254,6 +253,8 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
             )}
           </div>
           <DeckBuilderSidebar
+            switchToCards={_ => setViewFilters(false)}
+            setTab={setTab}
             deckId={deckId}
             deckInProgress={deckInProgress}
             setDeckInProgress={setDeckInProgress}

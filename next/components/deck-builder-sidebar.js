@@ -12,7 +12,13 @@ import {
 } from '../lib/deck-utils';
 
 export default function DeckBuilderSidebar(props) {
-  const { deckId, deckInProgress, setDeckInProgress } = props;
+  const {
+    deckId,
+    deckInProgress,
+    setDeckInProgress,
+    switchToCards,
+    setTab
+  } = props;
   const [mainDeckInput, setMainDeckInput] = useState('');
 
   const updateDeckName = e => {
@@ -50,7 +56,7 @@ export default function DeckBuilderSidebar(props) {
     <div className="deck-builder-actions">
       <style jsx>{`
         .deck-builder-actions {
-          width: 35%;
+          width: 60%;
         }
         .deck-builder-actions button {
           margin-bottom: 10px;
@@ -98,7 +104,12 @@ export default function DeckBuilderSidebar(props) {
         <div className="card-count">
           Cards: <span>{cardCount}</span>
         </div>
-        <DeckCardTable deck={deckInProgress} deleteCard={deleteCardFromTable} />
+        <DeckCardTable
+          deck={deckInProgress}
+          deleteCard={deleteCardFromTable}
+          switchToCards={switchToCards}
+          setTab={setTab}
+        />
       </div>
     </div>
   );
@@ -127,5 +138,7 @@ DeckBuilderSidebar.propTypes = {
     errors: PropTypes.arrayOf(PropTypes.string)
   }),
   onClear: PropTypes.func,
-  setDeckInProgress: PropTypes.func
+  setDeckInProgress: PropTypes.func,
+  switchToCards: PropTypes.func,
+  setTab: PropTypes.func
 };
