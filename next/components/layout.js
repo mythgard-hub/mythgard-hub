@@ -16,7 +16,7 @@ function Layout({ title, desc, children }) {
       <div className="container">
         <style jsx>{`
           .container {
-            padding: 0 43px;
+            padding: 0 20px;
             border-left: ${theme.border};
             border-right: ${theme.border};
             font-family: ${theme.fontFamily};
