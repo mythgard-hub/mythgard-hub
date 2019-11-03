@@ -28,7 +28,7 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 1);
     cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
-    cy.get(deckFactionsPicker).should('have.length', '1');
+    cy.get(deckFactionsPicker).should('have.length', '2');
     cy.get(deckEssencePicker).should('contain', '50');
     cy.get('[data-cy="deckSearchClear"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
@@ -54,8 +54,18 @@ describe('Decks Page', function() {
     cy.get(cardSearchSelections).should('have.length', 0);
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    // search by faction
+    // search by faction - contains only that faction
+    cy.get(`${factionFilter}`)
+      .eq(3)
+      .click();
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get('[data-cy="deckSearchClear"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+
+    // search by faction - contains at least this faction
     cy.get(`${factionFilter}:first`).click();
+    cy.get(`[data-cy="leftSlider"]`).click();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 2);
     cy.get('[data-cy="deckSearchClear"]').click();
