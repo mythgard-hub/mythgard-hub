@@ -40,7 +40,8 @@
     "react-apollo-hooks": "^0.5.0",
     "react-autosuggest": "^9.4.3",
     "react-dom": "16.8.x",
-    "react-markdown": "^4.1.0"
+    "react-markdown": "^4.1.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

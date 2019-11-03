@@ -6,8 +6,8 @@ import DeckCardsTableRow from './deck-card-table-row';
 
 export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
   const deckCards = deck && Object.values(deck.mainDeck);
-  const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
-  const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
+  const power = deck?.deckPower?.name || '[no power]';
+  const path = deck?.deckPath?.name || '[no path]';
   const colspan = deleteCard ? 3 : 2;
   const theme = useContext(ThemeContext);
 
@@ -128,7 +128,7 @@ DeckCardsTable.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPath: PropTypes.shape({
+    deckPower: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),
