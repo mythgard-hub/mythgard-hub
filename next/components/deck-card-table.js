@@ -89,7 +89,7 @@ export default function DeckCardsTable({
           width: 100%;
         }
         td {
-          padding: 2px 5px 5px 5px;
+          padding: 6px;
           border: ${theme.cardTableBorder};
         }
         .deck-title {

@@ -15,7 +15,7 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
     <tr key={card.id} data-cy="deckCardRow">
       <style jsx>{`
         td {
-          padding: 2px 5px 5px 5px;
+          padding: 6px;
           border: ${theme.cardTableBorder};
         }
         .deck-delete-card {
