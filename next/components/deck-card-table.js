@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
 import { FACTION_COLORS } from '../constants/factions';
 import DeckCardsTableRow from './deck-card-table-row';
+import DeckCardsTableEditMeta from './deck-card-table-edit-meta';
 
 export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
   const deckCards = deck && Object.values(deck.mainDeck);
-  const power = (deck.deckPower && deck.deckPower.name) || '[no power]';
-  const path = (deck.deckPath && deck.deckPath.name) || '[no path]';
   const colspan = deleteCard ? 3 : 2;
   const theme = useContext(ThemeContext);
 
@@ -99,11 +98,21 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
         <tbody>
           <tr>
             <td colSpan={2}>Path</td>
-            <td colSpan={colspan}>{path}</td>
+            <td colSpan={colspan}>
+              <DeckCardsTableEditMeta
+                metaName="path"
+                metaValue={deck.deckPath?.name}
+              />
+            </td>
           </tr>
           <tr>
             <td colSpan={2}>Power</td>
-            <td colSpan={colspan}>{power}</td>
+            <td colSpan={colspan}>
+              <DeckCardsTableEditMeta
+                metaName="power"
+                metaValue={deck.deckPower?.name}
+              />
+            </td>
           </tr>
           {sortedCards.map((deckCard, i) => (
             <DeckCardsTableRow
@@ -142,6 +151,8 @@ DeckCardsTable.propTypes = {
         gem: PropTypes.number
       })
     }),
-    errors: PropTypes.arrayOf(PropTypes.string)
+    errors: PropTypes.arrayOf(PropTypes.string),
+    switchToCards: PropTypes.func,
+    setTab: PropTypes.func
   })
 };
