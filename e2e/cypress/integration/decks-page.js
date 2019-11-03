@@ -57,7 +57,7 @@ describe('Decks Page', function() {
     // search by faction
     cy.get(`${factionFilter}:first`).click();
     cy.get('[data-cy="deckSearchSubmit"]').click();
-    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get('[data-cy="deckListItem"]').should('have.length', 2);
     cy.get('[data-cy="deckSearchClear"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
