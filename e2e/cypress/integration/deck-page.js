@@ -29,6 +29,6 @@ describe('Deck Page Metas', function() {
       .should('contain', 'cats by lsv');
     cy.get('head meta[property="og:description"]')
       .invoke('attr', 'content')
-      .should('contain', 'Standard Mythgard Deck, B, 50 Essence');
+      .should('contain', 'Standard Mythgard Deck, YB, 50 Essence');
   });
 });
