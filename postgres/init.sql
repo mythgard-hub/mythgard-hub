@@ -330,7 +330,26 @@ CREATE TABLE mythgard.card_faction (
 );
 
 INSERT INTO mythgard.card_faction("card_id","faction_id")
-  VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 1), (8, 2), (9, 3), (10, 4), (11, 5), (12, 6), (13, 1), (14, 1), (15, 1), (16, 1), (17, 2);
+  VALUES 
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 1),
+    (8, 2),
+    (9, 3),
+    (10, 4),
+    (11, 5),
+    (12, 6),
+    (13, 1),
+    (14, 1),
+    (15, 1),
+    (16, 1),
+    (17, 2);
 
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
