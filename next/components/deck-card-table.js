@@ -5,7 +5,13 @@ import { FACTION_COLORS } from '../constants/factions';
 import DeckCardsTableRow from './deck-card-table-row';
 import DeckCardsTableEditMeta from './deck-card-table-edit-meta';
 
-export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
+export default function DeckCardsTable({
+  deck,
+  deleteCard,
+  onlyTable,
+  switchToCards,
+  setTab
+}) {
   const deckCards = deck && Object.values(deck.mainDeck);
   const colspan = deleteCard ? 3 : 2;
   const theme = useContext(ThemeContext);
@@ -102,6 +108,10 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
               <DeckCardsTableEditMeta
                 metaName="path"
                 metaValue={deck.deckPath?.name}
+                onEditClick={_ => {
+                  setTab('Paths');
+                  switchToCards();
+                }}
               />
             </td>
           </tr>
@@ -111,6 +121,10 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
               <DeckCardsTableEditMeta
                 metaName="power"
                 metaValue={deck.deckPower?.name}
+                onEditClick={_ => {
+                  setTab('Powers');
+                  switchToCards();
+                }}
               />
             </td>
           </tr>
