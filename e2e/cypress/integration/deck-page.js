@@ -21,9 +21,14 @@ describe('Deck Page Metas', function() {
   });
   it('looks inside head tags', function() {
     cy.get('head title').should('contain', 'cats by lsv');
-    cy.get('head meta[name="description"]').invoke('attr', 'content').should('contain', 'Standard Mythgard Deck, B, 50 Essence');
-    cy.get('head meta[property="og:title"]').invoke('attr', 'content').should('contain', 'cats by lsv');
-    cy.get('head meta[property="og:description"]').invoke('attr', 'content').should('contain', 'Standard Mythgard Deck, B, 50 Essence');
+    cy.get('head meta[name="description"]')
+      .invoke('attr', 'content')
+      .should('contain', 'Standard Mythgard Deck, YB, 50 Essence');
+    cy.get('head meta[property="og:title"]')
+      .invoke('attr', 'content')
+      .should('contain', 'cats by lsv');
+    cy.get('head meta[property="og:description"]')
+      .invoke('attr', 'content')
+      .should('contain', 'Standard Mythgard Deck, B, 50 Essence');
   });
-
 });
