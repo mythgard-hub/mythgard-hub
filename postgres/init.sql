@@ -516,25 +516,29 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
     LIMIT 2000;
   $$ language sql stable;
 
---create or replace function mythgard.search_decks_by_essence_cost(deckName varchar(255), authorName varchar(255),
---                 deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer,
---                 faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer,
---                 faction6 integer, numFactions integer)
---  returns setof mythgard.deck as $$
---    select id, name, author_id, path_id, power_id, modified, created
---    from ( select * from mythgard.search_decks(deckName, authorName, deckModified, card1,
---               card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
---               faction6, numFactions) as foo, deck_essence_cost(foo.id) as dec  order by dec desc) as foo
---  $$ language sql stable;
---
---select * from mythgard.search_decks_by_essence_cost(null, null, null, null,
--- null, null, null, null, null, null, null, null, null,
--- null, null) limit 10;
-
--- END QUERIES
-
--- Create a user for Postgraphile to connect as which has permissions
--- to the mythgard schema
+-- create or replace function mythgard.seach_decks_sorted(sortBy text, deckName varchar(255), authorName varchar(255),
+--                  deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer,
+--                  faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer,
+--                  faction6 integer, numFactions integer)
+--   returns setof mythgard.deck as $$
+-- 
+--   BEGIN
+--        IF sortBy = 'essenceDesc' THEN
+--          RETURN QUERY select id, name, author_id, path_id, power_id, modified, created
+--           from ( select * from mythgard.search_decks(deckName, authorName, deckModified, card1,
+--                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+--                   faction6, numFactions) as foo,
+--                   deck_essence_cost(foo.id) as dec 
+--                   order by dec desc) as bar;
+--        END IF;
+--        RETURN;
+--    END
+-- 
+--   $$ language plpgsql;
+-- 
+-- select * from mythgard.seach_decks_sorted('essenceDesc', null, null, null, null,
+--  null, null, null, null, null, null, null, null, null,
+--  null, null) limit 10;
 
 CREATE USER postgraphile WITH password 'bears4life';
 GRANT ALL PRIVILEGES ON SCHEMA mythgard TO postgraphile;

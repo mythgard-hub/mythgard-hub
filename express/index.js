@@ -16,26 +16,26 @@ app.use(compression());
 app.use(helmet());
 
 app.use(express.json());
-app.use('/graphql', async (req, res, next) => {
-  const queries = req.body.map(b => b.query);
-  const allQueriesOk = queries.reduce((acc, query) => {
-    const hash = hashQuery(query);
-    const allowed = allowedQueryHashes.includes(hash);
-    if (!allowed && process.env.DEBUG) {
-      console.log('Bad query detected!!!');
-      console.log('query: ', query);
-      console.log('normalized: ', normalizeString(query));
-      console.log('hash: ', hash);
-      console.log('allowedQueryHashes: ', allowedQueryHashes);
-    }
-    return acc && allowed;
-  }, true);
-  if (!allQueriesOk) {
-    res.status(500).send('This query is not allowed.');
-  } else {
-    next();
-  }
-});
+// app.use('/graphql', async (req, res, next) => {
+//   const queries = req.body.map(b => b.query);
+//   const allQueriesOk = queries.reduce((acc, query) => {
+//     const hash = hashQuery(query);
+//     const allowed = allowedQueryHashes.includes(hash);
+//     if (!allowed && process.env.DEBUG) {
+//       console.log('Bad query detected!!!');
+//       console.log('query: ', query);
+//       console.log('normalized: ', normalizeString(query));
+//       console.log('hash: ', hash);
+//       console.log('allowedQueryHashes: ', allowedQueryHashes);
+//     }
+//     return acc && allowed;
+//   }, true);
+//   if (!allQueriesOk) {
+//     res.status(500).send('This query is not allowed.');
+//   } else {
+//     next();
+//   }
+// });
 
 app.use(
   postgraphile(
