@@ -97,14 +97,11 @@ export default function DeckBuilderSidebar(props) {
       <button onClick={() => clearDeck(props.onClear)}>Clear Deck</button>
       <div className="deck-in-progress" data-cy="deckInProgress">
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
-        <EditDeckName
-          deckName={deckInProgress.deckName}
-          onChange={updateDeckName}
-        />
         <div className="card-count">
           Cards: <span>{cardCount}</span>
         </div>
         <DeckCardTable
+          updateDeckName={updateDeckName}
           deck={deckInProgress}
           deleteCard={deleteCardFromTable}
           switchToCards={switchToCards}

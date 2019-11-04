@@ -4,13 +4,16 @@ import { ThemeContext } from './theme-context';
 import { FACTION_COLORS } from '../constants/factions';
 import DeckCardsTableRow from './deck-card-table-row';
 import DeckCardsTableEditMeta from './deck-card-table-edit-meta';
+import EditDeckName from './edit-deck-name';
+import DeckBuilderUser from './deck-builder-user';
 
 export default function DeckCardsTable({
   deck,
   deleteCard,
   onlyTable,
   switchToCards,
-  setTab
+  setTab,
+  updateDeckName
 }) {
   const deckCards = deck && Object.values(deck.mainDeck);
   const colspan = deleteCard ? 3 : 2;
@@ -88,18 +91,18 @@ export default function DeckCardsTable({
           border-collapse: collapse;
           width: 100%;
         }
+        .deck-author {
+          margin: 10px 0;
+        }
         td {
           padding: 6px;
           border: ${theme.cardTableBorder};
         }
-        .deck-title {
-          font-size: 30px;
-          margin: 0 0 20px 5px;
-        }
       `}</style>
       {!onlyTable && (
-        <div className="deck-title">{deck.deckName || '[untitled]'}</div>
+        <EditDeckName deckName={deck.deckName} onChange={updateDeckName} />
       )}
+      {!onlyTable && <DeckBuilderUser />}
       <table className="deck-card-table" data-cy="deckCardTable">
         <tbody>
           <tr>
@@ -167,6 +170,7 @@ DeckCardsTable.propTypes = {
     }),
     errors: PropTypes.arrayOf(PropTypes.string),
     switchToCards: PropTypes.func,
-    setTab: PropTypes.func
+    setTab: PropTypes.func,
+    updateDeckName: PropTypes.func
   })
 };
