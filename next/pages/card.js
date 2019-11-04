@@ -50,7 +50,7 @@ export default withRouter(({ router }) => {
       desc={description}
       image={getImagePath(data.card.name, data.card.set)}
     >
-      <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
+      <PageBanner image={PageBanner.IMG_CARDS} url="/cards">Cards</PageBanner>
       <Card card={data.card} />
     </Layout>
   );

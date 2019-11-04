@@ -129,16 +129,9 @@ export default withRouter(({ router }) => {
             margin: 10px 0 0;
             float: right;
           }
-          .bannerLink {
-            text-decoration: none;
-          }
         `}
       </style>
-      <Link href="/events">
-        <a className="bannerLink">
-          <PageBanner image={PageBanner.IMG_EVENTS}>Events</PageBanner>
-        </a>
-      </Link>
+      <PageBanner image={PageBanner.IMG_EVENTS} url="/events">Events</PageBanner>
       <a
         className="external-link accent bold tourneyLink"
         data-cy="tourneyLink"
