@@ -1,5 +1,4 @@
 import { withRouter } from 'next/router';
-import Head from 'next/head';
 import ErrorMessage from '../components/error-message';
 import Card from '../components/card';
 import Layout from '../components/layout';
@@ -46,36 +45,11 @@ export default withRouter(({ router }) => {
     .subtype && firstLetterUppercase(data.card.subtype)}, Core`;
 
   return (
-    <Layout title={title} desc={description}>
-      <Head>
-        <meta key="og:title" property="og:title" content={title} />
-        <meta
-          key="og:site_name"
-          property="og:site_name"
-          content="Mythgard Hub"
-        />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={description}
-        />
-        <meta
-          key="og:url"
-          property="og:url"
-          content={`https://mythgardhub.com${router.asPath}`}
-        />
-        <meta key="og:type" property="og:type" content="article" />
-        <meta
-          key="og:image"
-          property="og:image"
-          content={getImagePath(data.card.name, data.card.set)}
-        />
-        <meta
-          key="og:image:type"
-          property="og:image:type"
-          content="image/png"
-        />
-      </Head>
+    <Layout
+      title={title}
+      desc={description}
+      image={getImagePath(data.card.name, data.card.set)}
+    >
       <PageBanner image={PageBanner.IMG_CARDS}>Cards</PageBanner>
       <Card card={data.card} />
     </Layout>
