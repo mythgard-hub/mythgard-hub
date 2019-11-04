@@ -15,7 +15,8 @@ const resetFilters = values => {
     factionNames: values.factionNames,
     isOnlyFactions: values.isOnlyFactions,
     updatedTime: values.updatedTime,
-    authorName: values.authorName
+    authorName: values.authorName,
+    sortBy: values.sortBy
   };
 };
 
@@ -61,7 +62,8 @@ export default function DeckSearchForm(props) {
       factionNames: filters.factionNames,
       isOnlyFactions: filters.isOnlyFactions,
       updatedTime: filters.updatedTime,
-      authorName: filters.authorName
+      authorName: filters.authorName,
+      sortBy: filters.sortBy
     });
   };
 
@@ -215,7 +217,7 @@ export default function DeckSearchForm(props) {
         <label className="included-cards input-label">
           Sort by
           <select
-            value={'newToOld'}
+            value={filters.sortBy}
             onChange={handleInputChangeHooks(sortBy =>
               changeState('sortBy', sortBy)
             )}
