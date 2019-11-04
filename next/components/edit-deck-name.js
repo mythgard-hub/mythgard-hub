@@ -10,6 +10,7 @@ export default function EditDeckName(props) {
     <div className="deck-name-container">
       <style jsx>{`
         input {
+          width: 100%;
           background-color: transparent;
           border: ${theme.inputBorder};
           border-radius: 10px;
