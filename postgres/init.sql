@@ -262,6 +262,27 @@ CREATE POLICY accountupdate_if_author
   USING ("id" = mythgard.current_user_id())
   WITH CHECK ("id" = mythgard.current_user_id());
 
+ALTER TABLE mythgard.deck_vote ENABLE ROW LEVEL SECURITY;
+
+-- Admin users can make any changes and read all rows
+CREATE POLICY deck_vote_admin_all ON mythgard.deck_vote TO admin USING (true) WITH CHECK (true);
+-- Non-admins can read all rows
+CREATE POLICY deck_vote_all_view ON mythgard.deck_vote FOR SELECT USING (true);
+-- Rows can only be updated by their author
+-- and users cannot create a row for their own decks
+CREATE POLICY deck_vote_insert_if_author
+  ON mythgard.deck_vote
+  FOR INSERT
+  WITH CHECK ((account_id = mythgard.current_user_id())
+              AND
+              NOT EXISTS(select * from mythgard.deck
+                         where id = deck_vote.deck_id
+                         and author_id = mythgard.current_user_id()));
+CREATE POLICY deck_vote_delete_if_author
+  ON mythgard.deck_vote
+  FOR DELETE
+  USING ("account_id" = mythgard.current_user_id());
+
 CREATE TABLE mythgard.tournament (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -309,7 +330,25 @@ CREATE TABLE mythgard.card_faction (
 );
 
 INSERT INTO mythgard.card_faction("card_id","faction_id")
-  VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 1), (8, 2), (9, 3), (10, 4), (11, 5), (12, 6), (13, 1), (14, 1), (15, 1), (16, 1), (17, 2);
+  VALUES 
+    (1, 1),
+    (1, 2),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 1),
+    (8, 2),
+    (9, 3),
+    (10, 4),
+    (11, 5),
+    (12, 6),
+    (13, 1),
+    (14, 1),
+    (15, 1),
+    (16, 1),
+    (17, 2);
 
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
@@ -324,13 +363,34 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+CREATE OR REPLACE FUNCTION deck_essence_cost (IN deckId INTEGER) 
+RETURNS INTEGER AS $$
+  DECLARE
+    essence_cost INTEGER;
+  BEGIN
+    SELECT sum(essence_costs.essence * card_deck.quantity)::int into essence_cost
+    FROM mythgard.deck
+    JOIN mythgard.card_deck
+      ON card_deck.deck_id = deck.id
+    JOIN mythgard.card
+      ON card_deck.card_id = card.id
+    LEFT JOIN mythgard.essence_costs
+      On essence_costs.rarity = card.rarity
+    WHERE deck.id = $1
+    GROUP BY deck.id;
+    
+    RETURN essence_cost;
+  
+  END;
+  $$ language 'plpgsql';
+
 CREATE OR REPLACE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
          deck.name as deck_name,
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
-         sum(essence_costs.essence * card_deck.quantity)::int as essence_cost,
-         count(deck_vote)::int as votes
+         deck_essence_cost(deck.id)::int as essence_cost,
+         count(DISTINCT deck_vote)::int as votes
   FROM mythgard.deck
   JOIN mythgard.card_deck
     ON card_deck.deck_id = deck.id
@@ -391,10 +451,10 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
       LEFT JOIN mythgard.card ON (card.id = card_deck.card_id)
       LEFT JOIN mythgard.account ON (account.id = deck.author_id)
 
-    -- deck name filter
-    WHERE (deckName is NULL or deckName = '' or to_tsvector('simple', deck.name) @@ to_tsquery('simple',deckName || ':*'))
+-- deck name filter
+    WHERE (deckName is NULL or trim(deckName) = '' or to_tsvector('simple', deck.name) @@ to_tsquery('simple', replace(regexp_replace(trim(deckName), '\s+', ' ', 'g'), ' ', ':* & ') || ':*'))
     -- author name filter
-    AND (authorName is NULL or authorName = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple',authorName || ':*'))
+    AND (authorName is NULL or trim(authorName) = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple', replace(regexp_replace(trim(authorName), '\s+', ' ', 'g'), ' ', ':* & ') || ':*'))
     -- modification date filter
     AND (deckModified is NULL or deck.modified >= deckModified)
 

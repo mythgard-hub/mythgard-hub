@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 function PageBanner({ children, image, url }) {
   return (
@@ -23,16 +24,18 @@ function _bannerWithoutUrl(children, image){
 
 function _bannerWithUrl(children, image, url){
   return (
-    <a href={url} className='page-banner-link'>
-      <style jsx>{`
-        .page-banner-link { text-decoration: none; } 
-      `}</style>
+    <Link href={url}>
+      <a className='page-banner-link'>
+        <style jsx>{`
+          .page-banner-link { text-decoration: none; }
+        `}</style>
 
-      <div className="page-banner">
-        { _bannerStyling(image) }
-        <h1 data-cy="header">{children}</h1>
-      </div>
-    </a>
+        <div className="page-banner">
+          { _bannerStyling(image) }
+          <h1 data-cy="header">{children}</h1>
+        </div>
+      </a>
+    </Link>
   );
 }
 

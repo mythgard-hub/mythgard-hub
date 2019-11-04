@@ -35,7 +35,7 @@ class DeckExport extends React.Component {
     const { message } = this.state;
 
     return (
-      <div className="deck-export-container">
+      <div className={`deck-export-container ${this.props.className}`}>
         <style jsx>{`
           .deck-export-container {
             margin-bottom: 10px;
@@ -57,7 +57,7 @@ DeckExport.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPath: PropTypes.shape({
+    deckPower: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),
@@ -70,7 +70,8 @@ DeckExport.propTypes = {
       })
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  className: PropTypes.string
 };
 
 export default DeckExport;

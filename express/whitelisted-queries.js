@@ -262,8 +262,12 @@ mutation UpdateDeckAndRemoveCards(
 `,
 
   `
-  query decks($first:Int, $offset:Int) {
-    decks(orderBy: CREATED_DESC, first:$first, offset:$offset ) {
+  query decks($first:Int, $offset:Int, $modified:Datetime) {
+    decks(orderBy: CREATED_DESC, first:$first, offset:$offset, filter: {
+      modified: {
+        greaterThanOrEqualTo: $modified
+      }
+    }) {
       totalCount
       nodes {
         id
@@ -313,7 +317,7 @@ mutation UpdateDeckAndRemoveCards(
 `,
   `
   query deckPreview {
-    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3, filter: {
+    deckPreviews(orderBy: DECK_CREATED_ASC, first: 4, filter: {
       deck: {
         deckFeatureds: {
           some: {
@@ -475,6 +479,42 @@ query tournaments($now: Date) {
             }
           }
         }
+      }
+    }
+  }
+`,
+  `
+  query deckAccountVotes($deckId: Int!, $accountId: Int!) {
+    deckVotes(
+      filter: {
+        deckId: { equalTo: $deckId }
+        accountId: { equalTo: $accountId }
+      }
+    ) {
+      nodes {
+        id
+        __typename
+      }
+      __typename
+    }
+  }
+`,
+  `
+  mutation upvoteDeck($deckId: Int, $accountId: Int) {
+    createDeckVote(
+      input: { deckVote: { deckId: $deckId, accountId: $accountId } }
+    ) {
+      deckVote {
+        id
+      }
+    }
+  }
+`,
+  `
+  mutation removeDeckUpvote($deckVoteId: Int!) {
+    deleteDeckVote(input: { id: $deckVoteId }) {
+      deckVote {
+        id
       }
     }
   }

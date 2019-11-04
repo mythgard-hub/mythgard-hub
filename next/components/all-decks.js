@@ -3,22 +3,24 @@ import { useQuery } from '@apollo/react-hooks';
 import { useState } from 'react';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
-import { allDecksQuery } from '../lib/deck-queries';
+import { allDecksQuery, daysAgoToGraphQLTimestamp } from '../lib/deck-queries';
 import PagingControls from './paging-controls.js';
 import { scrollToTopOfElement } from '../lib/ui-utils';
+import PropTypes from 'prop-types';
 
 const pageSize = 50;
 
-export default function AllDecks() {
+export default function AllDecks({ defaultDaysAgo }) {
   const listRef = React.createRef();
   const dataLoaded = useRef(false);
   const [currentPage, setPage] = useState(0);
   const { loading, error, data } = useQuery(allDecksQuery, {
     variables: {
       first: pageSize,
-      offset: currentPage * pageSize
+      offset: currentPage * pageSize,
+      modified: daysAgoToGraphQLTimestamp(defaultDaysAgo)
     },
-    onCompleted: _ => {
+    onCompleted: () => {
       if (!dataLoaded.current) {
         setTimeout(() => {
           dataLoaded.current = true;
@@ -57,3 +59,7 @@ export default function AllDecks() {
     </div>
   );
 }
+
+AllDecks.propTypes = {
+  defaultDaysAgo: PropTypes.string.isRequired
+};

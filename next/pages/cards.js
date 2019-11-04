@@ -4,6 +4,7 @@ import PageBanner from '../components/page-banner';
 import { useState } from 'react';
 import CardSearchForm from '../components/card-search-form';
 import { useRouter } from 'next/router';
+import queryToParams from '../lib/url-to-search-parameters.js';
 
 export const twoColMinWidth = 925;
 
@@ -19,17 +20,8 @@ const searchQueryDefaults = {
 
 function CardsPage() {
   const router = useRouter();
-  const initialSearchQuery = { ...searchQueryDefaults };
-  for (const entry of Object.entries(router.query)) {
-    const [name, value] = entry;
-    if (value) {
-      initialSearchQuery[name] =
-        typeof searchQueryDefaults[name] !== 'object'
-          ? value
-          : value.split(',');
-    }
-  }
-  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
+  const urlSearchQuery = queryToParams(searchQueryDefaults, router.query);
+  const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
 
   const handleSearchSubmit = searchQuery => {
     setSearchQuery(searchQuery);

@@ -4,7 +4,14 @@ import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
 import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
-import { initializeDeckBuilder } from '../lib/deck-utils';
+import {
+  initializeDeckBuilder,
+  getAuthor,
+  getEssenceCost,
+  getDateCreated,
+  getFactions
+} from '../lib/deck-utils';
+import DeckVote from './deck-vote';
 import { deckCardsQuery } from '../lib/deck-queries';
 import DeckCardsTable from './deck-card-table';
 import EssenceIndicator from './essence-indicator.js';
@@ -31,62 +38,48 @@ export default function Deck({ deck }) {
   if (loading) return <div>Loading...</div>;
 
   const cards = data.deck ? data.deck.cardDecks.nodes : [];
-  const { power, path, author, deckPreviews } = deck;
+  const { power, path } = deck;
   const deckToExport = getDeckToExport(cards, deck.name, path, power);
-  const authorName = (author && author.username) || 'unknown';
-  const metaData =
-    deckPreviews &&
-    deckPreviews.nodes &&
-    deckPreviews.nodes[0] &&
-    deckPreviews.nodes[0];
-  const essenceCost = metaData && metaData.essenceCost;
-  const factions = metaData && metaData.factions;
-  const dateCreated =
-    metaData &&
-    metaData.deckCreated &&
-    new Date(metaData.deckCreated).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+  const authorName = getAuthor(deck);
+  const essenceCost = getEssenceCost(deck);
+  const factions = getFactions(deck);
+  const dateCreated = getDateCreated(deck);
 
   return (
     <div className="deck-page-container">
       <style jsx>{`
         .deck-page-container {
+          padding-top: 20px;
           display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
         }
 
-        .deck-details {
-          width: 70%;
-          padding-right: 20px;
-          padding-bottom: 50px;
+        .left-col {
+          min-width: 400px;
+          margin-bottom: 20px;
         }
 
-        .deck-actions {
-          width: 30%;
+        .right-col {
+          flex-grow: 100;
+        }
+
+        .spacer {
+          flex-grow: 10;
+          min-width: 20px;
         }
 
         .deck-name {
           font-weight: bold;
           font-size: 24px;
-          margin-bottom: 5px;
-          display: flex;
-          justify-content: space-between;
+          margin-bottom: 10px;
         }
 
         .deck-author {
           margin-bottom: 20px;
         }
 
-        .deck-stats {
-          width: 100%;
-          margin-left: 20px;
-          padding-bottom: 20px;
-        }
-
         .coming-soon {
-          margin-top: 10px;
           font-style: italic;
         }
 
@@ -95,47 +88,77 @@ export default function Deck({ deck }) {
           font-style: italic;
           font-weight: bold;
           font-size: 1em;
-          margin-top: 25px;
-          margin-bottom: 3px;
         }
 
         .date-created {
           text-transform: uppercase;
         }
 
-        @media only screen and (max-width: 600px) {
-          .deck-page-container {
-            flex-direction: column;
-          }
+        .deck-actions {
+          margin-top: 20px;
+          display: flex;
+          flex-wrap: wrap;
+        }
 
-          .deck-details,
-          .deck-actions {
-            width: 100%;
-          }
+        :global(.deck-actions .deck-action + .deck-action) {
+          margin-left: 10px;
+        }
+
+        :global(.deck-actions .deck-action) {
+          flex-grow: 999;
+        }
+
+        :global(.deck-actions .deck-action.no-grow) {
+          flex-grow: 1;
+        }
+
+        .gradient-hr {
+          margin: 10px 0;
+        }
+
+        .deck-stats {
+          margin-top: 10px;
+        }
+
+        .gradient-hr + .deck-stat {
+          margin-bottom: 20px;
+        }
+
+        @media only screen and (max-width: 600px) {
         }
       `}</style>
-      <div className="deck-details">
+      <div className="left-col">
         <div className="deck-name" data-cy="deckName">
           {deck.name}
         </div>
         <div className="deck-author">by {authorName}</div>
         <DeckCardsTable deck={deckToExport} onlyTable />
       </div>
-      <div className="deck-actions">
-        <DeckExport deckInProgress={deckToExport} />
-        <DeckEdit deck={deck} />
-        <DeckDelete deck={deck} />
-        <div className="deck-stats">
-          <div className="stats-title">Essence</div>
-          <hr className="gradient-hr" />
-          <EssenceIndicator essence={essenceCost} />
-          <div className="stats-title factions-title">Factions</div>
-          <hr className="gradient-hr" />
-          <FactionsIndicator factions={factions} />
-          <div className="stats-title factions-title">Deck Created</div>
-          <hr className="gradient-hr" />
-          <div className="date-created" data-cy="deckCreatedDate">
-            {dateCreated}
+      <div className="spacer"></div>
+      <div className="right-col">
+        <div className="deck-actions">
+          <DeckExport className="deck-action" deckInProgress={deckToExport} />
+          <DeckEdit className="deck-action" deck={deck} />
+          <DeckDelete className="deck-action" deck={deck} />
+          <DeckVote className="deck-action no-grow" deck={deck} />
+        </div>
+        <div className="deck-stats-container">
+          <div className="deck-stats">
+            <div className="stats-title">Essence</div>
+            <hr className="gradient-hr" />
+            <div className="deck-stat">
+              <EssenceIndicator essence={essenceCost} />
+            </div>
+            <div className="stats-title factions-title">Factions</div>
+            <hr className="gradient-hr" />
+            <div className="deck-stat">
+              <FactionsIndicator factions={factions} />
+            </div>
+            <div className="stats-title factions-title">Deck Created</div>
+            <hr className="gradient-hr" />
+            <div className="deck-stat date-created" data-cy="deckCreatedDate">
+              {dateCreated}
+            </div>
           </div>
         </div>
       </div>
@@ -150,6 +173,15 @@ Deck.propTypes = {
     cardDecks: PropTypes.array,
     power: PropTypes.shape({ name: PropTypes.string.isRequired }),
     path: PropTypes.shape({ name: PropTypes.string.isRequired }),
-    author: PropTypes.shape({ username: PropTypes.string.isRequired })
+    author: PropTypes.shape({ username: PropTypes.string.isRequired }),
+    deckPreviews: PropTypes.shape({
+      nodes: PropTypes.arrayOf(
+        PropTypes.shape({
+          essenceCost: PropTypes.number,
+          factions: PropTypes.arrayOf(PropTypes.string),
+          deckCreated: PropTypes.string
+        })
+      )
+    })
   }).isRequired
 };
