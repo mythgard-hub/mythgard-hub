@@ -13,7 +13,7 @@ describe('Export utility methods', () => {
 
       const result = exportDeck(deckInProgress);
       const expected = [
-        'name: ',
+        'name: Untitled',
         'path: ',
         'power: ',
         'coverart: ',
