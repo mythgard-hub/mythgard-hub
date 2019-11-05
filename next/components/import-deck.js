@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 
@@ -28,7 +29,9 @@ const handleImport = (
 export default function ImportDeck({
   mainDeckInput,
   handleInputChange,
-  updateImportedDeck
+  updateImportedDeck,
+  importMode,
+  setImportMode
 }) {
   const {
     loading: cardsLoading,
@@ -43,6 +46,19 @@ export default function ImportDeck({
     error: powerError,
     data: powerData
   } = useQuery(allPowersQuery);
+
+  if (!importMode) {
+    return (
+      <div>
+        <style jsx>{`
+          div {
+            margin-top: 20px;
+          }
+        `}</style>
+        <button onClick={e => setImportMode(true)}>Import</button>
+      </div>
+    );
+  }
 
   const error = cardsError || pathError || powerError;
   if (error) return <ErrorMessage message={error.message} />;
@@ -64,35 +80,44 @@ export default function ImportDeck({
 
     if (confirmation) {
       handleImport(mainDeckInput, updateImportedDeck, cards, paths, powers);
+      setImportMode(false);
     }
   };
 
   return (
     <div className="import-deck-container">
       <style jsx>{`
-        .import-deck-container {
+        .import-button {
+          margin-top: 20px;
           margin-bottom: 10px;
         }
         .import-deck-textarea {
-          margin-top: 10px;
+          margin-top: 30px;
           margin-bottom: 10px;
           max-width: 100%;
           width: 100%;
         }
       `}</style>
+      <button
+        onClick={onClick}
+        data-cy="importDeckButton"
+        className="import-button"
+      >
+        Import Decklist
+      </button>
+      <button onClick={_ => setImportMode(false)} data-cy="importDeckButton">
+        Cancel
+      </button>
       <textarea
         className="import-deck-textarea"
         data-cy="importDeckTextarea"
         cols="39"
-        rows="2"
+        rows="20"
         value={mainDeckInput}
         name="mainDeckInput"
         onChange={handleInputChange}
         placeholder="Paste deck from Mythgard..."
       />
-      <button onClick={onClick} data-cy="importDeckButton">
-        Import
-      </button>
     </div>
   );
 }
@@ -113,5 +138,7 @@ ImportDeck.propTypes = {
     })
   }),
   handleInputChange: PropTypes.func,
-  updateImportedDeck: PropTypes.func
+  updateImportedDeck: PropTypes.func,
+  importMode: PropTypes.bool,
+  setImportMode: PropTypes.func
 };

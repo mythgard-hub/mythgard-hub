@@ -21,6 +21,7 @@ export default function DeckBuilderSidebar(props) {
   } = props;
   const theme = useContext(ThemeContext);
   const [mainDeckInput, setMainDeckInput] = useState('');
+  const [importMode, setImportMode] = useState(false);
 
   const updateDeckName = e => {
     setDeckInProgress({
@@ -105,16 +106,17 @@ export default function DeckBuilderSidebar(props) {
           }
         }
       `}</style>
-      <h2 className="build-deck-title">Import Deck from Mythgard</h2>
       <ImportDeck
         mainDeckInput={mainDeckInput}
         handleInputChange={e => {
           setMainDeckInput(e.target.value);
         }}
         updateImportedDeck={updateImportedDeck}
+        importMode={importMode}
+        setImportMode={setImportMode}
       />
       <hr className="action-button-border" />
-      {cardCount ? (
+      {cardCount && !importMode ? (
         <div className="action-buttons">
           <SaveDeck
             deckId={deckId}
@@ -129,18 +131,20 @@ export default function DeckBuilderSidebar(props) {
       ) : (
         <h3 className="build-deck-title">- OR - BUILD YOUR DECK</h3>
       )}
-      <div className="deck-in-progress" data-cy="deckInProgress">
-        <div className="card-count">
-          Cards: <span>{cardCount}</span>
+      {!importMode && (
+        <div className="deck-in-progress" data-cy="deckInProgress">
+          <div className="card-count">
+            Cards: <span>{cardCount}</span>
+          </div>
+          <DeckCardTable
+            updateDeckName={updateDeckName}
+            deck={deckInProgress}
+            deleteCard={deleteCardFromTable}
+            switchToCards={switchToCards}
+            setTab={setTab}
+          />
         </div>
-        <DeckCardTable
-          updateDeckName={updateDeckName}
-          deck={deckInProgress}
-          deleteCard={deleteCardFromTable}
-          switchToCards={switchToCards}
-          setTab={setTab}
-        />
-      </div>
+      )}
     </div>
   );
 }
