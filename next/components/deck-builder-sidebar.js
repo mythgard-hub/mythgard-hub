@@ -127,7 +127,7 @@ export default function DeckBuilderSidebar(props) {
           <DeckExport deckInProgress={deckInProgress} />
         </div>
       ) : (
-        <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
+        <h3 className="build-deck-title">- OR - BUILD YOUR DECK</h3>
       )}
       <div className="deck-in-progress" data-cy="deckInProgress">
         <div className="card-count">
