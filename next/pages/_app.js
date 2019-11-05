@@ -2,9 +2,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import Router from 'next/router';
 import withApolloClient from '../components/with-apollo-client';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as HooksApolloProvider } from 'react-apollo-hooks';
-import { ApolloProvider as ApolloReactHooksProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/react-hooks';
 import { pageview, USE_GOOGLE_ANALYTICS } from '../lib/gtag';
 import UserContext from '../components/user-context';
 import redirect from '../lib/redirect';
@@ -17,9 +15,11 @@ class MyApp extends App {
   static async getInitialProps({ ctx, Component }) {
     let user;
 
-    const pageProps = Component.getInitialProps
-      ? await Component.getInitialProps(ctx)
-      : {};
+    let pageProps = {};
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+    //pageProps.query = ctx.query;
 
     if (ctx.req) {
       /**
@@ -77,20 +77,14 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, apolloClient, apolloState, ...pageProps } = this.props;
+    const { Component, apolloClient, ...pageProps } = this.props;
     const { user } = this.state;
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
-          <HooksApolloProvider client={apolloClient}>
-            <ApolloReactHooksProvider client={apolloClient}>
-              <UserContext.Provider
-                value={{ user, updateUser: this.updateUser }}
-              >
-                <Component {...pageProps} />
-              </UserContext.Provider>
-            </ApolloReactHooksProvider>
-          </HooksApolloProvider>
+          <UserContext.Provider value={{ user, updateUser: this.updateUser }}>
+            <Component {...pageProps} />
+          </UserContext.Provider>
         </ApolloProvider>
       </Container>
     );

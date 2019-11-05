@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 
 export const getCardsQuery = () => {
   return gql`
