@@ -537,6 +537,14 @@ create or replace function mythgard.seach_decks_sorted(sortBy text, deckName var
                   faction6, numFactions) as foo,
                   deck_essence_cost(foo.id) as dec
                   order by dec asc) as bar;
+       ELSIF sortBy = 'dateDesc' THEN
+         RETURN QUERY select * from mythgard.search_decks(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions) order by created desc;
+       ELSIF sortBy = 'dateAsc' THEN
+         RETURN QUERY select * from mythgard.search_decks(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions) order by created asc;
        ELSE
           RETURN QUERY select * from mythgard.search_decks(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
@@ -547,7 +555,7 @@ create or replace function mythgard.seach_decks_sorted(sortBy text, deckName var
 
   $$ language plpgsql;
 
-select * from mythgard.seach_decks_sorted('sdf', null, null, null, null,
+select * from mythgard.seach_decks_sorted('dateAsc', null, null, null, null,
  null, null, null, null, null, null, null, null, null,
  null, null) limit 10;
 
