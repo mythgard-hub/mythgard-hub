@@ -54,6 +54,7 @@ const userWantsToDiscardChanges = () => confirm(clearSessionStorageMsg);
 // previously worked on decks is not run during an SSR.
 const loadExistingDeck = (
   deckId,
+  deckInProgress,
   setDeckInProgress,
   setIsError,
   client,
