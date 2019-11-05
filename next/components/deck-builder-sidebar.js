@@ -114,19 +114,22 @@ export default function DeckBuilderSidebar(props) {
         updateImportedDeck={updateImportedDeck}
       />
       <hr className="action-button-border" />
-      <div className="action-buttons">
-        <SaveDeck
-          deckId={deckId}
-          deckInProgress={deckInProgress}
-          setDeckInProgress={setDeckInProgress}
-        />
-        <div className="clear-button-container">
-          <button onClick={() => clearDeck(props.onClear)}>Clear</button>
+      {cardCount ? (
+        <div className="action-buttons">
+          <SaveDeck
+            deckId={deckId}
+            deckInProgress={deckInProgress}
+            setDeckInProgress={setDeckInProgress}
+          />
+          <div className="clear-button-container">
+            <button onClick={() => clearDeck(props.onClear)}>Clear</button>
+          </div>
+          <DeckExport deckInProgress={deckInProgress} />
         </div>
-        <DeckExport deckInProgress={deckInProgress} />
-      </div>
-      <div className="deck-in-progress" data-cy="deckInProgress">
+      ) : (
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
+      )}
+      <div className="deck-in-progress" data-cy="deckInProgress">
         <div className="card-count">
           Cards: <span>{cardCount}</span>
         </div>
