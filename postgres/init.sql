@@ -528,14 +528,14 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
-                  deck_essence_cost(foo.id) as dec
+                  mythgard.deck_essence_cost(foo.id) as dec
                   order by dec desc) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
          RETURN QUERY select id, name, author_id, path_id, power_id, modified, created
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
-                  deck_essence_cost(foo.id) as dec
+                  mythgard.deck_essence_cost(foo.id) as dec
                   order by dec asc) as bar;
        ELSIF sortBy = 'dateDesc' THEN
          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
@@ -553,11 +553,11 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
        RETURN;
    END
 
-  $$ language plpgsql;
+  $$ language plpgsql stable;
 
 select * from mythgard.search_decks(null, null, null, null,
  null, null, null, null, null, null, null, null, null,
- null, null, 'dateAsc') limit 10;
+ null, null, 'essenceAsc') limit 10;
 
 CREATE USER postgraphile WITH password 'bears4life';
 GRANT ALL PRIVILEGES ON SCHEMA mythgard TO postgraphile;
