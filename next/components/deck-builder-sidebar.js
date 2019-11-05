@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import ImportDeck from '../components/import-deck';
 import DeckExport from '../components/deck-export';
 import DeckCardTable from '../components/deck-card-table';
-import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
 import {
   initializeDeckBuilder,
   resetDeckBuilderSavedState,
   getCardCount
 } from '../lib/deck-utils';
+import { ThemeContext } from './theme-context';
 
 export default function DeckBuilderSidebar(props) {
   const {
@@ -19,6 +19,7 @@ export default function DeckBuilderSidebar(props) {
     switchToCards,
     setTab
   } = props;
+  const theme = useContext(ThemeContext);
   const [mainDeckInput, setMainDeckInput] = useState('');
 
   const updateDeckName = e => {
@@ -73,6 +74,30 @@ export default function DeckBuilderSidebar(props) {
           text-transform: uppercase;
           text-align: center;
         }
+        .action-buttons {
+          display: flex;
+          justify-content: space-between;
+        }
+        :global(.save-deck-container),
+        :global(.deck-export-container),
+        .clear-button-container {
+          width: 31%;
+        }
+        .action-button-border {
+          margin-top: 18px;
+          margin-bottom: 16px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 90%;
+          border: 0;
+          height: 1px;
+          background-image: linear-gradient(
+            to right,
+            ${theme.orangeSeparatorSecondaryColor},
+            ${theme.orangeSeparatorColor},
+            ${theme.orangeSeparatorSecondaryColor}
+          );
+        }
 
         @media only screen and (max-width: 600px) {
           .deck-builder-actions {
@@ -88,13 +113,18 @@ export default function DeckBuilderSidebar(props) {
         }}
         updateImportedDeck={updateImportedDeck}
       />
-      <DeckExport deckInProgress={deckInProgress} />
-      <SaveDeck
-        deckId={deckId}
-        deckInProgress={deckInProgress}
-        setDeckInProgress={setDeckInProgress}
-      />
-      <button onClick={() => clearDeck(props.onClear)}>Clear Deck</button>
+      <hr className="action-button-border" />
+      <div className="action-buttons">
+        <SaveDeck
+          deckId={deckId}
+          deckInProgress={deckInProgress}
+          setDeckInProgress={setDeckInProgress}
+        />
+        <div className="clear-button-container">
+          <button onClick={() => clearDeck(props.onClear)}>Clear</button>
+        </div>
+        <DeckExport deckInProgress={deckInProgress} />
+      </div>
       <div className="deck-in-progress" data-cy="deckInProgress">
         <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
         <div className="card-count">
