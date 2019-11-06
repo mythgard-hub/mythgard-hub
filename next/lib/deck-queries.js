@@ -73,6 +73,7 @@ export const getDeckSearchVars = vars => {
     offset: vars.offset,
     deckName: vars.deckName,
     authorName: vars.authorName,
+    sortBy: vars.sortBy,
     deckModified: daysAgoToGraphQLTimestamp(vars.updatedTime),
     ...cardIdsToVars(vars.cardIds),
     ...factionNamesToVars(vars.factionNames, vars.isOnlyFactions)
@@ -99,6 +100,7 @@ const deckSearchQuery = gql`
       $numFactions: Int
       $first: Int
       $offset: Int
+      $sortBy: String
     ) {
       searchDecks(
         deckname: $deckName
@@ -118,6 +120,7 @@ const deckSearchQuery = gql`
         numfactions: $numFactions
         first: $first
         offset: $offset
+        sortby: $sortBy
       ) {
         totalCount
         nodes {
