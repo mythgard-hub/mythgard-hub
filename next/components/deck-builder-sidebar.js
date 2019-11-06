@@ -10,6 +10,7 @@ import {
   getCardCount
 } from '../lib/deck-utils';
 import { ThemeContext } from './theme-context';
+import DeckBuilderActionButtons from './deck-builder-action-buttons';
 
 export default function DeckBuilderSidebar(props) {
   const {
@@ -72,21 +73,13 @@ export default function DeckBuilderSidebar(props) {
           font-weight: bold;
         }
         .build-deck-title {
-          text-transform: uppercase;
           text-align: center;
-        }
-        .action-buttons {
-          display: flex;
-          justify-content: space-between;
-        }
-        :global(.save-deck-container),
-        :global(.deck-export-container),
-        .clear-button-container {
-          width: 106px;
+          margin-bottom: 15px;
+          font-size: 18px;
         }
         .action-button-border {
           margin-top: 18px;
-          margin-bottom: 16px;
+          margin-bottom: 10px;
           margin-left: auto;
           margin-right: auto;
           width: 90%;
@@ -116,20 +109,18 @@ export default function DeckBuilderSidebar(props) {
         setImportMode={setImportMode}
       />
       <hr className="action-button-border" />
-      {cardCount && !importMode ? (
-        <div className="action-buttons" data-cy="deckBuilderActions">
-          <SaveDeck
-            deckId={deckId}
-            deckInProgress={deckInProgress}
-            setDeckInProgress={setDeckInProgress}
-          />
-          <div className="clear-button-container">
-            <button onClick={() => clearDeck(props.onClear)}>Clear</button>
-          </div>
-          <DeckExport deckInProgress={deckInProgress} />
+      <DeckBuilderActionButtons
+        cardCount={cardCount}
+        importMode={importMode}
+        deckId={deckId}
+        deckInProgress={deckInProgress}
+        setDeckInProgress={setDeckInProgress}
+        onClear={() => clearDeck(props.onClear)}
+      />
+      {!importMode && !cardCount && (
+        <div className="build-deck-title">
+          - OR - Select a card to begin building
         </div>
-      ) : (
-        <h3 className="build-deck-title">- OR - BUILD YOUR DECK</h3>
       )}
       {!importMode && (
         <div className="deck-in-progress" data-cy="deckInProgress">
