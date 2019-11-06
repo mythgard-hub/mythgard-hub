@@ -1,5 +1,5 @@
 import { withRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from 'react-apollo-hooks';
 import ErrorMessage from '../components/error-message';
 import Deck from '../components/deck';
 import Layout from '../components/layout';

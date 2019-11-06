@@ -1,6 +1,7 @@
 import React from 'react';
 import initApollo from './init-apollo';
 import Head from 'next/head';
+import { getDataFromTree } from 'react-apollo';
 
 export default App => {
   return class Apollo extends React.Component {
@@ -19,7 +20,6 @@ export default App => {
       if (!process.browser) {
         try {
           // Run all GraphQL queries
-          const { getDataFromTree } = await import('@apollo/react-ssr');
           await getDataFromTree(
             <App
               {...appProps}
