@@ -20,7 +20,7 @@ const searchQueryDefaults = {
   isOnlyFactions: true,
   updatedTime: defaultUpdatedTime,
   authorName: '',
-  sortBy: 'newToOld'
+  sortBy: 'dateDesc'
 };
 
 const cardsErr = 'Error initializing deck seach';
