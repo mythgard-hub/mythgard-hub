@@ -117,7 +117,7 @@ export default function DeckBuilderSidebar(props) {
       />
       <hr className="action-button-border" />
       {cardCount && !importMode ? (
-        <div className="action-buttons">
+        <div className="action-buttons" data-cy="deckBuilderActions">
           <SaveDeck
             deckId={deckId}
             deckInProgress={deckInProgress}
