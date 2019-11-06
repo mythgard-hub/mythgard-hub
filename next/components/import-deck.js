@@ -55,7 +55,9 @@ export default function ImportDeck({
             margin-top: 20px;
           }
         `}</style>
-        <button onClick={e => setImportMode(true)}>Import</button>
+        <button onClick={e => setImportMode(true)} data-cy="goToImportMode">
+          Import
+        </button>
       </div>
     );
   }
@@ -105,7 +107,7 @@ export default function ImportDeck({
       >
         Import Decklist
       </button>
-      <button onClick={_ => setImportMode(false)} data-cy="importDeckButton">
+      <button onClick={_ => setImportMode(false)} data-cy="cancelImportMode">
         Cancel
       </button>
       <textarea
