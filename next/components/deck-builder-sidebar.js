@@ -82,7 +82,7 @@ export default function DeckBuilderSidebar(props) {
         :global(.save-deck-container),
         :global(.deck-export-container),
         .clear-button-container {
-          width: 31%;
+          width: 106px;
         }
         .action-button-border {
           margin-top: 18px;
