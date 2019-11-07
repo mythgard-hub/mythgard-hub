@@ -530,16 +530,32 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
-                  WHERE dec is not null
-                  order by dec desc) as bar;
+                  order by dec desc nulls last) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
          RETURN QUERY select id, name, author_id, path_id, power_id, modified, created
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
-                  WHERE dec is not null
-                  order by dec asc) as bar;
+                  order by dec asc nulls last) as bar;
+       ELSIF sortBy = 'ratingDesc' THEN
+        RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions) as deck
+          LEFT JOIN
+          (SELECT count(*) as voteCount, deck_id from mythgard.deck_vote group by deck_id) as deckVotes
+          on deckVotes.deck_id = deck.id
+          where deck.id is not null
+          order by voteCount desc nulls last;
+       ELSIF sortBy = 'ratingAsc' THEN
+        RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions) as deck
+          LEFT JOIN
+          (SELECT count(*) as voteCount, deck_id from mythgard.deck_vote group by deck_id) as deckVotes
+          on deckVotes.deck_id = deck.id
+          where deck.id is not null
+          order by voteCount asc nulls first;
        ELSIF sortBy = 'nameAsc' THEN
          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
@@ -568,7 +584,7 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
 
 select * from mythgard.search_decks(null, null, null, null,
  null, null, null, null, null, null, null, null, null,
- null, null, 'essenceAsc') limit 10;
+ null, null, 'ratingDesc') limit 10;
 
 CREATE USER postgraphile WITH password 'bears4life';
 GRANT ALL PRIVILEGES ON SCHEMA mythgard TO postgraphile;
