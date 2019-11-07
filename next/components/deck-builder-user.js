@@ -37,9 +37,6 @@ export default function DeckBuilderUser() {
         .login-link {
           font-size: 14px;
         }
-        .user-link {
-          font-size: inherit;
-        }
       `}</style>
       <div>
         by{' '}
