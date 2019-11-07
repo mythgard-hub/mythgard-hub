@@ -222,7 +222,10 @@ export default function DeckSearchForm(props) {
               changeState('sortBy', sortBy)
             )}
           >
-            <option value="newToOld">Newest First</option>
+            <option value="dateDesc">Newest First</option>
+            <option value="dateAsc">Oldest First</option>
+            <option value="essenceAsc">Essence Cost - Low</option>
+            <option value="essenceDesc">Essence Cost - High</option>
           </select>
         </label>
       </div>
