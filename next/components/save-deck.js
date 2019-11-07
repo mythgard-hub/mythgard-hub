@@ -42,7 +42,7 @@ export default function SaveDeck({
     saveButton = (
       <Link href="/auth/google">
         <a className="button" data-cy="saveDeck">
-          Login to Save
+          Save
         </a>
       </Link>
     );

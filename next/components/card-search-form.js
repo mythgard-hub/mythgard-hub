@@ -72,7 +72,7 @@ export default function CardSearchForm(props) {
         }
 
         .colLeft {
-          max-width: 535px;
+          max-width: 600px;
           flex-grow: 1;
         }
 

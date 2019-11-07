@@ -40,7 +40,7 @@ export default function GemDot({ gems }) {
     <span>
       <style jsx>{`
         span {
-          font-size: 24px;
+          font-size: 15px;
         }
       `}</style>
       {gemElements}

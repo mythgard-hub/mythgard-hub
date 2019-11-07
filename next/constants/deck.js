@@ -15,3 +15,5 @@ export const DECK_SIZES = {
   MIN: 40,
   MAX: 200
 };
+
+export const DECK_BUILDER_TABS = ['Cards', 'Paths', 'Powers'];
