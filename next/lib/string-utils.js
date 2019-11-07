@@ -8,7 +8,7 @@ export const firstLetterUppercase = str => {
 
 export const ordinalized = i => {
   try {
-    if (!i) return '';
+    if (!i && i !=== 0) return '';
 
     const j = i % 10,
       k = i % 100;
