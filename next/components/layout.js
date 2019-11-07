@@ -352,6 +352,13 @@ function Layout({ title, desc, image, router, children }) {
             margin-bottom: 25px;
           }
 
+          .call-to-action-chevron:before {
+            text-decoration: none;
+            content: '\u25b6';
+            margin-right: 3px;
+            font-size: 10px;
+          }
+
           .external-link::after {
             background-image: url('https://cdn.mythgardhub.com/icons/newWindow.svg');
             background-size: 12px 12px;

@@ -28,12 +28,6 @@ export default function DeckBuilderUser() {
           text-decoration: none;
           color: ${theme.fontColorAccent};
         }
-        .login-link:before {
-          text-decoration: none;
-          content: '\u25b6';
-          margin-right: 3px;
-          font-size: 10px;
-        }
         .login-link {
           font-size: 14px;
         }
@@ -48,7 +42,10 @@ export default function DeckBuilderUser() {
       </div>
       {!user && (
         <Link href="/auth/google">
-          <a data-cy="loginToSave" className="login-link">
+          <a
+            data-cy="loginToSave"
+            className="login-link call-to-action-chevron"
+          >
             Login/Register
           </a>
         </Link>
