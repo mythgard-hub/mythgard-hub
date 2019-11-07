@@ -380,6 +380,7 @@ mutation UpdateDeckAndRemoveCards(
       $numFactions: Int
       $first: Int
       $offset: Int
+      $sortBy: String
     ) {
       searchDecks(
         deckname: $deckName
@@ -399,6 +400,7 @@ mutation UpdateDeckAndRemoveCards(
         numfactions: $numFactions
         first: $first
         offset: $offset
+        sortby: $sortBy
       ) {
         totalCount
         nodes {
