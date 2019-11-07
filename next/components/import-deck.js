@@ -77,7 +77,7 @@ export default function ImportDeck({
 
   const onClick = () => {
     const confirmation = confirm(
-      'Are you sure you want to import? This will replace the current deck.'
+      'Importing will overwrite deck in progress. Continue?'
     );
 
     if (confirmation) {
