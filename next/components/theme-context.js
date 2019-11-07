@@ -42,6 +42,8 @@ export const themes = {
     footerLinkColor: mgColors.orange,
     footerTextColor: mgColors.mediumLighterGray,
     selectedPageColor: mgColors.blue,
+    orangeSeparatorColor: mgColors.orange,
+    orangeSeparatorSecondaryColor: mgColors.blackPearl,
     blueFactionColor: mgColors.blue,
     redFactionColor: mgColors.red,
     yellowFactionColor: mgColors.yellow,

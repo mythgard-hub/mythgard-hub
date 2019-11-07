@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import ImportDeck from '../components/import-deck';
 import DeckExport from '../components/deck-export';
 import DeckCardTable from '../components/deck-card-table';
-import EditDeckName from '../components/edit-deck-name';
 import SaveDeck from '../components/save-deck';
 import {
   initializeDeckBuilder,
   resetDeckBuilderSavedState,
   getCardCount
 } from '../lib/deck-utils';
+import { ThemeContext } from './theme-context';
+import DeckBuilderActionButtons from './deck-builder-action-buttons';
 
 export default function DeckBuilderSidebar(props) {
   const {
@@ -19,7 +20,9 @@ export default function DeckBuilderSidebar(props) {
     switchToCards,
     setTab
   } = props;
+  const theme = useContext(ThemeContext);
   const [mainDeckInput, setMainDeckInput] = useState('');
+  const [importMode, setImportMode] = useState(false);
 
   const updateDeckName = e => {
     setDeckInProgress({
@@ -70,8 +73,24 @@ export default function DeckBuilderSidebar(props) {
           font-weight: bold;
         }
         .build-deck-title {
-          text-transform: uppercase;
           text-align: center;
+          margin-bottom: 15px;
+          font-size: 18px;
+        }
+        .action-button-border {
+          margin-top: 18px;
+          margin-bottom: 10px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 90%;
+          border: 0;
+          height: 1px;
+          background-image: linear-gradient(
+            to right,
+            ${theme.orangeSeparatorSecondaryColor},
+            ${theme.orangeSeparatorColor},
+            ${theme.orangeSeparatorSecondaryColor}
+          );
         }
 
         @media only screen and (max-width: 600px) {
@@ -80,34 +99,43 @@ export default function DeckBuilderSidebar(props) {
           }
         }
       `}</style>
-      <h2 className="build-deck-title">Import Deck from Mythgard</h2>
       <ImportDeck
         mainDeckInput={mainDeckInput}
         handleInputChange={e => {
           setMainDeckInput(e.target.value);
         }}
         updateImportedDeck={updateImportedDeck}
+        importMode={importMode}
+        setImportMode={setImportMode}
       />
-      <DeckExport deckInProgress={deckInProgress} />
-      <SaveDeck
+      <hr className="action-button-border" />
+      <DeckBuilderActionButtons
+        cardCount={cardCount}
+        importMode={importMode}
         deckId={deckId}
         deckInProgress={deckInProgress}
         setDeckInProgress={setDeckInProgress}
+        onClear={() => clearDeck(props.onClear)}
       />
-      <button onClick={() => clearDeck(props.onClear)}>Clear Deck</button>
-      <div className="deck-in-progress" data-cy="deckInProgress">
-        <h2 className="build-deck-title">- OR - BUILD YOUR DECK</h2>
-        <div className="card-count">
-          Cards: <span>{cardCount}</span>
+      {!importMode && !cardCount && (
+        <div className="build-deck-title">
+          - OR - Select a card to begin building
         </div>
-        <DeckCardTable
-          updateDeckName={updateDeckName}
-          deck={deckInProgress}
-          deleteCard={deleteCardFromTable}
-          switchToCards={switchToCards}
-          setTab={setTab}
-        />
-      </div>
+      )}
+      {!importMode && (
+        <div className="deck-in-progress" data-cy="deckInProgress">
+          <div className="card-count">
+            Cards: <span>{cardCount}</span>
+          </div>
+          <DeckCardTable
+            updateDeckName={updateDeckName}
+            deck={deckInProgress}
+            deleteCard={deleteCardFromTable}
+            switchToCards={switchToCards}
+            setTab={setTab}
+          />
+        </div>
+      )}
     </div>
   );
 }
