@@ -5,6 +5,7 @@ describe('String utility methods', () => {
     it('Should return a number ordinalized', function() {
       expect(ordinalized(0)).toBe('0th');
       expect(ordinalized(1)).toBe('1st');
+      expect(ordinalized('1')).toBe('1st');
       expect(ordinalized(2)).toBe('2nd');
       expect(ordinalized(3)).toBe('3rd');
       expect(ordinalized(4)).toBe('4th');
@@ -15,7 +16,6 @@ describe('String utility methods', () => {
     });
 
     it('Should handle nonsense data gracefully', function() {
-      expect(ordinalized('1')).toBe('');
       expect(ordinalized([])).toBe('');
       expect(ordinalized()).toBe('');
       expect(ordinalized([1, 1])).toBe('');
