@@ -330,7 +330,25 @@ CREATE TABLE mythgard.card_faction (
 );
 
 INSERT INTO mythgard.card_faction("card_id","faction_id")
-  VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 1), (8, 2), (9, 3), (10, 4), (11, 5), (12, 6), (13, 1), (14, 1), (15, 1), (16, 1), (17, 2);
+  VALUES 
+    (1, 1),
+    (1, 2),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 1),
+    (8, 2),
+    (9, 3),
+    (10, 4),
+    (11, 5),
+    (12, 6),
+    (13, 1),
+    (14, 1),
+    (15, 1),
+    (16, 1),
+    (17, 2);
 
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
@@ -345,12 +363,33 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+CREATE OR REPLACE FUNCTION deck_essence_cost (IN deckId INTEGER) 
+RETURNS INTEGER AS $$
+  DECLARE
+    essence_cost INTEGER;
+  BEGIN
+    SELECT sum(essence_costs.essence * card_deck.quantity)::int into essence_cost
+    FROM mythgard.deck
+    JOIN mythgard.card_deck
+      ON card_deck.deck_id = deck.id
+    JOIN mythgard.card
+      ON card_deck.card_id = card.id
+    LEFT JOIN mythgard.essence_costs
+      On essence_costs.rarity = card.rarity
+    WHERE deck.id = $1
+    GROUP BY deck.id;
+    
+    RETURN essence_cost;
+  
+  END;
+  $$ language 'plpgsql';
+
 CREATE OR REPLACE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
          deck.name as deck_name,
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
-         sum(essence_costs.essence * card_deck.quantity)::int as essence_cost,
+         deck_essence_cost(deck.id)::int as essence_cost,
          count(DISTINCT deck_vote)::int as votes
   FROM mythgard.deck
   JOIN mythgard.card_deck
