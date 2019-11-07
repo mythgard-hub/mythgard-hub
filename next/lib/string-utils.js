@@ -6,9 +6,17 @@ export const firstLetterUppercase = str => {
   }
 };
 
+function isInt(value) {
+  return (
+    !isNaN(value) &&
+    parseInt(Number(value)) == value &&
+    !isNaN(parseInt(value, 10))
+  );
+}
+
 export const ordinalized = i => {
   try {
-    if (!i && i !== 0) return '';
+    if (!isInt(i)) return '';
 
     const j = i % 10,
       k = i % 100;
