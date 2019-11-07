@@ -224,8 +224,10 @@ export default function DeckSearchForm(props) {
           >
             <option value="dateDesc">Newest First</option>
             <option value="dateAsc">Oldest First</option>
-            <option value="essenceAsc">Essence Cost - Low</option>
-            <option value="essenceDesc">Essence Cost - High</option>
+            <option value="essenceAsc">Cost: Low-High</option>
+            <option value="essenceDesc">Cost: High-Low</option>
+            <option value="nameAsc">Name: A-Z</option>
+            <option value="nameDesc">Name: Z-A</option>
           </select>
         </label>
       </div>
