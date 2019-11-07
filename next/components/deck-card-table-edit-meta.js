@@ -17,12 +17,6 @@ export default function DeckCardsTableEditMeta(props) {
           font-style: normal;
           font-weight: normal;
         }
-        .edit-button:before {
-          text-decoration: none;
-          content: '\u25b6';
-          margin-right: 3px;
-          font-size: 10px;
-        }
         .no-meta-value {
           text-transform: uppercase;
         }
@@ -31,7 +25,7 @@ export default function DeckCardsTableEditMeta(props) {
       <div>
         <button
           data-cy="editMetaValue"
-          className="edit-button"
+          className="edit-button call-to-action-chevron"
           onClick={onEditClick}
         >
           edit

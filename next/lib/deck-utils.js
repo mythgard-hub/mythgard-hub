@@ -6,7 +6,7 @@ import { RARITY_MAX_CARDS } from '../constants/rarities';
 
 export const initializeDeckBuilder = () => {
   return {
-    deckName: '',
+    deckName: 'Untitled',
     deckPath: {},
     deckPower: {},
     deckCoverArt: '',
