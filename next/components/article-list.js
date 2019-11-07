@@ -4,6 +4,30 @@ import Article from './article';
 function ArticleList({ max }) {
   const list = [
     {
+      title: 'Player Agency in Mythgard',
+      url: 'https://teamrankstar.com/article/player-agency-in-mythgard/',
+      author: 'noahc92',
+      description:
+        'Today we’ll be discussing a term that is used often in game design and is really shown off well in Mythgard. Player Agency. What is it? What does it mean? Why does it matter?',
+      date: new Date('2019-10-31T17:24:18.280Z')
+    },
+    {
+      title: 'Deckbuilding 201 - Building on the Basics',
+      url: 'https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-201-building-on-the-basics',
+      author: 'Minmaxer',
+      description:
+        'In my first series of deckbuilding articles we started by examining the different deck archetypes and what they look like in Mythgard.  From there, I took a tour through each of the five Paths...',
+      date: new Date('2019-10-25T17:24:18.280Z')
+    },
+    {
+      title: 'Getting Started in Mythgard’s 2v2',
+      url: 'https://teamrankstar.com/guide/getting-started-in-mythgards-2v2/',
+      author: 'erobert',
+      description:
+        'Hey everyone, erobert here with a look at the mechanics and strategies of 2v2! The game mode itself is a raucous and chaotic shootout where you and your partner go head to head with another duo, and while this fun format operates with rules that are...',
+      date: new Date('2019-10-23T17:24:18.280Z')
+    },
+    {
       title: 'Fast Lane: Thrift Shop',
       url: 'https://teamdgn.net/2019/10/02/fast-lane-thrift-shop/',
       author: '14ierophant',
