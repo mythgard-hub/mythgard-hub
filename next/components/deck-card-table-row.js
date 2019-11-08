@@ -60,10 +60,18 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
         }
         .deck-card-name img {
           position: absolute;
-          top: 2px;
-          right: 6px;
-          height: 28px;
+          top: 0px;
+          right: 0px;
+          height: 32px;
           opacity: 0.75;
+          padding: 4px 4px 4px 16px;
+          background: rgb(0, 0, 0);
+          background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.75) 50%,
+            rgba(0, 0, 0, 1) 100%
+          );
         }
         .deck-card-quantity {
           text-align: center;
