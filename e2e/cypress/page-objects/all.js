@@ -42,6 +42,7 @@ export default {
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
   deckEssencePicker: '[data-cy="deckEssenceCell"]',
   decksSort: cy('decksSort'),
+  deckListItem: cy('deckListItem'),
 
   // deck page
   deckName: '[data-cy="deckName"]',

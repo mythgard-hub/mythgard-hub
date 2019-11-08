@@ -5,10 +5,14 @@ import {
   deckName,
   deckFactionsPicker,
   deckEssencePicker,
+  deckListItem,
   decksSort
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
+
+const newestFirst = 'dateDesc';
+const oldestFirst = 'dateAsc';
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -154,6 +158,15 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
 
     // test deck sort
-    cy.get(decksSort);
+    cy.get(decksSort).select(newestFirst);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'all_factions');
+    cy.get(decksSort).select(oldestFirst);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'dragons');
   });
 });
