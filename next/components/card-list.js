@@ -17,6 +17,7 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
           list-style: none;
           display: flex;
           flex-wrap: wrap;
+          padding-left: 20px;
         }
         .cardListItem {
           margin-right: 17px;

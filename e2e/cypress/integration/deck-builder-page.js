@@ -25,8 +25,9 @@ describe('Deck builder page', () => {
   });
   it('should have a happy path', function() {
     cy.get('[data-cy="header"]').should('be.visible');
-    cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
-    cy.get('[data-cy="importDeckButton"]').should('be.visible');
+    cy.get('[data-cy="goToImportMode"]').should('be.visible');
+    cy.get('[data-cy="importDeckButton"]').should('not.be.visible');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
     cy.get(cardList).should('be.visible');
     cy.get(deckInProgress).should('be.visible');
     cy.get('[data-cy="factionFilters"]').should('be.visible');
@@ -39,6 +40,7 @@ describe('Deck builder page', () => {
       .click();
     cy.get(deckInProgress).should('be.visible');
     cy.get(deckCardRow).should('have.length', 2);
+    cy.get('[data-cy="deckBuilderActions"]').should('be.visible');
 
     // basic test - delete a card from the deck
     cy.get('[data-cy="deckDeleteCard"]:first').click();
@@ -143,6 +145,7 @@ describe('Deck builder page', () => {
       '1 ghūl'
     ].join('\n');
 
+    cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').type(input);
     cy.get('[data-cy="importDeckButton"]').click();
 
@@ -163,11 +166,20 @@ describe('Deck builder page', () => {
       '2 Imp'
     ].join('\n');
 
+    // should be able to enter and exist import mode
+    cy.get('[data-cy="goToImportMode"]').click();
+    cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
+    cy.get('[data-cy="cancelImportMode"]').click();
+    cy.get('[data-cy="importDeckTextarea"]').should('not.be.visible');
+
+    cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').type(input);
     cy.get('[data-cy="importDeckButton"]').click();
     cy.get('[data-cy="exportDeckButton"]').click();
 
     cy.get('[data-cy="exportDeckSuccess"]').contains('Copied');
+    cy.get('[data-cy="deckBuilderActions"]').should('be.visible');
   });
 
   it('should clear filters', function() {

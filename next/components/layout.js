@@ -52,7 +52,7 @@ function Layout({ title, desc, image, router, children }) {
       <div className="container">
         <style jsx>{`
           .container {
-            padding: 0 43px;
+            padding: 0 20px;
             border-left: ${theme.border};
             border-right: ${theme.border};
             font-family: ${theme.fontFamily};
@@ -350,6 +350,13 @@ function Layout({ title, desc, image, router, children }) {
             display: block;
             text-align: center;
             margin-bottom: 25px;
+          }
+
+          .call-to-action-chevron:before {
+            text-decoration: none;
+            content: '\u25b6';
+            margin-right: 3px;
+            font-size: 10px;
           }
 
           .external-link::after {

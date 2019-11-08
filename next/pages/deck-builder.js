@@ -19,6 +19,7 @@ import DeckBuilderCardDisplay from '../components/deck-builder-card-display';
 import ErrorMessage from '../components/error-message';
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
+import { DECK_BUILDER_TABS } from '../constants/deck';
 
 const initFilters = {
   cardSearchText: '',
@@ -131,7 +132,7 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
   const [cardManaCosts, setCardManaCosts] = useState(initFilters.cardManaCosts);
   const [supertypes, setSupertypes] = useState(initFilters.supertypes);
   const [factions, setFactions] = useState(initFilters.factions);
-  const [currentTab, setTab] = useState('');
+  const [currentTab, setTab] = useState(DECK_BUILDER_TABS[0]);
   const [viewFilters, setViewFilters] = useState(false);
   const [isError, setIsError] = useState(false);
   const [editingExisting, setEditingExisting] = useState(false);
@@ -174,7 +175,7 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
       <style jsx>{`
         .deck-builder-card-selection {
           width: 100%;
-          padding-right: 25px;
+          padding-right: 15px;
         }
         .deck-builder-panels {
           display: flex;
@@ -254,6 +255,8 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
             )}
           </div>
           <DeckBuilderSidebar
+            switchToCards={_ => setViewFilters(false)}
+            setTab={setTab}
             deckId={deckId}
             deckInProgress={deckInProgress}
             setDeckInProgress={setDeckInProgress}
