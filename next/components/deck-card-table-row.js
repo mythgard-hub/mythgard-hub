@@ -24,7 +24,7 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
         }
         .deck-card-cost {
           text-align: center;
-          width: 30px;
+          width: 25px;
         }
         .deck-card-gems {
           width: 40px;
@@ -59,9 +59,8 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           opacity: 0;
         }
         .deck-card-quantity {
-          width: 48px;
-          background-color: #13222a;
-          color: #fff;
+          width: 30px;
+          background-color: ${theme.cardTableRowQuantityBackground};
           font-size: 0.9em;
           font-style: italic;
         }
