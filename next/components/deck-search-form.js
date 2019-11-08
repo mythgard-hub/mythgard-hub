@@ -5,6 +5,7 @@ import { handleInputChangeHooks } from '../lib/form-utils.js';
 import CardSearch from './card-search';
 import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
+import DeckSearchFormSort from './deck-search-form-sort.js';
 
 const resetFilters = values => {
   return {
@@ -118,12 +119,15 @@ export default function DeckSearchForm(props) {
           margin: 10px 0;
           width: 100%;
         }
+        :global(.deck-search-form-sort) {
+          white-space: nowrap;
+          margin-left: 20px;
+        }
         .action-buttons {
           float: right;
           display: flex;
           flex-direction: row;
           margin-top: 20px;
-          height: 35px;
           align-items: center;
         }
         .action-buttons input {
@@ -151,13 +155,17 @@ export default function DeckSearchForm(props) {
           }
 
           .action-buttons {
-            width: 35%;
             flex-direction: column;
             margin-bottom: 20px;
           }
 
           .action-buttons input {
             margin-bottom: 15px;
+            margin-right: 0;
+          }
+
+          :global(.deck-search-form-sort) {
+            margin-top: 20px;
           }
 
           .action-buttons input,
@@ -225,24 +233,14 @@ export default function DeckSearchForm(props) {
         <button type="button" onClick={handleClear} data-cy="deckSearchClear">
           Clear
         </button>
-        <label className="included-cards input-label">
-          Sort by
-          <select
-            value={filters.sortBy}
-            onChange={handleInputChangeHooks(sortBy =>
-              changeState('sortBy', sortBy)
-            )}
-          >
-            <option value="dateDesc">Newest First</option>
-            <option value="dateAsc">Oldest First</option>
-            <option value="essenceAsc">Cost: Low-High</option>
-            <option value="essenceDesc">Cost: High-Low</option>
-            <option value="nameAsc">Name: A-Z</option>
-            <option value="nameDesc">Name: Z-A</option>
-            <option value="ratingDesc">Rating: High-Low</option>
-            <option value="ratingAsc">Rating: Low-High</option>
-          </select>
-        </label>
+        <DeckSearchFormSort
+          name="decksSort"
+          cyName="decksSort"
+          value={filters.sortBy}
+          onChange={handleInputChangeHooks(sortBy =>
+            changeState('sortBy', sortBy)
+          )}
+        />
       </div>
     </form>
   );
