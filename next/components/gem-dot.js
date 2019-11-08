@@ -30,21 +30,34 @@ export default function GemDot({ gems }) {
     }
 
     return (
-      <span style={{ color: gemColor }} key={index}>
-        {String.fromCharCode(8226)}
-      </span>
+      <>
+        <style jsx>{`
+          span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 2px;
+          }
+        `}</style>
+        <span style={{ backgroundColor: gemColor }} key={index}></span>
+      </>
     );
   });
 
   return (
-    <span>
+    <>
       <style jsx>{`
         span {
-          font-size: 15px;
+          display: flex;
+          justify-content: center;
+        }
+        span :last-child {
+          margin-right: 0;
         }
       `}</style>
-      {gemElements}
-    </span>
+      <span>{gemElements}</span>
+    </>
   );
 }
 

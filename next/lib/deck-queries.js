@@ -155,6 +155,8 @@ export const deckCardsQuery = gql`
             id
             mana
             gem
+            supertype
+            rarity
             cardFactions {
               nodes {
                 faction {
