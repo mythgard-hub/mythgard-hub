@@ -4,13 +4,16 @@ import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
 import { cardMainColor, imagePathSmall, formatManaCost } from '../lib/card';
+import { firstLetterUppercase } from '../lib/string-utils';
 import { getRarityColor } from '../constants/rarities';
+import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
 
 export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
   const theme = useContext(ThemeContext);
   const backgroundColor = cardMainColor(card, theme);
   const color = backgroundColor ? theme.cardTableName : 'white';
   const imagePath = imagePathSmall(card.name, card.set || undefined);
+  const supertype = card.supertype[0] || '';
 
   return (
     <tr key={card.id} data-cy="deckCardRow">
@@ -40,13 +43,13 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           font-weight: 700;
           font-size: 0.8em;
         }
-        .imgWrapper {
+        .deck-card-name {
           position: relative;
           cursor: pointer;
           background-clip: padding-box;
         }
         // bigger version of the image (hidden until hover)
-        .imgWrapper::before {
+        .deck-card-name::before {
           content: url(${imagePath});
           position: absolute;
           top: 50%;
@@ -54,6 +57,13 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           z-index: 2;
           visibility: hidden;
           opacity: 0;
+        }
+        .deck-card-name img {
+          position: absolute;
+          top: 2px;
+          right: 6px;
+          height: 28px;
+          opacity: 0.75;
         }
         .deck-card-quantity {
           text-align: center;
@@ -70,7 +80,7 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
 
         @media (hover: hover) {
           // Show the hover image (but only on devices that have hover)
-          .imgWrapper:hover::before {
+          .deck-card-name:hover::before {
             visibility: visible;
             opacity: 1;
           }
@@ -80,16 +90,23 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
       <td className="deck-card-gems">
         <GemDot gems={card.gem} />
       </td>
-      <td style={{ backgroundColor, color }} className="imgWrapper">
+      <td className="deck-card-name" style={{ backgroundColor, color }}>
         <Link href={`/card?id=${card.id}`}>
           <a className="deck-card-link">{card.name}</a>
         </Link>
+        {card.supertype && (
+          <img
+            src={SUPERTYPE_IMAGES[supertype.toLowerCase()]}
+            className="supertype-icon"
+            title={firstLetterUppercase(supertype)}
+          />
+        )}
       </td>
       <td className="deck-card-quantity">&times;{quantity}</td>
       <td
         className="deck-card-rarity"
         style={{ backgroundColor: getRarityColor(card.rarity) }}
-        title={card.rarity}
+        title={firstLetterUppercase(card.rarity)}
       ></td>
       {deleteCard && (
         <td
