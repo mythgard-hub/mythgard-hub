@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FactionFilters from './faction-filters.js';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
@@ -40,11 +40,22 @@ export default function DeckSearchForm(props) {
     allCards,
     onClearFilters
   } = props;
+
   searchQuery.cardSelections = deserializeCards(
     searchQuery.cardIds,
     allCards.cards.nodes
   );
+
   const [filters, setFilters] = useState(resetFilters(searchQuery));
+
+  // if user changes sort, submit search
+  const [changedSort, setChangedSort] = useState(false);
+  useEffect(() => {
+    if (changedSort) {
+      handleSubmit();
+    }
+    setChangedSort(true);
+  }, [filters.sortBy]);
 
   const changeState = (filterName, value) => {
     setFilters(prevFilters => ({
