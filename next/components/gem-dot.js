@@ -30,7 +30,7 @@ export default function GemDot({ gems }) {
     }
 
     return (
-      <>
+      <span style={{ backgroundColor: gemColor }} key={index}>
         <style jsx>{`
           span {
             display: inline-block;
@@ -40,13 +40,12 @@ export default function GemDot({ gems }) {
             margin-right: 2px;
           }
         `}</style>
-        <span style={{ backgroundColor: gemColor }} key={index}></span>
-      </>
+      </span>
     );
   });
 
   return (
-    <>
+    <span>
       <style jsx>{`
         span {
           display: flex;
@@ -56,8 +55,8 @@ export default function GemDot({ gems }) {
           margin-right: 0;
         }
       `}</style>
-      <span>{gemElements}</span>
-    </>
+      {gemElements}
+    </span>
   );
 }
 
