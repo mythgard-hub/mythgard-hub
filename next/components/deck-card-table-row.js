@@ -58,28 +58,20 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
           visibility: hidden;
           opacity: 0;
         }
-        .deck-card-name img {
-          position: absolute;
-          top: 0px;
-          right: 0px;
-          height: 32px;
-          opacity: 0.75;
-          padding: 4px 4px 4px 16px;
-          background: rgb(0, 0, 0);
-          background: linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0) 0%,
-            rgba(0, 0, 0, 0.75) 50%,
-            rgba(0, 0, 0, 1) 100%
-          );
-        }
         .deck-card-quantity {
-          text-align: center;
-          width: 30px;
+          width: 48px;
           background-color: #13222a;
           color: #fff;
           font-size: 0.9em;
           font-style: italic;
+        }
+        .deck-card-quantity span {
+          display: flex;
+          justify-content: center;
+        }
+        .deck-card-quantity img {
+          height: 20px;
+          padding: 0 4px 0 0;
         }
         .deck-card-rarity {
           width: 1px;
@@ -102,15 +94,19 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
         <Link href={`/card?id=${card.id}`}>
           <a className="deck-card-link">{card.name}</a>
         </Link>
-        {card.supertype && (
-          <img
-            src={SUPERTYPE_IMAGES[supertype.toLowerCase()]}
-            className="supertype-icon"
-            title={firstLetterUppercase(supertype)}
-          />
-        )}
       </td>
-      <td className="deck-card-quantity">&times;{quantity}</td>
+      <td className="deck-card-quantity">
+        <span>
+          {card.supertype && (
+            <img
+              src={SUPERTYPE_IMAGES[supertype.toLowerCase()]}
+              className="supertype-icon"
+              title={firstLetterUppercase(supertype)}
+            />
+          )}
+          &times;{quantity}
+        </span>
+      </td>
       <td
         className="deck-card-rarity"
         style={{ backgroundColor: getRarityColor(card.rarity) }}
