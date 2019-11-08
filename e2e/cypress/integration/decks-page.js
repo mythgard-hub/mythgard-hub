@@ -13,6 +13,12 @@ const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
 
 const newestFirst = 'dateDesc';
 const oldestFirst = 'dateAsc';
+const essenceAsc = 'essenceAsc';
+const essenceDesc = 'essenceDesc';
+const nameAsc = 'nameAsc';
+const ratingDesc = 'ratingDesc';
+const ratingAsc = 'ratingAsc';
+const nameDesc = 'nameDesc';
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -168,5 +174,35 @@ describe('Decks Page', function() {
       .first()
       .get(deckName)
       .should('contain', 'dragons');
+    cy.get(decksSort).select(essenceAsc);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'cats');
+    cy.get(decksSort).select(essenceDesc);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'dragons');
+    cy.get(decksSort).select(nameAsc);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'all_factions');
+    cy.get(decksSort).select(nameDesc);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'dragons');
+    cy.get(decksSort).select(ratingDesc);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'dragons');
+    cy.get(decksSort).select(ratingAsc);
+    cy.get(deckListItem)
+      .first()
+      .get(deckName)
+      .should('contain', 'cats');
   });
 });
