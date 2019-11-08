@@ -5,6 +5,8 @@ const getPagingTotalAsInt = () => {
   });
 };
 
+const cy = s => `[data-cy="${s}"]`;
+
 export default {
   cardListCard: '[data-cy="cardListCard"]',
   cardList: '[data-cy="cardList"]',
@@ -39,6 +41,7 @@ export default {
   // decks page
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
   deckEssencePicker: '[data-cy="deckEssenceCell"]',
+  decksSort: cy('decksSort'),
 
   // deck page
   deckName: '[data-cy="deckName"]',

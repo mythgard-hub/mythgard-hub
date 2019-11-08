@@ -4,7 +4,8 @@ import {
   factionFilter,
   deckName,
   deckFactionsPicker,
-  deckEssencePicker
+  deckEssencePicker,
+  decksSort
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -151,5 +152,8 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckSearchDeckName"]').clear();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
+
+    // test deck sort
+    cy.get(decksSort);
   });
 });
