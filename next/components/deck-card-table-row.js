@@ -13,7 +13,7 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
   const backgroundColor = cardMainColor(card, theme);
   const color = backgroundColor ? theme.cardTableName : 'white';
   const imagePath = imagePathSmall(card.name, card.set || undefined);
-  const supertype = card.supertype[0] || '';
+  const supertype = (card.supertype && card.supertype[0]) || '';
 
   return (
     <tr key={card.id} data-cy="deckCardRow">
