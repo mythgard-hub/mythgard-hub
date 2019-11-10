@@ -44,6 +44,11 @@ export default {
   decksSort: cy('decksSort'),
   deckListItem: cy('deckListItem'),
   deckSearchDeckName: cy('deckSearchDeckName'),
+  deckSearchClear: cy('deckSearchClear'),
+  deckSearchAllDecksLoaded: cy('all-decks-loaded'),
+
+  // decks page sorted data
+  // used so cypress can know when newly sorted dom is loaded.
   deckListNewestFirst: '[data-cy-decksort="dateDesc"]',
   deckListOldestFirst: '[data-cy-decksort="dateAsc"]',
   deckListCheapestFirst: '[data-cy-decksort="essenceAsc"]',
