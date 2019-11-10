@@ -110,6 +110,7 @@ export default function DeckCardsTable({
             <td colSpan={colspan}>
               <DeckCardsTableEditMeta
                 metaName="path"
+                showEdit={!onlyTable}
                 metaValue={deck.deckPath?.name}
                 onEditClick={_ => {
                   setTab('Paths');
@@ -123,6 +124,7 @@ export default function DeckCardsTable({
             <td colSpan={colspan}>
               <DeckCardsTableEditMeta
                 metaName="power"
+                showEdit={!onlyTable}
                 metaValue={deck.deckPower?.name}
                 onEditClick={_ => {
                   setTab('Powers');
