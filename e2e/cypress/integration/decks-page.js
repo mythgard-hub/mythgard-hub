@@ -33,6 +33,7 @@ const ratingAsc = 'ratingAsc';
 
 const allFactions = 'all_factions';
 const dragons = 'dragons';
+const cats = 'cats';
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -196,7 +197,7 @@ describe('Decks Page', function() {
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', 'cats');
+      .should('contain', cats);
     cy.get(decksSort).select(essenceDesc);
     cy.get(deckListCostliestFirst);
     cy.get(deckListItem)
