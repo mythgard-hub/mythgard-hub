@@ -111,6 +111,8 @@ CREATE TABLE mythgard.account (
 );
 
 INSERT INTO mythgard.account ("username") VALUES ('lsv');
+INSERT INTO mythgard.account ("username") VALUES ('foo');
+INSERT INTO mythgard.account ("username") VALUES ('bar');
 
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,
@@ -226,6 +228,11 @@ CREATE TABLE mythgard.deck_vote (
 );
 
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 2);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 3);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 1);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 2);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (3, 1);
 
 CREATE TABLE mythgard.deck_featured (
   id SERIAL PRIMARY KEY,

@@ -44,6 +44,7 @@ export default {
   decksSort: cy('decksSort'),
   deckListItem: cy('deckListItem'),
   deckSearchDeckName: cy('deckSearchDeckName'),
+  deckListNewestFirst: '[data-cy-decksort="dateDesc"]',
   deckListOldestFirst: '[data-cy-decksort="dateAsc"]',
   deckListCheapestFirst: '[data-cy-decksort="essenceAsc"]',
   deckListCostliestFirst: '[data-cy-decksort="essenceDesc"]',
