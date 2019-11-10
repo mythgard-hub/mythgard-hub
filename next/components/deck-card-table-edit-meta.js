@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 export default function DeckCardsTableEditMeta(props) {
   const { metaName, metaValue, onEditClick } = props;
+  const className = metaValue ? '' : 'no-meta-value';
 
   return (
     <div className="no-meta-value-selected-container">
@@ -21,7 +22,9 @@ export default function DeckCardsTableEditMeta(props) {
           text-transform: uppercase;
         }
       `}</style>
-      {metaValue || <div className="no-meta-value">No {metaName} selected</div>}
+      <div className={className} data-cy="deckBuilderMetaValue">
+        {metaValue || `No ${metaName} selected`}
+      </div>
       <div>
         <button
           data-cy="editMetaValue"

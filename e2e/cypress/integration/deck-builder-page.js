@@ -133,6 +133,56 @@ describe('Deck builder page', () => {
       });
   });
 
+  it('should navigate between the tabs', function() {
+    // make sure we're on the cards tab
+    cy.get('[data-cy="tabButton"]:first').click();
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('have.class', 'selected');
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(0)
+      .should('contain', 'No path selected');
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(1)
+      .should('contain', 'No power selected');
+
+    // go to path tab
+    cy.get('[data-cy="editMetaValue"]:first').click();
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('not.have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(1)
+      .should('have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(2)
+      .should('not.have.class', 'selected');
+    cy.get(`${cardListCard}:first`).click();
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(0)
+      .should('not.contain', 'No path selected');
+
+    // ho to power tab
+    cy.get('[data-cy="tabButton"]:first').click(); // go back to cards tab
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('have.class', 'selected');
+    cy.get('[data-cy="editMetaValue"]:last').click();
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('not.have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(1)
+      .should('not.have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(2)
+      .should('have.class', 'selected');
+    cy.get(`${cardListCard}:first`).click();
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(0)
+      .should('not.contain', 'No power selected');
+  });
+
   it('should import a deck', function() {
     const input = [
       'name: my deck',
