@@ -370,7 +370,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION mythgard.deck_essence_cost (IN deckId INTEGER) 
+CREATE OR REPLACE FUNCTION mythgard.deck_essence_cost (IN deckId INTEGER)
 RETURNS INTEGER AS $$
   DECLARE
     essence_cost INTEGER;
@@ -390,7 +390,7 @@ RETURNS INTEGER AS $$
   END;
   $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION mythgard.deck_votes (IN deckId INTEGER) 
+CREATE OR REPLACE FUNCTION mythgard.deck_votes (IN deckId INTEGER)
 RETURNS INTEGER AS $$
   DECLARE
     votes INTEGER;
@@ -401,7 +401,7 @@ RETURNS INTEGER AS $$
      On deck_vote.deck_id = deck.id
    WHERE deck.id = $1
    GROUP BY deck.id;
-    
+
     RETURN votes;
 
   END;
