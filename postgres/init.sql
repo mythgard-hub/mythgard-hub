@@ -589,10 +589,6 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
 
   $$ language plpgsql stable;
 
-select * from mythgard.search_decks(null, null, null, null,
- null, null, null, null, null, null, null, null, null,
- null, null, 'ratingDesc') limit 10;
-
 CREATE USER postgraphile WITH password 'bears4life';
 GRANT ALL PRIVILEGES ON SCHEMA mythgard TO postgraphile;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA mythgard TO postgraphile;
