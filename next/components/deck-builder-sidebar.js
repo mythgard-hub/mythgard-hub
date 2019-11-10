@@ -1,9 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import ImportDeck from '../components/import-deck';
-import DeckExport from '../components/deck-export';
 import DeckCardTable from '../components/deck-card-table';
-import SaveDeck from '../components/save-deck';
 import {
   initializeDeckBuilder,
   resetDeckBuilderSavedState,

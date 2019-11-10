@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 
@@ -55,7 +54,7 @@ export default function ImportDeck({
             margin-top: 20px;
           }
         `}</style>
-        <button onClick={e => setImportMode(true)} data-cy="goToImportMode">
+        <button onClick={() => setImportMode(true)} data-cy="goToImportMode">
           Import
         </button>
       </div>
@@ -107,7 +106,7 @@ export default function ImportDeck({
       >
         Import Decklist
       </button>
-      <button onClick={_ => setImportMode(false)} data-cy="cancelImportMode">
+      <button onClick={() => setImportMode(false)} data-cy="cancelImportMode">
         Cancel
       </button>
       <textarea
