@@ -31,9 +31,9 @@ const nameDesc = 'nameDesc';
 const ratingDesc = 'ratingDesc';
 const ratingAsc = 'ratingAsc';
 
-const allFactions = 'all_factions';
-const dragons = 'dragons';
-const cats = 'cats';
+const deckNameAllFactions = 'all_factions';
+const deckNameDragons = 'dragons';
+const deckNameCats = 'cats';
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -185,49 +185,49 @@ describe('Decks Page', function() {
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', allFactions);
+      .should('contain', deckNameAllFactions);
     cy.get(decksSort).select(oldestFirst);
     cy.get(deckListOldestFirst);
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', dragons);
+      .should('contain', deckNameDragons);
     cy.get(decksSort).select(essenceAsc);
     cy.get(deckListCheapestFirst);
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', cats);
+      .should('contain', deckNameCats);
     cy.get(decksSort).select(essenceDesc);
     cy.get(deckListCostliestFirst);
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', dragons);
+      .should('contain', deckNameDragons);
     cy.get(decksSort).select(nameAsc);
     cy.get(deckListNameAtoZ);
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', allFactions);
+      .should('contain', deckNameAllFactions);
     cy.get(decksSort).select(nameDesc);
     cy.get(deckListNameZtoA);
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', dragons);
+      .should('contain', deckNameDragons);
     cy.get(decksSort).select(ratingDesc);
     cy.get(deckListRatingHighToLow);
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', dragons);
+      .should('contain', deckNameDragons);
     cy.get(decksSort).select(ratingAsc);
     cy.get(deckListRatingLowToHigh);
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', allFactions);
+      .should('contain', deckNameAllFactions);
     // this test differs from the first sort test in that
     // it uses some-decks rather than all-decks
     cy.get(decksSort).select(newestFirst);
@@ -235,6 +235,6 @@ describe('Decks Page', function() {
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', allFactions);
+      .should('contain', deckNameAllFactions);
   });
 });
