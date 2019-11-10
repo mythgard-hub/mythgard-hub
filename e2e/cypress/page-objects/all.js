@@ -46,6 +46,7 @@ export default {
   deckSearchDeckName: cy('deckSearchDeckName'),
   deckListOldestFirst: '[data-cy-decksort="dateAsc"]',
   deckListCheapestFirst: '[data-cy-decksort="essenceAsc"]',
+  deckListCostliestFirst: '[data-cy-decksort="essenceDesc"]',
 
   // deck page
   deckName: '[data-cy="deckName"]',

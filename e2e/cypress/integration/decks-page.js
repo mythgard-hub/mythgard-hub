@@ -9,7 +9,8 @@ import {
   decksSort,
   deckSearchDeckName,
   deckListOldestFirst,
-  deckListCheapestFirst
+  deckListCheapestFirst,
+  deckListCostliestFirst
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -184,11 +185,12 @@ describe('Decks Page', function() {
       .first()
       .find(deckName)
       .should('contain', 'cats');
-    // cy.get(decksSort).select(essenceDesc);
-    // cy.get(deckListItem)
-    //   .first()
-    //   .find(deckName)
-    //   .should('contain', 'dragons');
+    cy.get(decksSort).select(essenceDesc);
+    cy.get(deckListCostliestFirst);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', 'dragons');
     // cy.get(decksSort).select(nameAsc);
     // cy.get(deckListItem)
     //   .first()
