@@ -5,7 +5,7 @@ const getPagingTotalAsInt = () => {
   });
 };
 
-const cy = s => `[data-cy="${s}"]`;
+const dcy = s => `[data-cy="${s}"]`;
 
 export default {
   cardListCard: '[data-cy="cardListCard"]',
@@ -41,11 +41,11 @@ export default {
   // decks page
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
   deckEssencePicker: '[data-cy="deckEssenceCell"]',
-  decksSort: cy('decksSort'),
-  deckListItem: cy('deckListItem'),
-  deckSearchDeckName: cy('deckSearchDeckName'),
-  deckSearchClear: cy('deckSearchClear'),
-  deckSearchAllDecksLoaded: cy('all-decks-loaded'),
+  decksSort: dcy('decksSort'),
+  deckListItem: dcy('deckListItem'),
+  deckSearchDeckName: dcy('deckSearchDeckName'),
+  deckSearchClear: dcy('deckSearchClear'),
+  deckSearchAllDecksLoaded: dcy('all-decks-loaded'),
 
   // decks page sorted data
   // used so cypress can know when newly sorted dom is loaded.
