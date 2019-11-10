@@ -44,7 +44,7 @@ export default function SomeDecks(props) {
   const listRef = React.createRef();
 
   return (
-    <div ref={listRef} data-cy={`some-decks-${sortBy}`}>
+    <div ref={listRef} data-cy-decksort={sortBy}>
       <DeckList decks={data.searchDecks.nodes} />
 
       <style jsx>{`
