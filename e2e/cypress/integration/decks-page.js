@@ -10,7 +10,11 @@ import {
   deckSearchDeckName,
   deckListOldestFirst,
   deckListCheapestFirst,
-  deckListCostliestFirst
+  deckListCostliestFirst,
+  deckListNameAtoZ,
+  deckListNameZtoA,
+  deckListRatingHighToLow,
+  deckListRatingLowToHigh
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -20,9 +24,9 @@ const oldestFirst = 'dateAsc';
 const essenceAsc = 'essenceAsc';
 const essenceDesc = 'essenceDesc';
 const nameAsc = 'nameAsc';
+const nameDesc = 'nameDesc';
 const ratingDesc = 'ratingDesc';
 const ratingAsc = 'ratingAsc';
-const nameDesc = 'nameDesc';
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -191,11 +195,12 @@ describe('Decks Page', function() {
       .first()
       .find(deckName)
       .should('contain', 'dragons');
-    // cy.get(decksSort).select(nameAsc);
-    // cy.get(deckListItem)
-    //   .first()
-    //   .find(deckName)
-    //   .should('contain', 'all_factions');
+    cy.get(decksSort).select(nameAsc);
+    cy.get(deckListNameAtoZ);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', 'all_factions');
     // cy.get(decksSort).select(nameDesc);
     // cy.get(deckListItem)
     //   .first()

@@ -47,6 +47,10 @@ export default {
   deckListOldestFirst: '[data-cy-decksort="dateAsc"]',
   deckListCheapestFirst: '[data-cy-decksort="essenceAsc"]',
   deckListCostliestFirst: '[data-cy-decksort="essenceDesc"]',
+  deckListNameAtoZ: '[data-cy-decksort="nameAsc"]',
+  deckListNameZtoA: '[data-cy-decksort="nameDesc"]',
+  deckListRatingHighToLow: '[data-cy-decksort="ratingDesc"]',
+  deckListRatingLowToHigh: '[data-cy-decksort="ratingAsc"]',
 
   // deck page
   deckName: '[data-cy="deckName"]',
