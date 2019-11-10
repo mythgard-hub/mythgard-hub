@@ -43,6 +43,9 @@ export default {
   deckEssencePicker: '[data-cy="deckEssenceCell"]',
   decksSort: cy('decksSort'),
   deckListItem: cy('deckListItem'),
+  deckSearchDeckName: cy('deckSearchDeckName'),
+  deckListOldestFirst: cy('some-decks-dateAsc'),
+  deckListCheapestFirst: cy('some-decks-essenceAsc'),
 
   // deck page
   deckName: '[data-cy="deckName"]',
