@@ -44,5 +44,7 @@ DeckCardsTableEditMeta.propTypes = {
   showEdit: PropTypes.bool,
   switchToCards: PropTypes.func,
   setTab: PropTypes.func,
-  onEditClick: PropTypes.func
+  onEditClick: PropTypes.func,
+  metaName: PropTypes.string,
+  metaValue: PropTypes.string
 };

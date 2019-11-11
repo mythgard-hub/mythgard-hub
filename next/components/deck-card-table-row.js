@@ -133,7 +133,7 @@ DeckCardsTableRow.propTypes = {
     mana: PropTypes.number,
     gem: PropTypes.string,
     set: PropTypes.string,
-    supertype: PropTypes.string,
+    supertype: PropTypes.array,
     rarity: PropTypes.string
   })
 };
