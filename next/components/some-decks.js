@@ -17,7 +17,8 @@ export default function SomeDecks(props) {
     updatedTime,
     cardIds,
     factionNames,
-    isOnlyFactions
+    isOnlyFactions,
+    sortBy
   } = props.search;
   const { loading, error, data } = useDeckSearchQuery(
     {
@@ -27,6 +28,7 @@ export default function SomeDecks(props) {
       cardIds,
       factionNames,
       isOnlyFactions,
+      sortBy,
       first: pageSize,
       offset: currentPage * pageSize
     },
@@ -42,7 +44,7 @@ export default function SomeDecks(props) {
   const listRef = React.createRef();
 
   return (
-    <div ref={listRef}>
+    <div ref={listRef} data-cy-decksort={sortBy}>
       <DeckList decks={data.searchDecks.nodes} />
 
       <style jsx>{`
@@ -67,6 +69,7 @@ SomeDecks.propTypes = {
     cardIds: PropTypes.array,
     factionNames: PropTypes.array,
     isOnlyFactions: PropTypes.bool,
-    updatedTime: PropTypes.string
+    updatedTime: PropTypes.string,
+    sortBy: PropTypes.string
   }).isRequired
 };

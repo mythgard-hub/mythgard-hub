@@ -12,7 +12,7 @@ export function handleInputChange(event) {
 // returns function you can use as an onChange event
 // handler.
 export function handleInputChangeHooks(setter) {
-  return e => {
+  return event => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 

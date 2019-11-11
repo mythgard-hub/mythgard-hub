@@ -5,6 +5,8 @@ const getPagingTotalAsInt = () => {
   });
 };
 
+const dcy = s => `[data-cy="${s}"]`;
+
 export default {
   cardListCard: '[data-cy="cardListCard"]',
   cardList: '[data-cy="cardList"]',
@@ -39,6 +41,22 @@ export default {
   // decks page
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',
   deckEssencePicker: '[data-cy="deckEssenceCell"]',
+  decksSort: dcy('decksSort'),
+  deckListItem: dcy('deckListItem'),
+  deckSearchDeckName: dcy('deckSearchDeckName'),
+  deckSearchClear: dcy('deckSearchClear'),
+  deckSearchAllDecksLoaded: dcy('all-decks-loaded'),
+
+  // decks page sorted data
+  // used so cypress can know when newly sorted dom is loaded.
+  deckListNewestFirst: '[data-cy-decksort="dateDesc"]',
+  deckListOldestFirst: '[data-cy-decksort="dateAsc"]',
+  deckListCheapestFirst: '[data-cy-decksort="essenceAsc"]',
+  deckListCostliestFirst: '[data-cy-decksort="essenceDesc"]',
+  deckListNameAtoZ: '[data-cy-decksort="nameAsc"]',
+  deckListNameZtoA: '[data-cy-decksort="nameDesc"]',
+  deckListRatingHighToLow: '[data-cy-decksort="ratingDesc"]',
+  deckListRatingLowToHigh: '[data-cy-decksort="ratingAsc"]',
 
   // deck page
   deckName: '[data-cy="deckName"]',

@@ -112,7 +112,7 @@ export default function DeckCardsTable({
                 metaName="path"
                 showEdit={!onlyTable}
                 metaValue={deck.deckPath?.name}
-                onEditClick={_ => {
+                onEditClick={() => {
                   setTab('Paths');
                   switchToCards();
                 }}
@@ -126,7 +126,7 @@ export default function DeckCardsTable({
                 metaName="power"
                 showEdit={!onlyTable}
                 metaValue={deck.deckPower?.name}
-                onEditClick={_ => {
+                onEditClick={() => {
                   setTab('Powers');
                   switchToCards();
                 }}
@@ -174,7 +174,9 @@ DeckCardsTable.propTypes = {
     }),
     errors: PropTypes.arrayOf(PropTypes.string),
     switchToCards: PropTypes.func,
-    setTab: PropTypes.func,
-    updateDeckName: PropTypes.func
-  })
+    setTab: PropTypes.func
+  }),
+  updateDeckName: PropTypes.func,
+  switchToCards: PropTypes.func,
+  setTab: PropTypes.func
 };
