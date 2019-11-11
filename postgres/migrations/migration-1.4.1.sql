@@ -24,7 +24,7 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.name as deck_name,
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
-         mythgard.deck_essence_cost(deck.id)::int as essence_cost,
+         deck_essence_cost(deck.id)::int as essence_cost,
          count(DISTINCT deck_vote)::int as votes
   FROM mythgard.deck
   JOIN mythgard.card_deck
