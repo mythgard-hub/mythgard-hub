@@ -470,7 +470,7 @@ create or replace function mythgard.search_decks_nosort(deckName varchar(255), a
       LEFT JOIN mythgard.card ON (card.id = card_deck.card_id)
       LEFT JOIN mythgard.account ON (account.id = deck.author_id)
 
--- deck name filter
+    -- deck name filter
     WHERE (deckName is NULL or trim(deckName) = '' or to_tsvector('simple', deck.name) @@ to_tsquery('simple', replace(regexp_replace(trim(deckName), '\s+', ' ', 'g'), ' ', ':* & ') || ':*'))
     -- author name filter
     AND (authorName is NULL or trim(authorName) = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple', replace(regexp_replace(trim(authorName), '\s+', ' ', 'g'), ' ', ':* & ') || ':*'))
@@ -588,6 +588,8 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
    END
 
   $$ language plpgsql stable;
+
+-- END QUERIES
 
 CREATE USER postgraphile WITH password 'bears4life';
 GRANT ALL PRIVILEGES ON SCHEMA mythgard TO postgraphile;
