@@ -44,6 +44,7 @@ function TabGroup({ name, labels, selectedLabel, onChange }) {
           <React.Fragment key={i}>
             <button
               className={`tab reset-button ${selectedClass}`}
+              data-cy="tabButton"
               onClick={() => onChange(label)}
             >
               {label}
