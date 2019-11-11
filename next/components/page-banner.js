@@ -5,67 +5,82 @@ import Link from 'next/link';
 
 function PageBanner({ children, image, url }) {
   return (
-    (typeof(url) !== 'undefined' || url !== null )
+    (typeof(url) !== 'undefined')
     ? _bannerWithUrl(children, image, url)
     : _bannerWithoutUrl(children, image)
   );
 }
 
-function _bannerWithoutUrl(children, image){
+function _bannerWithoutUrl(children, backgroundImage){
   const theme = useContext(ThemeContext);
 
   return (
     <div className="page-banner">
-      { _bannerStyling(image) }
+      <style jsx>{`
+        .page-banner {
+          border-top: ${theme.border};
+          border-bottom: ${theme.border};
+          background: url(${backgroundImage}) left no-repeat, ${theme.background};
+          height: 70px;
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+        }
+        .page-banner h1 {
+          margin: 0;
+          padding-right: 0.5em;
+          text-align: right; /* multiline situations */
+        }
+
+        @media only screen and (max-width: 600px) {
+          .page-banner {
+            background: unset;
+          }
+        }
+      `}</style>
       <h1 data-cy="header">{children}</h1>
     </div>
   );
 }
 
-function _bannerWithUrl(children, image, url){
+function _bannerWithUrl(children, backgroundImage, url){
+  const theme = useContext(ThemeContext);
+
   return (
     <Link href={url}>
       <a className='page-banner-link'>
         <style jsx>{`
           .page-banner-link { text-decoration: none; }
+
+          .page-banner {
+            border-top: ${theme.border};
+            border-bottom: ${theme.border};
+            background: url(${backgroundImage}) left no-repeat, ${theme.background};
+            height: 70px;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+          }
+
+          .page-banner h1 {
+            margin: 0;
+            padding-right: 0.5em;
+            text-align: right; /* multiline situations */
+          }
+
+          @media only screen and (max-width: 600px) {
+            .page-banner {
+              background: unset;
+            }
+          }
         `}</style>
 
         <div className="page-banner">
-          { _bannerStyling(image) }
           <h1 data-cy="header">{children}</h1>
         </div>
       </a>
     </Link>
   );
-}
-
-function _bannerStyling(backgroundImage){
-  const theme = useContext(ThemeContext);
-
-  return (
-    <style jsx>{`
-      .page-banner {
-        border-top: ${theme.border};
-        border-bottom: ${theme.border};
-        background: url(${backgroundImage}) left no-repeat, ${theme.background};
-        height: 70px;
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-      }
-      .page-banner h1 {
-        margin: 0;
-        padding-right: 0.5em;
-        text-align: right; /* multiline situations */
-      }
-
-      @media only screen and (max-width: 600px) {
-        .page-banner {
-          background: unset;
-        }
-      }
-    `}</style>
-  )
 }
 
 PageBanner.IMG_ARTICLES = `${process.env.MG_CDN}/banner/Banner_Articles.jpg`;
