@@ -6,12 +6,12 @@ import Link from 'next/link';
 function PageBanner({ children, image, url }) {
   return (
     (typeof(url) !== 'undefined')
-    ? _bannerWithUrl(children, image, url)
-    : _bannerWithoutUrl(children, image)
+    ? _bannerWithLink(children, image, url)
+    : _bannerWithoutLink(children, image)
   );
 }
 
-function _bannerWithoutUrl(children, backgroundImage){
+function _bannerWithoutLink(children, backgroundImage){
   const theme = useContext(ThemeContext);
 
   return (
@@ -43,7 +43,7 @@ function _bannerWithoutUrl(children, backgroundImage){
   );
 }
 
-function _bannerWithUrl(children, backgroundImage, url){
+function _bannerWithLink(children, backgroundImage, url){
   const theme = useContext(ThemeContext);
 
   return (
