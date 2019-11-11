@@ -42,6 +42,8 @@ export const themes = {
     footerLinkColor: mgColors.orange,
     footerTextColor: mgColors.mediumLighterGray,
     selectedPageColor: mgColors.blue,
+    orangeSeparatorColor: mgColors.orange,
+    orangeSeparatorSecondaryColor: mgColors.blackPearl,
     blueFactionColor: mgColors.blue,
     redFactionColor: mgColors.red,
     yellowFactionColor: mgColors.yellow,
@@ -49,7 +51,8 @@ export const themes = {
     greenFactionColor: mgColors.green,
     purpleFactionColor: mgColors.purple,
     cardTableName: mgColors.mediumGray,
-    panelBackground: mgColors.grayBlue
+    panelBackground: mgColors.grayBlue,
+    cardTableRowQuantityBackground: mgColors.blackPearl
   }
 };
 

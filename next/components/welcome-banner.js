@@ -25,11 +25,6 @@ export default function WelcomeBanner() {
           align-items: center;
         }
 
-        .welcome-banner-link:before {
-          content: '\u25b6';
-          margin-right: 3px;
-        }
-
         .welcome-banner-link-username:before {
           content: none;
         }
@@ -71,7 +66,7 @@ export default function WelcomeBanner() {
       `}</style>
 
       <a
-        className="welcome-banner-link"
+        className="welcome-banner-link call-to-action-chevron"
         href={`mailto:${process.env.EMAIL_MG_CONTACT}`}
       >
         Contact
@@ -84,7 +79,10 @@ export default function WelcomeBanner() {
       <span className="spacer"></span>
 
       {!user && (
-        <a href="/auth/google" className="welcome-banner-link">
+        <a
+          href="/auth/google"
+          className="welcome-banner-link call-to-action-chevron"
+        >
           Login/Register
         </a>
       )}

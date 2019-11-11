@@ -5,6 +5,7 @@ import ImportedDeckErrors from '../components/imported-deck-errors';
 import TabGroup from '../components/tab-group';
 import { addCardToDeck } from '../lib/deck-utils';
 import PropTypes from 'prop-types';
+import { DECK_BUILDER_TABS } from '../constants/deck';
 
 export default function DeckBuilderCardDisplay(props) {
   const {
@@ -53,8 +54,6 @@ export default function DeckBuilderCardDisplay(props) {
     });
   };
 
-  const tabLabels = ['Cards', 'Paths', 'Powers'];
-
   return (
     <div>
       <style jsx>{`
@@ -62,7 +61,12 @@ export default function DeckBuilderCardDisplay(props) {
           flex-grow: 1;
         }
       `}</style>
-      <TabGroup onChange={setTab} labels={tabLabels} name="cardsPathsPowers" />
+      <TabGroup
+        selectedLabel={currentTab}
+        onChange={setTab}
+        labels={DECK_BUILDER_TABS}
+        name="cardsPathsPowers"
+      />
       {currentTab === 'Cards' && (
         <div className="collection" data-cy="deckBuilderCollection">
           <SomeCards filters={cardFilters} onCardClick={onCollectionClick} />

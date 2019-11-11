@@ -4,10 +4,36 @@ import {
   factionFilter,
   deckName,
   deckFactionsPicker,
-  deckEssencePicker
+  deckEssencePicker,
+  deckListItem,
+  decksSort,
+  deckSearchDeckName,
+  deckSearchClear,
+  deckSearchAllDecksLoaded,
+  deckListNewestFirst,
+  deckListOldestFirst,
+  deckListCheapestFirst,
+  deckListCostliestFirst,
+  deckListNameAtoZ,
+  deckListNameZtoA,
+  deckListRatingHighToLow,
+  deckListRatingLowToHigh
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
+
+const newestFirst = 'dateDesc';
+const oldestFirst = 'dateAsc';
+const essenceAsc = 'essenceAsc';
+const essenceDesc = 'essenceDesc';
+const nameAsc = 'nameAsc';
+const nameDesc = 'nameDesc';
+const ratingDesc = 'ratingDesc';
+const ratingAsc = 'ratingAsc';
+
+const deckNameAllFactions = 'all_factions';
+const deckNameDragons = 'dragons';
+const deckNameCats = 'cats';
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -30,13 +56,13 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
     cy.get(deckFactionsPicker).should('have.length', '2');
     cy.get(deckEssencePicker).should('contain', '50');
-    cy.get('[data-cy="deckSearchClear"]').click();
+    cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
     // search by name (search via enter)
     cy.get('[data-cy="deckSearchDeckName"]').type('cat{enter}');
     cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    cy.get('[data-cy="deckSearchClear"]').click();
+    cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
     // searh by included cards
@@ -50,7 +76,7 @@ describe('Decks Page', function() {
     cy.get(cardSearchSelections).should('have.length', 2);
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    cy.get('[data-cy="deckSearchClear"]').click();
+    cy.get(deckSearchClear).click();
     cy.get(cardSearchSelections).should('have.length', 0);
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
@@ -60,7 +86,7 @@ describe('Decks Page', function() {
       .click();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    cy.get('[data-cy="deckSearchClear"]').click();
+    cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
     // search by faction - contains at least this faction
@@ -68,14 +94,14 @@ describe('Decks Page', function() {
     cy.get(`[data-cy="leftSlider"]`).click();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 2);
-    cy.get('[data-cy="deckSearchClear"]').click();
+    cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
     // test deck author search
     cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv');
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 2);
-    cy.get('[data-cy="deckSearchClear"]').click();
+    cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
@@ -151,5 +177,64 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckSearchDeckName"]').clear();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
+
+    // test deck sort
+    cy.get(deckSearchClear).click();
+    // the default search is newest first.
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameAllFactions);
+    cy.get(decksSort).select(oldestFirst);
+    cy.get(deckListOldestFirst);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(essenceAsc);
+    cy.get(deckListCheapestFirst);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameCats);
+    cy.get(decksSort).select(essenceDesc);
+    cy.get(deckListCostliestFirst);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(nameAsc);
+    cy.get(deckListNameAtoZ);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameAllFactions);
+    cy.get(decksSort).select(nameDesc);
+    cy.get(deckListNameZtoA);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(ratingDesc);
+    cy.get(deckListRatingHighToLow);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(ratingAsc);
+    cy.get(deckListRatingLowToHigh);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameAllFactions);
+    // this test differs from the first sort test in that
+    // it uses some-decks rather than all-decks
+    cy.get(decksSort).select(newestFirst);
+    cy.get(deckListNewestFirst);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameAllFactions);
   });
 });

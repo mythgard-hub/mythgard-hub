@@ -44,7 +44,7 @@ export default function DeckList({ decks }) {
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
-                  <div className="deckName">
+                  <div className="deckName" data-cy="deckName">
                     <Link href={`/deck?id=${deck.id}`}>
                       <a>{deck.name}</a>
                     </Link>

@@ -39,7 +39,7 @@ export default function AllDecks({ defaultDaysAgo }) {
   const totalCount = data.decks.totalCount;
 
   return (
-    <div ref={listRef}>
+    <div ref={listRef} data-cy="all-decks-loaded">
       <DeckList
         decks={data.decks.nodes}
         currentPage={currentPage}

@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 import { ThemeContext } from './theme-context';
 import { FACTION_COLORS } from '../constants/factions';
 import DeckCardsTableRow from './deck-card-table-row';
+import DeckCardsTableEditMeta from './deck-card-table-edit-meta';
+import EditDeckName from './edit-deck-name';
+import DeckBuilderUser from './deck-builder-user';
 
-export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
+export default function DeckCardsTable({
+  deck,
+  deleteCard,
+  onlyTable,
+  switchToCards,
+  setTab,
+  updateDeckName
+}) {
   const deckCards = deck && Object.values(deck.mainDeck);
-  const power = deck?.deckPower?.name || '[no power]';
-  const path = deck?.deckPath?.name || '[no path]';
-  const colspan = deleteCard ? 3 : 2;
+  const colspan = deleteCard ? 4 : 3;
   const theme = useContext(ThemeContext);
 
   /**
@@ -83,27 +91,47 @@ export default function DeckCardsTable({ deck, deleteCard, onlyTable }) {
           border-collapse: collapse;
           width: 100%;
         }
-        td {
-          padding: 2px 5px 5px 5px;
-          border: ${theme.cardTableBorder};
+        .deck-author {
+          margin: 10px 0;
         }
-        .deck-title {
-          font-size: 30px;
-          margin: 0 0 20px 5px;
+        td {
+          padding: 6px;
+          border: ${theme.cardTableBorder};
         }
       `}</style>
       {!onlyTable && (
-        <div className="deck-title">{deck.deckName || '[untitled]'}</div>
+        <EditDeckName deckName={deck.deckName} onChange={updateDeckName} />
       )}
+      {!onlyTable && <DeckBuilderUser />}
       <table className="deck-card-table" data-cy="deckCardTable">
         <tbody>
           <tr>
             <td colSpan={2}>Path</td>
-            <td colSpan={colspan}>{path}</td>
+            <td colSpan={colspan}>
+              <DeckCardsTableEditMeta
+                metaName="path"
+                showEdit={!onlyTable}
+                metaValue={deck.deckPath?.name}
+                onEditClick={() => {
+                  setTab('Paths');
+                  switchToCards();
+                }}
+              />
+            </td>
           </tr>
           <tr>
             <td colSpan={2}>Power</td>
-            <td colSpan={colspan}>{power}</td>
+            <td colSpan={colspan}>
+              <DeckCardsTableEditMeta
+                metaName="power"
+                showEdit={!onlyTable}
+                metaValue={deck.deckPower?.name}
+                onEditClick={() => {
+                  setTab('Powers');
+                  switchToCards();
+                }}
+              />
+            </td>
           </tr>
           {sortedCards.map((deckCard, i) => (
             <DeckCardsTableRow
@@ -139,9 +167,16 @@ DeckCardsTable.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         mana: PropTypes.number,
-        gem: PropTypes.number
+        gem: PropTypes.number,
+        supertype: PropTypes.string,
+        rarity: PropTypes.string
       })
     }),
-    errors: PropTypes.arrayOf(PropTypes.string)
-  })
+    errors: PropTypes.arrayOf(PropTypes.string),
+    switchToCards: PropTypes.func,
+    setTab: PropTypes.func
+  }),
+  updateDeckName: PropTypes.func,
+  switchToCards: PropTypes.func,
+  setTab: PropTypes.func
 };

@@ -25,8 +25,9 @@ describe('Deck builder page', () => {
   });
   it('should have a happy path', function() {
     cy.get('[data-cy="header"]').should('be.visible');
-    cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
-    cy.get('[data-cy="importDeckButton"]').should('be.visible');
+    cy.get('[data-cy="goToImportMode"]').should('be.visible');
+    cy.get('[data-cy="importDeckButton"]').should('not.be.visible');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
     cy.get(cardList).should('be.visible');
     cy.get(deckInProgress).should('be.visible');
     cy.get('[data-cy="factionFilters"]').should('be.visible');
@@ -39,6 +40,7 @@ describe('Deck builder page', () => {
       .click();
     cy.get(deckInProgress).should('be.visible');
     cy.get(deckCardRow).should('have.length', 2);
+    cy.get('[data-cy="deckBuilderActions"]').should('be.visible');
 
     // basic test - delete a card from the deck
     cy.get('[data-cy="deckDeleteCard"]:first').click();
@@ -131,6 +133,56 @@ describe('Deck builder page', () => {
       });
   });
 
+  it('should navigate between the tabs', function() {
+    // make sure we're on the cards tab
+    cy.get('[data-cy="tabButton"]:first').click();
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('have.class', 'selected');
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(0)
+      .should('contain', 'No path selected');
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(1)
+      .should('contain', 'No power selected');
+
+    // go to path tab
+    cy.get('[data-cy="editMetaValue"]:first').click();
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('not.have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(1)
+      .should('have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(2)
+      .should('not.have.class', 'selected');
+    cy.get(`${cardListCard}:first`).click();
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(0)
+      .should('not.contain', 'No path selected');
+
+    // ho to power tab
+    cy.get('[data-cy="tabButton"]:first').click(); // go back to cards tab
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('have.class', 'selected');
+    cy.get('[data-cy="editMetaValue"]:last').click();
+    cy.get('[data-cy="tabButton"]')
+      .eq(0)
+      .should('not.have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(1)
+      .should('not.have.class', 'selected');
+    cy.get('[data-cy="tabButton"]')
+      .eq(2)
+      .should('have.class', 'selected');
+    cy.get(`${cardListCard}:first`).click();
+    cy.get('[data-cy="deckBuilderMetaValue"]')
+      .eq(0)
+      .should('not.contain', 'No power selected');
+  });
+
   it('should import a deck', function() {
     const input = [
       'name: my deck',
@@ -143,6 +195,7 @@ describe('Deck builder page', () => {
       '1 ghūl'
     ].join('\n');
 
+    cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').type(input);
     cy.get('[data-cy="importDeckButton"]').click();
 
@@ -163,11 +216,20 @@ describe('Deck builder page', () => {
       '2 Imp'
     ].join('\n');
 
+    // should be able to enter and exist import mode
+    cy.get('[data-cy="goToImportMode"]').click();
+    cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
+    cy.get('[data-cy="cancelImportMode"]').click();
+    cy.get('[data-cy="importDeckTextarea"]').should('not.be.visible');
+
+    cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').type(input);
     cy.get('[data-cy="importDeckButton"]').click();
     cy.get('[data-cy="exportDeckButton"]').click();
 
     cy.get('[data-cy="exportDeckSuccess"]').contains('Copied');
+    cy.get('[data-cy="deckBuilderActions"]').should('be.visible');
   });
 
   it('should clear filters', function() {
