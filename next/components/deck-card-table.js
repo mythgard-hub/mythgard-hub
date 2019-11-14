@@ -16,7 +16,7 @@ export default function DeckCardsTable({
   updateDeckName
 }) {
   const deckCards = deck && Object.values(deck.mainDeck);
-  const colspan = deleteCard ? 3 : 2;
+  const colspan = deleteCard ? 4 : 3;
   const theme = useContext(ThemeContext);
 
   /**
@@ -110,8 +110,9 @@ export default function DeckCardsTable({
             <td colSpan={colspan}>
               <DeckCardsTableEditMeta
                 metaName="path"
+                showEdit={!onlyTable}
                 metaValue={deck.deckPath && deck.deckPath.name}
-                onEditClick={_ => {
+                onEditClick={() => {
                   setTab('Paths');
                   switchToCards();
                 }}
@@ -123,8 +124,9 @@ export default function DeckCardsTable({
             <td colSpan={colspan}>
               <DeckCardsTableEditMeta
                 metaName="power"
+                showEdit={!onlyTable}
                 metaValue={deck.deckPower && deck.deckPower.name}
-                onEditClick={_ => {
+                onEditClick={() => {
                   setTab('Powers');
                   switchToCards();
                 }}
@@ -165,12 +167,16 @@ DeckCardsTable.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         mana: PropTypes.number,
-        gem: PropTypes.number
+        gem: PropTypes.number,
+        supertype: PropTypes.string,
+        rarity: PropTypes.string
       })
     }),
     errors: PropTypes.arrayOf(PropTypes.string),
     switchToCards: PropTypes.func,
-    setTab: PropTypes.func,
-    updateDeckName: PropTypes.func
-  })
+    setTab: PropTypes.func
+  }),
+  updateDeckName: PropTypes.func,
+  switchToCards: PropTypes.func,
+  setTab: PropTypes.func
 };

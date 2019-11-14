@@ -14,9 +14,25 @@ export const RARITY_MAX_CARDS = {
   mythic: 1
 };
 
+export const RARITY_COLORS = {
+  common: '#926950',
+  uncommon: '#A5A5A5',
+  rare: '#ccac00',
+  mythic: '#33A0E0'
+};
+
 export const getRarityImage = rarity => {
-  if (!rarity) {
-    rarity = 'common';
+  try {
+    return RARITY_IMAGES[rarity.toLowerCase()];
+  } catch (e) {
+    return RARITY_IMAGES.common;
   }
-  return RARITY_IMAGES[rarity.toLowerCase()];
+};
+
+export const getRarityColor = rarity => {
+  try {
+    return RARITY_COLORS[rarity.toLowerCase()];
+  } catch (e) {
+    return RARITY_COLORS.common;
+  }
 };
