@@ -16,7 +16,7 @@ const index = () => {
           display: flex;
           flex-wrap: wrap;
           min-width: 284px;
-          margin: 0 -20px;
+          margin: 0;
         }
 
         .mg-column + .mg-column {
