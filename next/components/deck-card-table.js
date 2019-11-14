@@ -111,7 +111,7 @@ export default function DeckCardsTable({
               <DeckCardsTableEditMeta
                 metaName="path"
                 showEdit={!onlyTable}
-                metaValue={deck.deckPath?.name}
+                metaValue={deck.deckPath && deck.deckPath.name}
                 onEditClick={() => {
                   setTab('Paths');
                   switchToCards();
@@ -125,7 +125,7 @@ export default function DeckCardsTable({
               <DeckCardsTableEditMeta
                 metaName="power"
                 showEdit={!onlyTable}
-                metaValue={deck.deckPower?.name}
+                metaValue={deck.deckPower && deck.deckPower.name}
                 onEditClick={() => {
                   setTab('Powers');
                   switchToCards();
