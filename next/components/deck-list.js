@@ -5,6 +5,7 @@ import { ThemeContext } from './theme-context';
 import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 import LargeTable from './large-table.js';
+import UpvoteIndicator from './upvote-indicator.js';
 
 export default function DeckList({ decks }) {
   const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
@@ -50,6 +51,9 @@ export default function DeckList({ decks }) {
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
+                </td>
+                <td>
+                  <UpvoteIndicator votes={deckMetaData[index].votes} />
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
                   {deckMetaData[index] && (
