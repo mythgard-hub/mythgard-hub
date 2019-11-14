@@ -110,7 +110,7 @@ export default function DeckCardsTable({
             <td colSpan={colspan}>
               <DeckCardsTableEditMeta
                 metaName="path"
-                metaValue={deck.deckPath?.name}
+                metaValue={deck.deckPath && deck.deckPath.name}
                 onEditClick={_ => {
                   setTab('Paths');
                   switchToCards();
@@ -123,7 +123,7 @@ export default function DeckCardsTable({
             <td colSpan={colspan}>
               <DeckCardsTableEditMeta
                 metaName="power"
-                metaValue={deck.deckPower?.name}
+                metaValue={deck.deckPower && deck.deckPower.name}
                 onEditClick={_ => {
                   setTab('Powers');
                   switchToCards();
@@ -154,7 +154,7 @@ DeckCardsTable.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string
     }),
-    deckPower: PropTypes.shape({
+    deckPath: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     }),
