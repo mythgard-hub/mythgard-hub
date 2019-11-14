@@ -10,7 +10,7 @@ export default function DeckBuilderUser() {
   const userElement = (
     <Link href={user ? '/account' : '/auth/google'}>
       <a data-cy="userLink" className="link">
-        {user?.username || 'Guest'}
+        {(user && user.username) || 'Guest'}
       </a>
     </Link>
   );
@@ -32,14 +32,7 @@ export default function DeckBuilderUser() {
           font-size: 14px;
         }
       `}</style>
-      <div>
-        by{' '}
-        <Link href={user ? '/account' : '/auth/google'}>
-          <a data-cy="userLink" className="user-link">
-            {user?.username || 'Guest'}
-          </a>
-        </Link>
-      </div>
+      <div>by {userElement}</div>
       {!user && (
         <Link href="/auth/google">
           <a

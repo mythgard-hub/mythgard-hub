@@ -19,7 +19,8 @@ const searchQueryDefaults = {
   factionNames: [],
   isOnlyFactions: true,
   updatedTime: defaultUpdatedTime,
-  authorName: ''
+  authorName: '',
+  sortBy: 'dateDesc'
 };
 
 const cardsErr = 'Error initializing deck seach';

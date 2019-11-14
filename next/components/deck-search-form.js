@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FactionFilters from './faction-filters.js';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import CardSearch from './card-search';
 import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
+import DeckSearchFormSort from './deck-search-form-sort.js';
 
 const resetFilters = values => {
   return {
@@ -15,7 +16,8 @@ const resetFilters = values => {
     factionNames: values.factionNames,
     isOnlyFactions: values.isOnlyFactions,
     updatedTime: values.updatedTime,
-    authorName: values.authorName
+    authorName: values.authorName,
+    sortBy: values.sortBy
   };
 };
 
@@ -39,11 +41,22 @@ export default function DeckSearchForm(props) {
     allCards,
     onClearFilters
   } = props;
+
   searchQuery.cardSelections = deserializeCards(
     searchQuery.cardIds,
     allCards.cards.nodes
   );
+
   const [filters, setFilters] = useState(resetFilters(searchQuery));
+
+  // if user changes sort, submit search
+  const [changedSort, setChangedSort] = useState(false);
+  useEffect(() => {
+    if (changedSort) {
+      handleSubmit();
+    }
+    setChangedSort(true);
+  }, [filters.sortBy]);
 
   const changeState = (filterName, value) => {
     setFilters(prevFilters => ({
@@ -61,7 +74,8 @@ export default function DeckSearchForm(props) {
       factionNames: filters.factionNames,
       isOnlyFactions: filters.isOnlyFactions,
       updatedTime: filters.updatedTime,
-      authorName: filters.authorName
+      authorName: filters.authorName,
+      sortBy: filters.sortBy
     });
   };
 
@@ -105,15 +119,29 @@ export default function DeckSearchForm(props) {
           margin: 10px 0;
           width: 100%;
         }
+        :global(.deck-search-form-sort) {
+          white-space: nowrap;
+          margin-left: 20px;
+        }
         .action-buttons {
-          width: 25%;
           float: right;
           display: flex;
           flex-direction: row;
           margin-top: 20px;
+          align-items: center;
         }
         .action-buttons input {
           margin-right: 10px;
+        }
+        .action-buttons label {
+          display: flex;
+          margin: 0 0 0 10px;
+          flex-wrap: nowrap;
+          white-space: nowrap;
+          align-items: center;
+        }
+        .action-buttons label select {
+          margin-left: 10px;
         }
 
         @media only screen and (max-width: 600px) {
@@ -127,13 +155,17 @@ export default function DeckSearchForm(props) {
           }
 
           .action-buttons {
-            width: 35%;
             flex-direction: column;
             margin-bottom: 20px;
           }
 
           .action-buttons input {
             margin-bottom: 15px;
+            margin-right: 0;
+          }
+
+          :global(.deck-search-form-sort) {
+            margin-top: 20px;
           }
 
           .action-buttons input,
@@ -201,6 +233,14 @@ export default function DeckSearchForm(props) {
         <button type="button" onClick={handleClear} data-cy="deckSearchClear">
           Clear
         </button>
+        <DeckSearchFormSort
+          name="decksSort"
+          cyName="decksSort"
+          value={filters.sortBy}
+          onChange={handleInputChangeHooks(sortBy =>
+            changeState('sortBy', sortBy)
+          )}
+        />
       </div>
     </form>
   );

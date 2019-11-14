@@ -437,7 +437,7 @@ Layout.propTypes = {
   title: PropTypes.string,
   desc: PropTypes.string,
   image: PropTypes.string,
-  router: PropTypes.router,
+  router: PropTypes.any,
   children: PropTypes.any
 };
 
