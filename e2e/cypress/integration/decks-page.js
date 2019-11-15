@@ -39,7 +39,12 @@ describe('Decks Page', function() {
   beforeEach(() => {
     cy.visit('/decks');
   });
+
   it('works', function() {
+    // Should show deck votes
+    cy.get('[data-cy="deckVotesCell"]').should('have.length', 3);
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 1);
+
     cy.get('[data-cy="deckListItem"] a:first').click();
     cy.location().should(location => {
       expect(location.pathname).to.eq('/deck', 'links to decks work');
