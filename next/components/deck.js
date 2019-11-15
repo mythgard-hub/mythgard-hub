@@ -1,4 +1,4 @@
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import ErrorMessage from './error-message';
 import DeckExport from './deck-export';

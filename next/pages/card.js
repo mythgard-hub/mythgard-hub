@@ -4,7 +4,7 @@ import Card from '../components/card';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import cardQuery from '../lib/queries/card-detail-query';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import {
   imagePathMedium as getImagePath,
   mainFaction,
