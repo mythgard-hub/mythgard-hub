@@ -35,12 +35,12 @@ function PagingControls({
 
         @media only screen and (max-width: 600px) {
           .mg-paging {
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
           }
 
           .mg-paging .counter {
-            padding: 15px 0;
+            font-size: 15px;
             margin: 0;
           }
         }

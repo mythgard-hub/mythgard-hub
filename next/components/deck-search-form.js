@@ -144,7 +144,7 @@ export default function DeckSearchForm(props) {
           margin-left: 10px;
         }
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 575.98px) {
           form {
             display: flex;
             flex-direction: column;
@@ -155,22 +155,22 @@ export default function DeckSearchForm(props) {
           }
 
           .action-buttons {
-            flex-direction: column;
-            margin-bottom: 20px;
-          }
-
-          .action-buttons input {
-            margin-bottom: 15px;
-            margin-right: 0;
-          }
-
-          :global(.deck-search-form-sort) {
-            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
           }
 
           .action-buttons input,
           .action-buttons button {
-            font-size: 20px;
+            flex: 1;
+          }
+
+          :global(.deck-search-form-sort) {
+            margin-top: 10px;
+          }
+
+          :global(.input-label) {
+            padding: 0;
           }
         }
       `}</style>
