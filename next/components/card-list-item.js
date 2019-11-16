@@ -45,6 +45,13 @@ export default function CardListItem({ card, onClick, options }) {
             transition-delay: 0.5s;
           }
         }
+        @media only screen and (max-width: 575.98px) {
+          .cardListImg {
+            max-width: 100%;
+            min-width: unset;
+            width: unset;
+          }
+        }
       `}</style>
       {onClick && (
         <div

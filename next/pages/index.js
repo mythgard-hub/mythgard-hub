@@ -89,7 +89,7 @@ const index = () => {
       </div>
       <style jsx>{`
         .patchNotes {
-          margin-bottom: ${theme.spacing / 2}px;
+          padding-bottom: ${theme.spacing / 2}px;
         }
         .patchNotes a {
           text-decoration: none;

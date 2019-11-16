@@ -20,18 +20,20 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
           padding: 0;
           display: flex;
           flex-wrap: wrap;
-          margin: ${theme.spacing / 2}px -${theme.cardSpacing}px 0 -${theme.cardSpacing}px;
+          margin: ${theme.spacing / 2}px -${theme.cardSpacing / 2}px 0 -${theme.cardSpacing /
+              2}px;
         }
         .cardListItem {
           flex: 1 0 33.33%;
-          padding: 0 ${theme.cardSpacing}px ${theme.cardSpacing}px
-            ${theme.cardSpacing}px;
+          padding: 0 ${theme.cardSpacing / 2}px ${theme.cardSpacing}px
+            ${theme.cardSpacing / 2}px;
           text-align: center;
         }
 
         @media only screen and (max-width: 575.98px) {
           .cardListItem {
             flex: 1 0 50%;
+            padding-bottom: ${theme.cardSpacing / 2}px;
           }
         }
       `}</style>
