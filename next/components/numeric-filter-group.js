@@ -55,6 +55,10 @@ export default function NumericFilterGroup({ cyName, selected, onChange }) {
           opacity: 0.6;
         }
 
+        img:last-child {
+          margin-right: 0;
+        }
+
         img:hover {
           filter: drop-shadow(0px 0px 3px #fff);
         }

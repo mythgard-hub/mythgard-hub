@@ -17,10 +17,12 @@ export default function CardListItem({ card, onClick, options }) {
     <>
       <style jsx>{`
         .cardListImg {
-          min-width: ${smallImageWidth}px;
-          width: ${smallImageWidth}px;
+          /*min-width: ${smallImageWidth}px;
+          width: ${smallImageWidth}px;*/
+          width: 100%;
         }
         .imgWrapper {
+          width: 100%;
           display: inline-block;
           position: relative;
           cursor: pointer;
