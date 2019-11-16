@@ -52,7 +52,8 @@ export const themes = {
     purpleFactionColor: mgColors.purple,
     cardTableName: mgColors.mediumGray,
     panelBackground: mgColors.grayBlue,
-    cardTableRowQuantityBackground: mgColors.blackPearl
+    cardTableRowQuantityBackground: mgColors.blackPearl,
+    spacing: 20
   }
 };
 
