@@ -84,6 +84,10 @@ export default function CardSearchForm(props) {
           justify-content: space-between;
         }
 
+        :global(.colLeftUpperLeft .searchFormText) {
+          padding: 0;
+        }
+
         .colLeftUpperRight {
           display: flex;
           flex-direction: column;

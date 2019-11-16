@@ -282,7 +282,7 @@ function Layout({ title, desc, image, router, children }) {
 
           .input-label {
             text-transform: uppercase;
-            padding-right: 20px;
+            padding-right: ${theme.spacing}px;
             font-weight: bold;
           }
 

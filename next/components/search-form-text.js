@@ -22,7 +22,6 @@ export default function SearchFormText(props) {
         }
         label {
           display: block;
-          padding: 0;
         }
       `}</style>
       {label}
