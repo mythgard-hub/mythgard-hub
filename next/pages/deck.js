@@ -46,7 +46,7 @@ export default withRouter(({ router }) => {
 
   return (
     <Layout title={title} desc={description}>
-      <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
+      <PageBanner image={PageBanner.IMG_DECKS} url="/decks">Decks</PageBanner>
       <Deck deck={data.deck} />
     </Layout>
   );
