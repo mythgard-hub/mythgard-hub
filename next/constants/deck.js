@@ -17,3 +17,15 @@ export const DECK_SIZES = {
 };
 
 export const DECK_BUILDER_TABS = ['Cards', 'Paths', 'Powers'];
+
+export const TYPES = ['Standard', 'Gauntlet', 'Tournament'];
+
+export const ARCHETYPES = [
+  'Unknown',
+  'Aggro',
+  'Aggro Midrange',
+  'Midrange',
+  'Control Midrange',
+  'Control',
+  'Combo'
+];
