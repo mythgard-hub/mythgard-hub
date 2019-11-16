@@ -14,9 +14,8 @@ class Header extends React.Component {
         <style jsx>{`
           .header {
             background: ${theme.background};
-            padding-top: 13px;
+            padding: ${theme.spacing / 2}px 0;
             font-weight: bold;
-            max-width: 940px;
             z-index: 2;
             display: flex;
             align-items: center;
@@ -51,16 +50,30 @@ class Header extends React.Component {
             color: #ce0000;
           }
 
-          @media only screen and (max-width: 600px) {
+          ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+          }
+
+          @media only screen and (max-width: 575.98px) {
             .header {
-              margin: 10px 0 25px 0;
-              max-height: unset;
               flex-direction: column;
             }
 
             .header .home {
               width: 100%;
-              margin-bottom: 10px;
+              margin-bottom: ${theme.spacing / 2}px;
+            }
+
+            ul {
+              flex-wrap: wrap;
+            }
+            li {
+              /*flex: 1 0 50%;*/
+              text-align: center;
             }
           }
         `}</style>
@@ -80,19 +93,34 @@ class Header extends React.Component {
             </picture>
           </a>
         </Link>
-        <HeaderLink route="/cards" cyName="cards">
-          Cards
-        </HeaderLink>
-        <HeaderLink route="/decks" cyName="decks">
-          Decks
-        </HeaderLink>
-        <HeaderLink route="/deck-builder" cyName="deck-builder">
-          Deck Builder
-        </HeaderLink>
-        <HeaderLink cyName="events" route="/events">
-          Events
-        </HeaderLink>
-        <HeaderLink route="/articles">Media</HeaderLink>
+        <nav>
+          <ul>
+            <li>
+              <HeaderLink route="/cards" cyName="cards">
+                Cards
+              </HeaderLink>
+            </li>
+            <li>
+              <HeaderLink route="/decks" cyName="decks">
+                Decks
+              </HeaderLink>
+            </li>
+            <li>
+              <HeaderLink route="/deck-builder" cyName="deck-builder">
+                Deck Builder
+              </HeaderLink>
+            </li>
+            <li>
+              <HeaderLink cyName="events" route="/events">
+                Events
+              </HeaderLink>
+            </li>
+            <li>
+              {' '}
+              <HeaderLink route="/articles">Media</HeaderLink>
+            </li>
+          </ul>
+        </nav>
       </div>
     );
   }
