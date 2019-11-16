@@ -26,6 +26,7 @@ export default function CardList({ onCardClick, cards, pageSize, options }) {
           flex: 1 0 33.33%;
           padding: 0 ${theme.cardSpacing}px ${theme.cardSpacing}px
             ${theme.cardSpacing}px;
+          text-align: center;
         }
 
         @media only screen and (max-width: 575.98px) {

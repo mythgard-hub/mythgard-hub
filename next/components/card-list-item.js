@@ -17,9 +17,8 @@ export default function CardListItem({ card, onClick, options }) {
     <>
       <style jsx>{`
         .cardListImg {
-          /*min-width: ${smallImageWidth}px;
-          width: ${smallImageWidth}px;*/
-          width: 100%;
+          min-width: ${smallImageWidth}px;
+          width: ${smallImageWidth}px;
         }
         .imgWrapper {
           width: 100%;

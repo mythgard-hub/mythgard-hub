@@ -59,7 +59,6 @@ function Layout({ title, desc, image, router, children }) {
             margin: auto;
             min-height: calc(100vh - 87px);
             background: ${theme.background};
-            overflow: hidden;
           }
 
           @media only screen and (min-width: 576px) {
@@ -122,6 +121,9 @@ function Layout({ title, desc, image, router, children }) {
             color: ${theme.fontColor};
             padding: 0;
             margin: 0;
+          }
+          #__next {
+            overflow: hidden;
           }
 
           p {
