@@ -12,7 +12,9 @@ export const initializeDeckBuilder = () => {
     deckCoverArt: '',
     mainDeck: {},
     sideboard: [],
-    errors: []
+    errors: [],
+    archetype: 'Unknown',
+    type: 'Standard'
   };
 };
 
