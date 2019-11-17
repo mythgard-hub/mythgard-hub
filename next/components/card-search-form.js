@@ -5,6 +5,8 @@ import FactionFilters from './faction-filters.js';
 import CardSearchFilters from './card-search-filters.js';
 import SearchFormText from './search-form-text.js';
 import SliderSwitch from './slider-switch';
+import { useContext } from 'react';
+import { ThemeContext } from '../components/theme-context.js';
 
 const widthSupportsTwoColumn = () => {
   if (!process.browser) {
@@ -27,6 +29,8 @@ export default function CardSearchForm(props) {
   const [defenses, setDefenses] = useState(searchQuery.defenses);
   const [rarities, setRarities] = useState(searchQuery.rarities);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
+
+  const theme = useContext(ThemeContext);
 
   const handleClearFilters = () => {
     setText(defaultQuery.text);
@@ -62,18 +66,15 @@ export default function CardSearchForm(props) {
           justify-content: space-between;
         }
 
-        :global(.searchFormText input) {
-          width: 380px;
-        }
-
-        .colLeft,
-        .colRight {
-          padding-top: 30px;
-        }
-
         .colLeft {
-          max-width: 600px;
-          flex-grow: 1;
+          margin-top: ${theme.spacing}px;
+          flex: 1;
+        }
+
+        .colRight {
+          margin-top: ${theme.spacing}px;
+          margin-left: ${theme.spacing * 2}px;
+          width: 300px;
         }
 
         .colLeftUpper {
@@ -81,7 +82,10 @@ export default function CardSearchForm(props) {
           align-items: center;
           flex-wrap: wrap;
           justify-content: space-between;
-          padding-right: 15px;
+        }
+
+        :global(.colLeftUpperLeft .searchFormText) {
+          padding: 0;
         }
 
         .colLeftUpperRight {
@@ -98,6 +102,24 @@ export default function CardSearchForm(props) {
 
         .clearButton {
           margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 575.98px) {
+          .colLeftUpper {
+            margin-right: 0;
+          }
+          .colLeftUpperRight {
+            justify-content: center;
+            flex-direction: row;
+            flex: 1;
+          }
+          .clearButton {
+            margin: 0 0 0 10px;
+          }
+          .colRight {
+            width: 100%;
+            margin-left: 0;
+          }
         }
       `}</style>
       <div className="colLeft">
@@ -137,7 +159,7 @@ export default function CardSearchForm(props) {
         {props.children}
       </div>
       <div className="colRight">
-        <span className={!viewFilters || 'hideOnNotTablet'}>
+        <div className={!viewFilters || 'hideOnNotTablet'}>
           <SliderSwitch
             rightSlider="View More Filters"
             checked={viewFilters}
@@ -146,7 +168,7 @@ export default function CardSearchForm(props) {
             }}
             onClickLabel={setViewFilters}
           />
-        </span>
+        </div>
         {viewFilters && (
           <>
             <CardSearchFilters
@@ -161,7 +183,7 @@ export default function CardSearchForm(props) {
               setCardRarities={setRarities}
               setSupertypes={setSupertypes}
             />
-            <span className="hideOnNotTablet">
+            <div className="hideOnNotTablet">
               <SliderSwitch
                 rightSlider="View Filters"
                 checked={viewFilters}
@@ -170,7 +192,7 @@ export default function CardSearchForm(props) {
                 }}
                 onClickLabel={setViewFilters}
               />
-            </span>
+            </div>
           </>
         )}
       </div>

@@ -21,6 +21,7 @@ export default function CardListItem({ card, onClick, options }) {
           width: ${smallImageWidth}px;
         }
         .imgWrapper {
+          width: 100%;
           display: inline-block;
           position: relative;
           cursor: pointer;
@@ -42,6 +43,13 @@ export default function CardListItem({ card, onClick, options }) {
             visibility: visible;
             opacity: 1;
             transition-delay: 0.5s;
+          }
+        }
+        @media only screen and (max-width: 575.98px) {
+          .cardListImg {
+            max-width: 100%;
+            min-width: unset;
+            width: unset;
           }
         }
       `}</style>

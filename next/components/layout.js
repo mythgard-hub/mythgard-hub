@@ -7,7 +7,6 @@ import { ThemeContext } from './theme-context';
 import Footer from './footer';
 import { withRouter } from 'next/router';
 
-const tabletMaxWidth = 925;
 const cdn = process.env.MG_CDN;
 
 function Layout({ title, desc, image, router, children }) {
@@ -52,17 +51,17 @@ function Layout({ title, desc, image, router, children }) {
       <div className="container">
         <style jsx>{`
           .container {
-            padding: 0 20px;
+            padding: 0 ${theme.spacing}px;
             border-left: ${theme.border};
             border-right: ${theme.border};
             font-family: ${theme.fontFamily};
             max-width: 960px;
             margin: auto;
-            min-height: 100vh;
+            min-height: calc(100vh - 87px);
             background: ${theme.background};
           }
 
-          @media only screen and (min-width: 600px) {
+          @media only screen and (min-width: 576px) {
             .container:before {
               content: '';
               position: fixed;
@@ -70,8 +69,6 @@ function Layout({ title, desc, image, router, children }) {
               top: 0;
               left: 0;
               width: calc((100% - 960px) / 2);
-              max-width: 432px;
-              min-width: 180px;
               height: 100%;
               background-image: url(${process.env.MG_CDN}/backgrounds/BG-LeftSide.png);
               background-size: cover;
@@ -84,29 +81,27 @@ function Layout({ title, desc, image, router, children }) {
               top: 0;
               right: 0;
               width: calc((100% - 960px) / 2);
-              max-width: 432px;
-              min-width: 180px;
               height: 100%;
               background: url(${process.env.MG_CDN}/backgrounds/BG-RightSide.png);
               background-size: cover;
             }
           }
 
-          @media only screen and (max-width: 600px) {
+          @media only screen and (max-width: 575.98px) {
             .container {
-              padding: 0 20px;
+              padding: 0 ${theme.spacing / 2}px;
               border-left: none;
               border-right: none;
             }
           }
 
-          @media only screen and (min-width: ${tabletMaxWidth + 1}px) {
+          @media only screen and (min-width: 992px) {
             :global(.hideOnNotTablet) {
               display: none;
             }
           }
 
-          @media only screen and (max-width: ${tabletMaxWidth}px) {
+          @media only screen and (max-width: 991.98px) {
             :global(.hideOnTablet) {
               display: none;
             }
@@ -127,6 +122,9 @@ function Layout({ title, desc, image, router, children }) {
             padding: 0;
             margin: 0;
           }
+          #__next {
+            overflow: hidden;
+          }
 
           p {
             margin-bottom: 10px;
@@ -146,15 +144,6 @@ function Layout({ title, desc, image, router, children }) {
           h2 {
             margin-top: 7px;
             margin-bottom: 10px;
-          }
-
-          columnHeader {
-            margin-top: 7px;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-            font-weight: 700;
-            font-style: italic;
-            text-transform: uppercase;
           }
 
           h3 {
@@ -293,7 +282,7 @@ function Layout({ title, desc, image, router, children }) {
 
           .input-label {
             text-transform: uppercase;
-            padding-right: 20px;
+            padding-right: ${theme.spacing}px;
             font-weight: bold;
           }
 
@@ -369,7 +358,7 @@ function Layout({ title, desc, image, router, children }) {
             content: '';
           }
 
-          @media only screen and (max-width: 600px) {
+          @media only screen and (max-width: 575.98px) {
             input[type='text'],
             select {
               height: 40px;

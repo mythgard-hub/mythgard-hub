@@ -1,32 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import CardListItem from './card-list-item';
 import PagingControls from './paging-controls.js';
 import { onCurrentPage } from '../lib/paging.js';
+import { ThemeContext } from '../components/theme-context.js';
 
 export default function CardList({ onCardClick, cards, pageSize, options }) {
   const [currentPage, setPage] = useState(0);
   const { withPaging } = options;
   const cardListRef = React.createRef();
+  const theme = useContext(ThemeContext);
 
   return (
     <div ref={cardListRef}>
       <style jsx>{`
         .cardList {
           list-style: none;
+          padding: 0;
           display: flex;
           flex-wrap: wrap;
-          padding-left: 20px;
+          margin: ${theme.spacing / 2}px -${theme.cardSpacing / 2}px 0 -${theme.cardSpacing /
+              2}px;
         }
         .cardListItem {
-          margin-right: 17px;
-          margin-bottom: 17px;
+          flex: 1 0 33.33%;
+          padding: 0 ${theme.cardSpacing / 2}px ${theme.cardSpacing}px
+            ${theme.cardSpacing / 2}px;
+          text-align: center;
         }
 
-        @media only screen and (max-width: 600px) {
-          .cardList {
-            padding: 0;
+        @media only screen and (max-width: 575.98px) {
+          .cardListItem {
+            flex: 1 0 50%;
+            padding-bottom: ${theme.cardSpacing / 2}px;
           }
         }
       `}</style>

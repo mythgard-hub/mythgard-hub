@@ -7,8 +7,11 @@ import {
 import { firstLetterUppercase } from '../lib/string-utils';
 import { getRarityImage } from '../constants/rarities.js';
 import { SUPERTYPES, SUPERTYPE_IMAGES } from '../constants/supertypes.js';
+import { useContext } from 'react';
+import { ThemeContext } from '../components/theme-context.js';
 
 export default function Card({ card }) {
+  const theme = useContext(ThemeContext);
   const imagePath = getImagePath(card.name, card.set);
   const imageAlt = card.name;
   // Technically this is an array but in actuality all cards should have
@@ -40,6 +43,10 @@ export default function Card({ card }) {
         .card-components {
           display: flex;
           flex-wrap: wrap;
+          align-items: center;
+        }
+        .card-image-container {
+          margin-bottom: ${theme.spacing}px;
         }
         .card-image {
           flex: 1;
@@ -51,9 +58,12 @@ export default function Card({ card }) {
           list-style: none;
           display: flex;
           flex-wrap: wrap;
+          padding: 0;
+          margin: 0 0 ${theme.spacing}px ${theme.spacing * 2}px;
         }
         li.card-detail {
           min-width: 220px;
+          margin-right: ${theme.spacing * 2}px;
         }
         .card-detail-label {
           font-size: 1em;
@@ -61,7 +71,6 @@ export default function Card({ card }) {
           color: #458a9e;
           font-style: italic;
           text-align: left;
-          margin-top: 20px;
           margin-bottom: 5px;
           text-transform: uppercase;
         }
@@ -83,7 +92,7 @@ export default function Card({ card }) {
         .card-detail-text {
           font-weight: 400;
           font-size: 1.8em;
-          margin-bottom: 18px;
+          margin-bottom: ${theme.spacing}px;
         }
         .rarity-icon {
           height: 22px;
@@ -96,12 +105,32 @@ export default function Card({ card }) {
         }
         .tokens {
           display: flex;
-          margin-bottom: 15px;
+          align-items: flex-start;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          margin: ${theme.spacing / 2}px -${theme.cardSpacing}px 0 -${theme.cardSpacing}px;
         }
         .token-image {
-          max-width: 222px;
-          height: auto;
-          margin-right: 15px;
+          max-width: 25%;
+          padding: 0 ${theme.cardSpacing}px ${theme.cardSpacing}px
+            ${theme.cardSpacing}px;
+        }
+
+        @media only screen and (max-width: 575.98px) {
+          .card-image-container {
+            width: 100%;
+            text-align: center;
+          }
+          ul.card-details {
+            margin: 0 0 ${theme.spacing}px 0;
+          }
+          li.card-detail {
+            width: 95%;
+            margin-right: 0;
+          }
+          .token-image {
+            max-width: 50%;
+          }
         }
       `}</style>
       <div>
@@ -109,7 +138,7 @@ export default function Card({ card }) {
           {card.name}
         </h1>
         <div className="card-components">
-          <div>
+          <div className="card-image-container">
             <img className="card-image" src={imagePath} alt={imageAlt} />
           </div>
           <ul className="card-details">

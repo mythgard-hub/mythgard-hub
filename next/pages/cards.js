@@ -6,8 +6,6 @@ import CardSearchForm from '../components/card-search-form';
 import { useRouter } from 'next/router';
 import queryToParams from '../lib/url-to-search-parameters.js';
 
-export const twoColMinWidth = 925;
-
 const searchQueryDefaults = {
   text: '',
   factions: [],
@@ -46,17 +44,6 @@ function CardsPage() {
         defaultQuery={{ ...searchQueryDefaults }}
         onClearFilters={clearFilters}
       >
-        <style jsx>{`
-          :global(.cardList) {
-            padding-left: 0;
-          }
-
-          @media only screen and (max-width: ${twoColMinWidth}px) {
-            :global(.cardList) {
-              min-width: 535px;
-            }
-          }
-        `}</style>
         <div className="hideOnTablet">
           <SomeCards filters={searchQuery} />
         </div>

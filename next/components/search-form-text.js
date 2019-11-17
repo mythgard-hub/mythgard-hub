@@ -20,6 +20,9 @@ export default function SearchFormText(props) {
           margin: 10px 0;
           width: 100%;
         }
+        label {
+          display: block;
+        }
       `}</style>
       {label}
       <br />

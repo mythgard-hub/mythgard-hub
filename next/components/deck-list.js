@@ -30,6 +30,13 @@ export default function DeckList({ decks }) {
         .factions {
           text-align: center;
         }
+        @media only screen and (max-width: 575.98px) {
+          .factions,
+          .mana,
+          :global(.upvoteIndicator) {
+            white-space: nowrap;
+          }
+        }
       `}</style>
       <LargeTable>
         <tbody>
