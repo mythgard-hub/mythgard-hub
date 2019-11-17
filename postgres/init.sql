@@ -11,9 +11,9 @@ CREATE TYPE mythgard.rarity AS ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC');
 
 CREATE TYPE mythgard.cardType AS ENUM ('MINION', 'SPELL', 'ENCHANTMENT', 'ARTIFACT', 'ITEM', 'BRAND');
 
-CREATE TYPE mythgard.deck_archetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
+CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
 
-CREATE TYPE mythgard.deck_type as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
+CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
 
 CREATE ROLE admin;
 CREATE ROLE authd_user;
@@ -126,13 +126,32 @@ CREATE TABLE mythgard.deck (
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
   created timestamp default current_timestamp,
-  archetype mythgard.deck_archetype[] default ARRAY['UNKNOWN']::mythgard.deck_archetype[],
-  type mythgard.deck_type[] default ARRAY['STANDARD']::mythgard.deck_type[]
+  archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
+  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
 );
-INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
-INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
-INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', current_date - interval '1 month');
-INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', current_date - interval '9 month');
+INSERT INTO mythgard.deck("name", "author_id")
+  VALUES (
+    'dragons', 
+    1);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
+  VALUES (
+    'cats',
+    1,
+    1,
+    1,
+    '{MIDRANGE}',
+    '{TOURNAMENT}');
+INSERT INTO mythgard.deck("name", "modified", "type")
+  VALUES (
+    'all_factions',
+    current_date - interval '1 month',
+    '{GAUNTLET}');
+INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
+  VALUES (
+    'norden aztlan',
+    current_date - interval '9 month',
+    '{CONTROL, COMBO}', 
+    '{STANDARD}');
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows

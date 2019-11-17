@@ -1,10 +1,10 @@
-CREATE TYPE mythgard.deck_archetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
+CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
 
-CREATE TYPE mythgard.deck_type as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
+CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
 
 ALTER TABLE deck
-ADD COLUMN archetype mythgard.deck_archetype[] NOT NULL DEFAULT ARRAY['UNKNOWN']::mythgard.deck_archetype[],
-ADD COLUMN type mythgard.deck_type[] NOT NULL DEFAULT ARRAY['STANDARD']::mythgard.deck_type[];
+ADD COLUMN archetype mythgard.deckArchetype[] NOT NULL DEFAULT ARRAY['UNKNOWN']::mythgard.deckArchetype[],
+ADD COLUMN type mythgard.deckType[] NOT NULL DEFAULT ARRAY['STANDARD']::mythgard.deckType[];
 
 CREATE OR REPLACE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
