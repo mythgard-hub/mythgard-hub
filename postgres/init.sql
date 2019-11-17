@@ -559,14 +559,14 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
 
   BEGIN
        IF sortBy = 'essenceDesc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec desc nulls last) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
