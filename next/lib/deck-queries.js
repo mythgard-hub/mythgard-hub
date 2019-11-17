@@ -9,6 +9,8 @@ const deckPreviewsFragment = `
       factions
       essenceCost
       votes
+      deckArchetype
+      deckType
       deck{
         id
         author {
