@@ -6,6 +6,7 @@ import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 import LargeTable from './large-table.js';
 import UpvoteIndicator from './upvote-indicator.js';
+import { ARCHETYPES } from '../constants/deck';
 
 export default function DeckList({ decks }) {
   const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
@@ -41,6 +42,10 @@ export default function DeckList({ decks }) {
             const deckModifiedMeta =
               deckMetaData[index] && deckMetaData[index].deckCreated;
             const modified = new Date(deck.modified || deckModifiedMeta);
+            const archetype =
+              deckMetaData[index] && deckMetaData[index].archetype
+                ? deckMetaData[index].archetype.join(' ')
+                : ARCHETYPES[0];
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
@@ -61,6 +66,9 @@ export default function DeckList({ decks }) {
                       factions={deckMetaData[index].factions}
                     />
                   )}
+                </td>
+                <td className="archetype" data-cy="deckArchetypeCell">
+                  {archetype}
                 </td>
                 <td className="mana">
                   {deckMetaData[index] && (
