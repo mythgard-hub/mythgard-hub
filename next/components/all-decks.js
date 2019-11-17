@@ -55,6 +55,7 @@ export default function AllDecks({ defaultDaysAgo }) {
         setPage={setPage}
         pageSize={pageSize}
         itemCount={totalCount}
+        listRef={listRef}
       ></PagingControls>
     </div>
   );
