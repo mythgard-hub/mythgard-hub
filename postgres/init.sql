@@ -11,6 +11,10 @@ CREATE TYPE mythgard.rarity AS ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC');
 
 CREATE TYPE mythgard.cardType AS ENUM ('MINION', 'SPELL', 'ENCHANTMENT', 'ARTIFACT', 'ITEM', 'BRAND');
 
+CREATE TYPE mythgard.deck_archetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
+
+CREATE TYPE mythgard.deck_type as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
+
 CREATE ROLE admin;
 CREATE ROLE authd_user;
 CREATE ROLE anon_user;
@@ -121,7 +125,9 @@ CREATE TABLE mythgard.deck (
   path_id integer REFERENCES mythgard.path (id),
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
-  created timestamp default current_timestamp
+  created timestamp default current_timestamp,
+  archetype mythgard.deck_archetype[] default ARRAY['UNKNOWN']::mythgard.deck_archetype[],
+  type mythgard.deck_type[] default ARRAY['STANDARD']::mythgard.deck_type[]
 );
 INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
