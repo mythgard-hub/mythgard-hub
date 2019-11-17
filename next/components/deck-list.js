@@ -31,6 +31,9 @@ export default function DeckList({ decks }) {
         .factions {
           text-align: center;
         }
+        .archetype {
+          text-transform: capitalize;
+        }
       `}</style>
       <LargeTable>
         <tbody>
@@ -43,8 +46,8 @@ export default function DeckList({ decks }) {
               deckMetaData[index] && deckMetaData[index].deckCreated;
             const modified = new Date(deck.modified || deckModifiedMeta);
             const archetype =
-              deckMetaData[index] && deckMetaData[index].archetype
-                ? deckMetaData[index].archetype.join(' ')
+              deckMetaData[index] && deckMetaData[index].deckArchetype
+                ? deckMetaData[index].deckArchetype.join(' ').toLowerCase()
                 : ARCHETYPES[0];
 
             return (
