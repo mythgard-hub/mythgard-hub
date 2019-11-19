@@ -114,6 +114,14 @@ INSERT INTO mythgard.account ("username") VALUES ('lsv');
 INSERT INTO mythgard.account ("username") VALUES ('foo');
 INSERT INTO mythgard.account ("username") VALUES ('bar');
 
+-- separate table from account b/c it's rarely needed and makes row level security easy
+CREATE TABLE mythgard.account_moderator (
+  id SERIAL PRIMARY KEY,
+  account_id integer,
+  FOREIGN KEY (account_id)
+    REFERENCES mythgard.account (id)
+    ON DELETE CASCADE);
+
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -262,7 +270,7 @@ ALTER TABLE mythgard.account ENABLE ROW LEVEL SECURITY;
 CREATE POLICY admin_all ON mythgard.account TO admin USING (true) WITH CHECK (true);
 -- Non-admins can read all rows
 CREATE POLICY all_view ON mythgard.account FOR SELECT USING (true);
--- Rows can only be updated by their author
+-- Rows can only be updated by their owner
 CREATE POLICY accountupdate_if_author
   ON mythgard.account
   FOR UPDATE
