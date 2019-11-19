@@ -11,6 +11,10 @@ CREATE TYPE mythgard.rarity AS ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC');
 
 CREATE TYPE mythgard.cardType AS ENUM ('MINION', 'SPELL', 'ENCHANTMENT', 'ARTIFACT', 'ITEM', 'BRAND');
 
+CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
+
+CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
+
 CREATE ROLE admin;
 CREATE ROLE authd_user;
 CREATE ROLE anon_user;
@@ -121,12 +125,33 @@ CREATE TABLE mythgard.deck (
   path_id integer REFERENCES mythgard.path (id),
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
-  created timestamp default current_timestamp
+  created timestamp default current_timestamp,
+  archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
+  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
 );
-INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
-INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
-INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', current_date - interval '1 month');
-INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', current_date - interval '9 month');
+INSERT INTO mythgard.deck("name", "author_id")
+  VALUES (
+    'dragons', 
+    1);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
+  VALUES (
+    'cats',
+    1,
+    1,
+    1,
+    '{MIDRANGE}',
+    '{TOURNAMENT}');
+INSERT INTO mythgard.deck("name", "modified", "type")
+  VALUES (
+    'all_factions',
+    current_date - interval '1 month',
+    '{GAUNTLET}');
+INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
+  VALUES (
+    'norden aztlan',
+    current_date - interval '9 month',
+    '{CONTROL, COMBO}', 
+    '{STANDARD}');
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows
@@ -413,7 +438,9 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
          mythgard.deck_essence_cost(deck.id)::int as essence_cost,
-         mythgard.deck_votes(deck.id)::int as votes
+         mythgard.deck_votes(deck.id)::int as votes,
+         deck.archetype as deck_archetype,
+         deck.type as deck_type
   FROM mythgard.deck
   JOIN mythgard.card_deck
     ON card_deck.deck_id = deck.id
@@ -532,14 +559,14 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
 
   BEGIN
        IF sortBy = 'essenceDesc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec desc nulls last) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,

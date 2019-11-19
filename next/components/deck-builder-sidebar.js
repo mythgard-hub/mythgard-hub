@@ -114,6 +114,7 @@ export default function DeckBuilderSidebar(props) {
         setPageMode={setPageMode}
         deckId={newDeckId || deckId}
         setDeckInProgress={setDeckInProgress}
+        deckInProgress={deckInProgress}
       />
       <hr className="action-button-border" />
       <DeckBuilderActionButtons
