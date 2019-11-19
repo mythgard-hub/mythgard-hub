@@ -6,6 +6,7 @@ import allPowersQuery from '../lib/queries/powers-query';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import { convertImportToDeck } from '../lib/import-utils';
 import ErrorMessage from './error-message.js';
+import { PAGE_MODES } from '../constants/deck-builder';
 
 const handleImport = (
   mainDeckInput,
@@ -29,8 +30,8 @@ export default function ImportDeck({
   mainDeckInput,
   handleInputChange,
   updateImportedDeck,
-  importMode,
-  setImportMode
+  pageMode,
+  setPageMode
 }) {
   const {
     loading: cardsLoading,
@@ -46,7 +47,9 @@ export default function ImportDeck({
     data: powerData
   } = useQuery(allPowersQuery);
 
-  if (!importMode) {
+  if (pageMode === PAGE_MODES.PUBLISH) return null;
+
+  if (pageMode !== PAGE_MODES.IMPORT) {
     return (
       <div>
         <style jsx>{`
@@ -54,7 +57,10 @@ export default function ImportDeck({
             margin-top: 20px;
           }
         `}</style>
-        <button onClick={() => setImportMode(true)} data-cy="goToImportMode">
+        <button
+          onClick={() => setPageMode(PAGE_MODES.IMPORT)}
+          data-cy="goToImportMode"
+        >
           Import
         </button>
       </div>
@@ -81,7 +87,7 @@ export default function ImportDeck({
 
     if (confirmation) {
       handleImport(mainDeckInput, updateImportedDeck, cards, paths, powers);
-      setImportMode(false);
+      setPageMode(PAGE_MODES.TABLE);
     }
   };
 
@@ -106,7 +112,10 @@ export default function ImportDeck({
       >
         Import Decklist
       </button>
-      <button onClick={() => setImportMode(false)} data-cy="cancelImportMode">
+      <button
+        onClick={() => setPageMode(PAGE_MODES.TABLE)}
+        data-cy="cancelImportMode"
+      >
         Cancel
       </button>
       <textarea
@@ -140,6 +149,6 @@ ImportDeck.propTypes = {
   }),
   handleInputChange: PropTypes.func,
   updateImportedDeck: PropTypes.func,
-  importMode: PropTypes.bool,
-  setImportMode: PropTypes.func
+  pageMode: PropTypes.string,
+  setPageMode: PropTypes.func
 };

@@ -9,6 +9,8 @@ import {
 } from '../lib/deck-utils';
 import { ThemeContext } from './theme-context';
 import DeckBuilderActionButtons from './deck-builder-action-buttons';
+import { PAGE_MODES } from '../constants/deck-builder';
+import DeckBuilderPublishMode from './deck-builder-publish-mode';
 
 export default function DeckBuilderSidebar(props) {
   const {
@@ -20,7 +22,8 @@ export default function DeckBuilderSidebar(props) {
   } = props;
   const theme = useContext(ThemeContext);
   const [mainDeckInput, setMainDeckInput] = useState('');
-  const [importMode, setImportMode] = useState(false);
+  const [pageMode, setPageMode] = useState(PAGE_MODES.TABLE);
+  const [newDeckId, setNewDeckId] = useState(null);
 
   const updateDeckName = e => {
     setDeckInProgress({
@@ -103,24 +106,33 @@ export default function DeckBuilderSidebar(props) {
           setMainDeckInput(e.target.value);
         }}
         updateImportedDeck={updateImportedDeck}
-        importMode={importMode}
-        setImportMode={setImportMode}
+        pageMode={pageMode}
+        setPageMode={setPageMode}
+      />
+      <DeckBuilderPublishMode
+        pageMode={pageMode}
+        setPageMode={setPageMode}
+        deckId={newDeckId || deckId}
+        setDeckInProgress={setDeckInProgress}
+        deckInProgress={deckInProgress}
       />
       <hr className="action-button-border" />
       <DeckBuilderActionButtons
         cardCount={cardCount}
-        importMode={importMode}
+        pageMode={pageMode}
+        setPageMode={setPageMode}
         deckId={deckId}
         deckInProgress={deckInProgress}
         setDeckInProgress={setDeckInProgress}
         onClear={() => clearDeck(props.onClear)}
+        setNewDeckId={setNewDeckId}
       />
-      {!importMode && !cardCount && (
+      {pageMode === PAGE_MODES.TABLE && !cardCount && (
         <div className="build-deck-title">
           - OR - Select a card to begin building
         </div>
       )}
-      {!importMode && (
+      {pageMode !== PAGE_MODES.IMPORT && (
         <div className="deck-in-progress" data-cy="deckInProgress">
           <div className="card-count">
             Cards: <span>{cardCount}</span>
