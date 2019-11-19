@@ -18,7 +18,8 @@ import {
   deckListNameZtoA,
   deckListRatingHighToLow,
   deckListRatingLowToHigh,
-  deckArchetypePicker
+  deckArchetypePicker,
+  deckTypePicker
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -46,12 +47,22 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckVotesCell"]').should('have.length', 3);
     cy.get('[data-cy="deckVotesCell"]:first').should('contain', 1);
     cy.get(deckArchetypePicker).should('have.length', 3);
+    cy.get(deckTypePicker).should('have.length', 3);
     cy.get(deckArchetypePicker)
       .eq(0)
       .should('contain', 'unknown');
     cy.get(deckArchetypePicker)
       .eq(1)
       .should('contain', 'midrange');
+    cy.get(deckTypePicker)
+      .eq(0)
+      .should('contain', 'gauntlet');
+    cy.get(deckTypePicker)
+      .eq(1)
+      .should('contain', 'tournament');
+    cy.get(deckTypePicker)
+      .eq(2)
+      .should('contain', 'standard');
 
     cy.get('[data-cy="deckListItem"] a:first').click();
     cy.location().should(location => {
@@ -130,6 +141,9 @@ describe('Decks Page', function() {
     cy.get(deckArchetypePicker)
       .eq(0)
       .should('contain', 'control combo');
+    cy.get(deckTypePicker)
+      .eq(0)
+      .should('contain', 'standard');
 
     // test deck name search - first full word and start of the second
     cy.get('[data-cy="deckSearchDeckName"]').type('norden azt');
