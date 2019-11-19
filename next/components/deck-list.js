@@ -69,7 +69,7 @@ export default function DeckList({ decks }) {
                   <div className="deckAuthor">by {author}</div>
                 </td>
                 <td>
-                  <UpvoteIndicator votes={metaData.votes} />
+                  <UpvoteIndicator votes={metaData.votes || 0} />
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
                   <FactionsIndicator factions={metaData.factions} />
