@@ -1,4 +1,4 @@
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from './error-message';
 import CardList from './card-list.js';
 import PropTypes from 'prop-types';

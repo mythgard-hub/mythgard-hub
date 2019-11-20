@@ -18,7 +18,7 @@ import SliderSwitch from '../components/slider-switch';
 import DeckBuilderCardDisplay from '../components/deck-builder-card-display';
 import ErrorMessage from '../components/error-message';
 import PropTypes from 'prop-types';
-import { useApolloClient } from 'react-apollo-hooks';
+import { useApolloClient } from '@apollo/react-hooks';
 import { DECK_BUILDER_TABS } from '../constants/deck';
 
 const initFilters = {
