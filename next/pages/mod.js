@@ -2,15 +2,23 @@ import { useContext, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import Layout from '../components/layout';
 import UserContext from '../components/user-context';
+import ErrorMessage from '../components/error-message.js';
 import Router from 'next/router';
 import gql from 'graphql-tag';
+
+const error403 = () => Router.push('/error');
+
+const userLoadedAndNotModerator = data => {
+  const userLoaded = data && data.accountModerators;
+  return userLoaded && !data.accountModerators.totalCount;
+};
 
 const ModeratorPage = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (!user) {
-      Router.push('/error');
+      error403();
     }
   });
 
@@ -24,7 +32,7 @@ const ModeratorPage = () => {
     `,
     {
       variables: {
-        accountId: user.id
+        accountId: user && user.id
       }
     }
   );
@@ -36,11 +44,11 @@ const ModeratorPage = () => {
   }
 
   if (error) {
-    result = 'error';
+    result = <ErrorMessage>error</ErrorMessage>;
   }
 
-  if (data && data.accountModerators && !data.accountModerators.totalCount) {
-    Router.push('/error');
+  if (userLoadedAndNotModerator(data)) {
+    error403();
   }
 
   return (
