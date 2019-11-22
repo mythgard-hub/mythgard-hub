@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import Layout from '../components/layout';
 import UserContext from '../components/user-context';
 import ErrorMessage from '../components/error-message.js';
+import ModeratorControlPanel from '../components/moderator-control-panel.js';
 import Router from 'next/router';
 import gql from 'graphql-tag';
 
@@ -50,6 +51,8 @@ const ModeratorPage = () => {
   if (userLoadedAndNotModerator(data)) {
     error403();
   }
+
+  result = <ModeratorControlPanel modUser={user} />;
 
   return (
     <Layout>
