@@ -9,7 +9,9 @@ import {
   getAuthor,
   getEssenceCost,
   getDateCreated,
-  getFactions
+  getFactions,
+  getDeckArchetype,
+  getDeckType
 } from '../lib/deck-utils';
 import DeckVote from './deck-vote';
 import { deckCardsQuery } from '../lib/deck-queries';
@@ -35,11 +37,10 @@ export default function Deck({ deck }) {
   const { loading, error, data } = useQuery(deckCardsQuery, {
     variables: { id: deck.id }
   });
+  const theme = useContext(ThemeContext);
 
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading...</div>;
-
-  const theme = useContext(ThemeContext);
 
   const cards = data.deck ? data.deck.cardDecks.nodes : [];
   const { power, path } = deck;
@@ -48,6 +49,8 @@ export default function Deck({ deck }) {
   const essenceCost = getEssenceCost(deck);
   const factions = getFactions(deck);
   const dateCreated = getDateCreated(deck);
+  const archetype = getDeckArchetype(deck);
+  const type = getDeckType(deck);
 
   return (
     <div className="deck-page-container">
@@ -111,7 +114,7 @@ export default function Deck({ deck }) {
         }
 
         .gradient-hr {
-          margin: 10px 0;
+          margin: 8px 0;
         }
 
         .deck-stats {
@@ -119,7 +122,11 @@ export default function Deck({ deck }) {
         }
 
         .gradient-hr + .deck-stat {
-          margin-bottom: 20px;
+          margin-bottom: 30px;
+        }
+
+        .deck-stat {
+          text-transform: capitalize;
         }
 
         @media only screen and (max-width: 575.98px) {
@@ -152,15 +159,21 @@ export default function Deck({ deck }) {
             <div className="deck-stat">
               <EssenceIndicator essence={essenceCost} />
             </div>
-            <div className="stats-title factions-title">Factions</div>
+            <div className="stats-title">Type</div>
             <hr className="gradient-hr" />
-            <div className="deck-stat">
-              <FactionsIndicator factions={factions} />
-            </div>
+            <div className="deck-stat">{type}</div>
+            <div className="stats-title">Archetype</div>
+            <hr className="gradient-hr" />
+            <div className="deck-stat">{archetype}</div>
             <div className="stats-title factions-title">Deck Created</div>
             <hr className="gradient-hr" />
             <div className="deck-stat date-created" data-cy="deckCreatedDate">
               {dateCreated}
+            </div>
+            <div className="stats-title factions-title">Factions</div>
+            <hr className="gradient-hr" />
+            <div className="deck-stat">
+              <FactionsIndicator factions={factions} />
             </div>
           </div>
         </div>
