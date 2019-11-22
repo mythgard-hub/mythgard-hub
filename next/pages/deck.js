@@ -1,5 +1,5 @@
 import { withRouter } from 'next/router';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../components/error-message';
 import Deck from '../components/deck';
 import Layout from '../components/layout';
@@ -46,7 +46,7 @@ export default withRouter(({ router }) => {
 
   return (
     <Layout title={title} desc={description}>
-      <PageBanner image={PageBanner.IMG_DECKS}>Decks</PageBanner>
+      <PageBanner image={PageBanner.IMG_DECKS} url="/decks">Decks</PageBanner>
       <Deck deck={data.deck} />
     </Layout>
   );

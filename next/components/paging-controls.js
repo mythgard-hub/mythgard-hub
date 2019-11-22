@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { hasNextPage, hasPrevPage, rangeMin, rangeMax } from '../lib/paging.js';
 import { scrollToTopOfElement } from '../lib/ui-utils';
+import { ThemeContext } from '../components/theme-context.js';
 
 function PagingControls({
   currentPage,
@@ -12,13 +13,14 @@ function PagingControls({
 }) {
   const showNext = hasNextPage(currentPage, pageSize, itemCount);
   const showPrev = hasPrevPage(currentPage);
+  const theme = useContext(ThemeContext);
 
   return (
     <div className="mg-paging">
       <style jsx>{`
         .mg-paging {
           display: flex;
-          padding-bottom: 30px;
+          padding: ${theme.cardSpacing / 2}px 0 ${theme.cardSpacing}px 0;
           justify-content: center;
         }
         .mg-paging button {
@@ -33,14 +35,14 @@ function PagingControls({
           white-space: nowrap;
         }
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 575.98px) {
           .mg-paging {
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
           }
 
           .mg-paging .counter {
-            padding: 15px 0;
+            font-size: 15px;
             margin: 0;
           }
         }

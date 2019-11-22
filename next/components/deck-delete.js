@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useState } from 'react';
-import { ApolloContext } from 'react-apollo';
+import { useApolloClient } from '@apollo/react-hooks';
 import deleteDeck from '../lib/mutations/delete-deck';
 import UserContext from '../components/user-context';
 
 let messageTimeoutHandle;
 
 function DeckDelete({ deck, className }) {
-  const { client } = useContext(ApolloContext);
+  const { client } = useApolloClient();
   const { user } = useContext(UserContext);
   const [message, setMessage] = useState(null);
   const handleClick = useCallback(async () => {

@@ -83,6 +83,12 @@ export default function SliderSwitch({
         .slider.round:before {
           border-radius: 50%;
         }
+
+        @media only screen and (max-width: 575.98px) {
+          .switch-container{
+            justify-content: center;
+          }
+        }
       `}</style>
       <span
         className="leftSlider"

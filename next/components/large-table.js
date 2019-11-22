@@ -30,6 +30,11 @@ export default function LargeTable(props) {
         :global(.zebraRow) {
           background-color: ${theme.zebraRowBackground};
         }
+        @media only screen and (max-width: 575.98px) {
+          div {
+            overflow: auto;
+          }
+        }
       `}</style>
       <table className="mgLargeTable">{props.children}</table>
     </div>

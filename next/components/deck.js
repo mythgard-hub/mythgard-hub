@@ -1,4 +1,4 @@
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
@@ -16,6 +16,8 @@ import { deckCardsQuery } from '../lib/deck-queries';
 import DeckCardsTable from './deck-card-table';
 import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
+import { useContext } from 'react';
+import { ThemeContext } from '../components/theme-context.js';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -37,6 +39,8 @@ export default function Deck({ deck }) {
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading...</div>;
 
+  const theme = useContext(ThemeContext);
+
   const cards = data.deck ? data.deck.cardDecks.nodes : [];
   const { power, path } = deck;
   const deckToExport = getDeckToExport(cards, deck.name, path, power);
@@ -49,24 +53,19 @@ export default function Deck({ deck }) {
     <div className="deck-page-container">
       <style jsx>{`
         .deck-page-container {
-          padding-top: 20px;
           display: flex;
           flex-wrap: wrap;
-          justify-content: space-around;
         }
 
         .left-col {
-          min-width: 400px;
-          margin-bottom: 20px;
+          margin-top: ${theme.spacing}px;
+          flex: 1;
         }
 
         .right-col {
-          flex-grow: 100;
-        }
-
-        .spacer {
-          flex-grow: 10;
-          min-width: 20px;
+          margin-top: ${theme.spacing}px;
+          flex: 1;
+          margin-left: ${theme.spacing * 2}px;
         }
 
         .deck-name {
@@ -95,7 +94,6 @@ export default function Deck({ deck }) {
         }
 
         .deck-actions {
-          margin-top: 20px;
           display: flex;
           flex-wrap: wrap;
         }
@@ -124,7 +122,13 @@ export default function Deck({ deck }) {
           margin-bottom: 20px;
         }
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 575.98px) {
+          .deck-page-container {
+            flex-direction: column;
+          }
+          .right-col {
+            margin-left: 0;
+          }
         }
       `}</style>
       <div className="left-col">
@@ -134,7 +138,6 @@ export default function Deck({ deck }) {
         <div className="deck-author">by {authorName}</div>
         <DeckCardsTable deck={deckToExport} onlyTable />
       </div>
-      <div className="spacer"></div>
       <div className="right-col">
         <div className="deck-actions">
           <DeckExport className="deck-action" deckInProgress={deckToExport} />

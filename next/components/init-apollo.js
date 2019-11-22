@@ -1,6 +1,8 @@
-import { ApolloClient, InMemoryCache } from 'apollo-boost';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { setContext } from 'apollo-link-context';
+import Cookies from 'js-cookie';
 import fetch from 'isomorphic-unfetch';
 
 let apolloClient = null;
@@ -21,16 +23,7 @@ const makeCache = initialState =>
 // Tries to read the JWT cookie and adds an authorization
 // header to the GraphQL request if it exists
 const authLink = setContext((_, { headers }) => {
-  const cookies = document.cookie
-    ? document.cookie.split(';').map(n => n.trim())
-    : [];
-  let token;
-  const jwtCookie = cookies.find(cook =>
-    cook.startsWith(`${process.env.JWT_COOKIE_NAME}=`)
-  );
-  if (jwtCookie) {
-    token = jwtCookie.split('=')[1];
-  }
+  const token = Cookies.get(process.env.JWT_COOKIE_NAME);
   const newHeaders = { ...headers };
   if (token) {
     newHeaders.Authorization = `Bearer ${token}`;

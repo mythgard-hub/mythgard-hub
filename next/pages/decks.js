@@ -6,7 +6,7 @@ import PageBanner from '../components/page-banner';
 import AllDecks from '../components/all-decks.js';
 import Layout from '../components/layout';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import queryToParams from '../lib/url-to-search-parameters.js';
 import { searchParamsPostProcessNumArray as postProcessNumArray } from '../lib/url-to-search-parameters.js';

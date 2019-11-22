@@ -36,6 +36,12 @@ function TabGroup({ name, labels, selectedLabel, onChange }) {
         .tab-spacer:last-of-type {
           flex-grow: 1;
         }
+
+        @media only screen and (max-width: 575.98px) {
+          .tab {
+            min-width: 75px;
+          }
+        }
       `}</style>
       <div className="tab-spacer"></div>
       {labels.map((label, i) => {
