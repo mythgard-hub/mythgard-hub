@@ -153,3 +153,26 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
    END
 
   $$ language plpgsql stable;
+
+CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards
+(
+  _id integer,
+  _name varchar
+(255),
+  _path_id integer,
+  _power_id integer,
+  _archetype mythgard.deckArchetype[],
+  _type mythgard.deckType[]
+)
+RETURNS mythgard.deck as $$
+DELETE FROM mythgard.card_deck
+    WHERE deck_id = _id;
+UPDATE mythgard.deck
+    SET name = _name,
+        path_id = _path_id,
+        power_id = _power_id,
+        archetype = _archetype,
+        type = _type
+    WHERE id = _id
+RETURNING *
+$$ LANGUAGE sql VOLATILE;

@@ -226,7 +226,9 @@ CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards
   _id integer,
   _name varchar(255),
   _path_id integer,
-  _power_id integer
+  _power_id integer,
+  _archetype mythgard.deckArchetype[],
+  _type mythgard.deckType[]
 )
 RETURNS mythgard.deck as $$
   DELETE FROM mythgard.card_deck
@@ -234,7 +236,9 @@ RETURNS mythgard.deck as $$
   UPDATE mythgard.deck
     SET name = _name,
         path_id = _path_id,
-        power_id = _power_id
+        power_id = _power_id,
+        archetype = _archetype,
+        type = _type
     WHERE id = _id
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
