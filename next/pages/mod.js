@@ -7,12 +7,7 @@ import ModeratorControlPanel from '../components/moderator-control-panel.js';
 import Router from 'next/router';
 import gql from 'graphql-tag';
 
-const error403 = () => Router.push('/error');
-
-const userLoadedAndNotModerator = data => {
-  const userLoaded = data && data.accountModerators;
-  return userLoaded && !data.accountModerators.totalCount;
-};
+const error403 = () => Router.push('/');
 
 const ModeratorPage = () => {
   const { user } = useContext(UserContext);
@@ -48,18 +43,25 @@ const ModeratorPage = () => {
     result = <ErrorMessage>error</ErrorMessage>;
   }
 
-  if (userLoadedAndNotModerator(data)) {
-    error403();
+  result = '';
+
+  if (data && data.accountModerators) {
+    const isModerator = data.accountModerators.totalCount;
+    if (isModerator) {
+      result = (
+        <div>
+          <h1>Mythgard moderators</h1>
+          <ModeratorControlPanel modUser={user} />
+        </div>
+      );
+    } else {
+      useEffect(() => {
+        error403();
+      });
+    }
   }
 
-  result = <ModeratorControlPanel modUser={user} />;
-
-  return (
-    <Layout>
-      <h1>Mythgard moderators</h1>
-      {result}
-    </Layout>
-  );
+  return <Layout>{result}</Layout>;
 };
 
 export default ModeratorPage;

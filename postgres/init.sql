@@ -146,7 +146,7 @@ CREATE POLICY deck_all_view ON mythgard.deck FOR SELECT USING (true);
 CREATE POLICY deck_insert_if_author
   ON mythgard.deck
   FOR INSERT
-  WITH CHECK ("author_id" = mythgard.current_user_id())
+  WITH CHECK ("author_id" = mythgard.current_user_id());
 -- Rows can only be updated by their author or mods
 CREATE POLICY deck_update_if_author_or_mod
   ON mythgard.deck
