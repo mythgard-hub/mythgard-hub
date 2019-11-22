@@ -8,13 +8,20 @@ import gql from 'graphql-tag';
 function moderatorControlPanel({ modUser }) {
   const [deckId, setDeckId] = useState(0);
   const [deckDesc, setDeckDesc] = useState('');
+  const [deckName, setDeckName] = useState('');
   const onChangeDeckId = handleInputChangeHooks(setDeckId);
   const onChangeDeckDesc = handleInputChangeHooks(setDeckDesc);
+  const onChangeDeckName = handleInputChangeHooks(setDeckName);
 
   const [updateDeck] = useMutation(
     gql`
-      mutation updateDeck($deckId: Int!, $deckDesc: String) {
-        updateDeck(input: { id: $deckId, patch: { description: $deckDesc } }) {
+      mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {
+        updateDeck(
+          input: {
+            id: $deckId
+            patch: { description: $deckDesc, name: $deckName }
+          }
+        ) {
           deck {
             id
           }
@@ -36,6 +43,9 @@ function moderatorControlPanel({ modUser }) {
     if (deckDesc) {
       variables.deckDesc = deckDesc;
     }
+    if (deckName) {
+      variables.deckName = deckName;
+    }
     updateDeck({ variables });
   };
 
@@ -56,6 +66,10 @@ function moderatorControlPanel({ modUser }) {
       <label htmlFor="deckId">
         deck Id:{' '}
         <input name="deckId" value={deckId} onChange={onChangeDeckId} />
+      </label>
+      <label htmlFor="deckName">
+        deck name:{' '}
+        <input name="deckName" value={deckName} onChange={onChangeDeckName} />
       </label>
       <label htmlFor="deckDesc">
         deck description:{' '}
