@@ -154,8 +154,7 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
 
   $$ language plpgsql stable;
 
-CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards
-(
+CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards (
   _id integer,
   _name varchar
 (255),

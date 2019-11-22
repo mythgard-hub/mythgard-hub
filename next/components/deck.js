@@ -10,7 +10,6 @@ import {
   getEssenceCost,
   getDateCreated,
   getFactions,
-  getDeckMetadata,
   getDeckArchetype,
   getDeckType
 } from '../lib/deck-utils';

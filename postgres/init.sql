@@ -221,8 +221,7 @@ CREATE POLICY card_deck_delete_if_author
                      where deck.author_id = mythgard.current_user_id()
                      AND "deck_id" = deck.id));
 
-CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards
-(
+CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards (
   _id integer,
   _name varchar(255),
   _path_id integer,
