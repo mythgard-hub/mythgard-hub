@@ -48,7 +48,7 @@ const updateDeckAndRemoveCards = (apolloClient, deckId, deck) => {
   const power = (deck.deckPower && deck.deckPower.id) || null;
   const archetype =
     deck.archetype && deck.archetype.length
-      ? deckdeck.archetype.toUpperCase().split(' ')
+      ? deck.archetype.toUpperCase().split(' ')
       : null;
   const type =
     deck.type && deck.type.length ? deck.type.toUpperCase().split(' ') : null;
