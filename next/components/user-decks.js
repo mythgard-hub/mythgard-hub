@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from './error-message';
 import DeckPreview from './deck-preview';
 import { userDecksQuery, deckPreviewsToDecks } from '../lib/deck-queries';

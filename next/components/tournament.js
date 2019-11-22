@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
 import { tourneyDecksQuery } from '../lib/deck-queries';
