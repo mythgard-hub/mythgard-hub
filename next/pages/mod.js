@@ -9,6 +9,7 @@ import gql from 'graphql-tag';
 
 const error403 = () => Router.push('/');
 
+// Only users added to the account_moderators table can view use this page.
 const ModeratorPage = () => {
   const { user } = useContext(UserContext);
 
