@@ -22,7 +22,7 @@ export default function DeckBuilderPublishDropdown({
         <br />
         <select value={value} onChange={onChange}>
           {options.map(option => (
-            <option key={option} value={option}>
+            <option key={option} value={option.toLowerCase()}>
               {option}
             </option>
           ))}
