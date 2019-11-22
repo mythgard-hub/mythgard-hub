@@ -11,13 +11,26 @@ function moderatorControlPanel({ modUser }) {
   const onChangeDeckId = handleInputChangeHooks(setDeckId);
   const onChangeDeckDesc = handleInputChangeHooks(setDeckDesc);
 
-  // const [updateDeck, updateDeckState] = useMutation(gql``, {
-  //   update() {
-  //     alert('please refresh the page to see updates');
-  //   }
-  // });
+  const [updateDeck] = useMutation(
+    gql`
+      mutation updateDeck($deckId: Int!, $deckDesc: String!) {
+        updateDeck(input: { id: $deckId, patch: { description: $deckDesc } }) {
+          deck {
+            id
+          }
+        }
+      }
+    `,
+    {
+      update() {
+        alert('please refresh the page to see updates');
+      }
+    }
+  );
 
-  const onClick = () => {};
+  const onClick = () => {
+    updateDeck({ variables: { deckId: parseInt(deckId, 10), deckDesc } });
+  };
 
   return (
     <div>

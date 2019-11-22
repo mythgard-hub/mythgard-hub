@@ -129,6 +129,7 @@ CREATE TABLE mythgard.deck (
   path_id integer REFERENCES mythgard.path (id),
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
+  description varchar(6000), -- about 10 paragraphs
   created timestamp default current_timestamp
 );
 INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
@@ -145,14 +146,16 @@ CREATE POLICY deck_all_view ON mythgard.deck FOR SELECT USING (true);
 CREATE POLICY deck_insert_if_author
   ON mythgard.deck
   FOR INSERT
-  WITH CHECK ("author_id" = mythgard.current_user_id());
--- Rows can only be updated by their author
-CREATE POLICY deck_update_if_author
+  WITH CHECK ("author_id" = mythgard.current_user_id())
+-- Rows can only be updated by their author or mods
+CREATE POLICY deck_update_if_author_or_mod
   ON mythgard.deck
   FOR UPDATE
-  USING ("author_id" = mythgard.current_user_id())
-  WITH CHECK ("author_id" = mythgard.current_user_id());
--- Rows can only be updated by their author
+  USING (("author_id" = mythgard.current_user_id())
+         OR
+         (exists(select * from mythgard.account_moderator
+                 where account_id = mythgard.current_user_id())));
+-- Rows can only be deleted by their author
 CREATE POLICY deck_delete_if_author
   ON mythgard.deck
   FOR DELETE
