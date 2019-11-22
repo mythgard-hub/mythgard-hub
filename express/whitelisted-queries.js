@@ -522,5 +522,26 @@ query tournaments($now: Date) {
       }
     }
   }
+`,
+  `
+  mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {
+    updateDeck(
+      input: {
+        id: $deckId
+        patch: { description: $deckDesc, name: $deckName }
+      }
+    ) {
+      deck {
+        id
+      }
+    }
+  }
+`,
+  `
+  query isModerator($accountId: Int!) {
+    accountModerators(condition: { accountId: $accountId }) {
+      totalCount
+    }
+  }
 `
 ];

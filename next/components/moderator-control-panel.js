@@ -30,7 +30,7 @@ function moderatorControlPanel({ modUser }) {
     `,
     {
       update() {
-        alert('please refresh the page to see updates');
+        window.location.reload();
       },
       onError() {
         alert('That failed. Please check values and try again');
