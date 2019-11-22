@@ -13,7 +13,7 @@ function moderatorControlPanel({ modUser }) {
 
   const [updateDeck] = useMutation(
     gql`
-      mutation updateDeck($deckId: Int!, $deckDesc: String!) {
+      mutation updateDeck($deckId: Int!, $deckDesc: String) {
         updateDeck(input: { id: $deckId, patch: { description: $deckDesc } }) {
           deck {
             id
@@ -24,12 +24,19 @@ function moderatorControlPanel({ modUser }) {
     {
       update() {
         alert('please refresh the page to see updates');
+      },
+      onError() {
+        alert('That failed. Please check values and try again');
       }
     }
   );
 
   const onClick = () => {
-    updateDeck({ variables: { deckId: parseInt(deckId, 10), deckDesc } });
+    const variables = { deckId: parseInt(deckId, 10) };
+    if (deckDesc) {
+      variables.deckDesc = deckDesc;
+    }
+    updateDeck({ variables });
   };
 
   return (
@@ -45,6 +52,7 @@ function moderatorControlPanel({ modUser }) {
         }
       `}</style>
       <h2>Modify any deck</h2>
+      <p>Non-Empty Values will be changed</p>
       <label htmlFor="deckId">
         deck Id:{' '}
         <input name="deckId" value={deckId} onChange={onChangeDeckId} />
