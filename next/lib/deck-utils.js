@@ -3,6 +3,7 @@ import updateDeckAndRemoveCards from '../lib/mutations/update-deck-and-remove-ca
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
 import { RARITY_MAX_CARDS } from '../constants/rarities';
+import { ARCHETYPES, TYPES } from '../constants/deck';
 
 export const initializeDeckBuilder = () => {
   return {
@@ -13,8 +14,8 @@ export const initializeDeckBuilder = () => {
     mainDeck: {},
     sideboard: [],
     errors: [],
-    archetype: 'Unknown',
-    type: 'Standard'
+    archetype: ARCHETYPES[0],
+    type: TYPES[0]
   };
 };
 
@@ -108,6 +109,8 @@ export const loadDeckFromServer = (
         deckName: deck.name,
         deckPath: deck.path,
         deckPower: deck.power,
+        archetype: getDeckArchetype(deck),
+        type: getDeckType(deck),
         mainDeck: cards.reduce((acc, c) => {
           acc[c.card.id] = c;
           return acc;
@@ -180,6 +183,32 @@ export const getCardCount = deck => {
     );
   } catch (e) {
     return 0;
+  }
+};
+
+/**
+ * Returns the archetype of a deck
+ * @param {Deck} deck
+ */
+export const getDeckArchetype = deck => {
+  try {
+    const metaData = getDeckMetadata(deck);
+    return metaData.deckArchetype.join(' ').toLowerCase();
+  } catch (e) {
+    return ARCHETYPES[0];
+  }
+};
+
+/**
+ * Returns the type of a deck
+ * @param {Deck} deck
+ */
+export const getDeckType = deck => {
+  try {
+    const metaData = getDeckMetadata(deck);
+    return metaData.deckType.join(' ').toLowerCase();
+  } catch (e) {
+    return TYPES[0];
   }
 };
 
