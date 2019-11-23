@@ -18,6 +18,8 @@ export default function SomeDecks(props) {
     cardIds,
     factionNames,
     isOnlyFactions,
+    archetype,
+    type,
     sortBy
   } = props.search;
   const { loading, error, data } = useDeckSearchQuery(
@@ -28,6 +30,8 @@ export default function SomeDecks(props) {
       cardIds,
       factionNames,
       isOnlyFactions,
+      archetype,
+      type,
       sortBy,
       first: pageSize,
       offset: currentPage * pageSize
