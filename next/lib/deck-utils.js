@@ -191,14 +191,8 @@ export const getCardCount = deck => {
  * @param {Deck} deck
  */
 export const getDeckArchetype = deck => {
-  try {
-    const metaData = getDeckMetadata(deck);
-    return ARCHETYPES.find(
-      a => JSON.stringify(a.value) === JSON.stringify(metaData.deckArchetype)
-    ).label;
-  } catch (e) {
-    return ARCHETYPES[0].label;
-  }
+  const metaData = getDeckMetadata(deck);
+  return getArchetypeLabel(metaData.deckArchetype);
 };
 
 /**
@@ -206,11 +200,32 @@ export const getDeckArchetype = deck => {
  * @param {Deck} deck
  */
 export const getDeckType = deck => {
+  const metaData = getDeckMetadata(deck);
+  return getTypeLabel(metaData.deckType);
+};
+
+/**
+ * Given a db archetype value, find the corresponding label
+ * @param {array} archetype
+ */
+export const getArchetypeLabel = archetype => {
   try {
-    const metaData = getDeckMetadata(deck);
-    return TYPES.find(
-      a => JSON.stringify(a.value) === JSON.stringify(metaData.deckType)
+    return ARCHETYPES.find(
+      a => JSON.stringify(a.value) === JSON.stringify(archetype)
     ).label;
+  } catch (e) {
+    return ARCHETYPES[0].label;
+  }
+};
+
+/**
+ * Given a db type value, find the corresponding label
+ * @param {array} type
+ */
+export const getTypeLabel = type => {
+  try {
+    return TYPES.find(a => JSON.stringify(a.value) === JSON.stringify(type))
+      .label;
   } catch (e) {
     return TYPES[0].label;
   }

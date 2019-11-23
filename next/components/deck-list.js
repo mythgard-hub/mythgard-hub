@@ -7,6 +7,7 @@ import FactionsIndicator from './factions-indicator.js';
 import LargeTable from './large-table.js';
 import UpvoteIndicator from './upvote-indicator.js';
 import { ARCHETYPES, TYPES } from '../constants/deck';
+import { getArchetypeLabel, getTypeLabel } from '../lib/deck-utils';
 
 export default function DeckList({ decks }) {
   const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
@@ -55,20 +56,8 @@ export default function DeckList({ decks }) {
 
             const deckModifiedMeta = metaData.deckCreated;
             const modified = new Date(deck.modified || deckModifiedMeta);
-            const archetype = metaData.deckArchetype
-              ? ARCHETYPES.find(
-                  a =>
-                    JSON.stringify(a.value) ===
-                    JSON.stringify(metaData.deckArchetype)
-                ).label
-              : ARCHETYPES[0].label;
-            const type = metaData.deckType
-              ? TYPES.find(
-                  t =>
-                    JSON.stringify(t.value) ===
-                    JSON.stringify(metaData.deckType)
-                ).label
-              : TYPES[0].label;
+            const archetype = getArchetypeLabel(metaData.deckArchetype);
+            const type = getTypeLabel(metaData.deckType);
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
