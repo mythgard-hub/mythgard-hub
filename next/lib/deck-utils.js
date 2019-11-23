@@ -14,8 +14,8 @@ export const initializeDeckBuilder = () => {
     mainDeck: {},
     sideboard: [],
     errors: [],
-    archetype: ARCHETYPES[0],
-    type: TYPES[0]
+    archetype: ARCHETYPES[0].label,
+    type: TYPES[0].label
   };
 };
 
@@ -193,9 +193,11 @@ export const getCardCount = deck => {
 export const getDeckArchetype = deck => {
   try {
     const metaData = getDeckMetadata(deck);
-    return metaData.deckArchetype.join(' ').toLowerCase();
+    return ARCHETYPES.find(
+      a => JSON.stringify(a.value) === JSON.stringify(metaData.deckArchetype)
+    ).label;
   } catch (e) {
-    return ARCHETYPES[0];
+    return ARCHETYPES[0].label;
   }
 };
 
@@ -206,9 +208,11 @@ export const getDeckArchetype = deck => {
 export const getDeckType = deck => {
   try {
     const metaData = getDeckMetadata(deck);
-    return metaData.deckType.join(' ').toLowerCase();
+    return TYPES.find(
+      a => JSON.stringify(a.value) === JSON.stringify(metaData.deckType)
+    ).label;
   } catch (e) {
-    return TYPES[0];
+    return TYPES[0].label;
   }
 };
 

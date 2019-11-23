@@ -59,11 +59,19 @@ export default function DeckList({ decks }) {
             const deckModifiedMeta = metaData.deckCreated;
             const modified = new Date(deck.modified || deckModifiedMeta);
             const archetype = metaData.deckArchetype
-              ? metaData.deckArchetype.join(' ').toLowerCase()
-              : ARCHETYPES[0];
+              ? ARCHETYPES.find(
+                  a =>
+                    JSON.stringify(a.value) ===
+                    JSON.stringify(metaData.deckArchetype)
+                ).label
+              : ARCHETYPES[0].label;
             const type = metaData.deckType
-              ? metaData.deckType.join(' ').toLowerCase()
-              : TYPES[0];
+              ? TYPES.find(
+                  t =>
+                    JSON.stringify(t.value) ===
+                    JSON.stringify(metaData.deckType)
+                ).label
+              : TYPES[0].label;
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
