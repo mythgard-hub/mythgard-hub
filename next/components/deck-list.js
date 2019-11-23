@@ -6,7 +6,6 @@ import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 import LargeTable from './large-table.js';
 import UpvoteIndicator from './upvote-indicator.js';
-import { ARCHETYPES, TYPES } from '../constants/deck';
 import { getArchetypeLabel, getTypeLabel } from '../lib/deck-utils';
 
 export default function DeckList({ decks }) {
