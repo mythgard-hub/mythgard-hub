@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { singleDeckQuery, deckCardsQuery } from '../deck-queries';
+import { singleDeckQuery } from '../deck-queries';
 import { ARCHETYPES, TYPES } from '../../constants/deck';
 
 const updateDeckAndRemoveCardsMutation = gql`
@@ -63,10 +63,6 @@ const updateDeckAndRemoveCards = (apolloClient, deckId, deck) => {
     refetchQueries: [
       {
         query: singleDeckQuery,
-        variables: { id: deckId }
-      },
-      {
-        query: deckCardsQuery,
         variables: { id: deckId }
       }
     ]
