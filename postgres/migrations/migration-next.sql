@@ -1,6 +1,6 @@
 CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
 
-CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT', '2V2');
+CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT', 'TWOVTWO');
 
 ALTER TABLE deck
 ADD COLUMN archetype mythgard.deckArchetype[] NOT NULL DEFAULT ARRAY['UNKNOWN']::mythgard.deckArchetype[],
