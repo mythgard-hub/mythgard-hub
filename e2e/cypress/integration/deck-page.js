@@ -7,8 +7,8 @@ describe('Deck Page', function() {
     cy.get('[data-cy="userLink"]').should('not.be.visible');
     cy.get('[data-cy="deckPageType"]').should('be.visible');
     cy.get('[data-cy="deckPageArchetype"]').should('be.visible');
-    cy.get('[data-cy="deckPageType"]').should('contain', 'standard');
-    cy.get('[data-cy="deckPageArchetype"]').should('contain', 'unknown');
+    cy.get('[data-cy="deckPageType"]').should('contain', 'Standard');
+    cy.get('[data-cy="deckPageArchetype"]').should('contain', 'Unknown');
   });
 
   it('happy path card click', function() {
