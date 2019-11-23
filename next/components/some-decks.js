@@ -31,6 +31,8 @@ export default function SomeDecks(props) {
     type,
     sortBy
   } = props.search;
+  const archetypeValue = findValueFromLabel(ARCHETYPES, archetype);
+  const typeValue = findValueFromLabel(TYPES, type);
   const { loading, error, data } = useDeckSearchQuery(
     {
       authorName,
@@ -39,8 +41,8 @@ export default function SomeDecks(props) {
       cardIds,
       factionNames,
       isOnlyFactions,
-      archetype: findValueFromLabel(ARCHETYPES, archetype),
-      type: findValueFromLabel(TYPES, type),
+      archetype: archetypeValue,
+      type: typeValue,
       sortBy,
       first: pageSize,
       offset: currentPage * pageSize

@@ -397,6 +397,8 @@ mutation UpdateDeckAndRemoveCards(
       $faction5: Int
       $faction6: Int
       $numFactions: Int
+      $archetype: [Deckarchetype]
+      $type: [Decktype]
       $first: Int
       $offset: Int
       $sortBy: String
@@ -417,6 +419,8 @@ mutation UpdateDeckAndRemoveCards(
         faction5: $faction5
         faction6: $faction6
         numfactions: $numFactions
+        archetype: $archetype
+        type: $type
         first: $first
         offset: $offset
         sortby: $sortBy
