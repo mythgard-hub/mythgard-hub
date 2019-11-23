@@ -140,7 +140,7 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
     cy.get(deckArchetypePicker)
       .eq(0)
-      .should('contain', 'Control Combo');
+      .should('contain', 'Control Midrange');
     cy.get(deckTypePicker)
       .eq(0)
       .should('contain', 'Standard');

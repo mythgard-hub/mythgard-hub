@@ -150,7 +150,7 @@ INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
   VALUES (
     'norden aztlan',
     current_date - interval '9 month',
-    '{CONTROL, COMBO}', 
+    '{CONTROL, MIDRANGE}', 
     '{STANDARD}');
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
