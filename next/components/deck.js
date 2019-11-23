@@ -125,10 +125,6 @@ export default function Deck({ deck }) {
           margin-bottom: 30px;
         }
 
-        .deck-stat {
-          text-transform: capitalize;
-        }
-
         @media only screen and (max-width: 575.98px) {
           .deck-page-container {
             flex-direction: column;
