@@ -6,8 +6,17 @@ import { useDeckSearchQuery } from '../lib/deck-queries';
 import { useState } from 'react';
 import PagingControls from './paging-controls.js';
 import { scrollToTopOfElement } from '../lib/ui-utils';
+import { ARCHETYPES, TYPES } from '../constants/deck';
 
 const pageSize = 50;
+
+const findValueFromLabel = (optionsArray, label) => {
+  try {
+    return optionsArray.find(o => o.label === label).value;
+  } catch (e) {
+    return null;
+  }
+};
 
 export default function SomeDecks(props) {
   const [currentPage, setPage] = useState(0);
@@ -30,8 +39,8 @@ export default function SomeDecks(props) {
       cardIds,
       factionNames,
       isOnlyFactions,
-      archetype,
-      type,
+      archetype: findValueFromLabel(ARCHETYPES, archetype),
+      type: findValueFromLabel(TYPES, type),
       sortBy,
       first: pageSize,
       offset: currentPage * pageSize
