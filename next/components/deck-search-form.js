@@ -37,6 +37,14 @@ const deserializeCards = (serializedCards, allCards) => {
   }, []);
 };
 
+const findValueFromLabel = (optionsArray, label) => {
+  try {
+    return optionsArray.find(o => o.label === label).value;
+  } catch (e) {
+    return null;
+  }
+};
+
 export default function DeckSearchForm(props) {
   const {
     onSubmit,
@@ -78,6 +86,8 @@ export default function DeckSearchForm(props) {
       factionNames: filters.factionNames,
       isOnlyFactions: filters.isOnlyFactions,
       updatedTime: filters.updatedTime,
+      archetype: findValueFromLabel(ARCHETYPES, filters.archetype),
+      type: findValueFromLabel(TYPES, filters.type),
       authorName: filters.authorName,
       sortBy: filters.sortBy
     });
