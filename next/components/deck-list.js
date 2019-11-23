@@ -31,9 +31,6 @@ export default function DeckList({ decks }) {
         .factions {
           text-align: center;
         }
-        .archetype-type-column {
-          text-transform: capitalize;
-        }
         .archetype {
           font-weight: 600;
         }
