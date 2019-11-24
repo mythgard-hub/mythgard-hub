@@ -11,6 +11,7 @@ export default function DeckSearchFormDropdownFilter(props) {
       <br />
       <select
         className="filter-dropdown"
+        data-cy={`deckSearch${label}`}
         value={filterValue}
         onChange={onChange}
       >
