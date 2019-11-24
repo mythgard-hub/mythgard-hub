@@ -78,7 +78,7 @@ This deck is from [this tournament](http://mythgardhub.com/events/).
 
   const deckDescriptionRendered = (
     <div>
-      <ReactMarkdown source={deck.description} />
+      <ReactMarkdown source={deck.description || 'No description'} />
     </div>
   );
 
