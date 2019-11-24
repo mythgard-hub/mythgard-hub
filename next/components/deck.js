@@ -175,6 +175,11 @@ export default function Deck({ deck }) {
             <div className="deck-stat">
               <FactionsIndicator factions={factions} />
             </div>
+            <div className="stats-title">Description</div>
+            <hr className="gradient-hr" />
+            <div className="deck-description">
+              <div>Good deck</div>
+            </div>
           </div>
         </div>
       </div>
