@@ -55,8 +55,8 @@ export default function DeckList({ decks }) {
 
             const deckModifiedMeta = metaData.deckCreated;
             const modified = new Date(deck.modified || deckModifiedMeta);
-            const archetype = getArchetypeLabel(metaData.deckArchetype);
-            const type = getTypeLabel(metaData.deckType);
+            const archetype = getArchetypeLabel(metaData);
+            const type = getTypeLabel(metaData);
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
