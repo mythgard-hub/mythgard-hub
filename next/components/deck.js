@@ -120,7 +120,7 @@ export default function Deck({ deck }) {
         }
 
         .deck-stats {
-          margin-top: 10px;
+          margin: 10px 0 20px;
         }
 
         .gradient-hr + .deck-stat {
