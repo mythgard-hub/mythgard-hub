@@ -4,6 +4,11 @@ import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
 import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
+const React = require('react');
+const ReactMarkdown = require('react-markdown');
+
+const input = '# This is a header\n\nAnd this is a paragraph';
+
 import {
   initializeDeckBuilder,
   getAuthor,
@@ -178,7 +183,9 @@ export default function Deck({ deck }) {
             <div className="stats-title">Description</div>
             <hr className="gradient-hr" />
             <div className="deck-description">
-              <div>Good deck</div>
+              <div>
+                <ReactMarkdown source={input} />
+              </div>
             </div>
           </div>
         </div>
