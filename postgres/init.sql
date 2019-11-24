@@ -13,7 +13,7 @@ CREATE TYPE mythgard.cardType AS ENUM ('MINION', 'SPELL', 'ENCHANTMENT', 'ARTIFA
 
 CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
 
-CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
+CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT', 'TWOVTWO');
 
 CREATE ROLE admin;
 CREATE ROLE authd_user;
@@ -159,7 +159,7 @@ INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
   VALUES (
     'norden aztlan',
     current_date - interval '9 month',
-    '{CONTROL, COMBO}', 
+    '{CONTROL, MIDRANGE}', 
     '{STANDARD}');
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;

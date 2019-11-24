@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { singleDeckQuery } from '../deck-queries';
+import { ARCHETYPES, TYPES } from '../../constants/deck';
 
 const updateDeckAndRemoveCardsMutation = gql`
   mutation UpdateDeckAndRemoveCards(
@@ -46,12 +47,8 @@ const updateDeckAndRemoveCards = (apolloClient, deckId, deck) => {
   const name = deck.deckName;
   const path = (deck.deckPath && deck.deckPath.id) || null;
   const power = (deck.deckPower && deck.deckPower.id) || null;
-  const archetype =
-    deck.archetype && deck.archetype.length
-      ? deck.archetype.toUpperCase().split(' ')
-      : null;
-  const type =
-    deck.type && deck.type.length ? deck.type.toUpperCase().split(' ') : null;
+  const archetype = ARCHETYPES.find(a => a.label === deck.archetype).value;
+  const type = TYPES.find(t => t.label === deck.type).value;
 
   return apolloClient.mutate({
     mutation: updateDeckAndRemoveCardsMutation,

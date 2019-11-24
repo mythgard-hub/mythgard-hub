@@ -50,7 +50,7 @@ export default function DeckBuilderPublishMode({
       <button onClick={() => setPageMode(PAGE_MODES.TABLE)}>Cancel</button>
       <DeckBuilderPublishDropdown
         title="Deck Archetype"
-        value={deckInProgress.archetype || ARCHETYPES[0]}
+        value={deckInProgress.archetype || ARCHETYPES[0].label}
         options={ARCHETYPES}
         onChange={e => {
           setDeckInProgress({
@@ -61,7 +61,7 @@ export default function DeckBuilderPublishMode({
       />
       <DeckBuilderPublishDropdown
         title="Deck Type"
-        value={deckInProgress.type || TYPES[0]}
+        value={deckInProgress.type || TYPES[0].label}
         options={TYPES}
         onChange={e => {
           setDeckInProgress({
@@ -75,7 +75,7 @@ export default function DeckBuilderPublishMode({
 }
 
 DeckBuilderPublishMode.propTypes = {
-  deckId: PropTypes.string,
+  deckId: PropTypes.number,
   pageMode: PropTypes.string,
   setPageMode: PropTypes.func,
   setDeckInProgress: PropTypes.func,

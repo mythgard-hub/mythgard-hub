@@ -5,6 +5,10 @@ describe('Deck Page', function() {
   it('deck page elements', function() {
     cy.get('[data-cy="editMetaValue"]').should('not.be.visible');
     cy.get('[data-cy="userLink"]').should('not.be.visible');
+    cy.get('[data-cy="deckPageType"]').should('be.visible');
+    cy.get('[data-cy="deckPageArchetype"]').should('be.visible');
+    cy.get('[data-cy="deckPageType"]').should('contain', 'Standard');
+    cy.get('[data-cy="deckPageArchetype"]').should('contain', 'Unknown');
   });
 
   it('happy path card click', function() {

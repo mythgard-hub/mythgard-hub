@@ -50,19 +50,19 @@ describe('Decks Page', function() {
     cy.get(deckTypePicker).should('have.length', 3);
     cy.get(deckArchetypePicker)
       .eq(0)
-      .should('contain', 'unknown');
+      .should('contain', 'Unknown');
     cy.get(deckArchetypePicker)
       .eq(1)
-      .should('contain', 'midrange');
+      .should('contain', 'Midrange');
     cy.get(deckTypePicker)
       .eq(0)
-      .should('contain', 'gauntlet');
+      .should('contain', 'Gauntlet');
     cy.get(deckTypePicker)
       .eq(1)
-      .should('contain', 'tournament');
+      .should('contain', 'Tournament');
     cy.get(deckTypePicker)
       .eq(2)
-      .should('contain', 'standard');
+      .should('contain', 'Standard');
 
     cy.get('[data-cy="deckListItem"] a:first').click();
     cy.location().should(location => {
@@ -140,10 +140,10 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
     cy.get(deckArchetypePicker)
       .eq(0)
-      .should('contain', 'control combo');
+      .should('contain', 'Control Midrange');
     cy.get(deckTypePicker)
       .eq(0)
-      .should('contain', 'standard');
+      .should('contain', 'Standard');
 
     // test deck name search - first full word and start of the second
     cy.get('[data-cy="deckSearchDeckName"]').type('norden azt');

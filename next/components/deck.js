@@ -125,10 +125,6 @@ export default function Deck({ deck }) {
           margin-bottom: 30px;
         }
 
-        .deck-stat {
-          text-transform: capitalize;
-        }
-
         @media only screen and (max-width: 575.98px) {
           .deck-page-container {
             flex-direction: column;
@@ -161,10 +157,14 @@ export default function Deck({ deck }) {
             </div>
             <div className="stats-title">Type</div>
             <hr className="gradient-hr" />
-            <div className="deck-stat">{type}</div>
+            <div className="deck-stat" data-cy="deckPageType">
+              {type}
+            </div>
             <div className="stats-title">Archetype</div>
             <hr className="gradient-hr" />
-            <div className="deck-stat">{archetype}</div>
+            <div className="deck-stat" data-cy="deckPageArchetype">
+              {archetype}
+            </div>
             <div className="stats-title factions-title">Deck Created</div>
             <hr className="gradient-hr" />
             <div className="deck-stat date-created" data-cy="deckCreatedDate">
