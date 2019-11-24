@@ -184,6 +184,9 @@ export default function Deck({ deck }) {
             <hr className="gradient-hr" />
             <div className="deck-description">
               <div>
+                <button>Edit</button>
+              </div>
+              <div>
                 <ReactMarkdown source={input} />
               </div>
             </div>
