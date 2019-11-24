@@ -3,6 +3,7 @@ CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CON
 CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT');
 
 ALTER TABLE deck
+ADD COLUMN description varchar(6000);
 ADD COLUMN archetype mythgard.deckArchetype[] NOT NULL DEFAULT ARRAY['UNKNOWN']::mythgard.deckArchetype[],
 ADD COLUMN type mythgard.deckType[] NOT NULL DEFAULT ARRAY['STANDARD']::mythgard.deckType[];
 
@@ -26,6 +27,23 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
     On faction.id = card_faction.faction_id
  GROUP BY deck.id
 ;
+
+CREATE TABLE mythgard.account_moderator (
+  id SERIAL PRIMARY KEY,
+  account_id integer,
+  FOREIGN KEY (account_id)
+    REFERENCES mythgard.account (id)
+    ON DELETE CASCADE);
+
+
+DROP POLICY deck_update_if_author on deck;
+CREATE POLICY deck_update_if_author_or_mod
+  ON mythgard.deck
+  FOR UPDATE
+  USING (("author_id" = mythgard.current_user_id())
+         OR
+         (exists(select * from mythgard.account_moderator
+                 where account_id = mythgard.current_user_id())));
 
 create or replace function mythgard.search_decks_nosort(deckName varchar(255), authorName varchar(255), deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
   returns setof mythgard.deck as $$
@@ -97,14 +115,14 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
 
   BEGIN
        IF sortBy = 'essenceDesc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec desc nulls last) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,

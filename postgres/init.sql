@@ -118,6 +118,14 @@ INSERT INTO mythgard.account ("username") VALUES ('lsv');
 INSERT INTO mythgard.account ("username") VALUES ('foo');
 INSERT INTO mythgard.account ("username") VALUES ('bar');
 
+-- separate table from account b/c it's rarely needed and makes row level security easy
+CREATE TABLE mythgard.account_moderator (
+  id SERIAL PRIMARY KEY,
+  account_id integer,
+  FOREIGN KEY (account_id)
+    REFERENCES mythgard.account (id)
+    ON DELETE CASCADE);
+
 CREATE TABLE mythgard.deck (
   id SERIAL PRIMARY KEY,
   name varchar(255),
@@ -126,6 +134,7 @@ CREATE TABLE mythgard.deck (
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
   created timestamp default current_timestamp,
+  description varchar(6000), -- about 10 paragraphs
   archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
   type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
 );
@@ -163,13 +172,15 @@ CREATE POLICY deck_insert_if_author
   ON mythgard.deck
   FOR INSERT
   WITH CHECK ("author_id" = mythgard.current_user_id());
--- Rows can only be updated by their author
-CREATE POLICY deck_update_if_author
+-- Rows can only be updated by their author or mods
+CREATE POLICY deck_update_if_author_or_mod
   ON mythgard.deck
   FOR UPDATE
-  USING ("author_id" = mythgard.current_user_id())
-  WITH CHECK ("author_id" = mythgard.current_user_id());
--- Rows can only be updated by their author
+  USING (("author_id" = mythgard.current_user_id())
+         OR
+         (exists(select * from mythgard.account_moderator
+                 where account_id = mythgard.current_user_id())));
+-- Rows can only be deleted by their author
 CREATE POLICY deck_delete_if_author
   ON mythgard.deck
   FOR DELETE
@@ -290,7 +301,7 @@ ALTER TABLE mythgard.account ENABLE ROW LEVEL SECURITY;
 CREATE POLICY admin_all ON mythgard.account TO admin USING (true) WITH CHECK (true);
 -- Non-admins can read all rows
 CREATE POLICY all_view ON mythgard.account FOR SELECT USING (true);
--- Rows can only be updated by their author
+-- Rows can only be updated by their owner
 CREATE POLICY accountupdate_if_author
   ON mythgard.account
   FOR UPDATE
@@ -562,14 +573,14 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
 
   BEGIN
        IF sortBy = 'essenceDesc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec desc nulls last) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, archetype, type
+         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions) as foo,
