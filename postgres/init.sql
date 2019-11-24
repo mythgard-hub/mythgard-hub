@@ -134,7 +134,7 @@ CREATE TABLE mythgard.deck (
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
   created timestamp default current_timestamp,
-  description varchar(6000) -- about 10 paragraphs,
+  description varchar(6000), -- about 10 paragraphs
   archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
   type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[],1
 );
@@ -611,7 +611,7 @@ create or replace function mythgard.search_decks(
 
   BEGIN
        IF sortBy = 'essenceDesc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
+        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions, archetypeFilter, typeFilter) as foo,
