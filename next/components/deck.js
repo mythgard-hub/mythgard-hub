@@ -5,9 +5,6 @@ import DeckExport from './deck-export';
 import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
 import DeckDescriptionEdit from './deck-description-edit.js';
-import ReactMarkdown from 'react-markdown';
-
-const input = '# This is a header\n\nAnd this is a paragraph';
 
 import {
   initializeDeckBuilder,
@@ -184,9 +181,6 @@ export default function Deck({ deck }) {
             <hr className="gradient-hr" />
             <div className="deck-description">
               <DeckDescriptionEdit deck={deck} />
-              <div>
-                <ReactMarkdown source={input} />
-              </div>
             </div>
           </div>
         </div>
