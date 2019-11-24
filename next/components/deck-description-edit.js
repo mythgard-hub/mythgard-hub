@@ -34,7 +34,7 @@ This deck is from [this tournament](http://mythgardhub.com/events/).
 * Play cards
 `;
 
-  const input = (
+  const inputForm = (
     <div>
       <style jsx>{`
         textarea {
@@ -73,6 +73,7 @@ This deck is from [this tournament](http://mythgardhub.com/events/).
     updateDeck({ variables });
     setEditMode(false);
   };
+
   const saveButton = <button onClick={onSave}>Save</button>;
 
   const deckDescriptionRendered = (
@@ -88,7 +89,7 @@ This deck is from [this tournament](http://mythgardhub.com/events/).
       {errorMsg && errorMsgRendered}
       {!editMode && deckDescriptionRendered}
       {!editMode && canEdit && editButton}
-      {editMode && input}
+      {editMode && inputForm}
       {editMode && saveButton}
     </div>
   );
