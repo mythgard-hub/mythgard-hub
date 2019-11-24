@@ -17,8 +17,8 @@ const resetFilters = values => {
     cardSuggestions: [],
     factionNames: values.factionNames,
     isOnlyFactions: values.isOnlyFactions,
-    archetype: null,
-    type: null,
+    archetype: '',
+    type: '',
     updatedTime: values.updatedTime,
     authorName: values.authorName,
     sortBy: values.sortBy

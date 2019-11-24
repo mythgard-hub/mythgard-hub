@@ -14,7 +14,7 @@ export default function DeckSearchFormDropdownFilter(props) {
         value={filterValue}
         onChange={onChange}
       >
-        <option key="any" value={null}>
+        <option key="any" value="">
           Any
         </option>
         {options.map(o => (
