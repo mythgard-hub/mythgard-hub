@@ -6,7 +6,6 @@ export default function DeckSearchFormDropdownFilter(props) {
 
   return (
     <label className="input-label">
-      <style jsx>{``}</style>
       {label}
       <br />
       <select
