@@ -3,58 +3,51 @@ import { useContext, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import UserContext from '../components/user-context';
 import ReactMarkdown from 'react-markdown';
-import gql from 'graphql-tag';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
+import ErrorMessage from '../components/error-message';
+import { updateDeck as deckQuery } from '../lib/deck-queries.js';
 
 function DeckDescriptionEdit({ deck }) {
   const { user } = useContext(UserContext);
   const [editMode, setEditMode] = useState(false);
   const [newDeckDesc, setNewDeckDesc] = useState(deck.description);
+  const [errorMsg, setErrorMsg] = useState('');
   const onChangeDeckDesc = handleInputChangeHooks(setNewDeckDesc);
 
-  // Users can only delete decks they authored
-  if (!user || !deck || !deck.id || !deck.author || user.id !== deck.author.id)
-    return null;
+  const canEdit =
+    user && deck && deck.id && deck.author && user.id === deck.author.id;
 
-  const [updateDeck] = useMutation(
-    gql`
-      mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {
-        updateDeck(
-          input: {
-            id: $deckId
-            patch: { description: $deckDesc, name: $deckName }
-          }
-        ) {
-          deck {
-            id
-          }
-        }
-      }
-    `,
-    {
-      update() {
-        window.location.reload();
-      },
-      onError() {
-        alert('That failed. Please check values and try again');
-      }
+  const [updateDeck] = useMutation(deckQuery, {
+    update() {
+      window.location.reload();
+    },
+    onError() {
+      setErrorMsg('Error updating deck description.');
     }
-  );
+  });
+
+  const placeholder = `Markdown format is supported.  Example:
+
+This deck is from [this tournament](http://mythgardhub.com/events/).
+
+* Burn cards
+* Play cards
+`;
 
   const input = (
     <div>
       <style jsx>{`
         textarea {
           width: 100%;
-          height: 50px;
+          min-height: 100px;
           margin: 10px 0;
         }
       `}</style>
-      Markdown format is supported.
       <div>
         <textarea
           name="deckDesc"
           value={newDeckDesc}
+          placeholder={placeholder}
           onChange={onChangeDeckDesc}
         ></textarea>
       </div>
@@ -68,13 +61,13 @@ function DeckDescriptionEdit({ deck }) {
           width: auto;
         }
       `}</style>
-      <button onClick={() => setEditMode(true)}>Edit</button>
+      <button onClick={() => setEditMode(true)}>Edit Description</button>
     </div>
   );
 
   const onSave = () => {
     const variables = {
-      description: newDeckDesc,
+      deckDesc: newDeckDesc,
       deckId: parseInt(deck.id, 10)
     };
     updateDeck({ variables });
@@ -88,10 +81,13 @@ function DeckDescriptionEdit({ deck }) {
     </div>
   );
 
+  const errorMsgRendered = <ErrorMessage>errorMsg</ErrorMessage>;
+
   return (
     <div>
-      {!editMode && editButton}
+      {errorMsg && errorMsgRendered}
       {!editMode && deckDescriptionRendered}
+      {!editMode && canEdit && editButton}
       {editMode && input}
       {editMode && saveButton}
     </div>
