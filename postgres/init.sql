@@ -510,8 +510,8 @@ create or replace function mythgard.search_decks_nosort(
   faction5 integer,
   faction6 integer,
   numFactions integer,
-  archetype mythgard.deckArchetype[],
-  type mythgard.deckType[])
+  archetypeFilter mythgard.deckArchetype[],
+  typeFilter mythgard.deckType[])
   returns setof mythgard.deck as $$
 
     SELECT deck.* FROM mythgard.deck
@@ -526,9 +526,9 @@ create or replace function mythgard.search_decks_nosort(
     -- modification date filter
     AND (deckModified is NULL or deck.modified >= deckModified)
     -- archetype filter
-    AND (deck.archetype::mythgard.deckArchetype[] = archetype::mythgard.deckArchetype[])
+    AND (archetypeFilter is NULL or deck.archetype = archetypeFilter)
     -- type filter
-    AND (type is NULL or deck.type::mythgard.deckType[] = type::mythgard.deckType[])
+    AND (typeFilter is NULL or deck.type = typeFilter)
 
     intersect
 
