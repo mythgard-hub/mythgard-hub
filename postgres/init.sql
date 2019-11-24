@@ -136,7 +136,7 @@ CREATE TABLE mythgard.deck (
   created timestamp default current_timestamp,
   description varchar(6000), -- about 10 paragraphs
   archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
-  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[],1
+  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
 );
 INSERT INTO mythgard.deck("name", "author_id")
   VALUES (
