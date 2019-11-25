@@ -1,7 +1,13 @@
 export const exportDeck = deckInProgress => {
   try {
-    const path = deckInProgress.deckPath ? deckInProgress.deckPath.name : '';
-    const power = deckInProgress.deckPower ? deckInProgress.deckPower.name : '';
+    const path =
+      deckInProgress.deckPath && deckInProgress.deckPath.name
+        ? deckInProgress.deckPath.name
+        : '';
+    const power =
+      deckInProgress.deckPower && deckInProgress.deckPower.name
+        ? deckInProgress.deckPower.name
+        : '';
     const exportMeta = [
       `name: ${deckInProgress.deckName}`,
       `path: ${path}`,
