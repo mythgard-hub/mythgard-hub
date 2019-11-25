@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
-import gql from 'graphql-tag';
+import { updateDeck as deckQuery } from '../lib/deck-queries.js';
 
-function moderatorControlPanel({ modUser }) {
+function moderatorControlPanel() {
   const [deckId, setDeckId] = useState(0);
   const [deckDesc, setDeckDesc] = useState('');
   const [deckName, setDeckName] = useState('');
@@ -13,30 +13,14 @@ function moderatorControlPanel({ modUser }) {
   const onChangeDeckDesc = handleInputChangeHooks(setDeckDesc);
   const onChangeDeckName = handleInputChangeHooks(setDeckName);
 
-  const [updateDeck] = useMutation(
-    gql`
-      mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {
-        updateDeck(
-          input: {
-            id: $deckId
-            patch: { description: $deckDesc, name: $deckName }
-          }
-        ) {
-          deck {
-            id
-          }
-        }
-      }
-    `,
-    {
-      update() {
-        window.location.reload();
-      },
-      onError() {
-        alert('That failed. Please check values and try again');
-      }
+  const [updateDeck] = useMutation(deckQuery, {
+    update() {
+      window.location.reload();
+    },
+    onError() {
+      alert('That failed. Please check values and try again');
     }
-  );
+  });
 
   const onClick = () => {
     const variables = { deckId: parseInt(deckId, 10) };
