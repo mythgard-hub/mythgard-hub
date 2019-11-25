@@ -4,8 +4,8 @@ export const exportDeck = deckInProgress => {
     const power = deckInProgress.deckPower ? deckInProgress.deckPower.name : '';
     const exportMeta = [
       `name: ${deckInProgress.deckName}`,
-      `path: ${path || ''}`,
-      `power: ${power || ''}`,
+      `path: ${path}`,
+      `power: ${power}`,
       `coverart: ${deckInProgress.deckCoverArt || ''}`
     ].join('\n');
 
