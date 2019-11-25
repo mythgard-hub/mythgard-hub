@@ -56,12 +56,9 @@ This deck is from [this tournament](http://mythgardhub.com/events/).
 
   const editButton = (
     <div>
-      <style jsx>{`
-        button {
-          width: auto;
-        }
-      `}</style>
-      <button onClick={() => setEditMode(true)}>Edit Description</button>
+      <button className="ddeButton" onClick={() => setEditMode(true)}>
+        Edit Description
+      </button>
     </div>
   );
 
@@ -74,7 +71,11 @@ This deck is from [this tournament](http://mythgardhub.com/events/).
     setEditMode(false);
   };
 
-  const saveButton = <button onClick={onSave}>Save</button>;
+  const saveButton = (
+    <button className="ddeButton" onClick={onSave}>
+      Save Description
+    </button>
+  );
 
   const deckDescriptionRendered = (
     <div>
@@ -86,6 +87,13 @@ This deck is from [this tournament](http://mythgardhub.com/events/).
 
   return (
     <div>
+      <style jsx>{`
+        :global(.ddeButton) {
+          width: auto;
+          margin: 10px 0;
+        }
+      `}</style>
+
       {errorMsg && errorMsgRendered}
       {!editMode && deckDescriptionRendered}
       {!editMode && canEdit && editButton}
