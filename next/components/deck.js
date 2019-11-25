@@ -4,8 +4,6 @@ import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
 import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
-import DeckDescriptionEdit from './deck-description-edit.js';
-
 import {
   initializeDeckBuilder,
   getAuthor,
@@ -120,7 +118,7 @@ export default function Deck({ deck }) {
         }
 
         .deck-stats {
-          margin: 10px 0 20px;
+          margin-top: 10px;
         }
 
         .gradient-hr + .deck-stat {
@@ -176,11 +174,6 @@ export default function Deck({ deck }) {
             <hr className="gradient-hr" />
             <div className="deck-stat">
               <FactionsIndicator factions={factions} />
-            </div>
-            <div className="stats-title">Description</div>
-            <hr className="gradient-hr" />
-            <div className="deck-description">
-              <DeckDescriptionEdit deck={deck} />
             </div>
           </div>
         </div>

@@ -310,7 +310,6 @@ mutation UpdateDeckAndRemoveCards(
     deck(id: $id) {
       id
       name
-      description
       author {
         id
         username
