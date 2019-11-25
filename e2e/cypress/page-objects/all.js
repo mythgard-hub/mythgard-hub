@@ -44,8 +44,12 @@ export default {
   decksSort: dcy('decksSort'),
   deckListItem: dcy('deckListItem'),
   deckSearchDeckName: dcy('deckSearchDeckName'),
+  deckSearchDeckArchetype: dcy('deckSearchArchetype'),
+  deckSearchDeckType: dcy('deckSearchType'),
   deckSearchClear: dcy('deckSearchClear'),
   deckSearchAllDecksLoaded: dcy('all-decks-loaded'),
+  deckArchetypePicker: dcy('deckArchetypeCell'),
+  deckTypePicker: dcy('deckTypeCell'),
 
   // decks page sorted data
   // used so cypress can know when newly sorted dom is loaded.

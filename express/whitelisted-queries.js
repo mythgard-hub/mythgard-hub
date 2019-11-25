@@ -5,6 +5,8 @@ const deckPreviewsFragment = `
     factions
     essenceCost
     votes
+    deckArchetype
+    deckType
     deck{
       id
       author {
@@ -64,6 +66,8 @@ module.exports = [
     $pathId: Int
     $powerId: Int
     $authorId: Int
+    $archetype: [Deckarchetype]
+    $type: [Decktype]
   ) {
     createDeck(
       input: {
@@ -72,6 +76,8 @@ module.exports = [
           pathId: $pathId
           powerId: $powerId
           authorId: $authorId
+          archetype: $archetype
+          type: $type
         }
       }
     ) {
@@ -90,6 +96,8 @@ module.exports = [
           id
           name
         }
+        archetype
+        type
       }
     }
   }
@@ -101,9 +109,18 @@ mutation UpdateDeckAndRemoveCards(
     $name: String!
     $pathId: Int
     $powerId: Int
+    $archetype: [Deckarchetype]
+    $type: [Decktype]
   ) {
     updateDeckAndRemoveCards(
-      input: { _id: $id, _name: $name, _pathId: $pathId, _powerId: $powerId }
+      input: {
+        _id: $id
+        _name: $name
+        _pathId: $pathId
+        _powerId: $powerId
+        _archetype: $archetype
+        _type: $type
+      }
     ) {
       deck {
         id
@@ -120,6 +137,8 @@ mutation UpdateDeckAndRemoveCards(
           id
           name
         }
+        archetype
+        type
       }
     }
   }
@@ -378,6 +397,8 @@ mutation UpdateDeckAndRemoveCards(
       $faction5: Int
       $faction6: Int
       $numFactions: Int
+      $archetype: [Deckarchetype]
+      $type: [Decktype]
       $first: Int
       $offset: Int
       $sortBy: String
@@ -398,6 +419,8 @@ mutation UpdateDeckAndRemoveCards(
         faction5: $faction5
         faction6: $faction6
         numfactions: $numFactions
+        archetypefilter: $archetype
+        typefilter: $type
         first: $first
         offset: $offset
         sortby: $sortBy

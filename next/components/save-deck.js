@@ -1,17 +1,18 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { ApolloConsumer } from '@apollo/react-common';
-import Router from 'next/router';
+import { ApolloConsumer } from 'react-apollo';
 import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';
-import { clearDeckInProgress, getCardCount } from '../lib/deck-utils';
+import { getCardCount } from '../lib/deck-utils';
 import { DECK_SIZES } from '../constants/deck.js';
+import { PAGE_MODES } from '../constants/deck-builder.js';
 
 export default function SaveDeck({
   deckId,
   deckInProgress,
-  setDeckInProgress
+  setPageMode,
+  setNewDeckId
 }) {
   const { user } = useContext(UserContext);
   const cardCount = getCardCount(deckInProgress);
@@ -23,8 +24,8 @@ export default function SaveDeck({
 
     saveDeckWithCards(client, deckId, deckInProgress, user.id).then(
       savedDeckId => {
-        Router.push(`/deck?id=${savedDeckId}`);
-        clearDeckInProgress(setDeckInProgress);
+        setPageMode(PAGE_MODES.PUBLISH);
+        setNewDeckId(savedDeckId);
       }
     );
   };
@@ -107,5 +108,7 @@ SaveDeck.propTypes = {
     }),
     errors: PropTypes.arrayOf(PropTypes.string)
   }),
-  setDeckInProgress: PropTypes.func.isRequired
+  setDeckInProgress: PropTypes.func.isRequired,
+  setPageMode: PropTypes.func,
+  setNewDeckId: PropTypes.func
 };

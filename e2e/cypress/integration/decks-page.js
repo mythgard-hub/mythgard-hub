@@ -17,7 +17,11 @@ import {
   deckListNameAtoZ,
   deckListNameZtoA,
   deckListRatingHighToLow,
-  deckListRatingLowToHigh
+  deckListRatingLowToHigh,
+  deckArchetypePicker,
+  deckTypePicker,
+  deckSearchDeckArchetype,
+  deckSearchDeckType
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -44,6 +48,23 @@ describe('Decks Page', function() {
     // Should show deck votes
     cy.get('[data-cy="deckVotesCell"]').should('have.length', 3);
     cy.get('[data-cy="deckVotesCell"]:first').should('contain', 1);
+    cy.get(deckArchetypePicker).should('have.length', 3);
+    cy.get(deckTypePicker).should('have.length', 3);
+    cy.get(deckArchetypePicker)
+      .eq(0)
+      .should('contain', 'Unknown');
+    cy.get(deckArchetypePicker)
+      .eq(1)
+      .should('contain', 'Midrange');
+    cy.get(deckTypePicker)
+      .eq(0)
+      .should('contain', 'Gauntlet');
+    cy.get(deckTypePicker)
+      .eq(1)
+      .should('contain', 'Tournament');
+    cy.get(deckTypePicker)
+      .eq(2)
+      .should('contain', 'Standard');
 
     cy.get('[data-cy="deckListItem"] a:first').click();
     cy.location().should(location => {
@@ -53,6 +74,54 @@ describe('Decks Page', function() {
   });
 
   it('should search for decks and clear filters', function() {
+    // search by archetype
+    // specific archetype
+    cy.get(deckSearchDeckArchetype).select('Midrange');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get(deckArchetypePicker)
+      .eq(0)
+      .should('contain', 'Midrange');
+    // all archetypes
+    cy.get(deckSearchDeckArchetype).select('Any');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    cy.get(deckArchetypePicker)
+      .eq(0)
+      .should('contain', 'Unknown');
+    cy.get(deckArchetypePicker)
+      .eq(1)
+      .should('contain', 'Midrange');
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+
+    // search by type
+    // specific type
+    cy.get(deckSearchDeckType).select('Standard');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get(deckTypePicker)
+      .eq(0)
+      .should('contain', 'Standard');
+    cy.get(deckSearchDeckType).select('2v2');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 0);
+    // any type
+    cy.get(deckSearchDeckType).select('Any');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    cy.get(deckTypePicker)
+      .eq(0)
+      .should('contain', 'Gauntlet');
+    cy.get(deckTypePicker)
+      .eq(1)
+      .should('contain', 'Tournament');
+    cy.get(deckTypePicker)
+      .eq(2)
+      .should('contain', 'Standard');
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+
     // search by name
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckSearchDeckName"]').type('cat');
@@ -119,6 +188,12 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckSearchDeckName"]').clear();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
+    cy.get(deckArchetypePicker)
+      .eq(0)
+      .should('contain', 'Control Midrange');
+    cy.get(deckTypePicker)
+      .eq(0)
+      .should('contain', 'Standard');
 
     // test deck name search - first full word and start of the second
     cy.get('[data-cy="deckSearchDeckName"]').type('norden azt');

@@ -11,6 +11,10 @@ CREATE TYPE mythgard.rarity AS ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC');
 
 CREATE TYPE mythgard.cardType AS ENUM ('MINION', 'SPELL', 'ENCHANTMENT', 'ARTIFACT', 'ITEM', 'BRAND');
 
+CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CONTROL', 'COMBO');
+
+CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'TOURNAMENT', 'TWOVTWO');
+
 CREATE ROLE admin;
 CREATE ROLE authd_user;
 CREATE ROLE anon_user;
@@ -130,12 +134,33 @@ CREATE TABLE mythgard.deck (
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
   created timestamp default current_timestamp,
-  description varchar(6000) -- about 10 paragraphs
+  description varchar(6000), -- about 10 paragraphs
+  archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
+  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
 );
-INSERT INTO mythgard.deck("name", "author_id") VALUES ('dragons', 1);
-INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id") VALUES ('cats', 1, 1, 1);
-INSERT INTO mythgard.deck("name", "modified") VALUES ('all_factions', current_date - interval '1 month');
-INSERT INTO mythgard.deck("name", "modified") VALUES ('norden aztlan', current_date - interval '9 month');
+INSERT INTO mythgard.deck("name", "author_id")
+  VALUES (
+    'dragons', 
+    1);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
+  VALUES (
+    'cats',
+    1,
+    1,
+    1,
+    '{MIDRANGE}'::mythgard.deckArchetype[],
+    '{TOURNAMENT}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "type")
+  VALUES (
+    'all_factions',
+    current_date - interval '1 month',
+    '{GAUNTLET}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
+  VALUES (
+    'norden aztlan',
+    current_date - interval '9 month',
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[], 
+    '{STANDARD}'::mythgard.deckType[]);
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows
@@ -207,12 +232,13 @@ CREATE POLICY card_deck_delete_if_author
                      where deck.author_id = mythgard.current_user_id()
                      AND "deck_id" = deck.id));
 
-CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards
-(
+CREATE OR REPLACE FUNCTION mythgard.update_deck_and_remove_cards (
   _id integer,
   _name varchar(255),
   _path_id integer,
-  _power_id integer
+  _power_id integer,
+  _archetype mythgard.deckArchetype[],
+  _type mythgard.deckType[]
 )
 RETURNS mythgard.deck as $$
   DELETE FROM mythgard.card_deck
@@ -220,7 +246,9 @@ RETURNS mythgard.deck as $$
   UPDATE mythgard.deck
     SET name = _name,
         path_id = _path_id,
-        power_id = _power_id
+        power_id = _power_id,
+        archetype = _archetype,
+        type = _type
     WHERE id = _id
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
@@ -424,7 +452,9 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.created as deck_created,
          array_agg(DISTINCT faction.name) as factions,
          mythgard.deck_essence_cost(deck.id)::int as essence_cost,
-         mythgard.deck_votes(deck.id)::int as votes
+         mythgard.deck_votes(deck.id)::int as votes,
+         deck.archetype as deck_archetype,
+         deck.type as deck_type
   FROM mythgard.deck
   JOIN mythgard.card_deck
     ON card_deck.deck_id = deck.id
@@ -473,7 +503,26 @@ CREATE INDEX author_name_index ON mythgard.account
 -- faction5    int or null - id of a faction that deck must contain
 -- faction6    int or null - id of a faction that deck must contain
 -- numFactions int or null - number of specified factions. Omit to allow more factions than specifed.
-create or replace function mythgard.search_decks_nosort(deckName varchar(255), authorName varchar(255), deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer, faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer, faction6 integer, numFactions integer)
+-- archetype   mythgard.deckArchetype or null - array of archetypes to filter by
+-- type        mythgard.deckType or null - array of types to filter by
+create or replace function mythgard.search_decks_nosort(
+  deckName varchar(255),
+  authorName varchar(255),
+  deckModified date,
+  card1 integer,
+  card2 Integer,
+  card3 Integer,
+  card4 Integer,
+  card5 Integer,
+  faction1 integer,
+  faction2 integer,
+  faction3 integer,
+  faction4 integer,
+  faction5 integer,
+  faction6 integer,
+  numFactions integer,
+  archetypeFilter mythgard.deckArchetype[],
+  typeFilter mythgard.deckType[])
   returns setof mythgard.deck as $$
 
     SELECT deck.* FROM mythgard.deck
@@ -487,6 +536,10 @@ create or replace function mythgard.search_decks_nosort(deckName varchar(255), a
     AND (authorName is NULL or trim(authorName) = '' or to_tsvector('simple', account.username) @@ to_tsquery('simple', replace(regexp_replace(trim(authorName), '\s+', ' ', 'g'), ' ', ':* & ') || ':*'))
     -- modification date filter
     AND (deckModified is NULL or deck.modified >= deckModified)
+    -- archetype filter
+    AND (archetypeFilter is NULL or deck.archetype = archetypeFilter)
+    -- type filter
+    AND (typeFilter is NULL or deck.type = typeFilter)
 
     intersect
 
@@ -535,31 +588,46 @@ create or replace function mythgard.search_decks_nosort(deckName varchar(255), a
     LIMIT 2000;
   $$ language sql stable;
 
-create or replace function mythgard.search_decks(deckName varchar(255), authorName varchar(255),
-                 deckModified date, card1 integer, card2 Integer, card3 Integer, card4 Integer, card5 Integer,
-                 faction1 integer, faction2 integer, faction3 integer, faction4 integer, faction5 integer,
-                 faction6 integer, numFactions integer, sortBy text)
+create or replace function mythgard.search_decks(
+  deckName varchar(255),
+  authorName varchar(255),
+  deckModified date,
+  card1 integer,
+  card2 Integer,
+  card3 Integer,
+  card4 Integer,
+  card5 Integer,
+  faction1 integer,
+  faction2 integer,
+  faction3 integer,
+  faction4 integer,
+  faction5 integer,
+  faction6 integer,
+  numFactions integer,
+  archetypeFilter mythgard.deckArchetype[],
+  typeFilter mythgard.deckType[],
+  sortBy text)
   returns setof mythgard.deck as $$
 
   BEGIN
        IF sortBy = 'essenceDesc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description
+        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) as foo,
+                  faction6, numFactions, archetypeFilter, typeFilter) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec desc nulls last) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
-         RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description
+        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) as foo,
+                  faction6, numFactions, archetypeFilter, typeFilter) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec asc nulls last) as bar;
        ELSIF sortBy = 'ratingDesc' THEN
         RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) as deck
+                  faction6, numFactions, archetypeFilter, typeFilter) as deck
           LEFT JOIN
           (SELECT count(*) as voteCount, deck_id from mythgard.deck_vote group by deck_id) as deckVotes
           on deckVotes.deck_id = deck.id
@@ -568,7 +636,7 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
        ELSIF sortBy = 'ratingAsc' THEN
         RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) as deck
+                  faction6, numFactions, archetypeFilter, typeFilter) as deck
           LEFT JOIN
           (SELECT count(*) as voteCount, deck_id from mythgard.deck_vote group by deck_id) as deckVotes
           on deckVotes.deck_id = deck.id
@@ -577,23 +645,23 @@ create or replace function mythgard.search_decks(deckName varchar(255), authorNa
        ELSIF sortBy = 'nameAsc' THEN
          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) order by lower(name) asc;
+                  faction6, numFactions, archetypeFilter, typeFilter) order by lower(name) asc;
        ELSIF sortBy = 'nameDesc' THEN
          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) order by lower(name) desc;
+                  faction6, numFactions, archetypeFilter, typeFilter) order by lower(name) desc;
        ELSIF sortBy = 'dateDesc' THEN
          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) order by created desc;
+                  faction6, numFactions, archetypeFilter, typeFilter) order by created desc;
        ELSIF sortBy = 'dateAsc' THEN
          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions) order by created asc;
+                  faction6, numFactions, archetypeFilter, typeFilter) order by created asc;
        ELSE
           RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions);
+                  faction6, numFactions, archetypeFilter, typeFilter);
        END IF;
        RETURN;
    END

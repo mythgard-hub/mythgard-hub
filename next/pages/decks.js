@@ -18,6 +18,8 @@ const searchQueryDefaults = {
   cardIds: [],
   factionNames: [],
   isOnlyFactions: true,
+  archetype: null,
+  type: null,
   updatedTime: defaultUpdatedTime,
   authorName: '',
   sortBy: 'dateDesc'

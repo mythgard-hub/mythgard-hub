@@ -1,18 +1,21 @@
 import PropTypes from 'prop-types';
 import DeckExport from '../components/deck-export';
 import SaveDeck from '../components/save-deck';
+import { PAGE_MODES } from '../constants/deck-builder';
 
 export default function DeckBuilderActionButtons(props) {
   const {
     cardCount,
-    importMode,
+    pageMode,
+    setPageMode,
     deckId,
     deckInProgress,
     setDeckInProgress,
-    onClear
+    onClear,
+    setNewDeckId
   } = props;
 
-  if (!cardCount || importMode) return null;
+  if (!cardCount || pageMode !== PAGE_MODES.TABLE) return null;
 
   return (
     <div className="action-buttons" data-cy="deckBuilderActions">
@@ -31,6 +34,8 @@ export default function DeckBuilderActionButtons(props) {
         deckId={deckId}
         deckInProgress={deckInProgress}
         setDeckInProgress={setDeckInProgress}
+        setPageMode={setPageMode}
+        setNewDeckId={setNewDeckId}
       />
       <div className="clear-button-container">
         <button onClick={onClear}>Clear</button>
@@ -46,5 +51,8 @@ DeckBuilderActionButtons.propTypes = {
   onClear: PropTypes.func,
   setDeckInProgress: PropTypes.func,
   importMode: PropTypes.bool,
-  cardCount: PropTypes.number
+  pageMode: PropTypes.string,
+  setPageMode: PropTypes.func,
+  cardCount: PropTypes.number,
+  setNewDeckId: PropTypes.func
 };

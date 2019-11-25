@@ -64,13 +64,13 @@ describe('Import utility methods', () => {
         id: 2,
         name: 'my path'
       });
-      expect(extractMetaValue(input, META_KEYS.PATH, [])).toBe('');
+      expect(extractMetaValue(input, META_KEYS.PATH, [])).toBe(null);
       expect(
         extractMetaValue(input, META_KEYS.PATH, [
           { id: 1, name: 'nothing' },
           { id: 2, name: 'applicable' }
         ])
-      ).toEqual('');
+      ).toEqual(null);
     });
 
     it('should return the trimmed meta value of a line - partial', function() {
@@ -83,9 +83,6 @@ describe('Import utility methods', () => {
       ];
 
       expect(extractMetaValue(input, META_KEYS.NAME)).toBe('my deck');
-      expect(extractMetaValue(input, META_KEYS.POWER)).toBe('my power');
-      expect(extractMetaValue(input, META_KEYS.PATH)).toBe('');
-      expect(extractMetaValue(input, META_KEYS.COVER_ART)).toBe('');
     });
 
     it('should return the trimmed meta value of a line - invalid input', function() {
@@ -487,7 +484,7 @@ describe('Import utility methods', () => {
       expect(result.errors.length).toEqual(0);
       expect(result.deckCoverArt).toEqual('myself');
       expect(result.deckName).toEqual('my deck');
-      expect(result.deckPath).toEqual('');
+      expect(result.deckPath).toEqual(null);
       expect(result.deckPower).toEqual('my power');
       expect(Object.values(result.mainDeck).length).toEqual(3);
     });
@@ -502,10 +499,10 @@ describe('Import utility methods', () => {
       const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(0);
-      expect(result.deckCoverArt).toEqual('');
-      expect(result.deckName).toEqual('');
-      expect(result.deckPath).toEqual('');
-      expect(result.deckPower).toEqual('');
+      expect(result.deckCoverArt).toEqual(null);
+      expect(result.deckName).toEqual(null);
+      expect(result.deckPath).toEqual(null);
+      expect(result.deckPower).toEqual(null);
       expect(Object.values(result.mainDeck).length).toEqual(3);
     });
 
@@ -515,10 +512,10 @@ describe('Import utility methods', () => {
       const result = convertImportToDeck(input, '', allCards);
 
       expect(result.errors.length).toEqual(0);
-      expect(result.deckCoverArt).toEqual('');
-      expect(result.deckName).toEqual('');
-      expect(result.deckPath).toEqual('');
-      expect(result.deckPower).toEqual('');
+      expect(result.deckCoverArt).toEqual(null);
+      expect(result.deckName).toEqual(null);
+      expect(result.deckPath).toEqual(null);
+      expect(result.deckPower).toEqual(null);
       expect(Object.values(result.mainDeck).length).toEqual(1);
     });
 

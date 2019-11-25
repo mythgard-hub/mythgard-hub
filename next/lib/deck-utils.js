@@ -3,6 +3,7 @@ import updateDeckAndRemoveCards from '../lib/mutations/update-deck-and-remove-ca
 import addCardsToDBDeck from '../lib/mutations/add-card-to-deck';
 import createNewEmptyDeck from '../lib/mutations/add-deck';
 import { RARITY_MAX_CARDS } from '../constants/rarities';
+import { ARCHETYPES, TYPES } from '../constants/deck';
 
 export const initializeDeckBuilder = () => {
   return {
@@ -12,7 +13,9 @@ export const initializeDeckBuilder = () => {
     deckCoverArt: '',
     mainDeck: {},
     sideboard: [],
-    errors: []
+    errors: [],
+    archetype: ARCHETYPES[0].label,
+    type: TYPES[0].label
   };
 };
 
@@ -106,6 +109,8 @@ export const loadDeckFromServer = (
         deckName: deck.name,
         deckPath: deck.path,
         deckPower: deck.power,
+        archetype: getDeckArchetype(deck),
+        type: getDeckType(deck),
         mainDeck: cards.reduce((acc, c) => {
           acc[c.card.id] = c;
           return acc;
@@ -178,6 +183,52 @@ export const getCardCount = deck => {
     );
   } catch (e) {
     return 0;
+  }
+};
+
+/**
+ * Returns the archetype of a deck
+ * @param {Deck} deck
+ */
+export const getDeckArchetype = deck => {
+  const metaData = getDeckMetadata(deck);
+  return getArchetypeLabel(metaData);
+};
+
+/**
+ * Returns the type of a deck
+ * @param {Deck} deck
+ */
+export const getDeckType = deck => {
+  const metaData = getDeckMetadata(deck);
+  return getTypeLabel(metaData);
+};
+
+/**
+ * Given a db archetype value, find the corresponding label
+ * @param {object} metaData the metadata of a deck
+ */
+export const getArchetypeLabel = metaData => {
+  try {
+    return ARCHETYPES.find(
+      a => JSON.stringify(a.value) === JSON.stringify(metaData.deckArchetype)
+    ).label;
+  } catch (e) {
+    return ARCHETYPES[0].label;
+  }
+};
+
+/**
+ * Given a db type value, find the corresponding label
+ * @param {object} metaData the metadata of a deck
+ */
+export const getTypeLabel = metaData => {
+  try {
+    return TYPES.find(
+      a => JSON.stringify(a.value) === JSON.stringify(metaData.deckType)
+    ).label;
+  } catch (e) {
+    return TYPES[0].label;
   }
 };
 
