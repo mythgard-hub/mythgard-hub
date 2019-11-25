@@ -230,6 +230,7 @@ export const singleDeckQuery = gql`
     deck(id: $id) {
       id
       name
+      description
       author {
         id
         username
@@ -299,3 +300,15 @@ export const topDeckPreviewsQuery = gql`
 `;
 
 export const deckPreviewsToDecks = dp => dp.map(deckPreviewToDeck);
+
+export const updateDeck = gql`
+  mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {
+    updateDeck(
+      input: { id: $deckId, patch: { description: $deckDesc, name: $deckName } }
+    ) {
+      deck {
+        id
+      }
+    }
+  }
+`;
