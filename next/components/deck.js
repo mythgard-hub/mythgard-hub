@@ -127,6 +127,10 @@ export default function Deck({ deck }) {
           margin-bottom: 30px;
         }
 
+        .deck-description {
+          margin: 20px 0;
+        }
+
         @media only screen and (max-width: 575.98px) {
           .deck-page-container {
             flex-direction: column;
@@ -177,13 +181,13 @@ export default function Deck({ deck }) {
             <div className="deck-stat">
               <FactionsIndicator factions={factions} />
             </div>
-            <div className="stats-title">Description</div>
-            <hr className="gradient-hr" />
-            <div className="deck-description">
-              <DeckDescriptionEdit deck={deck} />
-            </div>
           </div>
         </div>
+      </div>
+      <div className="deck-description">
+        <div className="stats-title">Description</div>
+        <hr className="gradient-hr" />
+        <DeckDescriptionEdit deck={deck} />
       </div>
     </div>
   );
