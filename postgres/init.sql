@@ -134,7 +134,7 @@ CREATE TABLE mythgard.deck (
   power_id integer REFERENCES mythgard.power (id),
   modified timestamp default current_timestamp,
   created timestamp default current_timestamp,
-  description varchar(6000), -- about 10 paragraphs
+  description varchar(20000), -- about 30 paragraphs
   archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
   type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
 );

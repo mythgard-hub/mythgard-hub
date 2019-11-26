@@ -4,6 +4,8 @@ import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
 import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
+import DeckDescriptionEdit from './deck-description-edit.js';
+
 import {
   initializeDeckBuilder,
   getAuthor,
@@ -118,11 +120,15 @@ export default function Deck({ deck }) {
         }
 
         .deck-stats {
-          margin-top: 10px;
+          margin: 10px 0 20px;
         }
 
         .gradient-hr + .deck-stat {
           margin-bottom: 30px;
+        }
+
+        .deck-description {
+          margin: 20px 0;
         }
 
         @media only screen and (max-width: 575.98px) {
@@ -177,6 +183,11 @@ export default function Deck({ deck }) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="deck-description">
+        <div className="stats-title">Description</div>
+        <hr className="gradient-hr" />
+        <DeckDescriptionEdit deck={deck} />
       </div>
     </div>
   );
