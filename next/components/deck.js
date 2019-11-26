@@ -57,7 +57,7 @@ export default function Deck({ deck }) {
   return (
     <div className="deck-page-container">
       <style jsx>{`
-        .deck-page-container {
+        .two-columns {
           display: flex;
           flex-wrap: wrap;
         }
@@ -140,46 +140,48 @@ export default function Deck({ deck }) {
           }
         }
       `}</style>
-      <div className="left-col">
-        <div className="deck-name" data-cy="deckName">
-          {deck.name}
+      <div className="two-columns">
+        <div className="left-col">
+          <div className="deck-name" data-cy="deckName">
+            {deck.name}
+          </div>
+          <div className="deck-author">by {authorName}</div>
+          <DeckCardsTable deck={deckToExport} onlyTable />
         </div>
-        <div className="deck-author">by {authorName}</div>
-        <DeckCardsTable deck={deckToExport} onlyTable />
-      </div>
-      <div className="right-col">
-        <div className="deck-actions">
-          <DeckExport className="deck-action" deckInProgress={deckToExport} />
-          <DeckEdit className="deck-action" deck={deck} />
-          <DeckDelete className="deck-action" deck={deck} />
-          <DeckVote className="deck-action no-grow" deck={deck} />
-        </div>
-        <div className="deck-stats-container">
-          <div className="deck-stats">
-            <div className="stats-title">Essence</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat">
-              <EssenceIndicator essence={essenceCost} />
-            </div>
-            <div className="stats-title">Type</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat" data-cy="deckPageType">
-              {type}
-            </div>
-            <div className="stats-title">Archetype</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat" data-cy="deckPageArchetype">
-              {archetype}
-            </div>
-            <div className="stats-title factions-title">Deck Created</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat date-created" data-cy="deckCreatedDate">
-              {dateCreated}
-            </div>
-            <div className="stats-title factions-title">Factions</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat">
-              <FactionsIndicator factions={factions} />
+        <div className="right-col">
+          <div className="deck-actions">
+            <DeckExport className="deck-action" deckInProgress={deckToExport} />
+            <DeckEdit className="deck-action" deck={deck} />
+            <DeckDelete className="deck-action" deck={deck} />
+            <DeckVote className="deck-action no-grow" deck={deck} />
+          </div>
+          <div className="deck-stats-container">
+            <div className="deck-stats">
+              <div className="stats-title">Essence</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <EssenceIndicator essence={essenceCost} />
+              </div>
+              <div className="stats-title">Type</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat" data-cy="deckPageType">
+                {type}
+              </div>
+              <div className="stats-title">Archetype</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat" data-cy="deckPageArchetype">
+                {archetype}
+              </div>
+              <div className="stats-title factions-title">Deck Created</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat date-created" data-cy="deckCreatedDate">
+                {dateCreated}
+              </div>
+              <div className="stats-title factions-title">Factions</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <FactionsIndicator factions={factions} />
+              </div>
             </div>
           </div>
         </div>
