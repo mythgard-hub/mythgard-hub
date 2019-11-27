@@ -4,6 +4,15 @@ import Article from './article';
 function ArticleList({ max }) {
   const list = [
     {
+      title:
+        'Nominate Mythgard for Steam\'s 2019 "Most Innovative Gameplay" Award',
+      url: 'https://store.steampowered.com/steamawards/nominations?l=english',
+      author: 'Mythgard Hub',
+      description:
+        'The Steam Awards are a yearly digital award ceremony where the best games of the year are brought to light. If we can get enough support behind Mythgard, we can grow the community by showing them what we already know. Follow the link and nominate Mythgard today!',
+      date: new Date('2019-11-27')
+    },
+    {
       title: 'Player Agency in Mythgard',
       url: 'https://teamrankstar.com/article/player-agency-in-mythgard/',
       author: 'noahc92',
@@ -13,7 +22,8 @@ function ArticleList({ max }) {
     },
     {
       title: 'Deckbuilding 201 - Building on the Basics',
-      url: 'https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-201-building-on-the-basics',
+      url:
+        'https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-201-building-on-the-basics',
       author: 'Minmaxer',
       description:
         'In my first series of deckbuilding articles we started by examining the different deck archetypes and what they look like in Mythgard.  From there, I took a tour through each of the five Paths...',
