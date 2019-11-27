@@ -21,6 +21,7 @@ export const DECK_BUILDER_TABS = ['Cards', 'Paths', 'Powers'];
 export const TYPES = [
   { value: ['STANDARD'], label: 'Standard' },
   { value: ['GAUNTLET'], label: 'Gauntlet' },
+  { value: ['ARENA'], label: 'Arena' },
   { value: ['TOURNAMENT'], label: 'Tournament' },
   { value: ['TWOVTWO'], label: '2v2' }
 ];
