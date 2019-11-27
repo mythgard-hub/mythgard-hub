@@ -160,7 +160,7 @@ export default function Deck({ deck }) {
           </div>
           <div className="deck-subtitle">
             <div className="deck-author">by {authorName}</div>
-            <div className="card-count">
+            <div className="card-count" data-cy="deckPageCardCount">
               Cards: <span>{cardCount}</span>
             </div>
           </div>
