@@ -13,7 +13,8 @@ import {
   getDateCreated,
   getFactions,
   getDeckArchetype,
-  getDeckType
+  getDeckType,
+  getCardCount
 } from '../lib/deck-utils';
 import DeckVote from './deck-vote';
 import { deckCardsQuery } from '../lib/deck-queries';
@@ -53,6 +54,7 @@ export default function Deck({ deck }) {
   const dateCreated = getDateCreated(deck);
   const archetype = getDeckArchetype(deck);
   const type = getDeckType(deck);
+  const cardCount = getCardCount(deckToExport);
 
   return (
     <div className="deck-page-container">
@@ -80,7 +82,7 @@ export default function Deck({ deck }) {
         }
 
         .deck-author {
-          margin-bottom: 20px;
+          margin-bottom: 10px;
         }
 
         .coming-soon {
@@ -131,12 +133,23 @@ export default function Deck({ deck }) {
           margin: 20px 0;
         }
 
+        .deck-subtitle {
+          display: flex;
+          justify-content: space-between;
+        }
+
         @media only screen and (max-width: 575.98px) {
           .deck-page-container {
             flex-direction: column;
           }
+          .two-columns {
+            flex-direction: column;
+          }
           .right-col {
             margin-left: 0;
+          }
+          .deck-author {
+            margin-bottom: 5px;
           }
         }
       `}</style>
@@ -145,7 +158,12 @@ export default function Deck({ deck }) {
           <div className="deck-name" data-cy="deckName">
             {deck.name}
           </div>
-          <div className="deck-author">by {authorName}</div>
+          <div className="deck-subtitle">
+            <div className="deck-author">by {authorName}</div>
+            <div className="card-count">
+              Cards: <span>{cardCount}</span>
+            </div>
+          </div>
           <DeckCardsTable deck={deckToExport} onlyTable />
         </div>
         <div className="right-col">
