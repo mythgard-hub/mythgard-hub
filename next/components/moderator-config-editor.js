@@ -2,6 +2,12 @@ import useConfig from '../lib/use-config.js';
 import useConfigMutation from '../lib/use-config-mutation.js';
 import ModeratorEditArticle from '../components/moderator-edit-article.js';
 
+function arrayMove(arr, fromIndex, toIndex) {
+  const element = arr[fromIndex];
+  arr.splice(fromIndex, 1);
+  arr.splice(toIndex, 0, element);
+}
+
 function ModeratorConfigEditor() {
   const { config, error, loading } = useConfig();
   const updateConfig = useConfigMutation();
@@ -14,8 +20,16 @@ function ModeratorConfigEditor() {
     return 'loading config';
   }
 
-  const setArticle = (i, article) => {
+  const setArticle = (i, article, newIndex) => {
     config.topMedia[i] = article;
+    if (i !== newIndex) {
+      arrayMove(config.topMedia, i, newIndex);
+    }
+    updateConfig(config);
+  };
+
+  const addArticle = newArticle => {
+    config.topMedia.push(newArticle);
     updateConfig(config);
   };
 
@@ -23,7 +37,8 @@ function ModeratorConfigEditor() {
     <div key={i}>
       <ModeratorEditArticle
         article={media}
-        setArticle={article => setArticle(i, article)}
+        i={i}
+        setArticle={(article, newIndex) => setArticle(i, article, newIndex)}
       ></ModeratorEditArticle>
       <hr />
     </div>
@@ -34,12 +49,16 @@ function ModeratorConfigEditor() {
       <h2>Edit Site Media</h2>
       <h3>First Four Are Top Media</h3>
       {topMediaInputs}
+      <h3>Add New Media</h3>
+      <div>
+        <ModeratorEditArticle
+          article={{}}
+          setArticle={addArticle}
+        ></ModeratorEditArticle>
+        <hr />
+      </div>
     </>
   );
 }
-
-// ModeratorConfigEditor.propTypes = {
-//   modUser: PropTypes.object
-// };
 
 export default ModeratorConfigEditor;

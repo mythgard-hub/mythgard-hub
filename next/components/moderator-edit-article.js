@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 
-function ModeratorEditArticle({ article, setArticle }) {
+function ModeratorEditArticle({ article, setArticle, i }) {
   const [title, setTitle] = useState(article.title);
   const onChangeTitle = handleInputChangeHooks(setTitle);
   const [url, setUrl] = useState(article.url);
@@ -14,15 +14,19 @@ function ModeratorEditArticle({ article, setArticle }) {
   const onChangeDate = handleInputChangeHooks(setDate);
   const [author, setAuthor] = useState(article.author);
   const onChangeAuthor = handleInputChangeHooks(setAuthor);
+  const [index, setIndex] = useState(i);
+  const onChangeIndex = handleInputChangeHooks(setIndex);
 
-  const onClick = () =>
-    setArticle({
+  const onClick = () => {
+    const newArticle = {
       title,
       url,
       description: desc,
       date,
       author
-    });
+    };
+    setArticle(newArticle, index);
+  };
   return (
     <div>
       <label>
@@ -40,6 +44,9 @@ function ModeratorEditArticle({ article, setArticle }) {
       <label>
         Author: <input type="text" value={author} onChange={onChangeAuthor} />
       </label>
+      <label>
+        Order: <input type="text" value={index} onChange={onChangeIndex} />
+      </label>
       <div>
         <button onClick={onClick}>Save</button>
       </div>
@@ -47,11 +54,14 @@ function ModeratorEditArticle({ article, setArticle }) {
   );
 }
 
-ModeratorEditArticle.defaultProps = {};
+ModeratorEditArticle.defaultProps = {
+  i: -1
+};
 
 ModeratorEditArticle.propTypes = {
   article: PropTypes.object,
-  setArticle: PropTypes.func
+  setArticle: PropTypes.func,
+  i: PropTypes.number
 };
 
 export default ModeratorEditArticle;
