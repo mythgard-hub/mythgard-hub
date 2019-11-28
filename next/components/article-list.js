@@ -10,7 +10,7 @@ function ArticleList({ max }) {
       author: 'Mythgard Hub',
       description:
         'The Steam Awards are a yearly digital award ceremony where the best games of the year are brought to light. If we can get enough support behind Mythgard, we can grow the community by showing them what we already know. Follow the link and nominate Mythgard today!',
-      date: new Date('2019-11-27')
+      date: new Date('2019-11-27T17:24:18.280Z')
     },
     {
       title: 'Player Agency in Mythgard',
