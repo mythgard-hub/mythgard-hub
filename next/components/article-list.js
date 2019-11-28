@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import Article from './article';
+import useConfig from '../lib/use-config.js';
 
 function ArticleList({ max }) {
+<<<<<<< HEAD
   const list = [
     {
       title:
@@ -120,6 +122,11 @@ function ArticleList({ max }) {
       date: new Date('2019-09-22T17:24:18.280Z')
     }
   ];
+=======
+  const { config } = useConfig();
+
+  const list = (config && config.topMedia) || [];
+>>>>>>> Create a hook for getting the site config
 
   return (
     <div>

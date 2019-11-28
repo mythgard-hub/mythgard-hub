@@ -6,37 +6,15 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
 import { ApolloProvider } from 'react-apollo';
 import { pageview, USE_GOOGLE_ANALYTICS } from '../lib/gtag';
 import UserContext from '../components/user-context';
-import ConfigContext from '../components/config-context.js';
 import redirect from '../lib/redirect';
 
 if (USE_GOOGLE_ANALYTICS) {
   Router.events.on('routeChangeComplete', url => pageview(url));
 }
 
-const SITE_CONFIG_QUERY =
-  '{"query":"query config {\\n  siteConfig(id: 1){\\n    config\\n  }\\n}\\n\\t","variables":null,"operationName":"config"}';
-
-const CONFIG_POST_OPTIONS = {
-  method: 'post',
-  body: SITE_CONFIG_QUERY,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-};
-
-const deserializeConfig = data => {
-  return (
-    (data &&
-      data.data &&
-      data.data.siteConfig &&
-      data.data.siteConfig.config) ||
-    {}
-  );
-};
-
 class MyApp extends App {
   static async getInitialProps({ ctx, Component }) {
-    let user, config;
+    let user;
 
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
@@ -55,32 +33,17 @@ class MyApp extends App {
       const token = ctx.req.cookies[JWT_COOKIE_NAME];
       const resp = await fetch(`${SSR_HOST}/auth/user/${token}`);
       user = await resp.json();
-
-      const API_HOST = process.env.API_HOST;
-      const configResp = await fetch(
-        `${API_HOST}/graphql`,
-        CONFIG_POST_OPTIONS
-      );
-
-      config = await configResp.json();
     } else {
       const resp = await fetch('/auth/user');
       user = await resp.json();
-
-      const configResp = await fetch('/graphql', CONFIG_POST_OPTIONS);
-
-      config = await configResp.json();
     }
     if (!user && Component.requiresAuth) {
       redirect(ctx, '/');
     }
 
-    console.log('config: ', deserializeConfig(config));
-
     return {
       ...pageProps,
-      user,
-      config: deserializeConfig(config)
+      user
     };
   }
 
@@ -88,17 +51,12 @@ class MyApp extends App {
     super(props);
 
     this.state = {
-      user: props.user,
-      config: props.config
+      user: props.user
     };
   }
 
   updateUser = user => {
     this.setState({ user });
-  };
-
-  updateConfig = config => {
-    this.setState({ config });
   };
 
   componentDidMount() {
@@ -119,17 +77,13 @@ class MyApp extends App {
 
   render() {
     const { Component, apolloClient, ...pageProps } = this.props;
-    const { user, config } = this.state;
+    const { user } = this.state;
     return (
       <ApolloHooksProvider client={apolloClient}>
         <ApolloProvider client={apolloClient}>
-          <ConfigContext.Provider
-            value={{ config, updateConfig: this.updateConfig }}
-          >
-            <UserContext.Provider value={{ user, updateUser: this.updateUser }}>
-              <Component {...pageProps} />
-            </UserContext.Provider>
-          </ConfigContext.Provider>
+          <UserContext.Provider value={{ user, updateUser: this.updateUser }}>
+            <Component {...pageProps} />
+          </UserContext.Provider>
         </ApolloProvider>
       </ApolloHooksProvider>
     );
