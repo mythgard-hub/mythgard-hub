@@ -1,20 +1,10 @@
 import useConfig from '../lib/use-config.js';
+import useConfigMutation from '../lib/use-config-mutation.js';
 import ModeratorEditArticle from '../components/moderator-edit-article.js';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-
-const configMutation = gql`
-  mutation setConfig($newConfig: JSON!) {
-    updateSiteConfig(input: { id: 1, patch: { config: $newConfig } }) {
-      siteConfig {
-        config
-      }
-    }
-  }
-`;
 
 function ModeratorConfigEditor() {
   const { config, error, loading } = useConfig();
+  const updateConfig = useConfigMutation();
 
   if (error) {
     return 'error loading config';
@@ -24,18 +14,9 @@ function ModeratorConfigEditor() {
     return 'loading config';
   }
 
-  const [updateConfig] = useMutation(configMutation, {
-    update() {
-      window.location.reload();
-    },
-    onError() {
-      alert('That failed. Please check values and try again');
-    }
-  });
-
   const setArticle = (i, article) => {
-    console.log('i: ', i);
-    console.log('article: ', article);
+    config.topMedia[i] = article;
+    updateConfig(config);
   };
 
   const topMediaInputs = config.topMedia.map((media, i) => (
