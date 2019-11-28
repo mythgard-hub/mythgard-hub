@@ -1,10 +1,5 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
-// import { useState } from 'react';
-// import { useMutation } from '@apollo/react-hooks';
 import useConfig from '../lib/use-config.js';
-// import { handleInputChangeHooks } from '../lib/form-utils.js';
-// import { updateDeck as deckQuery } from '../lib/deck-queries.js';
+import ModeratorEditArticle from '../components/moderator-edit-article.js';
 
 function ModeratorConfigEditor() {
   const { config, error, loading } = useConfig();
@@ -17,13 +12,19 @@ function ModeratorConfigEditor() {
     return 'loading config';
   }
 
+  console.log('config: ', config);
+
   const topMediaInputs = config.topMedia.map((media, i) => (
-    <div key={i}>foo</div>
+    <div key={i}>
+      <ModeratorEditArticle article={media}></ModeratorEditArticle>
+      <hr />
+    </div>
   ));
 
   return (
     <>
-      <h2>Edit Site Settings</h2>
+      <h2>Edit Site Media</h2>
+      <h3>First Four Are Top Media</h3>
       {topMediaInputs}
     </>
   );
