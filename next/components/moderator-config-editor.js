@@ -33,13 +33,16 @@ function ModeratorConfigEditor() {
     }
   });
 
-  const setArticle = article => console.log('article: ', article);
+  const setArticle = (i, article) => {
+    console.log('i: ', i);
+    console.log('article: ', article);
+  };
 
   const topMediaInputs = config.topMedia.map((media, i) => (
     <div key={i}>
       <ModeratorEditArticle
         article={media}
-        setArticle={setArticle}
+        setArticle={article => setArticle(i, article)}
       ></ModeratorEditArticle>
       <hr />
     </div>
