@@ -396,6 +396,23 @@ INSERT INTO mythgard.card_faction("card_id","faction_id")
     (16, 1),
     (17, 2);
 
+CREATE TABLE mythgard.site_config (
+  id SERIAL PRIMARY KEY,
+  config jsonb
+);
+
+INSERT INTO mythgard.site_config (config) values ('{}');
+
+ALTER TABLE mythgard.site_config ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY site_config_all_view ON mythgard.site_config FOR SELECT USING (true);
+
+CREATE POLICY update_site_config_if_moderator
+  ON mythgard.site_config
+  FOR UPDATE
+  USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
+
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
