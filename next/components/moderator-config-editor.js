@@ -37,7 +37,7 @@ function ModeratorConfigEditor() {
   const deleteArticle = i => {
     if (
       window.confirm(
-        'Are you sure you want to permanently delete this media? There is no undo'
+        'Are you sure you want to permanently delete this media? There is no undo. Copy-pasting fields to a spreadsheet first is recommended.'
       )
     ) {
       config.topMedia.splice(i, 1);
@@ -45,7 +45,7 @@ function ModeratorConfigEditor() {
     }
   };
 
-  const topMediaInputs = config.topMedia.map((media, i) => (
+  const topMediaEditForms = config.topMedia.map((media, i) => (
     <div key={i}>
       <ModeratorEditArticle
         article={media}
@@ -67,7 +67,7 @@ function ModeratorConfigEditor() {
       </div>
       <h2>Edit Site Media</h2>
       <h3>First Four Are Top Media</h3>
-      {topMediaInputs}
+      {topMediaEditForms}
     </>
   );
 }
