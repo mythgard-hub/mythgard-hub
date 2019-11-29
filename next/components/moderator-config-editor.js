@@ -28,8 +28,9 @@ function ModeratorConfigEditor() {
     updateConfig(config);
   };
 
-  const addArticle = newArticle => {
-    config.topMedia.push(newArticle);
+  const addArticle = (newArticle, i) => {
+    config.topMedia.unshift(newArticle);
+    arrayMove(config.topMedia, 0, i);
     updateConfig(config);
   };
 
@@ -39,7 +40,8 @@ function ModeratorConfigEditor() {
         'Are you sure you want to permanently delete this media? There is no undo'
       )
     ) {
-      console.log('delete ' + i);
+      config.topMedia.splice(i, 1);
+      updateConfig(config);
     }
   };
 
