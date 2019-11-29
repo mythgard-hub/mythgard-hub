@@ -567,5 +567,21 @@ query tournaments($now: Date) {
       totalCount
     }
   }
+`,
+  `
+  query config {
+    siteConfig(id: 1) {
+      config
+    }
+  }
+`,
+  `
+  mutation setConfig($config: JSON!) {
+    updateSiteConfig(input: { id: 1, patch: { config: $config } }) {
+      siteConfig {
+        config
+      }
+    }
+  }
 `
 ];
