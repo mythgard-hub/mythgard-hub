@@ -30,9 +30,15 @@ function ModeratorEditArticle({ article, setArticle, i, hasDelete, onDelete }) {
   return (
     <div>
       <style jsx>{`
+        .articleForm {
+          display: flex;
+          flex-wrap: wrap;
+        }
         label {
+          flex-grow: 1;
           display: block;
-          margin: 20px 0;
+          min-width: 400px;
+          margin: 10px 20px;
         }
 
         textarea,
@@ -47,25 +53,27 @@ function ModeratorEditArticle({ article, setArticle, i, hasDelete, onDelete }) {
           margin: 0 20px 0 0;
         }
       `}</style>
-      <label>
-        Title: <input type="text" value={title} onChange={onChangeTitle} />
-      </label>
-      <label>
-        Url: <input type="text" value={url} onChange={onChangeUrl} />
-      </label>
-      <label>
-        Description: <textarea value={desc} onChange={onChangeDesc} />
-      </label>
-      <label>
-        Date: <input type="text" value={date} onChange={onChangeDate} />
-      </label>
-      <label>
-        Author: <input type="text" value={author} onChange={onChangeAuthor} />
-      </label>
-      <label>
-        Order: <input type="text" value={index} onChange={onChangeIndex} />
-        <span> - zero through three appears in top media</span>
-      </label>
+      <div className="articleForm">
+        <label>
+          Title: <input type="text" value={title} onChange={onChangeTitle} />
+        </label>
+        <label>
+          Url: <input type="text" value={url} onChange={onChangeUrl} />
+        </label>
+        <label>
+          Description: <textarea value={desc} onChange={onChangeDesc} />
+        </label>
+        <label>
+          Date: <input type="text" value={date} onChange={onChangeDate} />
+        </label>
+        <label>
+          Author: <input type="text" value={author} onChange={onChangeAuthor} />
+        </label>
+        <label>
+          Order: <input type="text" value={index} onChange={onChangeIndex} />
+          <span> - zero through three appears in top media</span>
+        </label>
+      </div>
       <div>
         <button onClick={onClick}>Save</button>
         {hasDelete && <button onClick={onDelete}>Delete</button>}
