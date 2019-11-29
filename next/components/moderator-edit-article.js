@@ -29,6 +29,23 @@ function ModeratorEditArticle({ article, setArticle, i }) {
   };
   return (
     <div>
+      <style jsx>{`
+        label {
+          display: block;
+          margin: 20px 0;
+        }
+
+        textarea,
+        input {
+          display: block;
+          width: 100%;
+        }
+        button {
+          display: inline;
+          width: auto;
+          padding: 5px 40px;
+        }
+      `}</style>
       <label>
         Title: <input type="text" value={title} onChange={onChangeTitle} />
       </label>
@@ -36,7 +53,7 @@ function ModeratorEditArticle({ article, setArticle, i }) {
         Url: <input type="text" value={url} onChange={onChangeUrl} />
       </label>
       <label>
-        Description: <input type="text" value={desc} onChange={onChangeDesc} />
+        Description: <textarea value={desc} onChange={onChangeDesc} />
       </label>
       <label>
         Date: <input type="text" value={date} onChange={onChangeDate} />
