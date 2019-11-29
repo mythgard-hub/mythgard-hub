@@ -87,9 +87,9 @@ ModeratorEditArticle.defaultProps = {
   article: {
     title: '',
     description: '',
-    date: '',
-    url: '',
-    author: '',
+    date: new Date().toISOString(),
+    url: 'https://mythgardhub.com',
+    author: 'Mythgard Hub',
     order: -1
   },
   hasDelete: false
