@@ -46,6 +46,7 @@ function ModeratorEditArticle({ article, setArticle, i }) {
       </label>
       <label>
         Order: <input type="text" value={index} onChange={onChangeIndex} />
+        <span> - zero through three appears in top media</span>
       </label>
       <div>
         <button onClick={onClick}>Save</button>
@@ -55,7 +56,15 @@ function ModeratorEditArticle({ article, setArticle, i }) {
 }
 
 ModeratorEditArticle.defaultProps = {
-  i: -1
+  i: 0,
+  article: {
+    title: '',
+    description: '',
+    date: '',
+    url: '',
+    author: '',
+    order: -1
+  }
 };
 
 ModeratorEditArticle.propTypes = {

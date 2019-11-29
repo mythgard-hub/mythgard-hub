@@ -46,17 +46,14 @@ function ModeratorConfigEditor() {
 
   return (
     <>
+      <h2>Add New Media</h2>
+      <div>
+        <ModeratorEditArticle setArticle={addArticle}></ModeratorEditArticle>
+        <hr />
+      </div>
       <h2>Edit Site Media</h2>
       <h3>First Four Are Top Media</h3>
       {topMediaInputs}
-      <h3>Add New Media</h3>
-      <div>
-        <ModeratorEditArticle
-          article={{}}
-          setArticle={addArticle}
-        ></ModeratorEditArticle>
-        <hr />
-      </div>
     </>
   );
 }
