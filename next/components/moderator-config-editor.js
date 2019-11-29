@@ -33,12 +33,24 @@ function ModeratorConfigEditor() {
     updateConfig(config);
   };
 
+  const deleteArticle = i => {
+    if (
+      window.confirm(
+        'Are you sure you want to permanently delete this media? There is no undo'
+      )
+    ) {
+      console.log('delete ' + i);
+    }
+  };
+
   const topMediaInputs = config.topMedia.map((media, i) => (
     <div key={i}>
       <ModeratorEditArticle
         article={media}
         i={i}
         setArticle={(article, newIndex) => setArticle(i, article, newIndex)}
+        hasDelete={true}
+        onDelete={() => deleteArticle(i)}
       ></ModeratorEditArticle>
       <hr />
     </div>

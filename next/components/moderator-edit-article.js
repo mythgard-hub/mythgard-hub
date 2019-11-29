@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 
-function ModeratorEditArticle({ article, setArticle, i }) {
+function ModeratorEditArticle({ article, setArticle, i, hasDelete, onDelete }) {
   const [title, setTitle] = useState(article.title);
   const onChangeTitle = handleInputChangeHooks(setTitle);
   const [url, setUrl] = useState(article.url);
@@ -44,6 +44,7 @@ function ModeratorEditArticle({ article, setArticle, i }) {
           display: inline;
           width: auto;
           padding: 5px 40px;
+          margin: 0 20px 0 0;
         }
       `}</style>
       <label>
@@ -67,6 +68,7 @@ function ModeratorEditArticle({ article, setArticle, i }) {
       </label>
       <div>
         <button onClick={onClick}>Save</button>
+        {hasDelete && <button onClick={onDelete}>Delete</button>}
       </div>
     </div>
   );
@@ -81,13 +83,16 @@ ModeratorEditArticle.defaultProps = {
     url: '',
     author: '',
     order: -1
-  }
+  },
+  hasDelete: false
 };
 
 ModeratorEditArticle.propTypes = {
   article: PropTypes.object,
   setArticle: PropTypes.func,
-  i: PropTypes.number
+  i: PropTypes.number,
+  hasDelete: PropTypes.bool,
+  onDelete: PropTypes.func
 };
 
 export default ModeratorEditArticle;
