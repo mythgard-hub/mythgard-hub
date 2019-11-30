@@ -1,15 +1,17 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 import { getManaCurve } from '../lib/deck-stats';
+import { ThemeContext } from './theme-context';
 
 if (typeof Highcharts === 'object') {
   HighchartsExporting(Highcharts);
 }
 
 export default function DeckManaCurve({ cards }) {
-  const manaCurve = getManaCurve(cards);
+  const theme = useContext(ThemeContext);
   const options = {
     chart: {
       type: 'column',
@@ -27,12 +29,15 @@ export default function DeckManaCurve({ cards }) {
     },
     xAxis: {
       categories: ['1', '2', '3', '4', '5', '6+'],
-      crosshair: true
+      crosshair: true,
+      lineColor: '#666666'
     },
     yAxis: {
       title: {
         enabled: false
       },
+      tickInterval: 10,
+      gridLineColor: '#666666',
       min: 0
     },
     tooltip: {
@@ -40,7 +45,7 @@ export default function DeckManaCurve({ cards }) {
         '<span style="font-size:10px">Mana cost: {point.key}</span><table>',
       pointFormat:
         '<tr>' +
-        '<td style="padding:0; font-size:10px;">{series.name}:</td>' +
+        '<td style="padding:0; font-size:10px;text-transform:capitalize;">{series.name}:</td>' +
         '<td style="padding:0;font-size:10px;"><b>{point.y}</b></td>' +
         '</tr>',
       footerFormat: '</table>',
@@ -49,17 +54,13 @@ export default function DeckManaCurve({ cards }) {
     },
     plotOptions: {
       column: {
-        pointPadding: 0.2,
-        borderWidth: 0
+        pointPadding: 0,
+        borderWidth: 0.3,
+        borderColor: theme.background,
+        stacking: 'normal'
       }
     },
-    series: [
-      {
-        name: 'Cards',
-        showInLegend: false,
-        data: manaCurve
-      }
-    ]
+    series: getManaCurve(cards, theme)
   };
 
   return (
