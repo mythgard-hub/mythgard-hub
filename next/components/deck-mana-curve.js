@@ -55,7 +55,7 @@ export default function DeckManaCurve({ cards }) {
     plotOptions: {
       column: {
         pointPadding: 0,
-        borderWidth: 0.3,
+        borderWidth: 0.1,
         borderColor: theme.background,
         stacking: 'normal'
       }
