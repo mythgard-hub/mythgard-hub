@@ -11,6 +11,7 @@ import { ThemeContext } from './theme-context';
 import DeckBuilderActionButtons from './deck-builder-action-buttons';
 import { PAGE_MODES } from '../constants/deck-builder';
 import DeckBuilderPublishMode from './deck-builder-publish-mode';
+import DeckManaCurve from './deck-mana-curve';
 
 export default function DeckBuilderSidebar(props) {
   const {
@@ -144,6 +145,7 @@ export default function DeckBuilderSidebar(props) {
             switchToCards={switchToCards}
             setTab={setTab}
           />
+          <DeckManaCurve cards={deckInProgress.mainDeck} />
         </div>
       )}
     </div>
