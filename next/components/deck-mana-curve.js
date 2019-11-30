@@ -42,7 +42,9 @@ export default function DeckManaCurve({ cards }) {
     },
     tooltip: {
       headerFormat:
-        '<span style="font-size:10px">Mana cost: {point.key}</span><table>',
+        '<span style="font-size:10px">' +
+        'Mana cost: {point.key}' +
+        '</span><table>',
       pointFormat:
         '<tr>' +
         '<td style="padding:0; font-size:10px;text-transform:capitalize;">{series.name}:</td>' +
@@ -64,7 +66,7 @@ export default function DeckManaCurve({ cards }) {
   };
 
   return (
-    <div className="deck-mana-curve">
+    <div className="deck-mana-curve" data-cy="deckManaCurve">
       <style jsx>{``}</style>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
