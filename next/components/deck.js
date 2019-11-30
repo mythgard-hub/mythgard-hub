@@ -176,11 +176,6 @@ export default function Deck({ deck }) {
           </div>
           <div className="deck-stats-container">
             <div className="deck-stats">
-              <div className="stats-title">Mana Curve</div>
-              <hr className="gradient-hr" />
-              <div className="deck-stat">
-                <DeckManaCurve cards={cards} />
-              </div>
               <div className="stats-title">Essence</div>
               <hr className="gradient-hr" />
               <div className="deck-stat">
@@ -205,6 +200,11 @@ export default function Deck({ deck }) {
               <hr className="gradient-hr" />
               <div className="deck-stat">
                 <FactionsIndicator factions={factions} />
+              </div>
+              <div className="stats-title">Mana Curve</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <DeckManaCurve cards={cards} />
               </div>
             </div>
           </div>
