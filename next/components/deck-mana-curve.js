@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
-import { getManaCurve } from '../lib/deck-stats';
+import { getManaCurveHighchartsSeries } from '../lib/deck-stats';
 import { ThemeContext } from './theme-context';
 
 if (typeof Highcharts === 'object') {
@@ -60,7 +60,7 @@ export default function DeckManaCurve({ cards }) {
         stacking: 'normal'
       }
     },
-    series: getManaCurve(cards, theme)
+    series: getManaCurveHighchartsSeries(cards, theme)
   };
 
   return (

@@ -27,10 +27,9 @@ const factionMainColor = (faction, theme) => {
   return color;
 };
 
-export const getManaCurve = (cards, theme) => {
-  const manaCostsByFaction = {};
-  FACTION_NAMES.forEach(f => {
-    manaCostsByFaction[f] = {
+const initializeManaCostsByFunction = theme => {
+  return FACTION_NAMES.reduce((acc, f) => {
+    acc[f] = {
       name: f,
       showInLegend: false,
       color: factionMainColor(f, theme),
@@ -43,7 +42,13 @@ export const getManaCurve = (cards, theme) => {
         '6+': 0
       }
     };
-  });
+
+    return acc;
+  }, {});
+};
+
+export const getManaCurveHighchartsSeries = (cards, theme) => {
+  const manaCostsByFaction = initializeManaCostsByFunction(theme);
 
   try {
     Object.values(cards).forEach(c => {
