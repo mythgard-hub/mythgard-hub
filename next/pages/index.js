@@ -33,7 +33,7 @@ const index = () => {
           font-style: italic;
           text-transform: uppercase;
         }
-
+        /* Temporary banner */
         .newPlayerGuideBanner {
           display: block;
           border-top: ${theme.border};
@@ -55,7 +55,14 @@ const index = () => {
         .newPlayerGuideBanner:hover {
           color: ${mgColors.orange};
         }
-
+        .promo-banner {
+          background-image: url('https://s3-us-west-2.amazonaws.com/cdn.mythgardhub.com/banner/Banner_InkedGaming.jpg');
+          background-size: contain;
+          background-repeat: no-repeat;
+          width: 100%;
+          height: 0;
+          padding-top: 16%;
+        }
         @media only screen and (max-width: 575.98px) {
           .mg-column {
             width: 100%;
@@ -72,9 +79,14 @@ const index = () => {
           }
         }
       `}</style>
+      {/* Temporarily disabling new player guide in favor of banner 
       <Link href="/new-player-guide">
         <a className="newPlayerGuideBanner">New Player Guide</a>
-      </Link>
+      </Link> */}
+      {/* Temporary banner */}
+      <a href="https://www.inkedgaming.com/">
+        <div className="promotional-banner" />
+      </a>
       <div className="homePageColumns">
         <div className="mg-column">
           <h2>Top Media</h2>
