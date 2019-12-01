@@ -1,33 +1,21 @@
 import { FACTION_NAMES, FACTION_COLORS } from '../constants/factions';
 import { mainFaction } from './card';
 
-const factionMainColor = (faction, theme) => {
-  let color = null;
-  switch (faction) {
-    case FACTION_COLORS.blue:
-      color = theme.blueFactionColor;
-      break;
-    case FACTION_COLORS.yellow:
-      color = theme.yellowFactionColor;
-      break;
-    case FACTION_COLORS.red:
-      color = theme.redFactionColor;
-      break;
-    case FACTION_COLORS.purple:
-      color = theme.purpleFactionColor;
-      break;
-    case FACTION_COLORS.orange:
-      color = theme.orangeFactionColor;
-      break;
-    case FACTION_COLORS.green:
-      color = theme.greenFactionColor;
-      break;
-  }
+const FACTION_COLORS_MAP = {};
 
-  return color;
+const factionMainColor = (faction, theme) => {
+  if (!FACTION_COLORS_MAP[FACTION_COLORS.blue]) {
+    FACTION_COLORS_MAP[FACTION_COLORS.blue] = theme.blueFactionColor;
+    FACTION_COLORS_MAP[FACTION_COLORS.yellow] = theme.yellowFactionColor;
+    FACTION_COLORS_MAP[FACTION_COLORS.purple] = theme.purpleFactionColor;
+    FACTION_COLORS_MAP[FACTION_COLORS.red] = theme.redFactionColor;
+    FACTION_COLORS_MAP[FACTION_COLORS.green] = theme.greenFactionColor;
+    FACTION_COLORS_MAP[FACTION_COLORS.orange] = theme.orangeFactionColor;
+  }
+  return FACTION_COLORS_MAP[faction];
 };
 
-const initializeManaCostsByFunction = theme => {
+const initializeManaCostsByFaction = theme => {
   return FACTION_NAMES.reduce((acc, f) => {
     acc[f] = {
       name: f,
@@ -48,7 +36,7 @@ const initializeManaCostsByFunction = theme => {
 };
 
 export const getManaCurveHighchartsSeries = (cards, theme) => {
-  const manaCostsByFaction = initializeManaCostsByFunction(theme);
+  const manaCostsByFaction = initializeManaCostsByFaction(theme);
 
   try {
     Object.values(cards).forEach(c => {
