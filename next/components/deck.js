@@ -23,6 +23,7 @@ import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
+import DeckManaCurve from './deck-mana-curve';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -199,6 +200,11 @@ export default function Deck({ deck }) {
               <hr className="gradient-hr" />
               <div className="deck-stat">
                 <FactionsIndicator factions={factions} />
+              </div>
+              <div className="stats-title">Mana Curve</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <DeckManaCurve cards={cards} />
               </div>
             </div>
           </div>

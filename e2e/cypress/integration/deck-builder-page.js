@@ -28,6 +28,7 @@ describe('Deck builder page', () => {
     cy.get('[data-cy="goToImportMode"]').should('be.visible');
     cy.get('[data-cy="importDeckButton"]').should('not.be.visible');
     cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
+    cy.get('[data-cy="deckManaCurve"]').should('not.be.visible');
     cy.get(cardList).should('be.visible');
     cy.get(deckInProgress).should('be.visible');
     cy.get('[data-cy="factionFilters"]').should('be.visible');
@@ -41,6 +42,7 @@ describe('Deck builder page', () => {
     cy.get(deckInProgress).should('be.visible');
     cy.get(deckCardRow).should('have.length', 2);
     cy.get('[data-cy="deckBuilderActions"]').should('be.visible');
+    cy.get('[data-cy="deckManaCurve"]').should('be.visible');
 
     // basic test - delete a card from the deck
     cy.get('[data-cy="deckDeleteCard"]:first').click();

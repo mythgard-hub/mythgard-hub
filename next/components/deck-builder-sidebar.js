@@ -11,6 +11,7 @@ import { ThemeContext } from './theme-context';
 import DeckBuilderActionButtons from './deck-builder-action-buttons';
 import { PAGE_MODES } from '../constants/deck-builder';
 import DeckBuilderPublishMode from './deck-builder-publish-mode';
+import DeckManaCurve from './deck-mana-curve';
 
 export default function DeckBuilderSidebar(props) {
   const {
@@ -134,6 +135,7 @@ export default function DeckBuilderSidebar(props) {
       )}
       {pageMode !== PAGE_MODES.IMPORT && (
         <div className="deck-in-progress" data-cy="deckInProgress">
+          {cardCount > 0 && <DeckManaCurve cards={deckInProgress.mainDeck} />}
           <div className="card-count">
             Cards: <span>{cardCount}</span>
           </div>
