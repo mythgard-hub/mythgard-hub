@@ -283,7 +283,7 @@ describe('Decks Page', function() {
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', deckNameDragons);
+      .should('contain', deckNameAllFactions);
     cy.get(decksSort).select(nameAsc);
     cy.get(deckListNameAtoZ);
     cy.get(deckListItem)
