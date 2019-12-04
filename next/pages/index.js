@@ -7,13 +7,6 @@ import { ThemeContext } from '../components/theme-context.js';
 import { mgColors } from '../lib/theme.js';
 import Link from 'next/link';
 
-const bannerEndDate = new Date('2019-12-03T00:00:01-08:00');
-let showBannerAd = false;
-
-if (new Date() < bannerEndDate) {
-  showBannerAd = true;
-}
-
 const index = () => {
   const theme = useContext(ThemeContext);
   return (
@@ -40,7 +33,7 @@ const index = () => {
           font-style: italic;
           text-transform: uppercase;
         }
-        /* Temporary banner */
+
         .newPlayerGuideBanner {
           display: block;
           border-top: ${theme.border};
@@ -62,14 +55,7 @@ const index = () => {
         .newPlayerGuideBanner:hover {
           color: ${mgColors.orange};
         }
-        .promo-banner {
-          background-image: url('https://s3-us-west-2.amazonaws.com/cdn.mythgardhub.com/banner/Banner_InkedGaming.jpg');
-          background-size: contain;
-          background-repeat: no-repeat;
-          width: 100%;
-          height: 0;
-          padding-top: 16%;
-        }
+
         @media only screen and (max-width: 575.98px) {
           .mg-column {
             width: 100%;
@@ -86,16 +72,9 @@ const index = () => {
           }
         }
       `}</style>
-      {!showBannerAd && (
-        <Link href="/new-player-guide">
-          <a className="newPlayerGuideBanner">New Player Guide</a>
-        </Link>
-      )}
-      {showBannerAd && (
-        <a href="https://www.inkedgaming.com/">
-          <div className="promo-banner" />
-        </a>
-      )}
+      <Link href="/new-player-guide">
+        <a className="newPlayerGuideBanner">New Player Guide</a>
+      </Link>
       <div className="homePageColumns">
         <div className="mg-column">
           <h2>Top Media</h2>
