@@ -80,7 +80,8 @@ describe('Deck stats utility methods', () => {
         d: createFakeCard(2000, 4, FACTION_NAMES[0]),
         e: createFakeCard(20000, 5, FACTION_NAMES[0]),
         f: createFakeCard(200000, 6, FACTION_NAMES[0]),
-        g: createFakeCard(200000, 20, FACTION_NAMES[0])
+        g: createFakeCard(200000, 20, FACTION_NAMES[0]),
+        h: createFakeCard(4, -1, FACTION_NAMES[0])
       };
 
       const result = getManaCurveHighchartsSeries(cards, theme);
@@ -89,7 +90,7 @@ describe('Deck stats utility methods', () => {
           name: FACTION_NAMES[0],
           showInLegend: false,
           color: 'blue',
-          data: [2, 20, 200, 2000, 20000, 400000]
+          data: [6, 20, 200, 2000, 20000, 400000]
         },
         {
           name: FACTION_NAMES[1],
