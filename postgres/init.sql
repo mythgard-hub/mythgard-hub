@@ -64,8 +64,10 @@ INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 8', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 9', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
-  INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
+INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Ghul', 'rock', 'Earth Enchantment', '1', 'R', 'RARE', '{MINION}');
+INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
+  VALUES ('X Cost', 'lifelink', 'vampire', '-1', 'G', 'MYTHIC', '{MINION, ENCHANTMENT}');
 
 CREATE TABLE mythgard.card_spawn (
   card_id int CONSTRAINT spawner_card_id_fkey REFERENCES mythgard.card (id),
