@@ -37,6 +37,12 @@ export default function DeckList({ decks }) {
         .type {
           font-weight: 200;
         }
+        .deckVotes,
+        .factions,
+        .mana,
+        .modifiedDate {
+          white-space: nowrap;
+        }
         @media only screen and (max-width: 575.98px) {
           .factions,
           .mana,
@@ -68,7 +74,7 @@ export default function DeckList({ decks }) {
                   </div>
                   <div className="deckAuthor">by {author}</div>
                 </td>
-                <td>
+                <td className="deckVotes">
                   <UpvoteIndicator votes={metaData.votes || 0} />
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">

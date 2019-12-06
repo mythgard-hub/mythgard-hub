@@ -64,8 +64,10 @@ INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 8', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 9', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
-  INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
+INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Ghul', 'rock', 'Earth Enchantment', '1', 'R', 'RARE', '{MINION}');
+INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
+  VALUES ('X Cost', 'lifelink', 'vampire', '-1', 'G', 'MYTHIC', '{MINION, ENCHANTMENT}');
 
 CREATE TABLE mythgard.card_spawn (
   card_id int CONSTRAINT spawner_card_id_fkey REFERENCES mythgard.card (id),
@@ -201,7 +203,8 @@ CREATE TABLE mythgard.card_deck (
 
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (1, 4, 2);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1), (3, 18, 4);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
 
 ALTER TABLE mythgard.card_deck ENABLE ROW LEVEL SECURITY;
@@ -394,7 +397,8 @@ INSERT INTO mythgard.card_faction("card_id","faction_id")
     (14, 1),
     (15, 1),
     (16, 1),
-    (17, 2);
+    (17, 2),
+    (18, 6);
 
 CREATE TABLE mythgard.site_config (
   id SERIAL PRIMARY KEY,
