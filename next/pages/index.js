@@ -10,16 +10,9 @@ import useConfig from '../lib/use-config.js';
 
 const index = () => {
   const theme = useContext(ThemeContext);
-  // const { config } = useConfig();
-  //
-  const config = {
-    hasHomeBannerAd: true,
-    homeBannerAdUrl: 'www.google.com',
-    homeBannerImgUrl:
-      'https://s3-us-west-2.amazonaws.com/cdn.mythgardhub.com/banner/Banner_InkedGaming.jpg',
-    bannerEndDate: '2020-12-03T00:00:01-08:00',
-    bannerStartDate: '2018-12-03T00:00:01-08:00'
-  };
+  const { config } = useConfig();
+  const homeBannerAd = config && config.homeBannerAd;
+  const now = new Date();
 
   let banner = (
     <Link href="/new-player-guide">
@@ -27,15 +20,14 @@ const index = () => {
     </Link>
   );
 
-  const now = new Date();
   if (
-    config &&
-    config.hasHomeBannerAd &&
-    new Date(config.bannerStartDate) < now &&
-    new Date(config.bannerEndDate) > now
+    homeBannerAd &&
+    homeBannerAd.enabled &&
+    new Date(homeBannerAd.startDate) < now &&
+    new Date(homeBannerAd.endDate) > now
   ) {
     banner = (
-      <a href={config.homeBannerAdUrl}>
+      <a href={homeBannerAd.url}>
         <div className="promo-banner" />
       </a>
     );
@@ -88,7 +80,7 @@ const index = () => {
           color: ${mgColors.orange};
         }
         :global(.promo-banner) {
-          background-image: url(${config && config.homeBannerImgUrl});
+          background-image: url(${homeBannerAd && homeBannerAd.imgUrl});
           background-size: contain;
           background-repeat: no-repeat;
           width: 100%;
