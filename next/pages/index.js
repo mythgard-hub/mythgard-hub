@@ -6,16 +6,41 @@ import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import { mgColors } from '../lib/theme.js';
 import Link from 'next/link';
-
-const bannerEndDate = new Date('2019-12-03T00:00:01-08:00');
-let showBannerAd = false;
-
-if (new Date() < bannerEndDate) {
-  showBannerAd = true;
-}
+import useConfig from '../lib/use-config.js';
 
 const index = () => {
   const theme = useContext(ThemeContext);
+  // const { config } = useConfig();
+  //
+  const config = {
+    hasHomeBannerAd: true,
+    homeBannerAdUrl: 'www.google.com',
+    homeBannerImgUrl:
+      'https://s3-us-west-2.amazonaws.com/cdn.mythgardhub.com/banner/Banner_InkedGaming.jpg',
+    bannerEndDate: '2020-12-03T00:00:01-08:00',
+    bannerStartDate: '2018-12-03T00:00:01-08:00'
+  };
+
+  let banner = (
+    <Link href="/new-player-guide">
+      <a className="newPlayerGuideBanner">New Player Guide</a>
+    </Link>
+  );
+
+  const now = new Date();
+  if (
+    config &&
+    config.hasHomeBannerAd &&
+    new Date(config.bannerStartDate) < now &&
+    new Date(config.bannerEndDate) > now
+  ) {
+    banner = (
+      <a href={config.homeBannerAdUrl}>
+        <div className="promo-banner" />
+      </a>
+    );
+  }
+
   return (
     <Layout>
       <style jsx>{`
@@ -41,7 +66,7 @@ const index = () => {
           text-transform: uppercase;
         }
         /* Temporary banner */
-        .newPlayerGuideBanner {
+        :global(.newPlayerGuideBanner) {
           display: block;
           border-top: ${theme.border};
           border-bottom: ${theme.border};
@@ -59,11 +84,11 @@ const index = () => {
           vertical-align: middle;
           text-decoration: none;
         }
-        .newPlayerGuideBanner:hover {
+        :global(.newPlayerGuideBanner:hover) {
           color: ${mgColors.orange};
         }
-        .promo-banner {
-          background-image: url('https://s3-us-west-2.amazonaws.com/cdn.mythgardhub.com/banner/Banner_InkedGaming.jpg');
+        :global(.promo-banner) {
+          background-image: url(${config && config.homeBannerImgUrl});
           background-size: contain;
           background-repeat: no-repeat;
           width: 100%;
@@ -86,16 +111,7 @@ const index = () => {
           }
         }
       `}</style>
-      {!showBannerAd && (
-        <Link href="/new-player-guide">
-          <a className="newPlayerGuideBanner">New Player Guide</a>
-        </Link>
-      )}
-      {showBannerAd && (
-        <a href="https://www.inkedgaming.com/">
-          <div className="promo-banner" />
-        </a>
-      )}
+      {banner}
       <div className="homePageColumns">
         <div className="mg-column">
           <h2>Top Media</h2>
