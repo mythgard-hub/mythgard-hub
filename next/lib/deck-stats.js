@@ -1,5 +1,6 @@
 import { FACTION_NAMES, FACTION_COLORS } from '../constants/factions';
 import { mainFaction } from './card';
+import { X_COST } from '../constants/card';
 
 const FACTION_COLORS_MAP = {};
 
@@ -44,7 +45,7 @@ export const getManaCurveHighchartsSeries = (cards, theme) => {
       const primaryFaction = mainFaction(card);
 
       let manaCost = card.mana;
-      if (manaCost === -1) {
+      if (manaCost === X_COST) {
         manaCost = '1';
       } else if (manaCost >= 6) {
         manaCost = '6+';
