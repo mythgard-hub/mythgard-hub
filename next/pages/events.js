@@ -17,7 +17,7 @@ function TournamentsPage() {
           padding-bottom: 10px;
         }
 
-        .announcement content {
+        .announcement .content {
           display: table-cell;
           vertical-align: middle;
           text-align: left;
@@ -52,7 +52,7 @@ function TournamentsPage() {
           src="https://cdn.mythgardhub.com/identity/MGH_CrownLogo.png"
         />
 
-        <content>
+        <div className="content">
           <br />
           <h2>Thank you for your interest in Mythgard Events!</h2>
           <p>
@@ -67,7 +67,7 @@ function TournamentsPage() {
             </a>{' '}
             with the details.
           </p>
-        </content>
+        </div>
       </div>
       <div>
         <h1>Upcoming Events</h1>
