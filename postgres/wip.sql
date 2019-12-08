@@ -1,3 +1,4 @@
+-- reddit's hotness algorithm, allegedly
 -- def hot(ups, downs, date):
 --     s = score(ups, downs)
 --     order = log(max(abs(s), 1), 10)
@@ -5,21 +6,38 @@
 --     seconds = epoch_seconds(date) - 1134028003
 --     return round(sign * order + seconds / 45000, 7)
 
-
 drop function if exists mythgard.epochSeconds;
 create function mythgard.epochSeconds(timestamp) returns int as $$
   select extract(epoch from $1)::int;
 $$ language sql;
 
-drop function if exists mythgard.hotness;
-create function mythgard.hotness(ups integer, creation timestamp) returns int as $$
+drop function if exists mythgard.hotnessOrder;
+create function mythgard.hotnessOrder(votes integer) returns double precision as $$
+  select log(greatest(votes, 1));
+$$ language sql;
 
-  select mythgard.epochSeconds(creation);
+drop function if exists mythgard.hotnessSign;
+create function mythgard.hotnessSign(votes integer) returns integer as $$
+  select(case when votes > 0 then 1 else 0 end);
+$$ language sql;
+
+drop function if exists mythgard.hotnessSeconds;
+create function mythgard.hotnessSeconds(creation timestamp) returns integer as $$
+  select(mythgard.epochSeconds(creation) - 1134028003);
+$$ language sql;
+
+drop function if exists mythgard.hotness;
+create function mythgard.hotness(votes integer, creation timestamp) returns double precision as $$
+
+  select round(
+    ((mythgard.hotnessSign(votes) * mythgard.hotnessOrder(votes))
+      + (mythgard.hotnessSeconds(creation) / 45000))::numeric
+  , 7)::double precision;
 
 $$ language sql;
 
 drop function if exists mythgard.deckHotness;
-create function mythgard.deckHotness(deckId integer) returns int as $$
+create function mythgard.deckHotness(deckId integer) returns double precision as $$
 
   select mythgard.hotness(mythgard.deck_votes(deckId), created)
   from mythgard.deck
