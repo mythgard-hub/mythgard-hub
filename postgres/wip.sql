@@ -5,7 +5,7 @@
 --     sign = 1 if s > 0 else -1 if s < 0 else 0
 --     seconds = epoch_seconds(date) - 1134028003
 --     return round(sign * order + seconds / 45000, 7)
-
+start transaction;
 drop function if exists mythgard.epochSeconds;
 create function mythgard.epochSeconds(timestamp) returns int as $$
   select extract(epoch from $1)::int;
@@ -45,4 +45,6 @@ create function mythgard.deckHotness(deckId integer) returns double precision as
 
 $$ language sql;
 
-select * FROM mythgard.deckHotness(1);
+select  mythgard.deckHotness(deck.id), deck.name  from deck order by mythgard.deckHotness(deck.id) desc limit 3;
+
+rollback;
