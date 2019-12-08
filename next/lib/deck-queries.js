@@ -184,23 +184,26 @@ export const deckCardsQuery = gql`
 `;
 
 export const allDecksQuery = gql`
-  query decks($first:Int, $offset:Int, $modified:Datetime) {
-    decks(orderBy: CREATED_DESC, first:$first, offset:$offset, filter: {
-      modified: {
-        greaterThanOrEqualTo: $modified
-      }
-    }) {
+  query allDecks($first: Int, $offset: Int, $modified: Datetime) {
+    deckPreviews(
+      orderBy: HOTNESS_DESC
+      first: $first
+      offset: $offset
+      filter: { deckModified: { greaterThanOrEqualTo: $modified } }
+    ) {
       totalCount
       nodes {
-        id
-        name
-        author {
-          username
-        }
-        modified
-        deckPreviews {
-          ${deckPreviewsFragment}
-        }
+        deckId
+        deckName
+        username
+        accountId
+        deckModified
+        deckCreated
+        factions
+        essenceCost
+        votes
+        deckArchetype
+        deckType
       }
     }
   }

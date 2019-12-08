@@ -66,4 +66,7 @@ FROM mythgard.deck
 LEFT JOIN mythgard.account
 ON mythgard.account.id = mythgard.deck.author_id;
 
+comment on view mythgard.deck_preview is E'@foreignKey (deck_id) references mythgard.deck';
+
 GRANT SELECT ON TABLE mythgard.deck_preview TO admin, authd_user, anon_user;
+
