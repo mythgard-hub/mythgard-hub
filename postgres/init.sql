@@ -469,6 +469,53 @@ RETURNS INTEGER AS $$
   END;
   $$ language 'plpgsql';
 
+-- reddit's hotness algorithm, allegedly
+-- https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9
+-- def hot(ups, downs, date):
+--     s = score(ups, downs)
+--     order = log(max(abs(s), 1), 10)
+--     sign = 1 if s > 0 else -1 if s < 0 else 0
+--     seconds = epoch_seconds(date) - 1134028003
+--     return round(sign * order + seconds / 45000, 7)
+create function mythgard.epochSeconds(timestamp) returns int as $$
+  select extract(epoch from $1)::int;
+$$ language sql stable;
+
+-- we omit the log fn to emphasize votes more
+create function mythgard.hotnessOrder(votes integer) returns integer as $$
+  select greatest(votes, 1);
+$$ language sql stable;
+
+create function mythgard.hotnessSign(votes integer) returns integer as $$
+  select(case when votes > 0 then 1 else 0 end);
+$$ language sql stable;
+
+create function mythgard.hotnessSeconds(creation timestamp) returns integer as $$
+  select(mythgard.epochSeconds(creation) - 1134028003);
+$$ language sql stable;
+
+-- We inflate hotnessSeconds divisor by a lot. Reddit's is 45000. We want good decks
+-- to stay on the front page for several days
+create function mythgard.hotness(votes integer, creation timestamp) returns double precision as $$
+
+  select round(
+    ((mythgard.hotnessSign(votes) * mythgard.hotnessOrder(votes))
+      + (mythgard.hotnessSeconds(creation) / 180000))::numeric
+  , 7)::double precision;
+
+$$ language sql stable;
+
+create function mythgard.deckHotness(deckId integer) returns double precision as $$
+
+  select mythgard.hotness(mythgard.deck_votes(deckId), created)
+  from mythgard.deck
+  where deck.id = deckId;
+
+$$ language sql stable;
+
+-- useful function to run on production for evaluating results
+-- select mythgard.deckHotness(deck.id), mythgard.deck_votes(deck.id), created, name from mythgard.deck order by mythgard.deckHotness(deck.id) desc limit 20;
+
 CREATE OR REPLACE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
          deck.name as deck_name,
@@ -477,7 +524,8 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          mythgard.deck_essence_cost(deck.id)::int as essence_cost,
          mythgard.deck_votes(deck.id)::int as votes,
          deck.archetype as deck_archetype,
-         deck.type as deck_type
+         deck.type as deck_type,
+         mythgard.deckHotness(deck.id) as deck_hotness
   FROM mythgard.deck
   JOIN mythgard.card_deck
     ON card_deck.deck_id = deck.id
