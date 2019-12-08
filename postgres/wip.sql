@@ -12,8 +12,8 @@ create function mythgard.epochSeconds(timestamp) returns int as $$
 $$ language sql;
 
 drop function if exists mythgard.hotnessOrder;
-create function mythgard.hotnessOrder(votes integer) returns double precision as $$
-  select log(greatest(votes, 1));
+create function mythgard.hotnessOrder(votes integer) returns integer as $$
+  select greatest(votes, 1);
 $$ language sql;
 
 drop function if exists mythgard.hotnessSign;
@@ -31,7 +31,7 @@ create function mythgard.hotness(votes integer, creation timestamp) returns doub
 
   select round(
     ((mythgard.hotnessSign(votes) * mythgard.hotnessOrder(votes))
-      + (mythgard.hotnessSeconds(creation) / 45000))::numeric
+      + (mythgard.hotnessSeconds(creation) / 185000))::numeric
   , 7)::double precision;
 
 $$ language sql;
@@ -45,6 +45,6 @@ create function mythgard.deckHotness(deckId integer) returns double precision as
 
 $$ language sql;
 
-select  mythgard.deckHotness(deck.id), deck.name  from deck order by mythgard.deckHotness(deck.id) desc limit 3;
+select  mythgard.deckHotness(deck.id), mythgard.deck_votes(deck.id), created, name from mythgard.deck order by mythgard.deckHotness(deck.id) desc limit 20;
 
 rollback;
