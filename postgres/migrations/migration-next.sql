@@ -36,3 +36,34 @@ create function mythgard.deckHotness(deckId integer) returns double precision as
   where deck.id = deckId;
 
 $$ language sql stable;
+
+create or replace function mythgard.deck_factions(deckId integer) returns  character varying[] as $$
+  select(array_agg(distinct faction.name))
+  from mythgard.deck
+  left join mythgard.card_deck on card_deck.deck_id = deck.id
+  left join mythgard.card on card.id = card_deck.card_id
+  left join mythgard.card_faction on card_faction.card_id = card.id
+  left join mythgard.faction on faction.id = card_faction.faction_id
+  where mythgard.deck.id = deckId
+  and faction.name is not null;
+$$ language sql stable;
+
+DROP VIEW mythgard.deck_preview;
+CREATE VIEW mythgard.deck_preview as
+SELECT deck.id as deck_id,
+       deck.name as deck_name,
+       deck.created as deck_created,
+       deck.type as deck_type,
+       deck.modified as deck_modified,
+       deck.archetype as deck_archetype,
+       account.id as account_id,
+       account.username as username,
+       mythgard.deck_factions(deck.id) as factions,
+       mythgard.deck_essence_cost(deck.id)::int as essence_cost,
+       mythgard.deck_votes(deck.id)::int as votes,
+       mythgard.deck_hotness(deck.id)::int as hotness
+FROM mythgard.deck
+LEFT JOIN mythgard.account
+ON mythgard.account.id = mythgard.deck.author_id;
+
+GRANT SELECT ON TABLE mythgard.deck_preview TO admin, authd_user, anon_user;

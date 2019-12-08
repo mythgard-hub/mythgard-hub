@@ -505,7 +505,7 @@ create function mythgard.hotness(votes integer, creation timestamp) returns doub
 
 $$ language sql stable;
 
-create function mythgard.deckHotness(deckId integer) returns double precision as $$
+create function mythgard.deck_hotness(deckId integer) returns double precision as $$
 
   select mythgard.hotness(mythgard.deck_votes(deckId), created)
   from mythgard.deck
@@ -514,28 +514,36 @@ create function mythgard.deckHotness(deckId integer) returns double precision as
 $$ language sql stable;
 
 -- useful function to run on production for evaluating results
--- select mythgard.deckHotness(deck.id), mythgard.deck_votes(deck.id), created, name from mythgard.deck order by mythgard.deckHotness(deck.id) desc limit 20;
+-- select mythgard.deck_hotness(deck.id), mythgard.deck_votes(deck.id), created, name from mythgard.deck order by mythgard.deckHotness(deck.id) desc limit 20;
 
-CREATE OR REPLACE VIEW mythgard.deck_preview as
-  SELECT deck.id as deck_id,
-         deck.name as deck_name,
-         deck.created as deck_created,
-         array_agg(DISTINCT faction.name) as factions,
-         mythgard.deck_essence_cost(deck.id)::int as essence_cost,
-         mythgard.deck_votes(deck.id)::int as votes,
-         deck.archetype as deck_archetype,
-         deck.type as deck_type
-  FROM mythgard.deck
-  JOIN mythgard.card_deck
-    ON card_deck.deck_id = deck.id
-  JOIN mythgard.card
-    ON card_deck.card_id = card.id
-  LEFT JOIN mythgard.card_faction
-    ON (card.id = card_faction.card_id and card_faction.faction_id is not null)
-  LEFT JOIN mythgard.faction
-    On faction.id = card_faction.faction_id
- GROUP BY deck.id
-;
+create or replace function mythgard.deck_factions(deckId integer) returns  character varying[] as $$
+  select(array_agg(distinct faction.name))
+  from mythgard.deck
+  left join mythgard.card_deck on card_deck.deck_id = deck.id
+  left join mythgard.card on card.id = card_deck.card_id
+  left join mythgard.card_faction on card_faction.card_id = card.id
+  left join mythgard.faction on faction.id = card_faction.faction_id
+  where mythgard.deck.id = deckId
+  and faction.name is not null;
+$$ language sql stable;
+
+DROP VIEW mythgard.deck_preview;
+CREATE VIEW mythgard.deck_preview as
+SELECT deck.id as deck_id,
+       deck.name as deck_name,
+       deck.created as deck_created,
+       deck.type as deck_type,
+       deck.modified as deck_modified,
+       deck.archetype as deck_archetype,
+       account.id as account_id,
+       account.username as username,
+       mythgard.deck_factions(deck.id) as factions,
+       mythgard.deck_essence_cost(deck.id)::int as essence_cost,
+       mythgard.deck_votes(deck.id)::int as votes,
+       mythgard.deck_hotness(deck.id)::int as hotness
+FROM mythgard.deck
+LEFT JOIN mythgard.account
+ON mythgard.account.id = mythgard.deck.author_id;
 
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
 -- But basically is for postgraphile to see relation to deck

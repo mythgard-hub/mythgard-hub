@@ -24,3 +24,19 @@ create function mythgard.deck_factions(deckId integer) returns  character varyin
   where deck.id = deckId
   and faction.name is not null;
 $$ language sql stable;
+
+CREATE OR REPLACE VIEW mythgard.deck_preview as
+SELECT deck.id as deck_id,
+       deck.name as deck_name,
+       deck.created as deck_created,
+       mythgard.deck_factions(deck.id) as factions,
+       mythgard.deck_essence_cost(deck.id)::int as essence_cost,
+       mythgard.deck_votes(deck.id)::int as votes,
+       deck.archetype as deck_archetype,
+       deck.type as deck_type,
+       mythgard.deck_hotness(deck.id)::int as hotness,
+       account.id as account_id,
+       account.username as username
+FROM mythgard.deck
+LEFT JOIN mythgard.account
+ON account.id = deck.author_id;
