@@ -527,23 +527,23 @@ create or replace function mythgard.deck_factions(deckId integer) returns  chara
   and faction.name is not null;
 $$ language sql stable;
 
-DROP VIEW mythgard.deck_preview;
-CREATE VIEW mythgard.deck_preview as
-SELECT deck.id as deck_id,
-       deck.name as deck_name,
-       deck.created as deck_created,
-       deck.type as deck_type,
-       deck.modified as deck_modified,
-       deck.archetype as deck_archetype,
-       account.id as account_id,
-       account.username as username,
-       mythgard.deck_factions(deck.id) as factions,
-       mythgard.deck_essence_cost(deck.id)::int as essence_cost,
-       mythgard.deck_votes(deck.id)::int as votes,
-       mythgard.deck_hotness(deck.id)::int as hotness
-FROM mythgard.deck
-LEFT JOIN mythgard.account
-ON mythgard.account.id = mythgard.deck.author_id;
+CREATE OR REPLACE VIEW mythgard.deck_preview as
+  SELECT deck.id as deck_id,
+         deck.name as deck_name,
+         deck.created as deck_created,
+         mythgard.deck_factions(deck.id) as factions,
+         mythgard.deck_essence_cost(deck.id)::int as essence_cost,
+         mythgard.deck_votes(deck.id)::int as votes,
+         deck.archetype as deck_archetype,
+         deck.type as deck_type,
+         deck.modified as deck_modified,
+         account.id as account_id,
+         account.username as username,
+         mythgard.deck_hotness(deck.id)::int as hotness
+  FROM mythgard.deck
+  LEFT JOIN mythgard.account
+  ON mythgard.account.id = mythgard.deck.author_id
+;
 
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
 -- But basically is for postgraphile to see relation to deck
