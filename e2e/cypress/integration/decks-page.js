@@ -47,7 +47,7 @@ describe('Decks Page', function() {
   it('works', function() {
     // Should show deck votes
     cy.get('[data-cy="deckVotesCell"]').should('have.length', 3);
-    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 1);
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 3);
     cy.get(deckArchetypePicker).should('have.length', 3);
     cy.get(deckTypePicker).should('have.length', 3);
     cy.get(deckArchetypePicker)
@@ -57,13 +57,13 @@ describe('Decks Page', function() {
       .eq(1)
       .should('contain', 'Midrange');
     cy.get(deckTypePicker)
-      .eq(0)
+      .eq(2)
       .should('contain', 'Gauntlet');
     cy.get(deckTypePicker)
       .eq(1)
       .should('contain', 'Tournament');
     cy.get(deckTypePicker)
-      .eq(2)
+      .eq(0)
       .should('contain', 'Standard');
 
     cy.get('[data-cy="deckListItem"] a:first').click();
@@ -260,12 +260,12 @@ describe('Decks Page', function() {
 
     // test deck sort
     cy.get(deckSearchClear).click();
-    // the default search is newest first.
+    // the default search is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', deckNameAllFactions);
+      .should('contain', deckNameDragons);
     cy.get(decksSort).select(oldestFirst);
     cy.get(deckListOldestFirst);
     cy.get(deckListItem)
