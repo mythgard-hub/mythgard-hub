@@ -85,6 +85,8 @@ SomeDecks.propTypes = {
     factionNames: PropTypes.array,
     isOnlyFactions: PropTypes.bool,
     updatedTime: PropTypes.string,
-    sortBy: PropTypes.string
+    sortBy: PropTypes.string,
+    archetype: PropTypes.string,
+    type: PropTypes.string
   }).isRequired
 };
