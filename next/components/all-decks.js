@@ -34,17 +34,13 @@ export default function AllDecks({ defaultDaysAgo }) {
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading...</div>;
 
-  if (data && !data.decks) return <div>No decks found</div>;
+  if (data && !data.deckPreviews) return <div>No decks found</div>;
 
-  const totalCount = data.decks.totalCount;
+  const { totalCount, nodes } = data.deckPreviews;
 
   return (
     <div ref={listRef} data-cy="all-decks-loaded">
-      <DeckList
-        decks={data.decks.nodes}
-        currentPage={currentPage}
-        setPage={setPage}
-      />
+      <DeckList decks={nodes} currentPage={currentPage} setPage={setPage} />
       <style jsx>{`
         :global(.mg-paging) {
           margin-top: 20px;
