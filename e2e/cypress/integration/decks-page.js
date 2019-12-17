@@ -10,6 +10,7 @@ import {
   deckSearchDeckName,
   deckSearchClear,
   deckSearchAllDecksLoaded,
+  deckListHotFirst,
   deckListNewestFirst,
   deckListOldestFirst,
   deckListCheapestFirst,
@@ -257,63 +258,63 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
 
-    //   // test deck sort
-    //   cy.get(deckSearchClear).click();
-    //   // the default search is hot
-    //   cy.get(deckSearchAllDecksLoaded);
-    //   cy.get(deckListItem)
-    //     .find(deckName)
-    //     .first()
-    //     .should('contain', deckNameDragons);
-    //   cy.get(decksSort).select(oldestFirst);
-    //   cy.get(deckListOldestFirst);
-    //   cy.get(deckListItem)
-    //     .find(deckName)
-    //     .first()
-    //     .should('contain', deckNameDragons);
-    //   cy.get(decksSort).select(essenceAsc);
-    //   cy.get(deckListCheapestFirst);
-    //   cy.get(deckListItem)
-    //     .first()
-    //     .find(deckName)
-    //     .should('contain', deckNameCats);
-    //   cy.get(decksSort).select(essenceDesc);
-    //   cy.get(deckListCostliestFirst);
-    //   cy.get(deckListItem)
-    //     .first()
-    //     .find(deckName)
-    //     .should('contain', deckNameAllFactions);
-    //   cy.get(decksSort).select(nameAsc);
-    //   cy.get(deckListNameAtoZ);
-    //   cy.get(deckListItem)
-    //     .first()
-    //     .find(deckName)
-    //     .should('contain', deckNameAllFactions);
-    //   cy.get(decksSort).select(nameDesc);
-    //   cy.get(deckListNameZtoA);
-    //   cy.get(deckListItem)
-    //     .first()
-    //     .find(deckName)
-    //     .should('contain', deckNameDragons);
-    //   cy.get(decksSort).select(ratingDesc);
-    //   cy.get(deckListRatingHighToLow);
-    //   cy.get(deckListItem)
-    //     .first()
-    //     .find(deckName)
-    //     .should('contain', deckNameDragons);
-    //   cy.get(decksSort).select(ratingAsc);
-    //   cy.get(deckListRatingLowToHigh);
-    //   cy.get(deckListItem)
-    //     .find(deckName)
-    //     .first()
-    //     .should('contain', deckNameAllFactions);
-    //   // this test differs from the first sort test in that
-    //   // it uses some-decks rather than all-decks
-    //   cy.get(decksSort).select(newestFirst);
-    //   cy.get(deckListNewestFirst);
-    //   cy.get(deckListItem)
-    //     .find(deckName)
-    //     .first()
-    //     .should('contain', deckNameAllFactions);
+    // test deck sort
+    cy.get(deckSearchClear).click();
+    // the default search is hot
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(oldestFirst);
+    cy.get(deckListOldestFirst);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(essenceAsc);
+    cy.get(deckListCheapestFirst);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameCats);
+    cy.get(decksSort).select(essenceDesc);
+    cy.get(deckListCostliestFirst);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameAllFactions);
+    cy.get(decksSort).select(nameAsc);
+    cy.get(deckListNameAtoZ);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameAllFactions);
+    cy.get(decksSort).select(nameDesc);
+    cy.get(deckListNameZtoA);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(ratingDesc);
+    cy.get(deckListRatingHighToLow);
+    cy.get(deckListItem)
+      .first()
+      .find(deckName)
+      .should('contain', deckNameDragons);
+    cy.get(decksSort).select(ratingAsc);
+    cy.get(deckListRatingLowToHigh);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameAllFactions);
+    // this test differs from the first sort test in that
+    // it uses some-decks rather than all-decks
+    cy.get(decksSort).select(hot);
+    cy.get(deckListHotFirst);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
   });
 });
