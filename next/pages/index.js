@@ -57,7 +57,6 @@ const index = () => {
           font-style: italic;
           text-transform: uppercase;
         }
-        /* Temporary banner */
         :global(.newPlayerGuideBanner) {
           display: block;
           border-top: ${theme.border};
