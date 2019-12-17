@@ -739,7 +739,7 @@ create or replace function mythgard.search_decks(
        ELSIF sortBy = 'hot' THEN
          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions, archetypeFilter, typeFilter) order by mythgard.deck_hotness(deck.id) desc;
+                  faction6, numFactions, archetypeFilter, typeFilter) order by mythgard.deck_hotness(id) desc;
        ELSE
           RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
