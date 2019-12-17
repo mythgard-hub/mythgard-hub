@@ -124,78 +124,75 @@ describe('Decks Page', function() {
     cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    //   // search by name
-    //   cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
-    //   cy.get('[data-cy="deckSearchDeckName"]').type('cat');
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    //   cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
-    //   cy.get(deckFactionsPicker).should('have.length', '2');
-    //   cy.get(deckEssencePicker).should('contain', '50');
-    //   cy.get(deckSearchClear).click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    // search by name
+    cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
+    cy.get('[data-cy="deckSearchDeckName"]').type('cat');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get('[data-cy="deckListItem"] a').should('contain', 'cat');
+    cy.get(deckFactionsPicker).should('have.length', '2');
+    cy.get(deckEssencePicker).should('contain', '50');
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    //   // search by name (search via enter)
-    //   cy.get('[data-cy="deckSearchDeckName"]').type('cat{enter}');
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    //   cy.get(deckSearchClear).click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    // search by name (search via enter)
+    cy.get('[data-cy="deckSearchDeckName"]').type('cat{enter}');
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    //   // searh by included cards
-    //   cy.get(`${cardSearch} input`).type('drag');
-    //   cy.get(`${cardSearch} input`).type('{enter}');
-    //   cy.get(cardSearchSelections).should('have.length', 1);
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 2);
-    //   cy.get(`${cardSearch} input`).type('harm');
-    //   cy.get(`${cardSearch} input`).type('{enter}');
-    //   cy.get(cardSearchSelections).should('have.length', 2);
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    //   cy.get(deckSearchClear).click();
-    //   cy.get(cardSearchSelections).should('have.length', 0);
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    // searh by included cards
+    cy.get(`${cardSearch} input`).type('drag');
+    cy.get(`${cardSearch} input`).type('{enter}');
+    cy.get(cardSearchSelections).should('have.length', 1);
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 2);
+    cy.get(`${cardSearch} input`).type('harm');
+    cy.get(`${cardSearch} input`).type('{enter}');
+    cy.get(cardSearchSelections).should('have.length', 2);
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get(deckSearchClear).click();
+    cy.get(cardSearchSelections).should('have.length', 0);
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    //   // search by faction - contains only that faction
-    //   cy.get(`${factionFilter}`)
-    //     .eq(3)
-    //     .click();
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    //   cy.get(deckSearchClear).click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    // search by faction - contains only that faction
+    cy.get(`${factionFilter}`)
+      .eq(3)
+      .click();
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    //   // search by faction - contains at least this faction
-    //   cy.get(`${factionFilter}:first`).click();
-    //   cy.get(`[data-cy="leftSlider"]`).click();
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 2);
-    //   cy.get(deckSearchClear).click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    // search by faction - contains at least this faction
+    cy.get(`${factionFilter}:first`).click();
+    cy.get(`[data-cy="leftSlider"]`).click();
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 2);
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    //   // test deck author search
-    //   cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv');
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 2);
-    //   cy.get(deckSearchClear).click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    // test deck author search
+    cy.get('[data-cy="deckSearchDeckAuthor"]').type('lsv');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 2);
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
-    //   cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   // test deck name search - full name with spaces
-    //   cy.get('[data-cy="deckSearchDeckName"]').type('norden aztlan');
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 1);
-    //   cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
-    //   cy.get('[data-cy="deckSearchDeckName"]').clear();
-    //   cy.get('[data-cy="deckSearchSubmit"]').click();
-    //   cy.get('[data-cy="deckListItem"]').should('have.length', 4);
-    //   cy.get(deckArchetypePicker)
-    //     .eq(0)
-    //     .should('contain', 'Control Midrange');
-    //   cy.get(deckTypePicker)
-    //     .eq(0)
-    //     .should('contain', 'Standard');
+    cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+
+    // test deck name search - full name with spaces
+    cy.get('[data-cy="deckSearchDeckName"]').type('norden aztlan');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 1);
+    cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+
+    // Clear
+    cy.get('[data-cy="deckSearchDeckName"]').clear();
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 4);
 
     //   // test deck name search - first full word and start of the second
     //   cy.get('[data-cy="deckSearchDeckName"]').type('norden azt');
