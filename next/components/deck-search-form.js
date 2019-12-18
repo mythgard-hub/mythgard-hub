@@ -6,6 +6,8 @@ import CardSearch from './card-search';
 import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
 import DeckSearchFormSort from './deck-search-form-sort.js';
+import { ARCHETYPES, TYPES } from '../constants/deck';
+import DeckSearchFormDropdownFilter from './deck-search-form-dropdown-filter.js';
 
 const resetFilters = values => {
   return {
@@ -15,6 +17,8 @@ const resetFilters = values => {
     cardSuggestions: [],
     factionNames: values.factionNames,
     isOnlyFactions: values.isOnlyFactions,
+    archetype: '',
+    type: '',
     updatedTime: values.updatedTime,
     authorName: values.authorName,
     sortBy: values.sortBy
@@ -74,6 +78,8 @@ export default function DeckSearchForm(props) {
       factionNames: filters.factionNames,
       isOnlyFactions: filters.isOnlyFactions,
       updatedTime: filters.updatedTime,
+      archetype: filters.archetype,
+      type: filters.type,
       authorName: filters.authorName,
       sortBy: filters.sortBy
     });
@@ -115,7 +121,8 @@ export default function DeckSearchForm(props) {
           display: flex;
           flex-direction: column;
         }
-        .included-cards :global(.card-search-input) {
+        .included-cards :global(.card-search-input),
+        :global(.filter-dropdown) {
           margin: 10px 0;
           width: 100%;
         }
@@ -221,6 +228,22 @@ export default function DeckSearchForm(props) {
             Includes cards
             {cardSearchElement}
           </label>
+        </div>
+        <div className="filter-column">
+          <DeckSearchFormDropdownFilter
+            label="Archetype"
+            options={ARCHETYPES}
+            filterValue={filters.archetype}
+            onChange={handleInputChangeHooks(archetype =>
+              changeState('archetype', archetype)
+            )}
+          />
+          <DeckSearchFormDropdownFilter
+            label="Type"
+            options={TYPES}
+            filterValue={filters.type}
+            onChange={handleInputChangeHooks(type => changeState('type', type))}
+          />
         </div>
       </div>
       <div className="action-buttons">

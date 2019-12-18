@@ -87,7 +87,7 @@ PagingControls.propTypes = {
   pageSize: PropTypes.number.isRequired,
   itemCount: PropTypes.number.isRequired,
   setPage: PropTypes.func.isRequired,
-  listRef: PropTypes.string
+  listRef: PropTypes.object
 };
 
 export default PagingControls;

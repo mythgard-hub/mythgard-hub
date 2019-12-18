@@ -4,12 +4,17 @@ import ErrorMessage from './error-message';
 import DeckExport from './deck-export';
 import DeckEdit from './deck-edit';
 import DeckDelete from './deck-delete';
+import DeckDescriptionEdit from './deck-description-edit.js';
+
 import {
   initializeDeckBuilder,
   getAuthor,
   getEssenceCost,
   getDateCreated,
-  getFactions
+  getFactions,
+  getDeckArchetype,
+  getDeckType,
+  getCardCount
 } from '../lib/deck-utils';
 import DeckVote from './deck-vote';
 import { deckCardsQuery } from '../lib/deck-queries';
@@ -18,6 +23,7 @@ import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
+import DeckManaCurve from './deck-mana-curve';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -35,11 +41,10 @@ export default function Deck({ deck }) {
   const { loading, error, data } = useQuery(deckCardsQuery, {
     variables: { id: deck.id }
   });
+  const theme = useContext(ThemeContext);
 
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading...</div>;
-
-  const theme = useContext(ThemeContext);
 
   const cards = data.deck ? data.deck.cardDecks.nodes : [];
   const { power, path } = deck;
@@ -48,11 +53,14 @@ export default function Deck({ deck }) {
   const essenceCost = getEssenceCost(deck);
   const factions = getFactions(deck);
   const dateCreated = getDateCreated(deck);
+  const archetype = getDeckArchetype(deck);
+  const type = getDeckType(deck);
+  const cardCount = getCardCount(deckToExport);
 
   return (
     <div className="deck-page-container">
       <style jsx>{`
-        .deck-page-container {
+        .two-columns {
           display: flex;
           flex-wrap: wrap;
         }
@@ -75,7 +83,7 @@ export default function Deck({ deck }) {
         }
 
         .deck-author {
-          margin-bottom: 20px;
+          margin-bottom: 10px;
         }
 
         .coming-soon {
@@ -111,59 +119,101 @@ export default function Deck({ deck }) {
         }
 
         .gradient-hr {
-          margin: 10px 0;
+          margin: 8px 0;
         }
 
         .deck-stats {
-          margin-top: 10px;
+          margin: 10px 0 20px;
         }
 
         .gradient-hr + .deck-stat {
-          margin-bottom: 20px;
+          margin-bottom: 30px;
+        }
+
+        .deck-description {
+          margin: 20px 0;
+        }
+
+        .deck-subtitle {
+          display: flex;
+          justify-content: space-between;
         }
 
         @media only screen and (max-width: 575.98px) {
           .deck-page-container {
             flex-direction: column;
           }
+          .two-columns {
+            flex-direction: column;
+          }
           .right-col {
             margin-left: 0;
           }
+          .deck-author {
+            margin-bottom: 5px;
+          }
         }
       `}</style>
-      <div className="left-col">
-        <div className="deck-name" data-cy="deckName">
-          {deck.name}
-        </div>
-        <div className="deck-author">by {authorName}</div>
-        <DeckCardsTable deck={deckToExport} onlyTable />
-      </div>
-      <div className="right-col">
-        <div className="deck-actions">
-          <DeckExport className="deck-action" deckInProgress={deckToExport} />
-          <DeckEdit className="deck-action" deck={deck} />
-          <DeckDelete className="deck-action" deck={deck} />
-          <DeckVote className="deck-action no-grow" deck={deck} />
-        </div>
-        <div className="deck-stats-container">
-          <div className="deck-stats">
-            <div className="stats-title">Essence</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat">
-              <EssenceIndicator essence={essenceCost} />
+      <div className="two-columns">
+        <div className="left-col">
+          <div className="deck-name" data-cy="deckName">
+            {deck.name}
+          </div>
+          <div className="deck-subtitle">
+            <div className="deck-author">by {authorName}</div>
+            <div className="card-count" data-cy="deckPageCardCount">
+              Cards: <span>{cardCount}</span>
             </div>
-            <div className="stats-title factions-title">Factions</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat">
-              <FactionsIndicator factions={factions} />
-            </div>
-            <div className="stats-title factions-title">Deck Created</div>
-            <hr className="gradient-hr" />
-            <div className="deck-stat date-created" data-cy="deckCreatedDate">
-              {dateCreated}
+          </div>
+          <DeckCardsTable deck={deckToExport} onlyTable />
+        </div>
+        <div className="right-col">
+          <div className="deck-actions">
+            <DeckExport className="deck-action" deckInProgress={deckToExport} />
+            <DeckEdit className="deck-action" deck={deck} />
+            <DeckDelete className="deck-action" deck={deck} />
+            <DeckVote className="deck-action no-grow" deck={deck} />
+          </div>
+          <div className="deck-stats-container">
+            <div className="deck-stats">
+              <div className="stats-title">Essence</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <EssenceIndicator essence={essenceCost} />
+              </div>
+              <div className="stats-title">Type</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat" data-cy="deckPageType">
+                {type}
+              </div>
+              <div className="stats-title">Archetype</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat" data-cy="deckPageArchetype">
+                {archetype}
+              </div>
+              <div className="stats-title factions-title">Deck Created</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat date-created" data-cy="deckCreatedDate">
+                {dateCreated}
+              </div>
+              <div className="stats-title factions-title">Factions</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <FactionsIndicator factions={factions} />
+              </div>
+              <div className="stats-title">Mana Curve</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <DeckManaCurve cards={cards} />
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="deck-description">
+        <div className="stats-title">Description</div>
+        <hr className="gradient-hr" />
+        <DeckDescriptionEdit deck={deck} />
       </div>
     </div>
   );

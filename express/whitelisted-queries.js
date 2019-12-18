@@ -5,6 +5,8 @@ const deckPreviewsFragment = `
     factions
     essenceCost
     votes
+    deckArchetype
+    deckType
     deck{
       id
       author {
@@ -64,6 +66,8 @@ module.exports = [
     $pathId: Int
     $powerId: Int
     $authorId: Int
+    $archetype: [Deckarchetype]
+    $type: [Decktype]
   ) {
     createDeck(
       input: {
@@ -72,6 +76,8 @@ module.exports = [
           pathId: $pathId
           powerId: $powerId
           authorId: $authorId
+          archetype: $archetype
+          type: $type
         }
       }
     ) {
@@ -90,6 +96,8 @@ module.exports = [
           id
           name
         }
+        archetype
+        type
       }
     }
   }
@@ -101,9 +109,18 @@ mutation UpdateDeckAndRemoveCards(
     $name: String!
     $pathId: Int
     $powerId: Int
+    $archetype: [Deckarchetype]
+    $type: [Decktype]
   ) {
     updateDeckAndRemoveCards(
-      input: { _id: $id, _name: $name, _pathId: $pathId, _powerId: $powerId }
+      input: {
+        _id: $id
+        _name: $name
+        _pathId: $pathId
+        _powerId: $powerId
+        _archetype: $archetype
+        _type: $type
+      }
     ) {
       deck {
         id
@@ -120,6 +137,8 @@ mutation UpdateDeckAndRemoveCards(
           id
           name
         }
+        archetype
+        type
       }
     }
   }
@@ -264,23 +283,26 @@ mutation UpdateDeckAndRemoveCards(
 `,
 
   `
-  query decks($first:Int, $offset:Int, $modified:Datetime) {
-    decks(orderBy: CREATED_DESC, first:$first, offset:$offset, filter: {
-      modified: {
-        greaterThanOrEqualTo: $modified
-      }
-    }) {
+  query allDecks($first: Int, $offset: Int, $modified: Datetime) {
+    deckPreviews(
+      orderBy: HOTNESS_DESC
+      first: $first
+      offset: $offset
+      filter: { deckModified: { greaterThanOrEqualTo: $modified } }
+    ) {
       totalCount
       nodes {
-        id
-        name
-        author {
-          username
-        }
-        modified
-        deckPreviews {
-          ${deckPreviewsFragment}
-        }
+        deckId
+        deckName
+        username
+        accountId
+        deckModified
+        deckCreated
+        factions
+        essenceCost
+        votes
+        deckArchetype
+        deckType
       }
     }
   }
@@ -291,6 +313,7 @@ mutation UpdateDeckAndRemoveCards(
     deck(id: $id) {
       id
       name
+      description
       author {
         id
         username
@@ -378,6 +401,8 @@ mutation UpdateDeckAndRemoveCards(
       $faction5: Int
       $faction6: Int
       $numFactions: Int
+      $archetype: [Deckarchetype]
+      $type: [Decktype]
       $first: Int
       $offset: Int
       $sortBy: String
@@ -398,6 +423,8 @@ mutation UpdateDeckAndRemoveCards(
         faction5: $faction5
         faction6: $faction6
         numfactions: $numFactions
+        archetypefilter: $archetype
+        typefilter: $type
         first: $first
         offset: $offset
         sortby: $sortBy
@@ -519,6 +546,43 @@ query tournaments($now: Date) {
     deleteDeckVote(input: { id: $deckVoteId }) {
       deckVote {
         id
+      }
+    }
+  }
+`,
+  `
+  mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {
+    updateDeck(
+      input: {
+        id: $deckId
+        patch: { description: $deckDesc, name: $deckName }
+      }
+    ) {
+      deck {
+        id
+      }
+    }
+  }
+`,
+  `
+  query isModerator($accountId: Int!) {
+    accountModerators(condition: { accountId: $accountId }) {
+      totalCount
+    }
+  }
+`,
+  `
+  query config {
+    siteConfig(id: 1) {
+      config
+    }
+  }
+`,
+  `
+  mutation setConfig($config: JSON!) {
+    updateSiteConfig(input: { id: 1, patch: { config: $config } }) {
+      siteConfig {
+        config
       }
     }
   }

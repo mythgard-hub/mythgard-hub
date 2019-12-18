@@ -1,10 +1,18 @@
 export const exportDeck = deckInProgress => {
   try {
+    const path =
+      deckInProgress.deckPath && deckInProgress.deckPath.name
+        ? deckInProgress.deckPath.name
+        : '';
+    const power =
+      deckInProgress.deckPower && deckInProgress.deckPower.name
+        ? deckInProgress.deckPower.name
+        : '';
     const exportMeta = [
       `name: ${deckInProgress.deckName}`,
-      `path: ${deckInProgress.deckPath.name || ''}`,
-      `power: ${deckInProgress.deckPower.name || ''}`,
-      `coverart: ${deckInProgress.deckCoverArt}`
+      `path: ${path}`,
+      `power: ${power}`,
+      `coverart: ${deckInProgress.deckCoverArt || ''}`
     ].join('\n');
 
     const cards = Object.values(deckInProgress.mainDeck)

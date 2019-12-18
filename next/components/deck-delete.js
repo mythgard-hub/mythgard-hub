@@ -7,7 +7,7 @@ import UserContext from '../components/user-context';
 let messageTimeoutHandle;
 
 function DeckDelete({ deck, className }) {
-  const { client } = useApolloClient();
+  const client = useApolloClient();
   const { user } = useContext(UserContext);
   const [message, setMessage] = useState(null);
   const handleClick = useCallback(async () => {

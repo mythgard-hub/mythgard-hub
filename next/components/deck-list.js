@@ -6,10 +6,9 @@ import EssenceIndicator from './essence-indicator.js';
 import FactionsIndicator from './factions-indicator.js';
 import LargeTable from './large-table.js';
 import UpvoteIndicator from './upvote-indicator.js';
+import { getArchetypeLabel, getTypeLabel } from '../lib/deck-utils';
 
 export default function DeckList({ decks }) {
-  const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
-
   const theme = useContext(ThemeContext);
   return (
     <div>
@@ -30,6 +29,18 @@ export default function DeckList({ decks }) {
         .factions {
           text-align: center;
         }
+        .archetype {
+          font-weight: 600;
+        }
+        .type {
+          font-weight: 200;
+        }
+        .deckVotes,
+        .factions,
+        .mana,
+        .modifiedDate {
+          white-space: nowrap;
+        }
         @media only screen and (max-width: 575.98px) {
           .factions,
           .mana,
@@ -42,39 +53,38 @@ export default function DeckList({ decks }) {
         <tbody>
           {decks.map((deck, index) => {
             const classNames = index % 2 ? 'zebraRow' : '';
-            const author =
-              deck && deck.author ? deck.author.username : 'unknown';
+            const author = deck.username || 'unknown';
 
-            const deckModifiedMeta =
-              deckMetaData[index] && deckMetaData[index].deckCreated;
-            const modified = new Date(deck.modified || deckModifiedMeta);
+            const modified = new Date(deck.deckModified || deck.deckCreated);
+            const archetype = getArchetypeLabel(deck);
+            const type = getTypeLabel(deck);
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
                   <div className="deckName" data-cy="deckName">
-                    <Link href={`/deck?id=${deck.id}`}>
-                      <a>{deck.name}</a>
+                    <Link href={`/deck?id=${deck.deckId}`}>
+                      <a>{deck.deckName}</a>
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
                 </td>
-                <td>
-                  <UpvoteIndicator votes={deckMetaData[index].votes} />
+                <td className="deckVotes">
+                  <UpvoteIndicator votes={deck.votes || 0} />
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
-                  {deckMetaData[index] && (
-                    <FactionsIndicator
-                      factions={deckMetaData[index].factions}
-                    />
-                  )}
+                  <FactionsIndicator factions={deck.factions} />
+                </td>
+                <td className="archetype-type-column">
+                  <div className="archetype" data-cy="deckArchetypeCell">
+                    {archetype}
+                  </div>
+                  <div className="type" data-cy="deckTypeCell">
+                    {type}
+                  </div>
                 </td>
                 <td className="mana">
-                  {deckMetaData[index] && (
-                    <EssenceIndicator
-                      essence={deckMetaData[index].essenceCost}
-                    />
-                  )}
+                  <EssenceIndicator essence={deck.essenceCost} />
                 </td>
                 <td className="modifiedDate">
                   <span>

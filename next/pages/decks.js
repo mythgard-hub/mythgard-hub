@@ -18,9 +18,11 @@ const searchQueryDefaults = {
   cardIds: [],
   factionNames: [],
   isOnlyFactions: true,
+  archetype: null,
+  type: null,
   updatedTime: defaultUpdatedTime,
   authorName: '',
-  sortBy: 'dateDesc'
+  sortBy: 'hot'
 };
 
 const cardsErr = 'Error initializing deck seach';

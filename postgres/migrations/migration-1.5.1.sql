@@ -1,0 +1,2 @@
+ALTER TYPE mythgard.deckType
+ADD VALUE 'ARENA' AFTER 'GAUNTLET';

@@ -39,7 +39,7 @@ export const extractMetaValue = (lines, metaname, metaValues) => {
           const dbMetaValue = metaValues.find(
             m => m.name.toLowerCase() === metaValue.toLowerCase()
           );
-          return dbMetaValue || '';
+          return dbMetaValue || null;
         }
 
         return metaValue;
@@ -48,7 +48,7 @@ export const extractMetaValue = (lines, metaname, metaValues) => {
       index++;
     }
 
-    return '';
+    return null;
   } catch (e) {
     return null;
   }

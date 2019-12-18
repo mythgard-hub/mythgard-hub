@@ -5,6 +5,13 @@ describe('Deck Page', function() {
   it('deck page elements', function() {
     cy.get('[data-cy="editMetaValue"]').should('not.be.visible');
     cy.get('[data-cy="userLink"]').should('not.be.visible');
+    cy.get('[data-cy="deckPageType"]').should('be.visible');
+    cy.get('[data-cy="deckPageArchetype"]').should('be.visible');
+    cy.get('[data-cy="deckPageCardCount"]').should('be.visible');
+    cy.get('[data-cy="deckManaCurve"]').should('be.visible');
+    cy.get('[data-cy="deckPageType"]').should('contain', 'Standard');
+    cy.get('[data-cy="deckPageArchetype"]').should('contain', 'Unknown');
+    cy.get('[data-cy="deckPageCardCount"]').should('contain', '2');
   });
 
   it('happy path card click', function() {

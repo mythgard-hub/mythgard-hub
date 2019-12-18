@@ -107,6 +107,7 @@ const index = () => {
             Latest Patch Notes
             <br />
             <span className="patchNotes__v">v</span>0.17.3
+
           </PageBanner>
         </a>
       </div>
