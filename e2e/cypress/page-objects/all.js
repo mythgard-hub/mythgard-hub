@@ -53,6 +53,7 @@ export default {
 
   // decks page sorted data
   // used so cypress can know when newly sorted dom is loaded.
+  deckListHotFirst: '[data-cy-decksort="hot"]',
   deckListNewestFirst: '[data-cy-decksort="dateDesc"]',
   deckListOldestFirst: '[data-cy-decksort="dateAsc"]',
   deckListCheapestFirst: '[data-cy-decksort="essenceAsc"]',

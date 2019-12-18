@@ -12,6 +12,7 @@ export default function DeckSearchFormSort(props) {
       `}</style>
       Sort by:
       <select data-cy={cyName} name={name} value={value} onChange={onChange}>
+        <option value="hot">Hot</option>
         <option value="dateDesc">Newest First</option>
         <option value="dateAsc">Oldest First</option>
         <option value="essenceAsc">Cost: Low-High</option>

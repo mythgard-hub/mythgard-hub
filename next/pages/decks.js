@@ -22,7 +22,7 @@ const searchQueryDefaults = {
   type: null,
   updatedTime: defaultUpdatedTime,
   authorName: '',
-  sortBy: 'dateDesc'
+  sortBy: 'hot'
 };
 
 const cardsErr = 'Error initializing deck seach';

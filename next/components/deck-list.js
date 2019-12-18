@@ -9,8 +9,6 @@ import UpvoteIndicator from './upvote-indicator.js';
 import { getArchetypeLabel, getTypeLabel } from '../lib/deck-utils';
 
 export default function DeckList({ decks }) {
-  const deckMetaData = decks.map(d => d.deckPreviews.nodes[0]);
-
   const theme = useContext(ThemeContext);
   return (
     <div>
@@ -54,31 +52,28 @@ export default function DeckList({ decks }) {
       <LargeTable>
         <tbody>
           {decks.map((deck, index) => {
-            const metaData = deckMetaData[index] || {};
             const classNames = index % 2 ? 'zebraRow' : '';
-            const author =
-              deck && deck.author ? deck.author.username : 'unknown';
+            const author = deck.username || 'unknown';
 
-            const deckModifiedMeta = metaData.deckCreated;
-            const modified = new Date(deck.modified || deckModifiedMeta);
-            const archetype = getArchetypeLabel(metaData);
-            const type = getTypeLabel(metaData);
+            const modified = new Date(deck.deckModified || deck.deckCreated);
+            const archetype = getArchetypeLabel(deck);
+            const type = getTypeLabel(deck);
 
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
                   <div className="deckName" data-cy="deckName">
-                    <Link href={`/deck?id=${deck.id}`}>
-                      <a>{deck.name}</a>
+                    <Link href={`/deck?id=${deck.deckId}`}>
+                      <a>{deck.deckName}</a>
                     </Link>
                   </div>
                   <div className="deckAuthor">by {author}</div>
                 </td>
                 <td className="deckVotes">
-                  <UpvoteIndicator votes={metaData.votes || 0} />
+                  <UpvoteIndicator votes={deck.votes || 0} />
                 </td>
                 <td className="factions" data-cy="deckFactionsCell">
-                  <FactionsIndicator factions={metaData.factions} />
+                  <FactionsIndicator factions={deck.factions} />
                 </td>
                 <td className="archetype-type-column">
                   <div className="archetype" data-cy="deckArchetypeCell">
@@ -89,7 +84,7 @@ export default function DeckList({ decks }) {
                   </div>
                 </td>
                 <td className="mana">
-                  <EssenceIndicator essence={metaData.essenceCost} />
+                  <EssenceIndicator essence={deck.essenceCost} />
                 </td>
                 <td className="modifiedDate">
                   <span>

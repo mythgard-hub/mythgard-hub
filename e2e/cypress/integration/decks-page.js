@@ -10,6 +10,7 @@ import {
   deckSearchDeckName,
   deckSearchClear,
   deckSearchAllDecksLoaded,
+  deckListHotFirst,
   deckListNewestFirst,
   deckListOldestFirst,
   deckListCheapestFirst,
@@ -26,6 +27,7 @@ import {
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
 
+const hot = 'hot';
 const newestFirst = 'dateDesc';
 const oldestFirst = 'dateAsc';
 const essenceAsc = 'essenceAsc';
@@ -47,7 +49,7 @@ describe('Decks Page', function() {
   it('works', function() {
     // Should show deck votes
     cy.get('[data-cy="deckVotesCell"]').should('have.length', 3);
-    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 1);
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 3);
     cy.get(deckArchetypePicker).should('have.length', 3);
     cy.get(deckTypePicker).should('have.length', 3);
     cy.get(deckArchetypePicker)
@@ -57,13 +59,13 @@ describe('Decks Page', function() {
       .eq(1)
       .should('contain', 'Midrange');
     cy.get(deckTypePicker)
-      .eq(0)
+      .eq(2)
       .should('contain', 'Gauntlet');
     cy.get(deckTypePicker)
       .eq(1)
       .should('contain', 'Tournament');
     cy.get(deckTypePicker)
-      .eq(2)
+      .eq(0)
       .should('contain', 'Standard');
 
     cy.get('[data-cy="deckListItem"] a:first').click();
@@ -106,19 +108,20 @@ describe('Decks Page', function() {
     cy.get(deckSearchDeckType).select('2v2');
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 0);
+
     // any type
     cy.get(deckSearchDeckType).select('Any');
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
     cy.get(deckTypePicker)
       .eq(0)
-      .should('contain', 'Gauntlet');
+      .should('contain', 'Standard');
     cy.get(deckTypePicker)
       .eq(1)
       .should('contain', 'Tournament');
     cy.get(deckTypePicker)
       .eq(2)
-      .should('contain', 'Standard');
+      .should('contain', 'Gauntlet');
     cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
 
@@ -180,20 +183,17 @@ describe('Decks Page', function() {
 
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckSearchSubmit"]').click();
+
     // test deck name search - full name with spaces
     cy.get('[data-cy="deckSearchDeckName"]').type('norden aztlan');
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 1);
     cy.get('[data-cy="deckListItem"] a').should('contain', 'norden aztlan');
+
+    // Clear
     cy.get('[data-cy="deckSearchDeckName"]').clear();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', 4);
-    cy.get(deckArchetypePicker)
-      .eq(0)
-      .should('contain', 'Control Midrange');
-    cy.get(deckTypePicker)
-      .eq(0)
-      .should('contain', 'Standard');
 
     // test deck name search - first full word and start of the second
     cy.get('[data-cy="deckSearchDeckName"]').type('norden azt');
@@ -260,12 +260,12 @@ describe('Decks Page', function() {
 
     // test deck sort
     cy.get(deckSearchClear).click();
-    // the default search is newest first.
+    // the default search is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', deckNameAllFactions);
+      .should('contain', deckNameDragons);
     cy.get(decksSort).select(oldestFirst);
     cy.get(deckListOldestFirst);
     cy.get(deckListItem)
@@ -310,11 +310,11 @@ describe('Decks Page', function() {
       .should('contain', deckNameAllFactions);
     // this test differs from the first sort test in that
     // it uses some-decks rather than all-decks
-    cy.get(decksSort).select(newestFirst);
-    cy.get(deckListNewestFirst);
+    cy.get(decksSort).select(hot);
+    cy.get(deckListHotFirst);
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', deckNameAllFactions);
+      .should('contain', deckNameDragons);
   });
 });

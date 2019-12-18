@@ -1,22 +1,156 @@
-CREATE TABLE mythgard.site_config (
-  id SERIAL PRIMARY KEY,
-  config jsonb
-);
+drop function if exists mythgard.epochSeconds;
+create function mythgard.epochSeconds(timestamp) returns int as $$
+  select extract(epoch from $1)::int;
+$$ language sql stable;
 
-INSERT INTO mythgard.site_config (config) values ('{}');
+drop function if exists mythgard.hotnessOrder;
+create function mythgard.hotnessOrder(votes integer) returns integer as $$
+  select greatest(votes, 1);
+$$ language sql stable;
 
-UPDATE mythgard.site_config set config = $${"topMedia":[{"title":"Nominate Mythgard for Steam's 2019 \"Most Innovative Gameplay\" Award","url":"https://store.steampowered.com/steamawards/nominations?l=english","author":"Mythgard Hub","description":"The Steam Awards are a yearly digital award ceremony where the best games of the year are brought to light. If we can get enough support behind Mythgard, we can grow the community by showing them what we already know. Follow the link and nominate Mythgard today!","date":"2019-11-27T17:24:18.280Z"},{"title":"Player Agency in Mythgard","url":"https://teamrankstar.com/article/player-agency-in-mythgard/","author":"noahc92","description":"Today we’ll be discussing a term that is used often in game design and is really shown off well in Mythgard. Player Agency. What is it? What does it mean? Why does it matter?","date":"2019-10-31T17:24:18.280Z"},{"title":"Deckbuilding 201 - Building on the Basics","url":"https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-201-building-on-the-basics","author":"Minmaxer","description":"In my first series of deckbuilding articles we started by examining the different deck archetypes and what they look like in Mythgard.  From there, I took a tour through each of the five Paths...","date":"2019-10-25T17:24:18.280Z"},{"title":"Getting Started in Mythgard’s 2v2","url":"https://teamrankstar.com/guide/getting-started-in-mythgards-2v2/","author":"erobert","description":"Hey everyone, erobert here with a look at the mechanics and strategies of 2v2! The game mode itself is a raucous and chaotic shootout where you and your partner go head to head with another duo, and while this fun format operates with rules that are...","date":"2019-10-23T17:24:18.280Z"},{"title":"Fast Lane: Thrift Shop","url":"https://teamdgn.net/2019/10/02/fast-lane-thrift-shop/","author":"14ierophant","description":"Ever since middle school, I have been a die hard fan of control in CCGs. I love drawing cards, I love canceling and limiting my opponent’s options, and I love the slow burn of...","date":"2019-10-02T17:24:18.280Z"},{"title":"7 things I wish I knew when I was first starting out in Mythgard","url":"/7-things","author":"AgitatedBadger","description":"A detailed resource for new players that helps fill in the holes of the tutorial","date":"2019-10-01T17:24:18.280Z"},{"title":"Budget Decks for Mythgard - October 2019","url":"https://teamrankstar.com/budget-decks-for-mythgard-october-2019/","author":"noahc92","description":"October! What a fun month... trick-or-treaters, spoopy memes, budget decks... October truly has it all. Let’s sit down to enjoy some candy and talk about what this article is...","date":"2019-09-29T17:24:18.280Z"},{"title":"Lore Broker's Files: Chapter 1","url":"https://teamrankstar.com/budget-decks-for-mythgard-october-2019/","author":"The Mantid Man","description":"The first episode in a brand new series from Team Rankstar that covers the lore of Mythgard in short, easy to take in chunks.","date":"2019-09-29T17:24:18.280Z"},{"title":"The Many Uses of Impel","url":"https://teamdgn.net/2019/09/27/the-many-uses-of-impel/","author":"NowayitsJ","description":"Why Should You Use Impel? Some of you may think, “Wow, Impel doesn’t give me immediate value or combat benefits, movement can’t have that much impact!”  Well in Mythgard...","date":"2019-09-27T17:24:18.280Z"},{"title":"Budget Decks For Mythgard September 2019","url":"https://teamrankstar.com/budget-decks-for-mythgard-september-2019/","author":"noahc92","description":"Closed Beta is finally upon us in the land of Mythgard. With no more account wipe looming, it’s now more important than ever to be smart about building your collection...","date":"2019-09-22T17:24:18.280Z"},{"title":"Yellow-Green Kolobok Ramp","url":"https://teamrankstar.com/yellow-green-kolobok-ramp/","author":"Tenchuu","description":"I was trapped in a loop. I wanted to play big powerful minions and I wanted to play Green...","date":"2019-09-22T17:24:18.280Z"},{"title":"Advanced Lane Mechanics in Mythgard","url":"https://teamrankstar.com/advanced-lane-mechanics-in-mythgard/","author":"noahc92","description":"One of Mythgard’s most distinguishing features is its usage of lanes. This lane system leads to a very large number of nuanced decisions per game...","date":"2019-09-22T17:24:18.280Z"},{"title":"Deckbuilding 105 - What about combo?","url":"https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-105-what-about-combo","author":"Minmaxer","description":"The previous articles in this series examined the spectrum of Aggro, Midrange, and Control.  Combo sits outside the spectrum, and looks to play the game totally differently...","date":"2019-09-22T17:24:18.280Z"},{"title":"Deckbuilding 104 - Control","url":"https://minmaxer.wixsite.com/mindfreak/post/deckbuilding-104-control","author":"Minmaxer","description":"Control decks are in it for the long haul.  Traditionally, they play a patient, defensive game...","date":"2019-09-22T17:24:18.280Z"}]}$$;
+drop function if exists mythgard.hotnessSign;
+create function mythgard.hotnessSign(votes integer) returns integer as $$
+  select(case when votes > 0 then 1 else 0 end);
+$$ language sql stable;
 
-ALTER TABLE mythgard.site_config ENABLE ROW LEVEL SECURITY;
+drop function if exists mythgard.hotnessSeconds;
+create function mythgard.hotnessSeconds(creation timestamp) returns integer as $$
+  select(mythgard.epochSeconds(creation) - 1134028003);
+$$ language sql stable;
 
-GRANT SELECT ON TABLE mythgard.site_config TO admin, authd_user, anon_user;
-GRANT UPDATE (config) ON TABLE mythgard.site_config TO authd_user;
+drop function if exists mythgard.hotness;
+create function mythgard.hotness(votes integer, creation timestamp) returns double precision as $$
 
-CREATE POLICY site_config_all_view ON mythgard.site_config FOR SELECT USING (true);
+  select round(
+    ((mythgard.hotnessSign(votes) * mythgard.hotnessOrder(votes))
+      + (mythgard.hotnessSeconds(creation) / 180000))::numeric
+  , 7)::double precision;
 
-CREATE POLICY update_site_config_if_moderator
-  ON mythgard.site_config
-  FOR UPDATE
-  USING (exists(select * from mythgard.account_moderator
-         where account_id = mythgard.current_user_id()));
+$$ language sql stable;
 
+drop function if exists mythgard.deckHotness;
+create function mythgard.deckHotness(deckId integer) returns double precision as $$
+
+  select mythgard.hotness(mythgard.deck_votes(deckId), created)
+  from mythgard.deck
+  where deck.id = deckId;
+
+$$ language sql stable;
+
+create or replace function mythgard.deck_factions(deckId integer) returns  character varying[] as $$
+  select(array_agg(distinct faction.name))
+  from mythgard.deck
+  left join mythgard.card_deck on card_deck.deck_id = deck.id
+  left join mythgard.card on card.id = card_deck.card_id
+  left join mythgard.card_faction on card_faction.card_id = card.id
+  left join mythgard.faction on faction.id = card_faction.faction_id
+  where mythgard.deck.id = deckId
+  and faction.name is not null;
+$$ language sql stable;
+
+DROP VIEW mythgard.deck_preview;
+CREATE OR REPLACE VIEW mythgard.deck_preview as
+  SELECT deck.id as deck_id,
+         deck.name as deck_name,
+         deck.created as deck_created,
+         mythgard.deck_factions(deck.id) as factions,
+         mythgard.deck_essence_cost(deck.id)::int as essence_cost,
+         mythgard.deck_votes(deck.id)::int as votes,
+         deck.archetype as deck_archetype,
+         deck.type as deck_type,
+         deck.modified as deck_modified,
+         account.id as account_id,
+         account.username as username,
+         mythgard.deck_hotness(deck.id)::int as hotness
+  FROM mythgard.deck
+  LEFT JOIN mythgard.account
+  ON mythgard.account.id = mythgard.deck.author_id
+;
+
+comment on view mythgard.deck_preview is E'@foreignKey (deck_id) references mythgard.deck';
+
+GRANT SELECT ON TABLE mythgard.deck_preview TO admin, authd_user, anon_user;
+
+create or replace function mythgard.search_decks(
+  deckName varchar(255),
+  authorName varchar(255),
+  deckModified date,
+  card1 integer,
+  card2 Integer,
+  card3 Integer,
+  card4 Integer,
+  card5 Integer,
+  faction1 integer,
+  faction2 integer,
+  faction3 integer,
+  faction4 integer,
+  faction5 integer,
+  faction6 integer,
+  numFactions integer,
+  archetypeFilter mythgard.deckArchetype[],
+  typeFilter mythgard.deckType[],
+  sortBy text)
+  returns setof mythgard.deck as $$
+
+  BEGIN
+       IF sortBy = 'essenceDesc' THEN
+        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
+          from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) as foo,
+                  mythgard.deck_essence_cost(foo.id) as dec
+                  order by dec desc nulls last) as bar;
+       ELSIF sortBy = 'essenceAsc' THEN
+        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
+          from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) as foo,
+                  mythgard.deck_essence_cost(foo.id) as dec
+                  order by dec asc nulls last) as bar;
+       ELSIF sortBy = 'ratingDesc' THEN
+        RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) as deck
+          LEFT JOIN
+          (SELECT count(*) as voteCount, deck_id from mythgard.deck_vote group by deck_id) as deckVotes
+          on deckVotes.deck_id = deck.id
+          where deck.id is not null
+          order by voteCount desc nulls last;
+       ELSIF sortBy = 'ratingAsc' THEN
+        RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) as deck
+          LEFT JOIN
+          (SELECT count(*) as voteCount, deck_id from mythgard.deck_vote group by deck_id) as deckVotes
+          on deckVotes.deck_id = deck.id
+          where deck.id is not null
+          order by voteCount asc nulls first;
+       ELSIF sortBy = 'nameAsc' THEN
+         RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) order by lower(name) asc;
+       ELSIF sortBy = 'nameDesc' THEN
+         RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) order by lower(name) desc;
+       ELSIF sortBy = 'dateDesc' THEN
+         RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) order by created desc;
+       ELSIF sortBy = 'dateAsc' THEN
+         RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) order by created asc;
+       ELSIF sortBy = 'hot' THEN
+         RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter) order by mythgard.deck_hotness(id) desc;
+       ELSE
+          RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter);
+       END IF;
+       RETURN;
+   END
+
+  $$ language plpgsql stable;
