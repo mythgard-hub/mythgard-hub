@@ -38,6 +38,9 @@ const index = () => {
     );
   }
 
+  const patchNoteUrl = (config && config.patchNoteUrl) || defaultPatchNoteUrl;
+  const patchVersion = (config && config.patchVersion) || defaultPatchVersion;
+
   return (
     <Layout>
       <style jsx>{`
@@ -135,12 +138,12 @@ const index = () => {
         }
       `}</style>
       <div className="patchNotes">
-        <a href={defaultPatchNoteUrl}>
+        <a href={patchNoteUrl}>
           <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
             Latest Patch Notes
             <br />
             <span className="patchNotes__v">v</span>
-            {defaultPatchVersion}
+            {patchVersion}
           </PageBanner>
         </a>
       </div>
