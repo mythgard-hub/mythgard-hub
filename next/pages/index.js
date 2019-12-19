@@ -6,9 +6,34 @@ import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import { mgColors } from '../lib/theme.js';
 import Link from 'next/link';
+import useConfig from '../lib/use-config.js';
 
 const index = () => {
   const theme = useContext(ThemeContext);
+  const { config } = useConfig();
+  const homeBannerAd = config && config.homeBannerAd;
+  const now = new Date();
+
+  let banner = (
+    <Link href="/new-player-guide">
+      <a className="newPlayerGuideBanner">New Player Guide</a>
+    </Link>
+  );
+
+  if (
+    homeBannerAd &&
+    homeBannerAd.enabled &&
+    homeBannerAd.imgUrl &&
+    new Date(homeBannerAd.startDate) < now &&
+    new Date(homeBannerAd.endDate) > now
+  ) {
+    banner = (
+      <a href={homeBannerAd.url}>
+        <div className="promo-banner" />
+      </a>
+    );
+  }
+
   return (
     <Layout>
       <style jsx>{`
@@ -33,8 +58,7 @@ const index = () => {
           font-style: italic;
           text-transform: uppercase;
         }
-
-        .newPlayerGuideBanner {
+        :global(.newPlayerGuideBanner) {
           display: block;
           border-top: ${theme.border};
           border-bottom: ${theme.border};
@@ -52,10 +76,17 @@ const index = () => {
           vertical-align: middle;
           text-decoration: none;
         }
-        .newPlayerGuideBanner:hover {
+        :global(.newPlayerGuideBanner:hover) {
           color: ${mgColors.orange};
         }
-
+        :global(.promo-banner) {
+          background-image: url(${homeBannerAd && homeBannerAd.imgUrl});
+          background-size: contain;
+          background-repeat: no-repeat;
+          width: 100%;
+          height: 0;
+          padding-top: 16%;
+        }
         @media only screen and (max-width: 575.98px) {
           .mg-column {
             width: 100%;
@@ -72,9 +103,7 @@ const index = () => {
           }
         }
       `}</style>
-      <Link href="/new-player-guide">
-        <a className="newPlayerGuideBanner">New Player Guide</a>
-      </Link>
+      {banner}
       <div className="homePageColumns">
         <div className="mg-column">
           <h2>Top Media</h2>

@@ -1,6 +1,7 @@
 import useConfig from '../lib/use-config.js';
 import useConfigMutation from '../lib/use-config-mutation.js';
 import ModeratorEditArticle from '../components/moderator-edit-article.js';
+import ModeratorAdConfig from '../components/moderator-ad-config.js';
 
 function arrayMove(arr, fromIndex, toIndex) {
   const element = arr[fromIndex];
@@ -45,6 +46,11 @@ function ModeratorConfigEditor() {
     }
   };
 
+  const updateHomeBannerAd = updatedAd => {
+    config.homeBannerAd = updatedAd;
+    updateConfig(config);
+  };
+
   const topMediaEditForms = config.topMedia.map((media, i) => (
     <div key={i}>
       <ModeratorEditArticle
@@ -68,6 +74,8 @@ function ModeratorConfigEditor() {
       <h2>Edit Site Media</h2>
       <h3>First Four Are Top Media</h3>
       {topMediaEditForms}
+      <h2>Edit Home Page Banner Ad</h2>
+      <ModeratorAdConfig ad={config.homeBannerAd} setAd={updateHomeBannerAd} />
     </>
   );
 }
