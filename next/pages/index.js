@@ -23,6 +23,7 @@ const index = () => {
   if (
     homeBannerAd &&
     homeBannerAd.enabled &&
+    homeBannerAd.imgUrl &&
     new Date(homeBannerAd.startDate) < now &&
     new Date(homeBannerAd.endDate) > now
   ) {
