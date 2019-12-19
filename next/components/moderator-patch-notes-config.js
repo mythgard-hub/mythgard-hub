@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 
-function ModeratorPatchConfig({ url, version, setPatchInfo }) {
+function ModeratorPatchConfig({ url, version, updatePatchVersion }) {
   const [newUrl, setUrl] = useState(url);
   const onChangeUrl = handleInputChangeHooks(setUrl);
   const [newPatchVersion, setPatchVersion] = useState(version);
   const onChangePatchVersion = handleInputChangeHooks(setPatchVersion);
 
   const onClick = () => {
-    setPatchInfo({
+    updatePatchVersion({
       url: newUrl,
       version: newPatchVersion
     });
@@ -73,7 +73,7 @@ ModeratorPatchConfig.defaultProps = {
 ModeratorPatchConfig.propTypes = {
   url: PropTypes.string,
   version: PropTypes.string,
-  setPatchInfo: PropTypes.func
+  updatePatchVersion: PropTypes.func
 };
 
 export default ModeratorPatchConfig;

@@ -88,7 +88,7 @@ function ModeratorConfigEditor() {
       <ModeratorPatchConfig
         version={config.patchVersion}
         url={config.patchNoteUrl}
-        setPatchInfo={updatePatchVersion}
+        updatePatchVersion={updatePatchVersion}
       />
     </>
   );
