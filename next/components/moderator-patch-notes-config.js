@@ -6,13 +6,13 @@ import { handleInputChangeHooks } from '../lib/form-utils.js';
 function ModeratorPatchConfig({ url, version, updatePatchVersion }) {
   const [newUrl, setUrl] = useState(url);
   const onChangeUrl = handleInputChangeHooks(setUrl);
-  const [newPatchVersion, setPatchVersion] = useState(version);
-  const onChangePatchVersion = handleInputChangeHooks(setPatchVersion);
+  const [newVersion, setPatchVersion] = useState(version);
+  const onChangeVersion = handleInputChangeHooks(setPatchVersion);
 
   const onClick = () => {
     updatePatchVersion({
       url: newUrl,
-      version: newPatchVersion
+      version: newVersion
     });
   };
   return (
@@ -51,8 +51,8 @@ function ModeratorPatchConfig({ url, version, updatePatchVersion }) {
         <label>
           <input
             type="text"
-            value={newPatchVersion}
-            onChange={onChangePatchVersion}
+            value={newVersion}
+            onChange={onChangeVersion}
           ></input>{' '}
           Version Number
         </label>
