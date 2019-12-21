@@ -36,7 +36,7 @@ export default function Card({ card }) {
   }
 
   const primaryFaction = factions.length ? factions[0] : '';
-  const secondaryFaction = factions.length === 2 ? factions[1] : '';
+  const secondaryFaction = factions.length > 1 ? factions[1] : '';
 
   return (
     <>
