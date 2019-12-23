@@ -52,8 +52,8 @@ export default function DeckCardsTableRow({ card, deleteCard, quantity }) {
         .deck-card-name::before {
           content: url(${imagePath});
           position: absolute;
-          top: 50%;
-          left: 70%;
+          top: 125%;
+          left: 0;
           z-index: 2;
           visibility: hidden;
           opacity: 0;
