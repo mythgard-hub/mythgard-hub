@@ -2,6 +2,7 @@ import useConfig from '../lib/use-config.js';
 import useConfigMutation from '../lib/use-config-mutation.js';
 import ModeratorEditArticle from '../components/moderator-edit-article.js';
 import ModeratorAdConfig from '../components/moderator-ad-config.js';
+import ModeratorPatchConfig from '../components/moderator-patch-notes-config.js';
 
 function arrayMove(arr, fromIndex, toIndex) {
   const element = arr[fromIndex];
@@ -51,6 +52,12 @@ function ModeratorConfigEditor() {
     updateConfig(config);
   };
 
+  const updatePatchVersion = ({ url, version }) => {
+    config.patchNoteUrl = url;
+    config.patchVersion = version;
+    updateConfig(config);
+  };
+
   const topMediaEditForms = config.topMedia.map((media, i) => (
     <div key={i}>
       <ModeratorEditArticle
@@ -76,6 +83,13 @@ function ModeratorConfigEditor() {
       {topMediaEditForms}
       <h2>Edit Home Page Banner Ad</h2>
       <ModeratorAdConfig ad={config.homeBannerAd} setAd={updateHomeBannerAd} />
+      <hr />
+      <h2>Edit Patch Note</h2>
+      <ModeratorPatchConfig
+        version={config.patchVersion}
+        url={config.patchNoteUrl}
+        updatePatchVersion={updatePatchVersion}
+      />
     </>
   );
 }

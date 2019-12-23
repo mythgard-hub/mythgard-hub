@@ -8,6 +8,10 @@ import { mgColors } from '../lib/theme.js';
 import Link from 'next/link';
 import useConfig from '../lib/use-config.js';
 
+const defaultPatchNoteUrl =
+  'https://www.mythgardgame.com/permalink/patch-notes-v0-17-3---holiday-edition';
+const defaultPatchVersion = '0.17.3';
+
 const index = () => {
   const theme = useContext(ThemeContext);
   const { config } = useConfig();
@@ -33,6 +37,9 @@ const index = () => {
       </a>
     );
   }
+
+  const patchNoteUrl = (config && config.patchNoteUrl) || defaultPatchNoteUrl;
+  const patchVersion = (config && config.patchVersion) || defaultPatchVersion;
 
   return (
     <Layout>
@@ -131,11 +138,12 @@ const index = () => {
         }
       `}</style>
       <div className="patchNotes">
-        <a href="https://www.mythgardgame.com/permalink/patch-notes-v0-17-3---holiday-edition">
+        <a href={patchNoteUrl}>
           <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
             Latest Patch Notes
             <br />
-            <span className="patchNotes__v">v</span>0.17.3
+            <span className="patchNotes__v">v</span>
+            {patchVersion}
           </PageBanner>
         </a>
       </div>
