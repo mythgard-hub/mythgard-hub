@@ -4,6 +4,8 @@ describe('Card Page', function() {
   });
   it('should work', function() {
     cy.get('[data-cy="cardName"]').should('be.visible');
+    cy.get('[data-cy="cardPrimaryFaction"]').should('contain', 'Norden');
+    cy.get('[data-cy="cardSecondaryFaction"]').should('contain', 'Aztlan');
   });
 });
 
@@ -13,9 +15,14 @@ describe('Card Page Metas', function() {
   });
   it('looks inside head tags', function() {
     cy.get('head title').should('contain', 'Furball');
-    cy.get('head meta[name="description"]').invoke('attr', 'content').should('contain', 'Norden, 3B Common Minion, Cat, Core');
-    cy.get('head meta[property="og:title"]').invoke('attr', 'content').should('contain', 'Furball');
-    cy.get('head meta[property="og:description"]').invoke('attr', 'content').should('contain', 'Norden, 3B Common Minion, Cat, Core');
+    cy.get('head meta[name="description"]')
+      .invoke('attr', 'content')
+      .should('contain', 'Norden, 3B Common Minion, Cat, Core');
+    cy.get('head meta[property="og:title"]')
+      .invoke('attr', 'content')
+      .should('contain', 'Furball');
+    cy.get('head meta[property="og:description"]')
+      .invoke('attr', 'content')
+      .should('contain', 'Norden, 3B Common Minion, Cat, Core');
   });
-
 });

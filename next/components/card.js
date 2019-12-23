@@ -18,25 +18,26 @@ export default function Card({ card }) {
   // a single super type.
   const supertype = card.supertype[0] || '';
   let factions = [];
+
   try {
-    factions = card.cardFactions.nodes.reduce(
-      (acc, n) => {
-        if (n && n.faction && n.faction.name) {
-          acc.unshift(firstLetterUppercase(n.faction.name));
-        }
-        return acc;
-      },
-      ['', '']
+    factions = card.cardFactions.nodes.map(f =>
+      firstLetterUppercase(f.faction.name)
     );
   } catch (error) {
     console.error('Something went wrong trying to read card factions', error);
   }
+
   let spawns = [];
+
   try {
     spawns = card.cardSpawns.nodes.map(n => n.spawn.name);
   } catch (error) {
     console.error('Something went wrong trying to read card spawns', error);
   }
+
+  const primaryFaction = factions.length ? factions[0] : '';
+  const secondaryFaction = factions.length > 1 ? factions[1] : '';
+
   return (
     <>
       <style jsx>{`
@@ -145,12 +146,16 @@ export default function Card({ card }) {
             <li className="card-detail">
               <div className="card-detail-label">Faction</div>
               <hr />
-              <div className="card-detail-text">{factions[0]}</div>
+              <div className="card-detail-text" data-cy="cardPrimaryFaction">
+                {primaryFaction}
+              </div>
             </li>
             <li className="card-detail">
               <div className="card-detail-label">Secondary Faction</div>
               <hr />
-              <div className="card-detail-text">{factions[1]}</div>
+              <div className="card-detail-text" data-cy="cardSecondaryFaction">
+                {secondaryFaction}
+              </div>
             </li>
             <li className="card-detail">
               <div className="card-detail-label">Cost</div>
