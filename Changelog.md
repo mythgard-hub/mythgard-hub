@@ -1,3 +1,11 @@
+# Changelog 1.5.3
+
+Fix faction order
+Configurable patch version
+Configurable home banner ad
+Update patch notes
+View decks in order of hotnes (reddit-like algorithm to promote both newness and vote count)
+
 # ChangeLog 1.4.2
 
 - Deck sorting

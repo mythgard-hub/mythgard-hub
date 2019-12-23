@@ -23,6 +23,7 @@
 # First copy the full sized images to the "m" (medium) folder. Medium is currently the largest
 # size we will use on the web.
 mkdir core/m
+mkdir core/s
 cp core/*.png core/m
 
 # Next, shrink the medium images and compress them.
