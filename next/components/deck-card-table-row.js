@@ -9,13 +9,14 @@ import { getRarityColor } from '../constants/rarities';
 import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
 
 export default function DeckCardsTableRow({
-  card,
+  deckCard,
   deleteCard,
-  addCard,
-  removeCard,
-  quantity
+  addSingleCard,
+  removeSingleCard
 }) {
   const theme = useContext(ThemeContext);
+  const card = deckCard.card;
+  const quantity = deckCard.quantity;
   const backgroundColor = cardMainColor(card, theme);
   const color = backgroundColor ? theme.cardTableName : 'white';
   const imagePath = imagePathSmall(card.name, card.set || undefined);
@@ -119,10 +120,10 @@ export default function DeckCardsTableRow({
             <a className="deck-card-link">{card.name}</a>
           </Link>
         </div>
-        {addCard && removeCard && (
+        {addSingleCard && removeSingleCard && (
           <div className="deck-card-plus-minus">
-            <button onClick={() => addCard(card)}>+</button>
-            <button onClick={() => removeCard(card)}>-</button>
+            <button onClick={() => addSingleCard(deckCard)}>+</button>
+            <button onClick={() => removeSingleCard(deckCard)}>-</button>
           </div>
         )}
       </td>
@@ -158,16 +159,19 @@ export default function DeckCardsTableRow({
 
 DeckCardsTableRow.propTypes = {
   deleteCard: PropTypes.func,
-  addCard: PropTypes.func,
-  removeCard: PropTypes.func,
+  addSingleCard: PropTypes.func,
+  removeSingleCard: PropTypes.func,
   quantity: PropTypes.number,
-  card: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    mana: PropTypes.number,
-    gem: PropTypes.string,
-    set: PropTypes.string,
-    supertype: PropTypes.array,
-    rarity: PropTypes.string
+  deckCard: PropTypes.shape({
+    quantity: PropTypes.number,
+    card: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      mana: PropTypes.number,
+      gem: PropTypes.string,
+      set: PropTypes.string,
+      supertype: PropTypes.array,
+      rarity: PropTypes.string
+    })
   })
 };
