@@ -63,7 +63,7 @@ INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Common 8', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
-  VALUES ('Common 9', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
+  VALUES ('Common 9 with a really long name', 'rock', 'Earth Enchantment', '1', 'B', 'COMMON', '{ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Ghul', 'rock', 'Earth Enchantment', '1', 'R', 'RARE', '{MINION}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
