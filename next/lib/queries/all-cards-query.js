@@ -9,6 +9,7 @@ const cardsQuery = gql`
         mana
         gem
         rarity
+        supertype
         cardFactions {
           nodes {
             faction {
