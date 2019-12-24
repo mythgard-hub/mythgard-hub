@@ -35,7 +35,7 @@ export default function DeckBuilderSidebar(props) {
     });
   };
 
-  const addSingleCard = card => {
+  const increaseCardQuantity = card => {
     const newMainDeck = { ...deckInProgress.mainDeck };
 
     setDeckInProgress({
@@ -44,7 +44,7 @@ export default function DeckBuilderSidebar(props) {
     });
   };
 
-  const removeSingleCard = card => {
+  const decreaseCardQuantity = card => {
     const newMainDeck = { ...deckInProgress.mainDeck };
 
     setDeckInProgress({
@@ -163,8 +163,8 @@ export default function DeckBuilderSidebar(props) {
             updateDeckName={updateDeckName}
             deck={deckInProgress}
             deleteCard={deleteCardFromTable}
-            addSingleCard={addSingleCard}
-            removeSingleCard={removeSingleCard}
+            increaseCardQuantity={increaseCardQuantity}
+            decreaseCardQuantity={decreaseCardQuantity}
             switchToCards={switchToCards}
             setTab={setTab}
           />

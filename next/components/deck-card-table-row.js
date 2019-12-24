@@ -11,8 +11,8 @@ import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
 export default function DeckCardsTableRow({
   deckCard,
   deleteCard,
-  addSingleCard,
-  removeSingleCard
+  increaseCardQuantity,
+  decreaseCardQuantity
 }) {
   const theme = useContext(ThemeContext);
   const card = deckCard.card;
@@ -113,16 +113,30 @@ export default function DeckCardsTableRow({
       <td className="deck-card-gems">
         <GemDot gems={card.gem} />
       </td>
-      <td className="deck-card-name" style={{ backgroundColor, color }}>
+      <td
+        className="deck-card-name"
+        data-cy="deckCardName"
+        style={{ backgroundColor, color }}
+      >
         <div className="deck-card-link-container">
           <Link href={`/card?id=${card.id}`}>
             <a className="deck-card-link">{card.name}</a>
           </Link>
         </div>
-        {addSingleCard && removeSingleCard && (
+        {increaseCardQuantity && decreaseCardQuantity && (
           <div className="deck-card-plus-minus">
-            <button onClick={() => addSingleCard(deckCard)}>+</button>
-            <button onClick={() => removeSingleCard(deckCard)}>-</button>
+            <button
+              data-cy="deckAddCard"
+              onClick={() => increaseCardQuantity(deckCard)}
+            >
+              +
+            </button>
+            <button
+              data-cy="deckRemoveCard"
+              onClick={() => decreaseCardQuantity(deckCard)}
+            >
+              -
+            </button>
           </div>
         )}
       </td>
@@ -158,8 +172,8 @@ export default function DeckCardsTableRow({
 
 DeckCardsTableRow.propTypes = {
   deleteCard: PropTypes.func,
-  addSingleCard: PropTypes.func,
-  removeSingleCard: PropTypes.func,
+  increaseCardQuantity: PropTypes.func,
+  decreaseCardQuantity: PropTypes.func,
   quantity: PropTypes.number,
   deckCard: PropTypes.shape({
     quantity: PropTypes.number,

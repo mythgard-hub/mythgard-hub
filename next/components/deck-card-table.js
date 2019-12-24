@@ -14,8 +14,8 @@ export default function DeckCardsTable({
   switchToCards,
   setTab,
   updateDeckName,
-  addSingleCard,
-  removeSingleCard
+  increaseCardQuantity,
+  decreaseCardQuantity
 }) {
   const deckCards = deck && Object.values(deck.mainDeck);
   const colspan = deleteCard ? 4 : 3;
@@ -140,8 +140,8 @@ export default function DeckCardsTable({
               key={i}
               deckCard={deckCard}
               deleteCard={deleteCard}
-              addSingleCard={addSingleCard}
-              removeSingleCard={removeSingleCard}
+              increaseCardQuantity={increaseCardQuantity}
+              decreaseCardQuantity={decreaseCardQuantity}
             />
           ))}
         </tbody>
@@ -153,8 +153,8 @@ export default function DeckCardsTable({
 DeckCardsTable.propTypes = {
   onlyTable: PropTypes.bool,
   deleteCard: PropTypes.func,
-  addSingleCard: PropTypes.func,
-  removeSingleCard: PropTypes.func,
+  increaseCardQuantity: PropTypes.func,
+  decreaseCardQuantity: PropTypes.func,
   deck: PropTypes.shape({
     deckName: PropTypes.string,
     deckPath: PropTypes.shape({
