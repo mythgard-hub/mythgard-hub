@@ -93,7 +93,8 @@ export default function DeckCardsTableRow({
         .deck-card-plus-minus {
           height: calc(100% + 12px);
           display: flex;
-          opacity: 1;
+          visibility: hidden;
+          opacity: 0;
         }
         .deck-card-plus-minus button {
           padding: 0 8px 4px 8px;
@@ -101,11 +102,9 @@ export default function DeckCardsTableRow({
         }
         @media (hover: hover) {
           // Show the hover image (but only on devices that have hover)
-          .deck-card-link-container:hover::before {
+          .deck-card-name:hover .deck-card-link-container::before,
+          .deck-card-name:hover .deck-card-plus-minus {
             visibility: visible;
-            opacity: 1;
-          }
-          .deck-card-plus-minus:hover {
             opacity: 1;
           }
         }
