@@ -102,8 +102,15 @@ export default function DeckCardsTableRow({
         }
         @media (hover: hover) {
           // Show the hover image (but only on devices that have hover)
+          // and reveal the plus and minus buttons
           .deck-card-name:hover .deck-card-link-container::before,
           .deck-card-name:hover .deck-card-plus-minus {
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+        @media (hover: none) {
+          .deck-card-plus-minus {
             visibility: visible;
             opacity: 1;
           }
