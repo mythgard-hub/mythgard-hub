@@ -1,4 +1,9 @@
-import { addCardToDeck, getQuantity, getCardCount } from './deck-utils';
+import {
+  addCardToDeck,
+  removeCardFromDeck,
+  getQuantity,
+  getCardCount
+} from './deck-utils';
 
 describe('Deck utility methods', () => {
   describe('Test addCardToDeck', () => {
@@ -163,7 +168,173 @@ describe('Deck utility methods', () => {
     });
   });
 
-  describe('Test addCardToDeck', () => {
+  describe('Test removeCardFromDeck', () => {
+    it('Card exists', function() {
+      const deck = {
+        1: {
+          quantity: 1,
+          card: {
+            id: 1,
+            name: 'card 1',
+            rarity: 'COMMON'
+          }
+        },
+        2: {
+          quantity: 2,
+          card: {
+            id: 2,
+            name: 'card 2',
+            rarity: 'COMMON'
+          }
+        }
+      };
+
+      const input1 = {
+        quantity: 1,
+        card: {
+          id: 1,
+          name: 'card 1',
+          rarity: 'COMMON'
+        }
+      };
+
+      const input2 = {
+        quantity: 2,
+        card: {
+          id: 2,
+          name: 'card 2',
+          rarity: 'COMMON'
+        }
+      };
+
+      const expected1 = {
+        2: {
+          quantity: 2,
+          card: {
+            id: 2,
+            name: 'card 2',
+            rarity: 'COMMON'
+          }
+        }
+      };
+
+      const expected2 = {
+        2: {
+          quantity: 1,
+          card: {
+            id: 2,
+            name: 'card 2',
+            rarity: 'COMMON'
+          }
+        }
+      };
+
+      const expected3 = {
+        1: {
+          quantity: 1,
+          card: {
+            id: 1,
+            name: 'card 1',
+            rarity: 'COMMON'
+          }
+        },
+        2: {
+          quantity: 1,
+          card: {
+            id: 2,
+            name: 'card 2',
+            rarity: 'COMMON'
+          }
+        }
+      };
+
+      expect(removeCardFromDeck(deck, input1)).toEqual(expected1);
+      expect(removeCardFromDeck(expected1, input2)).toEqual(expected2);
+      expect(removeCardFromDeck(deck, input2)).toEqual(expected3);
+    });
+
+    it("Card doesn't exist", function() {
+      const deck = {
+        3: {
+          quantity: 1,
+          card: {
+            id: 3,
+            name: 'card 1',
+            rarity: 'COMMON'
+          }
+        }
+      };
+
+      const input1 = {
+        quantity: 1,
+        card: {
+          id: 1,
+          name: 'card 1',
+          rarity: 'COMMON'
+        }
+      };
+
+      const input2 = {
+        quantity: 1,
+        card: {
+          id: 2,
+          name: 'card 2',
+          rarity: 'COMMON'
+        }
+      };
+
+      const exptected1 = {
+        3: {
+          quantity: 1,
+          card: {
+            id: 3,
+            name: 'card 1',
+            rarity: 'COMMON'
+          }
+        },
+        1: {
+          quantity: 1,
+          card: {
+            id: 1,
+            name: 'card 1',
+            rarity: 'COMMON'
+          }
+        }
+      };
+
+      const exptected2 = {
+        3: {
+          quantity: 1,
+          card: {
+            id: 3,
+            name: 'card 1',
+            rarity: 'COMMON'
+          }
+        },
+        1: {
+          quantity: 1,
+          card: {
+            id: 1,
+            name: 'card 1',
+            rarity: 'COMMON'
+          }
+        },
+        2: {
+          quantity: 1,
+          card: {
+            id: 2,
+            name: 'card 2',
+            rarity: 'COMMON'
+          }
+        }
+      };
+
+      expect(addCardToDeck(deck, input1)).toEqual(exptected1);
+      expect(addCardToDeck(exptected1, input2)).toEqual(exptected2);
+    });
+  });
+
+  describe('Test getQuantity', () => {
     it('Should return the right quantities depending on the rarity', function() {
       const common = { rarity: 'COMMON' };
       const uncommon = { rarity: 'UNCOMMON' };
