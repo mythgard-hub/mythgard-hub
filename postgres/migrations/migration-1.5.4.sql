@@ -29,7 +29,7 @@ create function mythgard.hotness(votes integer, creation timestamp) returns doub
 $$ language sql stable;
 
 drop function if exists mythgard.deckHotness;
-create function mythgard.deckHotness(deckId integer) returns double precision as $$
+create function mythgard.deck_hotness(deckId integer) returns double precision as $$
 
   select mythgard.hotness(mythgard.deck_votes(deckId), created)
   from mythgard.deck

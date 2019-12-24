@@ -1,10 +1,11 @@
-# Changelog 1.5.3
+# Changelog 1.6.0
 
 Fix faction order
 Configurable patch version
 Configurable home banner ad
 Update patch notes
 View decks in order of hotnes (reddit-like algorithm to promote both newness and vote count)
+Fix mana curve graph for x cost cards
 
 # ChangeLog 1.4.2
 
