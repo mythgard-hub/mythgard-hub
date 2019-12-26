@@ -5,7 +5,9 @@ import DeckCardTable from '../components/deck-card-table';
 import {
   initializeDeckBuilder,
   resetDeckBuilderSavedState,
-  getCardCount
+  getCardCount,
+  addCardToDeck,
+  removeCardFromDeck
 } from '../lib/deck-utils';
 import { ThemeContext } from './theme-context';
 import DeckBuilderActionButtons from './deck-builder-action-buttons';
@@ -30,6 +32,24 @@ export default function DeckBuilderSidebar(props) {
     setDeckInProgress({
       ...deckInProgress,
       deckName: e.target.value
+    });
+  };
+
+  const increaseCardQuantity = card => {
+    const newMainDeck = { ...deckInProgress.mainDeck };
+
+    setDeckInProgress({
+      ...deckInProgress,
+      mainDeck: addCardToDeck(newMainDeck, card)
+    });
+  };
+
+  const decreaseCardQuantity = card => {
+    const newMainDeck = { ...deckInProgress.mainDeck };
+
+    setDeckInProgress({
+      ...deckInProgress,
+      mainDeck: removeCardFromDeck(newMainDeck, card)
     });
   };
 
@@ -143,6 +163,8 @@ export default function DeckBuilderSidebar(props) {
             updateDeckName={updateDeckName}
             deck={deckInProgress}
             deleteCard={deleteCardFromTable}
+            increaseCardQuantity={increaseCardQuantity}
+            decreaseCardQuantity={decreaseCardQuantity}
             switchToCards={switchToCards}
             setTab={setTab}
           />

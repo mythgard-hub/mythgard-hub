@@ -21,17 +21,42 @@ export const initializeDeckBuilder = () => {
 
 export const addCardToDeck = (deck, card) => {
   const newDeck = { ...deck };
+  const cardId = card.card.id;
 
-  if (!newDeck.hasOwnProperty(card.card.id)) {
-    newDeck[card.card.id] = card;
+  if (!newDeck.hasOwnProperty(cardId)) {
+    newDeck[cardId] = card;
     return newDeck;
   }
 
-  const oldQuantity = newDeck[card.card.id].quantity;
+  const oldQuantity = newDeck[cardId].quantity;
 
-  newDeck[card.card.id] = {
-    ...newDeck[card.card.id],
+  newDeck[cardId] = {
+    ...newDeck[cardId],
     quantity: getQuantity(card.card, oldQuantity, card.quantity)
+  };
+
+  return newDeck;
+};
+
+export const removeCardFromDeck = (deck, card) => {
+  const newDeck = { ...deck };
+  const cardId = card.card.id;
+
+  // Card doesn't exist... what are we even doing here?
+  if (!newDeck.hasOwnProperty(cardId)) {
+    return newDeck;
+  }
+
+  const oldQuantity = newDeck[cardId].quantity;
+
+  if (oldQuantity === 1) {
+    delete newDeck[cardId];
+    return newDeck;
+  }
+
+  newDeck[cardId] = {
+    ...newDeck[cardId],
+    quantity: oldQuantity - 1
   };
 
   return newDeck;

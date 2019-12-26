@@ -177,6 +177,7 @@ mutation UpdateDeckAndRemoveCards(
         mana
         gem
         rarity
+        supertype
         cardFactions {
           nodes {
             faction {
@@ -241,6 +242,7 @@ mutation UpdateDeckAndRemoveCards(
           id
           mana
           gem
+          supertype
           cardFactions {
             nodes {
               faction {
