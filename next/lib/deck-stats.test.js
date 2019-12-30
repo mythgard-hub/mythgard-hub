@@ -1,11 +1,13 @@
-import { getManaCurveHighchartsSeries } from './deck-stats';
+import { getManaCurveHighchartsSeries, getRarityCounts } from './deck-stats';
 import { FACTION_NAMES } from '../constants/factions';
+import { RARITY_IMAGES } from '../constants/rarities';
 
-const createFakeCard = (quantity, mana, factionName) => {
+const createFakeCard = (quantity, mana, factionName, rarity) => {
   return {
     quantity,
     card: {
       mana,
+      rarity,
       cardFactions: {
         nodes: [
           {
@@ -178,6 +180,99 @@ describe('Deck stats utility methods', () => {
           showInLegend: false,
           color: 'purple',
           data: [6, 0, 0, 0, 0, 0]
+        }
+      ];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('Test getRarityCounts', () => {
+    it('No cards', function() {
+      const result = getRarityCounts({});
+      const expected = [
+        {
+          count: 0,
+          link: RARITY_IMAGES.common
+        },
+        {
+          count: 0,
+          link: RARITY_IMAGES.uncommon
+        },
+        {
+          count: 0,
+          link: RARITY_IMAGES.rare
+        },
+        {
+          count: 0,
+          link: RARITY_IMAGES.mythic
+        }
+      ];
+
+      expect(result).toEqual(expected);
+    });
+
+    it('Some rarities present', function() {
+      const cards = {
+        a: createFakeCard(2, 1, FACTION_NAMES[0], 'COMMON'),
+        b: createFakeCard(20, 2, FACTION_NAMES[0], 'COMMON'),
+        d: createFakeCard(2000, 4, FACTION_NAMES[0], 'RARE'),
+        c: createFakeCard(200, 3, FACTION_NAMES[0], 'COMMON'),
+        e: createFakeCard(20000, 5, FACTION_NAMES[0], 'RARE')
+      };
+
+      const result = getRarityCounts(cards);
+      const expected = [
+        {
+          count: 222,
+          link: RARITY_IMAGES.common
+        },
+        {
+          count: 0,
+          link: RARITY_IMAGES.uncommon
+        },
+        {
+          count: 22000,
+          link: RARITY_IMAGES.rare
+        },
+        {
+          count: 0,
+          link: RARITY_IMAGES.mythic
+        }
+      ];
+
+      expect(result).toEqual(expected);
+    });
+
+    it('All rarities present', function() {
+      const cards = {
+        a: createFakeCard(2, 1, FACTION_NAMES[0], 'COMMON'),
+        b: createFakeCard(20, 2, FACTION_NAMES[0], 'COMMON'),
+        d: createFakeCard(2000, 4, FACTION_NAMES[0], 'RARE'),
+        c: createFakeCard(200, 3, FACTION_NAMES[0], 'COMMON'),
+        e: createFakeCard(20000, 5, FACTION_NAMES[0], 'RARE'),
+        f: createFakeCard(15, 6, FACTION_NAMES[0], 'MYTHIC'),
+        g: createFakeCard(700, 7, FACTION_NAMES[0], 'UNCOMMON'),
+        h: createFakeCard(80, 8, FACTION_NAMES[0], 'UNCOMMON')
+      };
+
+      const result = getRarityCounts(cards);
+      const expected = [
+        {
+          count: 222,
+          link: RARITY_IMAGES.common
+        },
+        {
+          count: 780,
+          link: RARITY_IMAGES.uncommon
+        },
+        {
+          count: 22000,
+          link: RARITY_IMAGES.rare
+        },
+        {
+          count: 15,
+          link: RARITY_IMAGES.mythic
         }
       ];
 

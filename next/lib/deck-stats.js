@@ -1,4 +1,5 @@
 import { FACTION_NAMES, FACTION_COLORS } from '../constants/factions';
+import { RARITY_IMAGES } from '../constants/rarities';
 import { mainFaction } from './card';
 import { X_COST } from '../constants/card';
 
@@ -65,4 +66,38 @@ export const getManaCurveHighchartsSeries = (cards, theme) => {
   }));
 
   return manaCurveSeries;
+};
+
+export const getRarityCounts = cards => {
+  const rarityCounts = {
+    COMMON: {
+      count: 0,
+      link: RARITY_IMAGES.common
+    },
+    UNCOMMON: {
+      count: 0,
+      link: RARITY_IMAGES.uncommon
+    },
+    RARE: {
+      count: 0,
+      link: RARITY_IMAGES.rare
+    },
+    MYTHIC: {
+      count: 0,
+      link: RARITY_IMAGES.mythic
+    }
+  };
+
+  try {
+    Object.values(cards).forEach(c => {
+      const { quantity, card } = c;
+      if (card.rarity) {
+        rarityCounts[card.rarity].count += quantity;
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
+
+  return Object.values(rarityCounts);
 };
