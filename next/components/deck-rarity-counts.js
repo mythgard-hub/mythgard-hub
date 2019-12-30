@@ -24,7 +24,8 @@ export default function DeckRarityCounts({ cards }) {
       `}</style>
       {rarityCounts.map((r, i) => (
         <div key={i} className="rarity-count">
-          <img className="rarity-image" src={r.link} /> {r.count}
+          <img className="rarity-image" src={r.link} />{' '}
+          <div data-cy="deckRarityCount">{r.count}</div>
         </div>
       ))}
     </div>
