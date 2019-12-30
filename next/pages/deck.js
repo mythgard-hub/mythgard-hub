@@ -7,10 +7,12 @@ import {
   getAuthor,
   getColors,
   getEssenceCost,
-  getDateCreated
+  getDateCreated,
+  getDeckType
 } from '../lib/deck-utils';
 import { singleDeckQuery } from '../lib/deck-queries';
 import PageBanner from '../components/page-banner';
+import { firstLetterUppercase } from '../lib/string-utils';
 
 export default withRouter(({ router }) => {
   const { error, loading, data } = useQuery(singleDeckQuery, {
@@ -36,13 +38,15 @@ export default withRouter(({ router }) => {
       </Layout>
     );
 
-  const authorName = getAuthor(data.deck);
-  const essenceCost = getEssenceCost(data.deck);
-  const dateCreated = getDateCreated(data.deck);
-  const colors = getColors(data.deck);
+  const deck = data.deck;
+  const authorName = getAuthor(deck);
+  const essenceCost = getEssenceCost(deck);
+  const dateCreated = getDateCreated(deck);
+  const colors = getColors(deck);
+  const type = firstLetterUppercase(getDeckType(deck));
 
   const title = `${data.deck.name} by ${authorName} | Mythgard Hub`;
-  const description = `Standard Mythgard Deck, ${colors}, ${essenceCost} Essence, Updated ${dateCreated}`;
+  const description = `${type} Mythgard Deck, ${colors}, ${essenceCost} Essence, Updated ${dateCreated}`;
 
   return (
     <Layout title={title} desc={description}>
