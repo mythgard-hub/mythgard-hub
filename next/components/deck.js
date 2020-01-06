@@ -24,7 +24,8 @@ import FactionsIndicator from './factions-indicator.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import DeckManaCurve from './deck-mana-curve';
-import DeckRarityCounts from './deck-rarity-counts';
+import { getRarityCounts, getTypeCounts } from '../lib/deck-stats';
+import DeckCount from './deck-count';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -57,6 +58,8 @@ export default function Deck({ deck }) {
   const archetype = getDeckArchetype(deck);
   const type = getDeckType(deck);
   const cardCount = getCardCount(deckToExport);
+  const rarityCounts = getRarityCounts(cards);
+  const typeCounts = getTypeCounts(cards);
 
   return (
     <div className="deck-page-container">
@@ -210,7 +213,18 @@ export default function Deck({ deck }) {
               <div className="stats-title">Rarity Counts</div>
               <hr className="gradient-hr" />
               <div className="deck-stat">
-                <DeckRarityCounts cards={cards} />
+                <DeckCount
+                  imagesAndCounts={rarityCounts}
+                  dataCyName="deckRarityCount"
+                />
+              </div>
+              <div className="stats-title">Type Counts</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <DeckCount
+                  imagesAndCounts={typeCounts}
+                  dataCyName="deckTypeCount"
+                />
               </div>
             </div>
           </div>
