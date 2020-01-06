@@ -1,13 +1,19 @@
-import { getManaCurveHighchartsSeries, getRarityCounts } from './deck-stats';
+import {
+  getManaCurveHighchartsSeries,
+  getRarityCounts,
+  getTypeCounts
+} from './deck-stats';
 import { FACTION_NAMES } from '../constants/factions';
 import { RARITY_IMAGES } from '../constants/rarities';
+import { SUPERTYPE_IMAGES } from '../constants/supertypes';
 
-const createFakeCard = (quantity, mana, factionName, rarity) => {
+const createFakeCard = (quantity, mana, factionName, rarity, supertype) => {
   return {
     quantity,
     card: {
       mana,
       rarity,
+      supertype: [supertype],
       cardFactions: {
         nodes: [
           {
@@ -273,6 +279,99 @@ describe('Deck stats utility methods', () => {
         {
           count: 15,
           link: RARITY_IMAGES.mythic
+        }
+      ];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('Test getTypeCounts', () => {
+    it('No cards', function() {
+      const result = getTypeCounts({});
+      const expected = [
+        {
+          count: 0,
+          link: SUPERTYPE_IMAGES.minion
+        },
+        {
+          count: 0,
+          link: SUPERTYPE_IMAGES.spell
+        },
+        {
+          count: 0,
+          link: SUPERTYPE_IMAGES.enchantment
+        },
+        {
+          count: 0,
+          link: SUPERTYPE_IMAGES.artifact
+        }
+      ];
+
+      expect(result).toEqual(expected);
+    });
+
+    it('Some types present', function() {
+      const cards = {
+        a: createFakeCard(2, 1, FACTION_NAMES[0], 'COMMON', 'SPELL'),
+        b: createFakeCard(20, 2, FACTION_NAMES[0], 'COMMON', 'SPELL'),
+        d: createFakeCard(2000, 4, FACTION_NAMES[0], 'COMMON', 'ARTIFACT'),
+        c: createFakeCard(200, 3, FACTION_NAMES[0], 'COMMON', 'SPELL'),
+        e: createFakeCard(20000, 5, FACTION_NAMES[0], 'COMMON', 'ARTIFACT')
+      };
+
+      const result = getTypeCounts(cards);
+      const expected = [
+        {
+          count: 0,
+          link: SUPERTYPE_IMAGES.minion
+        },
+        {
+          count: 222,
+          link: SUPERTYPE_IMAGES.spell
+        },
+        {
+          count: 0,
+          link: SUPERTYPE_IMAGES.enchantment
+        },
+        {
+          count: 22000,
+          link: SUPERTYPE_IMAGES.artifact
+        }
+      ];
+
+      expect(result).toEqual(expected);
+    });
+
+    it('All rarities present', function() {
+      const cards = {
+        a: createFakeCard(2, 1, FACTION_NAMES[0], 'COMMON', 'SPELL'),
+        b: createFakeCard(20, 2, FACTION_NAMES[0], 'COMMON', 'SPELL'),
+        d: createFakeCard(2000, 4, FACTION_NAMES[0], 'COMMON', 'ARTIFACT'),
+        c: createFakeCard(200, 3, FACTION_NAMES[0], 'COMMON', 'SPELL'),
+        e: createFakeCard(20000, 5, FACTION_NAMES[0], 'COMMON', 'ARTIFACT'),
+        f: createFakeCard(15, 5, FACTION_NAMES[0], 'COMMON', 'MINION'),
+        g: createFakeCard(350, 5, FACTION_NAMES[0], 'COMMON', 'ENCHANTMENT'),
+        h: createFakeCard(85, 5, FACTION_NAMES[0], 'COMMON', 'MINION')
+      };
+
+      const result = getTypeCounts(cards);
+      const expected = [
+        {
+          count: 100,
+          link: SUPERTYPE_IMAGES.minion
+        },
+        {
+          count: 222,
+          link: SUPERTYPE_IMAGES.spell
+        },
+        {
+          count: 350,
+          link: SUPERTYPE_IMAGES.enchantment
+        },
+        {
+          count: 22000,
+          link: SUPERTYPE_IMAGES.artifact
         }
       ];
 

@@ -1,5 +1,6 @@
 import { FACTION_NAMES, FACTION_COLORS } from '../constants/factions';
 import { RARITY_IMAGES } from '../constants/rarities';
+import { SUPERTYPE_IMAGES } from '../constants/supertypes';
 import { mainFaction } from './card';
 import { X_COST } from '../constants/card';
 
@@ -100,4 +101,39 @@ export const getRarityCounts = cards => {
   }
 
   return Object.values(rarityCounts);
+};
+
+export const getTypeCounts = cards => {
+  const typeCounts = {
+    MINION: {
+      count: 0,
+      link: SUPERTYPE_IMAGES.minion
+    },
+    SPELL: {
+      count: 0,
+      link: SUPERTYPE_IMAGES.spell
+    },
+    ENCHANTMENT: {
+      count: 0,
+      link: SUPERTYPE_IMAGES.enchantment
+    },
+    ARTIFACT: {
+      count: 0,
+      link: SUPERTYPE_IMAGES.artifact
+    }
+  };
+
+  try {
+    Object.values(cards).forEach(c => {
+      const { quantity, card } = c;
+      if (card.supertype && card.supertype.length) {
+        const supertype = card.supertype[0];
+        typeCounts[supertype].count += quantity;
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
+
+  return Object.values(typeCounts);
 };
