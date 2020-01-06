@@ -37,6 +37,18 @@ describe('Deck Page', function() {
     cy.get('[data-cy="deckRarityCount"]')
       .eq(3)
       .should('contain', '5');
+    cy.get('[data-cy="deckTypeCount"]')
+      .eq(0)
+      .should('contain', '7');
+    cy.get('[data-cy="deckTypeCount"]')
+      .eq(1)
+      .should('contain', '1');
+    cy.get('[data-cy="deckTypeCount"]')
+      .eq(2)
+      .should('contain', '1');
+    cy.get('[data-cy="deckTypeCount"]')
+      .eq(3)
+      .should('contain', '1');
   });
 
   it('happy path card click', function() {
