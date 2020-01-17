@@ -472,7 +472,7 @@ RETURNS INTEGER AS $$
 -- reddit's hotness algorithm, allegedly
 -- https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9
 -- def hot(ups, downs, date):
---     s = score(ups, downs)
+--     s = score(ups, downs) // This is ups - downs for reddit, but we don't have downvotes
 --     order = log(max(abs(s), 1), 10)
 --     sign = 1 if s > 0 else -1 if s < 0 else 0
 --     seconds = epoch_seconds(date) - 1134028003
@@ -481,9 +481,9 @@ create function mythgard.epochSeconds(timestamp) returns int as $$
   select extract(epoch from $1)::int;
 $$ language sql stable;
 
--- we omit the log fn to emphasize votes more
+-- we do log2(n+1) instead of log10(n) since we get fewer votes than reddit
 create function mythgard.hotnessOrder(votes integer) returns integer as $$
-  select greatest(votes, 1);
+  select log(2, greatest(votes + 1, 1))::int;
 $$ language sql stable;
 
 create function mythgard.hotnessSign(votes integer) returns integer as $$
@@ -500,7 +500,7 @@ create function mythgard.hotness(votes integer, creation timestamp) returns doub
 
   select round(
     ((mythgard.hotnessSign(votes) * mythgard.hotnessOrder(votes))
-      + (mythgard.hotnessSeconds(creation) / 180000))::numeric
+      + (mythgard.hotnessSeconds(creation) / 5 / 45000))::numeric
   , 7)::double precision;
 
 $$ language sql stable;
