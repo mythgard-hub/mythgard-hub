@@ -1,6 +1,6 @@
 drop function if exists mythgard.hotnessOrder;
-create function mythgard.hotnessOrder(votes integer) returns integer as $$
-  select log(2, greatest(votes + 1, 1))::int;
+create function mythgard.hotnessOrder(votes integer) returns numeric as $$
+  select log(2, greatest(votes + 1, 1));
 $$ language sql stable;
 
 drop function if exists mythgard.hotness;

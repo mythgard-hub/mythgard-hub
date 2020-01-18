@@ -482,8 +482,8 @@ create function mythgard.epochSeconds(timestamp) returns int as $$
 $$ language sql stable;
 
 -- we do log2(n+1) instead of log10(n) since we get fewer votes than reddit
-create function mythgard.hotnessOrder(votes integer) returns integer as $$
-  select log(2, greatest(votes + 1, 1))::int;
+create function mythgard.hotnessOrder(votes integer) returns numeric as $$
+  select log(2, greatest(votes + 1, 1));
 $$ language sql stable;
 
 create function mythgard.hotnessSign(votes integer) returns integer as $$
