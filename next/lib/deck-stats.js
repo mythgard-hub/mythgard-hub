@@ -25,6 +25,7 @@ const initializeManaCostsByFaction = theme => {
       showInLegend: false,
       color: factionMainColor(f, theme),
       data: {
+        '0': 0,
         '1': 0,
         '2': 0,
         '3': 0,
