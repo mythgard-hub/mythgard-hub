@@ -37,16 +37,14 @@ export default function DeckBuilderSidebar(props) {
 
   const increaseCardQuantity = card => {
     const newMainDeck = { ...deckInProgress.mainDeck };
-
     setDeckInProgress({
       ...deckInProgress,
-      mainDeck: addCardToDeck(newMainDeck, card)
+      mainDeck: addCardToDeck(newMainDeck, card, 1)
     });
   };
 
   const decreaseCardQuantity = card => {
     const newMainDeck = { ...deckInProgress.mainDeck };
-
     setDeckInProgress({
       ...deckInProgress,
       mainDeck: removeCardFromDeck(newMainDeck, card)

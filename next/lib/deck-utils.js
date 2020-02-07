@@ -19,7 +19,7 @@ export const initializeDeckBuilder = () => {
   };
 };
 
-export const addCardToDeck = (deck, card) => {
+export const addCardToDeck = (deck, card, quantityOverride) => {
   const newDeck = { ...deck };
   const cardId = card.card.id;
 
@@ -29,10 +29,11 @@ export const addCardToDeck = (deck, card) => {
   }
 
   const oldQuantity = newDeck[cardId].quantity;
+  const newQuantity = quantityOverride || card.quantity;
 
   newDeck[cardId] = {
     ...newDeck[cardId],
-    quantity: getQuantity(card.card, oldQuantity, card.quantity)
+    quantity: getQuantity(card.card, oldQuantity, newQuantity)
   };
 
   return newDeck;

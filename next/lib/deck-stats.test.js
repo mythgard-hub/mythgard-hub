@@ -43,37 +43,37 @@ describe('Deck stats utility methods', () => {
           name: FACTION_NAMES[0],
           showInLegend: false,
           color: 'blue',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[1],
           showInLegend: false,
           color: 'yellow',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[2],
           showInLegend: false,
           color: 'red',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[3],
           showInLegend: false,
           color: 'green',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[4],
           showInLegend: false,
           color: 'orange',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[5],
           showInLegend: false,
           color: 'purple',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         }
       ];
 
@@ -89,7 +89,8 @@ describe('Deck stats utility methods', () => {
         e: createFakeCard(20000, 5, FACTION_NAMES[0]),
         f: createFakeCard(200000, 6, FACTION_NAMES[0]),
         g: createFakeCard(200000, 20, FACTION_NAMES[0]),
-        h: createFakeCard(4, -1, FACTION_NAMES[0])
+        h: createFakeCard(4, -1, FACTION_NAMES[0]),
+        i: createFakeCard(5, 0, FACTION_NAMES[0])
       };
 
       const result = getManaCurveHighchartsSeries(cards, theme);
@@ -98,37 +99,37 @@ describe('Deck stats utility methods', () => {
           name: FACTION_NAMES[0],
           showInLegend: false,
           color: 'blue',
-          data: [6, 20, 200, 2000, 20000, 400000]
+          data: [5, 6, 20, 200, 2000, 20000, 400000]
         },
         {
           name: FACTION_NAMES[1],
           showInLegend: false,
           color: 'yellow',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[2],
           showInLegend: false,
           color: 'red',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[3],
           showInLegend: false,
           color: 'green',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[4],
           showInLegend: false,
           color: 'orange',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[5],
           showInLegend: false,
           color: 'purple',
-          data: [0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0]
         }
       ];
 
@@ -146,7 +147,9 @@ describe('Deck stats utility methods', () => {
         g: createFakeCard(8, 1, FACTION_NAMES[2]),
         h: createFakeCard(10, 10, FACTION_NAMES[3]),
         i: createFakeCard(5, 2, FACTION_NAMES[4]),
-        j: createFakeCard(6, 1, FACTION_NAMES[5])
+        j: createFakeCard(6, 1, FACTION_NAMES[5]),
+        k: createFakeCard(6, 0, FACTION_NAMES[5]),
+        l: createFakeCard(2, -1, FACTION_NAMES[5])
       };
 
       const result = getManaCurveHighchartsSeries(cards, theme);
@@ -155,37 +158,37 @@ describe('Deck stats utility methods', () => {
           name: FACTION_NAMES[0],
           showInLegend: false,
           color: 'blue',
-          data: [2, 3, 0, 0, 0, 5]
+          data: [0, 2, 3, 0, 0, 0, 5]
         },
         {
           name: FACTION_NAMES[1],
           showInLegend: false,
           color: 'yellow',
-          data: [0, 0, 0, 10, 0, 0]
+          data: [0, 0, 0, 0, 10, 0, 0]
         },
         {
           name: FACTION_NAMES[2],
           showInLegend: false,
           color: 'red',
-          data: [8, 0, 0, 0, 23, 0]
+          data: [0, 8, 0, 0, 0, 23, 0]
         },
         {
           name: FACTION_NAMES[3],
           showInLegend: false,
           color: 'green',
-          data: [0, 0, 0, 0, 0, 10]
+          data: [0, 0, 0, 0, 0, 0, 10]
         },
         {
           name: FACTION_NAMES[4],
           showInLegend: false,
           color: 'orange',
-          data: [0, 5, 0, 0, 0, 0]
+          data: [0, 0, 5, 0, 0, 0, 0]
         },
         {
           name: FACTION_NAMES[5],
           showInLegend: false,
           color: 'purple',
-          data: [6, 0, 0, 0, 0, 0]
+          data: [6, 8, 0, 0, 0, 0, 0]
         }
       ];
 

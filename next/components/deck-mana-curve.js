@@ -28,7 +28,7 @@ export default function DeckManaCurve({ cards }) {
       text: ''
     },
     xAxis: {
-      categories: ['1', '2', '3', '4', '5', '6+'],
+      categories: ['0', '1', '2', '3', '4', '5', '6+'],
       crosshair: true,
       lineColor: '#666666'
     },
