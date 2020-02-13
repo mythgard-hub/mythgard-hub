@@ -20,9 +20,9 @@ export default function Card({ card }) {
   let factions = [];
 
   try {
-    factions = card.cardFactions.nodes.map(f =>
-      firstLetterUppercase(f.faction.name)
-    );
+    factions = card.cardFactions.nodes
+      .filter(f => f)
+      .map(f => firstLetterUppercase(f.faction.name));
   } catch (error) {
     console.error('Something went wrong trying to read card factions', error);
   }
