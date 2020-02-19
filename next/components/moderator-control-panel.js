@@ -9,6 +9,8 @@ function moderatorControlPanel() {
       <ModeratorDeckEditor />
       <hr />
       <ModeratorConfigEditor />
+      <hr />
+      <h1>Edit Featured Decks</h1>
     </>
   );
 }
