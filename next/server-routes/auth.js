@@ -52,9 +52,9 @@ const getUsername = () => {
 };
 
 /**
- * Stay logged in for one hour of non-activity
+ * Stay logged in for a month of non-activity
  */
-const sessionTimeoutInSecs = 60 * 60;
+const sessionTimeoutInSecs = 60 * 60 * 24 * 30;
 const getJwtExp = () => Math.floor(Date.now() / 1000 + sessionTimeoutInSecs);
 
 client.connect();
