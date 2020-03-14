@@ -597,5 +597,14 @@ mutation deleteFeaturedDeck($deckId: Int!) {
     }
   }
 }
+`,
+  `
+mutation addFeaturedDeck($deckId: Int!) {
+  createDeckFeatured(input: {deckFeatured: {deckId: $deckId}}) {
+    deckFeatured {
+      deckId
+    }
+  }
+}
 `
 ];
