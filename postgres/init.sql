@@ -429,6 +429,12 @@ CREATE POLICY delete_deck_featured_moderator
   USING (exists(select * from mythgard.account_moderator
          where account_id = mythgard.current_user_id()));
 
+CREATE POLICY insert_deck_featured_moderator
+  ON mythgard.deck_featured
+  FOR INSERT
+  WITH CHECK (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
+
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$

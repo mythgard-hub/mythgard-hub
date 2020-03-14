@@ -8,3 +8,8 @@ CREATE POLICY delete_deck_featured_moderator
   USING (exists(select * from mythgard.account_moderator
          where account_id = mythgard.current_user_id()));
 
+CREATE POLICY insert_deck_featured_moderator
+  ON mythgard.deck_featured
+  FOR INSERT
+  WITH CHECK (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
