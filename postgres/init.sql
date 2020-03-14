@@ -419,6 +419,16 @@ CREATE POLICY update_site_config_if_moderator
   USING (exists(select * from mythgard.account_moderator
          where account_id = mythgard.current_user_id()));
 
+ALTER TABLE mythgard.deck_featured ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY deck_featured_all_view ON mythgard.deck_featured FOR SELECT USING (true);
+
+CREATE POLICY delete_deck_featured_moderator
+  ON mythgard.deck_featured
+  FOR DELETE
+  USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
+
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
