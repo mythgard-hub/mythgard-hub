@@ -588,5 +588,14 @@ query tournaments($now: Date) {
       }
     }
   }
+`,
+  `
+mutation deleteFeaturedDeck($deckId: Int!) {
+  deleteDeckFeatured(input: {id: $deckId}) {
+    deckFeatured {
+      id
+    }
+  }
+}
 `
 ];
