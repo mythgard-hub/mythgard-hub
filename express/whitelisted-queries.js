@@ -590,6 +590,16 @@ query tournaments($now: Date) {
   }
 `,
   `
+  query deckFeatured {
+    deckFeatureds {
+      nodes {
+        id
+        deckId
+      }
+    }
+  }
+`,
+  `
 mutation deleteFeaturedDeck($deckId: Int!) {
   deleteDeckFeatured(input: {id: $deckId}) {
     deckFeatured {
