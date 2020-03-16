@@ -283,6 +283,7 @@ CREATE TABLE mythgard.deck_featured (
     REFERENCES mythgard.deck (id)
     ON DELETE CASCADE
 );
+ALTER TABLE mythgard.deck_featured ADD CONSTRAINT deckIdUniq UNIQUE (deck_id);
 
 INSERT INTO mythgard.deck_featured("deck_id") VALUES (1);
 

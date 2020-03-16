@@ -328,8 +328,8 @@ export const deckFeaturedQuery = gql`
 `;
 
 export const deleteFeaturedDeckMutation = gql`
-  mutation deleteFeaturedDeck($deckId: Int!) {
-    deleteDeckFeatured(input: { id: $deckId }) {
+  mutation deleteFeaturedDeck($id: Int!) {
+    deleteDeckFeatured(input: { id: $id }) {
       deckFeatured {
         id
       }
@@ -342,6 +342,7 @@ export const addFeaturedDeckMutation = gql`
     createDeckFeatured(input: { deckFeatured: { deckId: $deckId } }) {
       deckFeatured {
         deckId
+        id
       }
     }
   }

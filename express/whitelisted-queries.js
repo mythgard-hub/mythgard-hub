@@ -600,8 +600,8 @@ query tournaments($now: Date) {
   }
 `,
   `
-mutation deleteFeaturedDeck($deckId: Int!) {
-  deleteDeckFeatured(input: {id: $deckId}) {
+mutation deleteFeaturedDeck($id: Int!) {
+  deleteDeckFeatured(input: {id: $id}) {
     deckFeatured {
       id
     }
@@ -613,6 +613,7 @@ mutation addFeaturedDeck($deckId: Int!) {
   createDeckFeatured(input: {deckFeatured: {deckId: $deckId}}) {
     deckFeatured {
       deckId
+      id
     }
   }
 }

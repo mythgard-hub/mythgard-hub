@@ -13,3 +13,6 @@ CREATE POLICY insert_deck_featured_moderator
   FOR INSERT
   WITH CHECK (exists(select * from mythgard.account_moderator
          where account_id = mythgard.current_user_id()));
+
+ALTER TABLE mythgard.deck_featured ADD CONSTRAINT deckIdUniq UNIQUE (deck_id);
+
