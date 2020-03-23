@@ -283,6 +283,7 @@ CREATE TABLE mythgard.deck_featured (
     REFERENCES mythgard.deck (id)
     ON DELETE CASCADE
 );
+ALTER TABLE mythgard.deck_featured ADD CONSTRAINT deckIdUniq UNIQUE (deck_id);
 
 INSERT INTO mythgard.deck_featured("deck_id") VALUES (1);
 
@@ -417,6 +418,22 @@ CREATE POLICY update_site_config_if_moderator
   ON mythgard.site_config
   FOR UPDATE
   USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
+
+ALTER TABLE mythgard.deck_featured ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY deck_featured_all_view ON mythgard.deck_featured FOR SELECT USING (true);
+
+CREATE POLICY delete_deck_featured_moderator
+  ON mythgard.deck_featured
+  FOR DELETE
+  USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
+
+CREATE POLICY insert_deck_featured_moderator
+  ON mythgard.deck_featured
+  FOR INSERT
+  WITH CHECK (exists(select * from mythgard.account_moderator
          where account_id = mythgard.current_user_id()));
 
 -- Save deck modification time so decks can be searched by last update time

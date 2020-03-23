@@ -315,3 +315,35 @@ export const updateDeck = gql`
     }
   }
 `;
+
+export const deckFeaturedQuery = gql`
+  query deckFeatured {
+    deckFeatureds {
+      nodes {
+        id
+        deckId
+      }
+    }
+  }
+`;
+
+export const deleteFeaturedDeckMutation = gql`
+  mutation deleteFeaturedDeck($id: Int!) {
+    deleteDeckFeatured(input: { id: $id }) {
+      deckFeatured {
+        id
+      }
+    }
+  }
+`;
+
+export const addFeaturedDeckMutation = gql`
+  mutation addFeaturedDeck($deckId: Int!) {
+    createDeckFeatured(input: { deckFeatured: { deckId: $deckId } }) {
+      deckFeatured {
+        deckId
+        id
+      }
+    }
+  }
+`;

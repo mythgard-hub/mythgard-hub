@@ -588,5 +588,34 @@ query tournaments($now: Date) {
       }
     }
   }
+`,
+  `
+  query deckFeatured {
+    deckFeatureds {
+      nodes {
+        id
+        deckId
+      }
+    }
+  }
+`,
+  `
+mutation deleteFeaturedDeck($id: Int!) {
+  deleteDeckFeatured(input: {id: $id}) {
+    deckFeatured {
+      id
+    }
+  }
+}
+`,
+  `
+mutation addFeaturedDeck($deckId: Int!) {
+  createDeckFeatured(input: {deckFeatured: {deckId: $deckId}}) {
+    deckFeatured {
+      deckId
+      id
+    }
+  }
+}
 `
 ];
