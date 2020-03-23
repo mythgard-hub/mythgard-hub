@@ -290,11 +290,7 @@ export const topDeckPreviewsQuery = gql`
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_ASC, first: 4, filter: {
       deck: {
-        deckFeatureds: {
-          some: {
-            deckExists: true
-          }
-        }
+        deckFeaturedByDeckIdExists: true
       }
     }) {
       ${deckPreviewsFragment}
