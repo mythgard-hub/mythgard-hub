@@ -1,6 +1,5 @@
-import React from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   deckFeaturedQuery,
   deleteFeaturedDeckMutation,
@@ -8,7 +7,7 @@ import {
 } from '../lib/deck-queries.js';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 
-function moderatorFeaturedDecksEditor() {
+function ModeratorFeaturedDecksEditor() {
   const { loading, error, data } = useQuery(deckFeaturedQuery);
   const [newFeaturedDeckId, setNewFeaturedDeckId] = useState(-1);
   const onChangeNewFeaturedDeckId = handleInputChangeHooks(
@@ -75,7 +74,7 @@ function moderatorFeaturedDecksEditor() {
     },
     onError() {
       alert(
-        'Add featured deck failed. Please check values and try again (must be integer, and not a duplicate)'
+        'Add featured deck failed. Please check values and try again (must be integer, and not a duplicate, and deck with that id must exist)'
       );
     }
   });
@@ -126,8 +125,8 @@ function moderatorFeaturedDecksEditor() {
   );
 }
 
-moderatorFeaturedDecksEditor.defaultProps = {};
+ModeratorFeaturedDecksEditor.defaultProps = {};
 
-moderatorFeaturedDecksEditor.propTypes = {};
+ModeratorFeaturedDecksEditor.propTypes = {};
 
-export default moderatorFeaturedDecksEditor;
+export default ModeratorFeaturedDecksEditor;
