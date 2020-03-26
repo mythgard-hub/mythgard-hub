@@ -522,6 +522,8 @@ create function mythgard.hotness(votes integer, creation timestamp) returns doub
 
 $$ language sql stable;
 
+-- useful function to run on production for evaluating results
+-- select mythgard.deck_hotness(deck.id), mythgard.deck_votes(deck.id), created, name from mythgard.deck order by mythgard.deckHotness(deck.id) desc limit 20;
 create function mythgard.deck_hotness(deckId integer) returns double precision as $$
 
   select mythgard.hotness(mythgard.deck_votes(deckId), created)
@@ -529,9 +531,6 @@ create function mythgard.deck_hotness(deckId integer) returns double precision a
   where deck.id = deckId;
 
 $$ language sql stable;
-
--- useful function to run on production for evaluating results
--- select mythgard.deck_hotness(deck.id), mythgard.deck_votes(deck.id), created, name from mythgard.deck order by mythgard.deckHotness(deck.id) desc limit 20;
 
 create or replace function mythgard.deck_factions(deckId integer) returns  character varying[] as $$
   select(array_agg(distinct faction.name))
@@ -543,6 +542,15 @@ create or replace function mythgard.deck_factions(deckId integer) returns  chara
   where mythgard.deck.id = deckId
   and faction.name is not null;
 $$ language sql stable;
+
+CREATE SEQUENCE mythgard.deck_hotness_index_id START 1;
+CREATE TABLE mythgard.deck_hotness_index
+  AS
+  SELECT nextval('mythgard.deck_hotness_index_id') as id,
+         id as deck_id,
+         mythgard.deck_hotness(id)::int as hotness
+  FROM mythgard.deck;
+ALTER TABLE mythgard.deck_hotness_index ADD PRIMARY KEY (id);
 
 CREATE OR REPLACE VIEW mythgard.deck_preview as
   SELECT deck.id as deck_id,
@@ -756,9 +764,11 @@ create or replace function mythgard.search_decks(
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions, archetypeFilter, typeFilter) order by created asc;
        ELSIF sortBy = 'hot' THEN
-         RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+         RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
-                  faction6, numFactions, archetypeFilter, typeFilter) order by mythgard.deck_hotness(id) desc;
+                  faction6, numFactions, archetypeFilter, typeFilter) as deck
+                LEFT JOIN mythgard.deck_hotness_index on deck_hotness_index.deck_id = deck.id
+                order by deck_hotness_index.hotness desc nulls last;
        ELSE
           RETURN QUERY select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
@@ -768,15 +778,6 @@ create or replace function mythgard.search_decks(
    END
 
   $$ language plpgsql stable;
-
-CREATE SEQUENCE mythgard.deck_hotness_index_id START 1;
-CREATE TABLE mythgard.deck_hotness_index
-  AS
-  SELECT nextval('mythgard.deck_hotness_index_id') as id,
-         id as deck_id,
-         mythgard.deck_hotness(id)::int as hotness
-  FROM mythgard.deck;
-ALTER TABLE mythgard.deck_hotness_index ADD PRIMARY KEY (id);
 -- END QUERIES
 
 CREATE USER postgraphile WITH password 'bears4life';
