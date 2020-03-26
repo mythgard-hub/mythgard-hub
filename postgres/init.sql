@@ -142,7 +142,7 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name", "author_id")
   VALUES (
-    'dragons', 
+    'dragons',
     1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
   VALUES (
@@ -161,7 +161,7 @@ INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
   VALUES (
     'norden aztlan',
     current_date - interval '9 month',
-    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[], 
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
     '{STANDARD}'::mythgard.deckType[]);
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
@@ -556,10 +556,12 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.modified as deck_modified,
          account.id as account_id,
          account.username as username,
-         mythgard.deck_hotness(deck.id)::int as hotness
+         hotness
   FROM mythgard.deck
   LEFT JOIN mythgard.account
   ON mythgard.account.id = mythgard.deck.author_id
+  LEFT JOIN mythgard.deck_hotness_index
+  ON mythgard.deck_hotness_index.deck_id = mythgard.deck.id
 ;
 
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
@@ -767,6 +769,14 @@ create or replace function mythgard.search_decks(
 
   $$ language plpgsql stable;
 
+CREATE SEQUENCE mythgard.deck_hotness_index_id START 1;
+CREATE TABLE mythgard.deck_hotness_index
+  AS
+  SELECT nextval('mythgard.deck_hotness_index_id') as id,
+         id as deck_id,
+         mythgard.deck_hotness(id)::int as hotness
+  FROM mythgard.deck;
+ALTER TABLE mythgard.deck_hotness_index ADD PRIMARY KEY (id);
 -- END QUERIES
 
 CREATE USER postgraphile WITH password 'bears4life';
