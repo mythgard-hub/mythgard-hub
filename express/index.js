@@ -62,7 +62,7 @@ app.use(
       pgDefaultRole: process.env.PG_ANON_USER_ROLE,
       ignoreRBAC: false,
       pgSettings: {
-        statement_timeout: '3000'
+        statement_timeout: '10000'
       }
     }
   )

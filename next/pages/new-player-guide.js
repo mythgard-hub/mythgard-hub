@@ -438,6 +438,16 @@ function NewPlayerGuide() {
                           6.3 Gauntlet Mode Leveling
                         </a>
                       </li>
+                      <li>
+                        <a href="#Starting_Missions" title="Starting Missions">
+                          6.4 Starting Missions
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#Faction_Missions" title="Faction Missions">
+                          6.5 Faction Missions
+                        </a>
+                      </li>
                     </ul>
                   </li>
                   <li>
@@ -1737,6 +1747,46 @@ function NewPlayerGuide() {
             get more familiar with cards in the Core Set, as you will be able to
             see many of them as you go through drafts and get to test drive many
             different decks as you fill out your collection of Paths and Powers!{' '}
+          </p>
+
+          <h2>
+            <span id="Starting_Missions">Starting Missions</span>
+          </h2>
+
+          <p>
+            When you start playing, you will notice in the Missions screen that
+            you have access to a fourth mission on the far left. These start
+            with preliminary missions to earn coins for trying out various game
+            modes or performing simple tasks in game. After you have clear these
+            out, you will have access to special missions in blue which grant
+            big one-time bonuses. The missions–win seven matches, destroy 88
+            opposing minions, win a match with 1 HP–grant 2 special mythic
+            wildcards and 2 special rare wildcards. Unlike other wildcards,
+            these can be used to craft cards of any color. With these wildcards
+            you can likely fill in any gaps in your collection and get straight
+            to making a decent version of your dream deck!
+          </p>
+
+          <h2>
+            <span id="Faction_Missions">Factions Missions</span>
+          </h2>
+
+          <p>
+            Another tab absolutely worth investigating early in Missions are
+            “Factions”. Pick your favorite color, notice the gorgeous new
+            animated background, and start plugging away at missions specific to
+            each color’s specific mechanics–using Lifetap for Red, sending
+            minions to the Boneyard in Green, etc. There are nine levels for
+            each color, each granting 600 coins and some cards and wildcards.
+            The first six give two common cards and two wildcards, alternating
+            common and uncommon rarity, all in color and missions seven and
+            eight give a rare card and wildcard in color. For the final mission
+            you are awarded a Mythic Wildcard in color! These mission are
+            probably not something that you can grind out right away, but being
+            sure to set your faction mission track to the color you want to work
+            on, as you can only select one at a time. This is not only a
+            fantastic way to build your collection, but a great introduction to
+            themes in each color!
           </p>
 
           <h1>

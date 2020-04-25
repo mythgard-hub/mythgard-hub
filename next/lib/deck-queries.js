@@ -290,11 +290,7 @@ export const topDeckPreviewsQuery = gql`
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_ASC, first: 4, filter: {
       deck: {
-        deckFeatureds: {
-          some: {
-            deckExists: true
-          }
-        }
+        deckFeaturedByDeckIdExists: true
       }
     }) {
       ${deckPreviewsFragment}
@@ -310,6 +306,38 @@ export const updateDeck = gql`
       input: { id: $deckId, patch: { description: $deckDesc, name: $deckName } }
     ) {
       deck {
+        id
+      }
+    }
+  }
+`;
+
+export const deckFeaturedQuery = gql`
+  query deckFeatured {
+    deckFeatureds {
+      nodes {
+        id
+        deckId
+      }
+    }
+  }
+`;
+
+export const deleteFeaturedDeckMutation = gql`
+  mutation deleteFeaturedDeck($id: Int!) {
+    deleteDeckFeatured(input: { id: $id }) {
+      deckFeatured {
+        id
+      }
+    }
+  }
+`;
+
+export const addFeaturedDeckMutation = gql`
+  mutation addFeaturedDeck($deckId: Int!) {
+    createDeckFeatured(input: { deckFeatured: { deckId: $deckId } }) {
+      deckFeatured {
+        deckId
         id
       }
     }

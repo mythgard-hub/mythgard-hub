@@ -346,11 +346,7 @@ mutation UpdateDeckAndRemoveCards(
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_ASC, first: 4, filter: {
       deck: {
-        deckFeatureds: {
-          some: {
-            deckExists: true
-          }
-        }
+        deckFeaturedByDeckIdExists: true
       }
     }) {
       ${deckPreviewsFragment}
@@ -588,5 +584,34 @@ query tournaments($now: Date) {
       }
     }
   }
+`,
+  `
+  query deckFeatured {
+    deckFeatureds {
+      nodes {
+        id
+        deckId
+      }
+    }
+  }
+`,
+  `
+mutation deleteFeaturedDeck($id: Int!) {
+  deleteDeckFeatured(input: {id: $id}) {
+    deckFeatured {
+      id
+    }
+  }
+}
+`,
+  `
+mutation addFeaturedDeck($deckId: Int!) {
+  createDeckFeatured(input: {deckFeatured: {deckId: $deckId}}) {
+    deckFeatured {
+      deckId
+      id
+    }
+  }
+}
 `
 ];
