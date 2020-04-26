@@ -1,24 +1,18 @@
 const cdn = `${process.env.MG_CDN}/filters/`;
 
+const pathIcons = {
+  'disk of circadia': `${cdn}DiskOfCircadia.png`,
+  'fires of creation': `${cdn}FiresOfCreation.png`,
+  'journey of souls': `${cdn}JourneyOfSouls.png`,
+  "rainbow's end": `${cdn}RainbowsEnd.png`,
+  'turn of seasons': `${cdn}TurnOfSeasons.png`
+};
+
 export const matchPathNameToIcon = path => {
   try {
     const pathName = path.name;
     const lowerCaseName = pathName.toLowerCase();
-
-    switch (lowerCaseName) {
-      case 'disk of circadia':
-        return `${cdn}DiskOfCircadia.png`;
-      case 'fires of creation':
-        return `${cdn}FiresOfCreation.png`;
-      case 'journey of souls':
-        return `${cdn}JourneyOfSouls.png`;
-      case "rainbow's end":
-        return `${cdn}RainbowsEnd.png`;
-      case 'turn of seasons':
-        return `${cdn}TurnOfSeasons.png`;
-      default:
-        return null;
-    }
+    return pathIcons[lowerCaseName] || null;
   } catch (e) {
     return null;
   }
