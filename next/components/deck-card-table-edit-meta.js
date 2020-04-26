@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 
 export default function DeckCardsTableEditMeta(props) {
-  const { metaName, metaValue, onEditClick, showEdit } = props;
-  const className = metaValue ? '' : 'no-meta-value';
+  const { metaName, metaValue, onEditClick, showEdit, icon } = props;
+  const className = metaValue ? 'meta-value' : 'no-meta-value';
 
   return (
     <div className="no-meta-value-selected-container">
       <style jsx>{`
+        .meta-value {
+          display: flex;
+        }
         .no-meta-value-selected-container {
           display: flex;
           justify-content: space-between;
@@ -21,8 +24,14 @@ export default function DeckCardsTableEditMeta(props) {
         .no-meta-value {
           text-transform: uppercase;
         }
+        img {
+          width: 20px;
+          height: auto;
+          margin-right: 5px;
+        }
       `}</style>
       <div className={className} data-cy="deckBuilderMetaValue">
+        {icon && <img src={icon} />}
         {metaValue || `No ${metaName} selected`}
       </div>
       {showEdit && (
@@ -46,5 +55,6 @@ DeckCardsTableEditMeta.propTypes = {
   setTab: PropTypes.func,
   onEditClick: PropTypes.func,
   metaName: PropTypes.string,
-  metaValue: PropTypes.string
+  metaValue: PropTypes.string,
+  icon: PropTypes.string
 };
