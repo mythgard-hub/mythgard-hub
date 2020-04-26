@@ -24,14 +24,22 @@ export default function DeckCardsTableEditMeta(props) {
         .no-meta-value {
           text-transform: uppercase;
         }
+        .icon-container {
+          width: 20px;
+          height: 20px;
+          margin-right: 5px;
+        }
         img {
           width: 20px;
           height: auto;
-          margin-right: 5px;
         }
       `}</style>
       <div className={className} data-cy="deckBuilderMetaValue">
-        {icon && <img src={icon} />}
+        {icon && (
+          <div className="icon-container">
+            <img src={icon} />
+          </div>
+        )}
         {metaValue || `No ${metaName} selected`}
       </div>
       {showEdit && (
