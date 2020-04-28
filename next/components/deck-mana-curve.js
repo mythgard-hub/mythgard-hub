@@ -74,5 +74,5 @@ export default function DeckManaCurve({ cards }) {
 }
 
 DeckManaCurve.propTypes = {
-  cards: PropTypes.object
+  cards: PropTypes.array
 };
