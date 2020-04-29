@@ -138,7 +138,8 @@ CREATE TABLE mythgard.deck (
   created timestamp default current_timestamp,
   description varchar(20000), -- about 30 paragraphs
   archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
-  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
+  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[],
+  views integer default 0
 );
 INSERT INTO mythgard.deck("name", "author_id")
   VALUES (
@@ -485,6 +486,17 @@ RETURNS INTEGER AS $$
 
   END;
   $$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION mythgard.increase_deck_views(IN deckid INTEGER)
+RETURNS INTEGER AS $$
+
+  UPDATE mythgard.deck SET views = views + 1
+  WHERE deck.id = deckid;
+
+  SELECT views
+  FROM mythgard.deck
+  WHERE deck.id = deckid;
+$$ language sql VOLATILE SECURITY DEFINER;
 
 -- reddit's hotness algorithm, allegedly
 -- https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9
