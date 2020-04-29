@@ -25,6 +25,7 @@ describe('Deck Page', function() {
     cy.get('[data-cy="deckPageType"]').should('contain', 'Gauntlet');
     cy.get('[data-cy="deckPageArchetype"]').should('contain', 'Unknown');
     cy.get('[data-cy="deckPageCardCount"]').should('contain', '10');
+    cy.get('[data-cy="viewsCell"]').should('contain', '1');
     cy.get('[data-cy="deckRarityCount"]')
       .eq(0)
       .should('contain', '3');
@@ -49,6 +50,12 @@ describe('Deck Page', function() {
     cy.get('[data-cy="deckTypeCount"]')
       .eq(3)
       .should('contain', '1');
+  });
+
+  it('increases page views', function() {
+    cy.get('[data-cy="viewsCell"]').should('contain', '1');
+    cy.reload();
+    cy.get('[data-cy="viewsCell"]').should('contain', '2');
   });
 
   it('happy path card click', function() {
