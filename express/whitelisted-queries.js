@@ -316,6 +316,7 @@ mutation UpdateDeckAndRemoveCards(
       id
       name
       description
+      views
       author {
         id
         username
@@ -563,6 +564,13 @@ query tournaments($now: Date) {
   }
 `,
   `
+  mutation increaseDeckViews($deckid: Int!) {
+    increaseDeckViews(input: { deckid: $deckid }) {
+      integer
+    }
+  }
+`,
+  `
   query isModerator($accountId: Int!) {
     accountModerators(condition: { accountId: $accountId }) {
       totalCount
@@ -613,5 +621,5 @@ mutation addFeaturedDeck($deckId: Int!) {
     }
   }
 }
-`
+`,
 ];

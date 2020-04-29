@@ -234,6 +234,7 @@ export const singleDeckQuery = gql`
       id
       name
       description
+      views
       author {
         id
         username
@@ -308,6 +309,14 @@ export const updateDeck = gql`
       deck {
         id
       }
+    }
+  }
+`;
+
+export const increaseDeckViews = gql`
+  mutation increaseDeckViews($deckid: Int!) {
+    increaseDeckViews(input: { deckid: $deckid }) {
+      integer
     }
   }
 `;
