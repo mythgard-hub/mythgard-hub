@@ -26,6 +26,7 @@ import { ThemeContext } from '../components/theme-context.js';
 import DeckManaCurve from './deck-mana-curve';
 import { getRarityCounts, getTypeCounts } from '../lib/deck-stats';
 import DeckCount from './deck-count';
+import ViewsIndicator from './views-indicator';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -225,6 +226,11 @@ export default function Deck({ deck }) {
                   imagesAndCounts={typeCounts}
                   dataCyName="deckTypeCount"
                 />
+              </div>
+              <div className="stats-title">Views</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <ViewsIndicator views={deck.views} />
               </div>
             </div>
           </div>
