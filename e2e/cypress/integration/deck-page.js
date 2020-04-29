@@ -54,7 +54,7 @@ describe('Deck Page', function() {
 
   it('increases page views', function() {
     cy.get('[data-cy="viewsCell"]').should('contain', '1');
-    cy.reload();
+    cy.visit('/deck/3');
     cy.get('[data-cy="viewsCell"]').should('contain', '2');
   });
 
