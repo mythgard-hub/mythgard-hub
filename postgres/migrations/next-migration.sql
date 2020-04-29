@@ -1,18 +1,13 @@
-ALTER TABLE mythgard.deck_featured ENABLE ROW LEVEL SECURITY;
+ALTER TABLE deck
+ADD COLUMN views integer default 0;
 
-CREATE POLICY deck_featured_all_view ON mythgard.deck_featured FOR SELECT USING (true);
+CREATE OR REPLACE FUNCTION mythgard.increase_deck_views (IN deckid INTEGER)
+RETURNS INTEGER AS $$
 
-CREATE POLICY delete_deck_featured_moderator
-  ON mythgard.deck_featured
-  FOR DELETE
-  USING (exists(select * from mythgard.account_moderator
-         where account_id = mythgard.current_user_id()));
+  UPDATE mythgard.deck SET views = views + 1
+  WHERE deck.id = deckid;
 
-CREATE POLICY insert_deck_featured_moderator
-  ON mythgard.deck_featured
-  FOR INSERT
-  WITH CHECK (exists(select * from mythgard.account_moderator
-         where account_id = mythgard.current_user_id()));
-
-ALTER TABLE mythgard.deck_featured ADD CONSTRAINT deckIdUniq UNIQUE (deck_id);
-
+  SELECT views
+  FROM mythgard.deck
+  WHERE deck.id = deckid;
+$$ language sql VOLATILE SECURITY DEFINER;
