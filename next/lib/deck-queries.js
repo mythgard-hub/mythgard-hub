@@ -314,8 +314,8 @@ export const updateDeck = gql`
 `;
 
 export const increaseDeckViews = gql`
-  mutation increaseDeckViews($deckid: Int!) {
-    increaseDeckViews(input: { deckid: $deckid }) {
+  mutation increaseDeckViews($deckId: Int!) {
+    increaseDeckViews(input: { _deckId: $deckId }) {
       integer
     }
   }

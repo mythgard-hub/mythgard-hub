@@ -499,19 +499,19 @@ RETURNS INTEGER AS $$
   END;
   $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION mythgard.increase_deck_views (IN deckid INTEGER)
+CREATE OR REPLACE FUNCTION mythgard.increase_deck_views (IN _deck_id INTEGER)
 RETURNS INTEGER AS $$
-  INSERT INTO mythgard.deck_views(deck_id, views) VALUES (deckid, 1)
+  INSERT INTO mythgard.deck_views(deck_id, views) VALUES (_deck_id, 1)
   ON CONFLICT (deck_id)
   DO UPDATE SET views = 1 + (
     SELECT views
     FROM mythgard.deck_views
-    WHERE deck_views.deck_id = deckid
+    WHERE deck_views.deck_id = _deck_id
   );
 
   SELECT views
   FROM mythgard.deck_views
-  WHERE deck_views.deck_id = deckid;
+  WHERE deck_views.deck_id = _deck_id;
 $$ language sql VOLATILE SECURITY DEFINER;
 
 -- reddit's hotness algorithm, allegedly

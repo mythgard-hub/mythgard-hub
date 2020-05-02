@@ -564,8 +564,8 @@ query tournaments($now: Date) {
   }
 `,
   `
-  mutation increaseDeckViews($deckid: Int!) {
-    increaseDeckViews(input: { deckid: $deckid }) {
+  mutation increaseDeckViews($deckId: Int!) {
+    increaseDeckViews(input: { _deckId: $deckId }) {
       integer
     }
   }

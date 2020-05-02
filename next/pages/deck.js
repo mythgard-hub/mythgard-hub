@@ -53,7 +53,7 @@ export default withRouter(({ router }) => {
   useEffect(() => {
     increaseViews({
       variables: {
-        deckid: deckId
+        deckId
       }
     });
   }, []);
