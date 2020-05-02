@@ -36,6 +36,7 @@ export default withRouter(({ router }) => {
           deck: {
             ...deck,
             deckPreviews: {
+              __typename: 'DeckPreviewsConnection',
               nodes: [
                 {
                   ...deck.deckPreviews.nodes[0],
