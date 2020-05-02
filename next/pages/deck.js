@@ -37,7 +37,14 @@ export default withRouter(({ router }) => {
           data: {
             deck: {
               ...deck,
-              views: newViews
+              deckPreviews: {
+                nodes: [
+                  {
+                    ...deck.deckPreviews.nodes[0],
+                    views: newViews
+                  }
+                ]
+              }
             }
           }
         });
