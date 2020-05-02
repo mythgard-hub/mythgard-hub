@@ -138,8 +138,7 @@ CREATE TABLE mythgard.deck (
   created timestamp default current_timestamp,
   description varchar(20000), -- about 30 paragraphs
   archetype mythgard.deckArchetype[] default ARRAY['UNKNOWN']::mythgard.deckArchetype[],
-  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[],
-  views integer default 0
+  type mythgard.deckType[] default ARRAY['STANDARD']::mythgard.deckType[]
 );
 INSERT INTO mythgard.deck("name", "author_id")
   VALUES (
@@ -287,6 +286,19 @@ CREATE TABLE mythgard.deck_featured (
 ALTER TABLE mythgard.deck_featured ADD CONSTRAINT deckIdUniq UNIQUE (deck_id);
 
 INSERT INTO mythgard.deck_featured("deck_id") VALUES (1);
+
+CREATE TABLE mythgard.deck_views (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  views integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE
+);
+
+ALTER TABLE mythgard.deck_views ADD CONSTRAINT deckIdUniqVote UNIQUE (deck_id);
+
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (3, 4);
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
@@ -487,15 +499,19 @@ RETURNS INTEGER AS $$
   END;
   $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION mythgard.increase_deck_views(IN deckid INTEGER)
+CREATE OR REPLACE FUNCTION mythgard.increase_deck_views (IN deckid INTEGER)
 RETURNS INTEGER AS $$
-
-  UPDATE mythgard.deck SET views = views + 1
-  WHERE deck.id = deckid;
+  INSERT INTO mythgard.deck_views(deck_id, views) VALUES (deckid, 1)
+  ON CONFLICT (deck_id)
+  DO UPDATE SET views = 1 + (
+    SELECT views
+    FROM mythgard.deck_views
+    WHERE deck_views.deck_id = deckid
+  );
 
   SELECT views
-  FROM mythgard.deck
-  WHERE deck.id = deckid;
+  FROM mythgard.deck_views
+  WHERE deck_views.deck_id = deckid;
 $$ language sql VOLATILE SECURITY DEFINER;
 
 -- reddit's hotness algorithm, allegedly
@@ -568,10 +584,13 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.modified as deck_modified,
          account.id as account_id,
          account.username as username,
-         mythgard.deck_hotness(deck.id)::int as hotness
+         mythgard.deck_hotness(deck.id)::int as hotness,
+         deck_views.views::int as views
   FROM mythgard.deck
   LEFT JOIN mythgard.account
   ON mythgard.account.id = mythgard.deck.author_id
+  LEFT JOIN mythgard.deck_views
+  ON mythgard.deck_views.deck_id = mythgard.deck.id
 ;
 
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
@@ -718,14 +737,14 @@ create or replace function mythgard.search_decks(
 
   BEGIN
        IF sortBy = 'essenceDesc' THEN
-        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type, views
+        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions, archetypeFilter, typeFilter) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec desc nulls last) as bar;
        ELSIF sortBy = 'essenceAsc' THEN
-        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type, views
+        RETURN QUERY select id, name, author_id, path_id, power_id, modified, created, description, archetype, type
           from ( select * from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
                   faction6, numFactions, archetypeFilter, typeFilter) as foo,
