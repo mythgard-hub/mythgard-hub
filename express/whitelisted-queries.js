@@ -7,6 +7,7 @@ const deckPreviewsFragment = `
     votes
     deckArchetype
     deckType
+    views
     deck{
       id
       author {
@@ -316,7 +317,6 @@ mutation UpdateDeckAndRemoveCards(
       id
       name
       description
-      views
       author {
         id
         username

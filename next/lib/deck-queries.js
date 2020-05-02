@@ -11,6 +11,7 @@ const deckPreviewsFragment = `
       votes
       deckArchetype
       deckType
+      views
       deck{
         id
         author {
@@ -234,7 +235,6 @@ export const singleDeckQuery = gql`
       id
       name
       description
-      views
       author {
         id
         username
