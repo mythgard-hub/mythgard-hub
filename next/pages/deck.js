@@ -21,36 +21,33 @@ export default withRouter(({ router }) => {
   const { error, loading, data } = useQuery(singleDeckQuery, {
     variables: { id: deckId }
   });
-  const [increaseViews, { loading: viewsUpdating }] = useMutation(
-    increaseDeckViews,
-    {
-      update: (cache, { data }) => {
-        const newViews = data.increaseDeckViews.integer;
-        const { deck } = cache.readQuery({
-          query: singleDeckQuery,
-          variables: { id: deckId }
-        });
+  const [increaseViews] = useMutation(increaseDeckViews, {
+    update: (cache, { data }) => {
+      const newViews = data.increaseDeckViews.integer;
+      const { deck } = cache.readQuery({
+        query: singleDeckQuery,
+        variables: { id: deckId }
+      });
 
-        cache.writeQuery({
-          query: singleDeckQuery,
-          variables: { id: deckId },
-          data: {
-            deck: {
-              ...deck,
-              deckPreviews: {
-                nodes: [
-                  {
-                    ...deck.deckPreviews.nodes[0],
-                    views: newViews
-                  }
-                ]
-              }
+      cache.writeQuery({
+        query: singleDeckQuery,
+        variables: { id: deckId },
+        data: {
+          deck: {
+            ...deck,
+            deckPreviews: {
+              nodes: [
+                {
+                  ...deck.deckPreviews.nodes[0],
+                  views: newViews
+                }
+              ]
             }
           }
-        });
-      }
+        }
+      });
     }
-  );
+  });
 
   useEffect(() => {
     increaseViews({
@@ -60,7 +57,7 @@ export default withRouter(({ router }) => {
     });
   }, []);
 
-  if (loading || viewsUpdating)
+  if (loading)
     return (
       <Layout>
         <div>Loading...</div>
