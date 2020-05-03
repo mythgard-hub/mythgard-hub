@@ -287,6 +287,20 @@ export const getDeckMetadata = deck => {
 };
 
 /**
+ * Returns the deck views or 0 if there are none
+ * @param Deck deck
+ * @returns number
+ */
+export const getDeckViews = deck => {
+  try {
+    const metaData = getDeckMetadata(deck);
+    return metaData && metaData.views;
+  } catch (e) {
+    return 0;
+  }
+};
+
+/**
  * Returns the factions of the deck
  * @param Deck deck
  * @returns array

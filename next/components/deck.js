@@ -14,7 +14,8 @@ import {
   getFactions,
   getDeckArchetype,
   getDeckType,
-  getCardCount
+  getCardCount,
+  getDeckViews
 } from '../lib/deck-utils';
 import DeckVote from './deck-vote';
 import { deckCardsQuery } from '../lib/deck-queries';
@@ -26,6 +27,7 @@ import { ThemeContext } from '../components/theme-context.js';
 import DeckManaCurve from './deck-mana-curve';
 import { getRarityCounts, getTypeCounts } from '../lib/deck-stats';
 import DeckCount from './deck-count';
+import ViewsIndicator from './views-indicator';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -60,6 +62,7 @@ export default function Deck({ deck }) {
   const cardCount = getCardCount(deckToExport);
   const rarityCounts = getRarityCounts(cards);
   const typeCounts = getTypeCounts(cards);
+  const views = getDeckViews(deck);
 
   return (
     <div className="deck-page-container">
@@ -226,6 +229,11 @@ export default function Deck({ deck }) {
                   dataCyName="deckTypeCount"
                 />
               </div>
+              <div className="stats-title">Views</div>
+              <hr className="gradient-hr" />
+              <div className="deck-stat">
+                <ViewsIndicator views={views} />
+              </div>
             </div>
           </div>
         </div>
@@ -252,7 +260,8 @@ Deck.propTypes = {
         PropTypes.shape({
           essenceCost: PropTypes.number,
           factions: PropTypes.arrayOf(PropTypes.string),
-          deckCreated: PropTypes.string
+          deckCreated: PropTypes.string,
+          views: PropTypes.number
         })
       )
     })

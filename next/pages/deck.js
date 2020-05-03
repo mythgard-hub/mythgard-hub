@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { withRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import ErrorMessage from '../components/error-message';
 import Deck from '../components/deck';
 import Layout from '../components/layout';
@@ -10,14 +11,52 @@ import {
   getDateCreated,
   getDeckType
 } from '../lib/deck-utils';
-import { singleDeckQuery } from '../lib/deck-queries';
+import { singleDeckQuery, increaseDeckViews } from '../lib/deck-queries';
 import PageBanner from '../components/page-banner';
 import { firstLetterUppercase } from '../lib/string-utils';
 
 export default withRouter(({ router }) => {
+  const deckId = parseInt(router.query.id, 10);
+
   const { error, loading, data } = useQuery(singleDeckQuery, {
-    variables: { id: parseInt(router.query.id, 10) }
+    variables: { id: deckId }
   });
+  const [increaseViews] = useMutation(increaseDeckViews, {
+    update: (cache, { data }) => {
+      const newViews = data.increaseDeckViews.integer;
+      const { deck } = cache.readQuery({
+        query: singleDeckQuery,
+        variables: { id: deckId }
+      });
+
+      cache.writeQuery({
+        query: singleDeckQuery,
+        variables: { id: deckId },
+        data: {
+          deck: {
+            ...deck,
+            deckPreviews: {
+              __typename: 'DeckPreviewsConnection',
+              nodes: [
+                {
+                  ...deck.deckPreviews.nodes[0],
+                  views: newViews
+                }
+              ]
+            }
+          }
+        }
+      });
+    }
+  });
+
+  useEffect(() => {
+    increaseViews({
+      variables: {
+        deckId
+      }
+    });
+  }, []);
 
   if (loading)
     return (

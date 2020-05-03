@@ -1,18 +1,46 @@
-ALTER TABLE mythgard.deck_featured ENABLE ROW LEVEL SECURITY;
+CREATE TABLE mythgard.deck_views (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  views integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE
+);
 
-CREATE POLICY deck_featured_all_view ON mythgard.deck_featured FOR SELECT USING (true);
+ALTER TABLE mythgard.deck_views ADD CONSTRAINT deckIdUniqVote UNIQUE (deck_id);
 
-CREATE POLICY delete_deck_featured_moderator
-  ON mythgard.deck_featured
-  FOR DELETE
-  USING (exists(select * from mythgard.account_moderator
-         where account_id = mythgard.current_user_id()));
+CREATE OR REPLACE FUNCTION mythgard.increase_deck_views (IN _deck_id INTEGER)
+RETURNS INTEGER AS $$
+  INSERT INTO mythgard.deck_views(deck_id, views) VALUES (_deck_id, 1)
+  ON CONFLICT (deck_id)
+  DO UPDATE SET views = 1 + (
+    SELECT views
+    FROM mythgard.deck_views
+    WHERE deck_views.deck_id = _deck_id
+  );
 
-CREATE POLICY insert_deck_featured_moderator
-  ON mythgard.deck_featured
-  FOR INSERT
-  WITH CHECK (exists(select * from mythgard.account_moderator
-         where account_id = mythgard.current_user_id()));
+  SELECT views
+  FROM mythgard.deck_views
+  WHERE deck_views.deck_id = _deck_id;
+$$ language sql VOLATILE SECURITY DEFINER;
 
-ALTER TABLE mythgard.deck_featured ADD CONSTRAINT deckIdUniq UNIQUE (deck_id);
-
+CREATE OR REPLACE VIEW mythgard.deck_preview as
+  SELECT deck.id as deck_id,
+         deck.name as deck_name,
+         deck.created as deck_created,
+         mythgard.deck_factions(deck.id) as factions,
+         mythgard.deck_essence_cost(deck.id)::int as essence_cost,
+         mythgard.deck_votes(deck.id)::int as votes,
+         deck.archetype as deck_archetype,
+         deck.type as deck_type,
+         deck.modified as deck_modified,
+         account.id as account_id,
+         account.username as username,
+         mythgard.deck_hotness(deck.id)::int as hotness,
+         deck_views.views::int as views
+  FROM mythgard.deck
+  LEFT JOIN mythgard.account
+  ON mythgard.account.id = mythgard.deck.author_id
+  LEFT JOIN mythgard.deck_views
+  ON mythgard.deck_views.deck_id = mythgard.deck.id
+;

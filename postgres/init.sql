@@ -287,6 +287,19 @@ ALTER TABLE mythgard.deck_featured ADD CONSTRAINT deckIdUniq UNIQUE (deck_id);
 
 INSERT INTO mythgard.deck_featured("deck_id") VALUES (1);
 
+CREATE TABLE mythgard.deck_views (
+  id SERIAL PRIMARY KEY,
+  deck_id integer,
+  views integer,
+  FOREIGN KEY (deck_id)
+    REFERENCES mythgard.deck (id)
+    ON DELETE CASCADE
+);
+
+ALTER TABLE mythgard.deck_views ADD CONSTRAINT deckIdUniqVote UNIQUE (deck_id);
+
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (3, 4);
+
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
   _google_id varchar(255),
@@ -486,6 +499,21 @@ RETURNS INTEGER AS $$
   END;
   $$ language 'plpgsql';
 
+CREATE OR REPLACE FUNCTION mythgard.increase_deck_views (IN _deck_id INTEGER)
+RETURNS INTEGER AS $$
+  INSERT INTO mythgard.deck_views(deck_id, views) VALUES (_deck_id, 1)
+  ON CONFLICT (deck_id)
+  DO UPDATE SET views = 1 + (
+    SELECT views
+    FROM mythgard.deck_views
+    WHERE deck_views.deck_id = _deck_id
+  );
+
+  SELECT views
+  FROM mythgard.deck_views
+  WHERE deck_views.deck_id = _deck_id;
+$$ language sql VOLATILE SECURITY DEFINER;
+
 -- reddit's hotness algorithm, allegedly
 -- https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9
 -- def hot(ups, downs, date):
@@ -556,10 +584,13 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.modified as deck_modified,
          account.id as account_id,
          account.username as username,
-         mythgard.deck_hotness(deck.id)::int as hotness
+         mythgard.deck_hotness(deck.id)::int as hotness,
+         deck_views.views::int as views
   FROM mythgard.deck
   LEFT JOIN mythgard.account
   ON mythgard.account.id = mythgard.deck.author_id
+  LEFT JOIN mythgard.deck_views
+  ON mythgard.deck_views.deck_id = mythgard.deck.id
 ;
 
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key

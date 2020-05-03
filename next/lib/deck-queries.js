@@ -11,6 +11,7 @@ const deckPreviewsFragment = `
       votes
       deckArchetype
       deckType
+      views
       deck{
         id
         author {
@@ -308,6 +309,14 @@ export const updateDeck = gql`
       deck {
         id
       }
+    }
+  }
+`;
+
+export const increaseDeckViews = gql`
+  mutation increaseDeckViews($deckId: Int!) {
+    increaseDeckViews(input: { _deckId: $deckId }) {
+      integer
     }
   }
 `;

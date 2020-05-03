@@ -7,6 +7,7 @@ const deckPreviewsFragment = `
     votes
     deckArchetype
     deckType
+    views
     deck{
       id
       author {
@@ -563,6 +564,13 @@ query tournaments($now: Date) {
   }
 `,
   `
+  mutation increaseDeckViews($deckId: Int!) {
+    increaseDeckViews(input: { _deckId: $deckId }) {
+      integer
+    }
+  }
+`,
+  `
   query isModerator($accountId: Int!) {
     accountModerators(condition: { accountId: $accountId }) {
       totalCount
@@ -613,5 +621,5 @@ mutation addFeaturedDeck($deckId: Int!) {
     }
   }
 }
-`
+`,
 ];
