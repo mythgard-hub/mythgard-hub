@@ -256,8 +256,8 @@ export const singleDeckQuery = gql`
 
 // A view that aggregates facts and stats about a deck
 export const newDeckPreviewsQuery = gql`
-  query deckPreview {
-    deckPreviews(orderBy: DECK_CREATED_DESC, first: 3) {
+  query newestDecks {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 4) {
       ${deckPreviewsFragment}
     }
   }

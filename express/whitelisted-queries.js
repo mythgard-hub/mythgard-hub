@@ -622,4 +622,11 @@ mutation addFeaturedDeck($deckId: Int!) {
   }
 }
 `,
+  `
+  query newestDecks {
+    deckPreviews(orderBy: DECK_CREATED_DESC, first: 4) {
+      ${deckPreviewsFragment}
+    }
+  }
+`,
 ];
