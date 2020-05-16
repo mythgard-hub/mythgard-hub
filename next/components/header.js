@@ -31,6 +31,7 @@ class Header extends React.Component {
           }
           .header .home .crownIcon {
             width: 80px;
+            height: 69px;
             vertical-align: top;
             position: relative;
             top: -3px;
