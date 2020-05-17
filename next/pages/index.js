@@ -115,7 +115,7 @@ const index = () => {
       {banner}
       <div className="homePageColumns">
         <div className="mg-column">
-          <h2>Top Media</h2>
+          <h2>Recent Media</h2>
           <hr className="orangeGrade" />
           <ArticleList max={3} />
         </div>
