@@ -53,6 +53,7 @@ export const themes = {
     cardTableName: mgColors.mediumGray,
     panelBackground: mgColors.grayBlue,
     cardTableRowQuantityBackground: mgColors.blackPearl,
+    authorLinkColor: mgColors.orange,
     spacing: 20,
     cardSpacing: 15
   }

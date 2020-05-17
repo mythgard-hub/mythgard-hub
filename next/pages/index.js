@@ -7,6 +7,7 @@ import { ThemeContext } from '../components/theme-context.js';
 import { mgColors } from '../lib/theme.js';
 import Link from 'next/link';
 import useConfig from '../lib/use-config.js';
+import NewestDecks from '../components/newest-decks';
 
 const defaultPatchNoteUrl =
   'https://www.mythgardgame.com/permalink/patch-notes-v0-17-3---holiday-edition';
@@ -48,6 +49,7 @@ const index = () => {
           display: flex;
           flex-wrap: wrap;
           margin: 0;
+          padding: 10px 0;
         }
 
         .mg-column + .mg-column {
@@ -113,12 +115,17 @@ const index = () => {
       {banner}
       <div className="homePageColumns">
         <div className="mg-column">
-          <h2>Top Media</h2>
+          <h2>Recent Media</h2>
           <hr className="orangeGrade" />
           <ArticleList max={3} />
         </div>
         <div className="mg-column">
-          <h2>Featured Decks</h2>
+          <h2>New Decks</h2>
+          <hr className="orangeGrade" />
+          <NewestDecks />
+        </div>
+        <div className="mg-column">
+          <h2>Top Decks</h2>
           <hr className="orangeGrade" />
           <TopDecks />
         </div>

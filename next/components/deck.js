@@ -28,6 +28,7 @@ import DeckManaCurve from './deck-mana-curve';
 import { getRarityCounts, getTypeCounts } from '../lib/deck-stats';
 import DeckCount from './deck-count';
 import ViewsIndicator from './views-indicator';
+import AuthorLink from './author-link';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -167,7 +168,9 @@ export default function Deck({ deck }) {
             {deck.name}
           </div>
           <div className="deck-subtitle">
-            <div className="deck-author">by {authorName}</div>
+            <div className="deck-author">
+              by <AuthorLink author={authorName} />
+            </div>
             <div className="card-count" data-cy="deckPageCardCount">
               Cards: <span>{cardCount}</span>
             </div>

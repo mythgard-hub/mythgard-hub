@@ -5,5 +5,6 @@ describe('Index Page', function() {
   });
   it('home page', function() {
     cy.get(`[data-cy=topDecks] ${deckPreview}`).should('have.length', 1);
+    cy.get(`[data-cy=newestDecks] ${deckPreview}`).should('have.length', 4);
   });
 });

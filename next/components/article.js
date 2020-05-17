@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 import { dateToDeltaString } from '../lib/time';
+import AuthorLink from './author-link';
 
 function Article({ title, url, author, description, date }) {
   const theme = useContext(ThemeContext);
@@ -10,13 +11,15 @@ function Article({ title, url, author, description, date }) {
     <>
       <style jsx>{`
         .article {
-          padding: 9px 12px;
+          padding: 9px 12px 12px 12px;
           border: ${theme.borderAccent};
           background-color: ${theme.panelBackground};
+          margin-bottom: 10px;
         }
 
-        .article {
-          margin-bottom: 10px;
+        .article-desc,
+        .article-by {
+          font-size: 0.9em;
         }
 
         .article-link {
@@ -31,6 +34,7 @@ function Article({ title, url, author, description, date }) {
         }
 
         .article-date {
+          padding-left: 5px;
           font-style: italic;
         }
       `}</style>
@@ -38,10 +42,13 @@ function Article({ title, url, author, description, date }) {
         <a className="article-link" href={url}>
           {title}
         </a>
-        <div>
-          by <span className="article-author">{author}</span>
+        <div className="article-by">
+          by{' '}
+          <span className="article-author">
+            <AuthorLink author={author} />
+          </span>
+          <span className="article-date">{timeMsg}</span>
         </div>
-        <div className="article-date">{timeMsg}</div>
         <hr className="bgrad" />
         <div className="article-desc">{description}</div>
       </div>
