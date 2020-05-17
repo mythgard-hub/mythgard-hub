@@ -7,14 +7,6 @@ export default function DeckBuilderUser() {
   const theme = useContext(ThemeContext);
   const { user } = useContext(UserContext);
 
-  const userElement = (
-    <Link href={user ? '/account' : '/auth/google'}>
-      <a data-cy="userLink" className="link">
-        {(user && user.username) || 'Guest'}
-      </a>
-    </Link>
-  );
-
   return (
     <div className="deck-author">
       <style jsx>{`
@@ -32,7 +24,14 @@ export default function DeckBuilderUser() {
           font-size: 14px;
         }
       `}</style>
-      <div>by {userElement}</div>
+      <div>
+        by{' '}
+        <Link href={user ? '/account' : '/auth/google'}>
+          <a data-cy="userLink" className="user-link">
+            {(user && user.username) || 'Guest'}
+          </a>
+        </Link>
+      </div>
       {!user && (
         <Link href="/auth/google">
           <a
