@@ -7,6 +7,7 @@ import { ThemeContext } from '../components/theme-context.js';
 import Link from 'next/link';
 import { dateToDeltaString } from '../lib/time.js';
 import PropTypes from 'prop-types';
+import AuthorLink from './author-link.js';
 
 function DeckPreview({ deck }) {
   const theme = useContext(ThemeContext);
@@ -73,9 +74,10 @@ function DeckPreview({ deck }) {
           <Link href={`/deck?id=${deck.id}`}>
             <a href={`/deck?id=${deck.id}`}>{deck.name}</a>
           </Link>
-          <div className="deckAuthor">
-            by {username} <i>{dateToDeltaString(new Date(deck.created))}</i>
-          </div>
+        </div>
+        <div className="deckAuthor">
+          by <AuthorLink author={username} />{' '}
+          <i>{dateToDeltaString(new Date(deck.created))}</i>
         </div>
         <div className="subsection">
           <FactionsIndicator factions={deck.factions} />

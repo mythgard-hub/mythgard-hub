@@ -7,6 +7,7 @@ import FactionsIndicator from './factions-indicator.js';
 import LargeTable from './large-table.js';
 import UpvoteIndicator from './upvote-indicator.js';
 import { getArchetypeLabel, getTypeLabel } from '../lib/deck-utils';
+import AuthorLink from './author-link';
 
 export default function DeckList({ decks }) {
   const theme = useContext(ThemeContext);
@@ -67,7 +68,9 @@ export default function DeckList({ decks }) {
                       <a>{deck.deckName}</a>
                     </Link>
                   </div>
-                  <div className="deckAuthor">by {author}</div>
+                  <div className="deckAuthor">
+                    by <AuthorLink author={author} />
+                  </div>
                 </td>
                 <td className="deckVotes">
                   <UpvoteIndicator votes={deck.votes || 0} />

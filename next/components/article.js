@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 import { dateToDeltaString } from '../lib/time';
+import AuthorLink from './author-link';
 
 function Article({ title, url, author, description, date }) {
   const theme = useContext(ThemeContext);
@@ -42,7 +43,10 @@ function Article({ title, url, author, description, date }) {
           {title}
         </a>
         <div className="article-by">
-          by <span className="article-author">{author}</span>
+          by{' '}
+          <span className="article-author">
+            <AuthorLink author={author} />
+          </span>
           <span className="article-date">{timeMsg}</span>
         </div>
         <hr className="bgrad" />
