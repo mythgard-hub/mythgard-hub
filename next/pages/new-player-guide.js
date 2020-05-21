@@ -572,7 +572,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/guide1.png"
+          src="https://cdn.mythgardhub.com/articles/guide1.png"
         />
         <div className="article_caption">
           Your Gem Bar shows the Gems you have available and your Mana Circle
@@ -673,7 +673,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/image-33.png"
+          src="https://cdn.mythgardhub.com/articles/image-33.png"
           style={{ width: '877px' }}
         />
         <div className="article_caption">Image Courtesy of Rhino Games</div>
@@ -720,7 +720,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/image-34-768x524.png"
+          src="https://cdn.mythgardhub.com/articles/image-34-768x524.png"
           style={{ width: '66%' }}
         />
         <div className="article_caption">An example of a Burned card</div>
@@ -737,7 +737,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/guide2.png"
+          src="https://cdn.mythgardhub.com/articles/guide2.png"
         />
         <div className="article_caption">
           An example of playable and unplayable cards in hand.
@@ -771,7 +771,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/guide3.png"
+          src="https://cdn.mythgardhub.com/articles/guide3.png"
         />
         <div className="article_caption">
           An example of each minion’s area of influence.
@@ -1106,13 +1106,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guie_files/DiskOfCircadia-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Disk_Of_Circadia.png"
                     alt=""
                     className="wp-image-16387"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1126,13 +1124,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="alignrcenter is-resized">
                   <img
-                    src="./new_player_guide_files/FiresOfCreation-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Fires_Of_Creation.png"
                     alt=""
                     className="wp-image-16388"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1148,13 +1144,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/JourneyOfSouls-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Journey_Of_Souls.png"
                     alt=""
                     className="wp-image-16389"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1168,13 +1162,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/RainbowsEnd-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Rainbows_End.png"
                     alt=""
                     className="wp-image-16390"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1190,13 +1182,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/TurnOfSeasons-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Turn_Of_Seasons.png"
                     alt=""
                     className="wp-image-16391"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1225,13 +1215,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/ForesightPower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Foresight.png"
                     alt=""
                     className="wp-image-16392"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1245,13 +1233,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/ImpelPower-1-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Impel.png"
                     alt=""
                     className="wp-image-16393"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1267,13 +1253,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/InfusePower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Infuse.png"
                     alt=""
                     className="wp-image-16394"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1287,13 +1271,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/MendPower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Mend.png"
                     alt=""
                     className="wp-image-16395"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/MendPower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1309,13 +1291,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/ReanimatePower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Reanimate.png"
                     alt=""
                     className="wp-image-16396"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1329,13 +1309,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/SmitePower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Smite.png"
                     alt=""
                     className="wp-image-16397"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
