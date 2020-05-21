@@ -1445,12 +1445,7 @@ function NewPlayerGuide() {
           </h3>
 
           <p>
-            You can earn coins through missions that are granted to you daily.
-            Team Rankstar was not able to compile a full list of missions at the
-            time of publication but will update this accordingly, as soon as we
-            have a complete list of missions. Until then, be sure to check the
-            Missions tab in-game to see your current missions. Mission coin
-            values are not static and vary from 600 to 900.
+            You can earn coins through missions that are granted to you daily. Be sure to check the Missions tab in-game to see your current missions. Mission coin values are not static and vary from 600 to 900.
           </p>
 
           <h3>
@@ -1458,12 +1453,7 @@ function NewPlayerGuide() {
           </h3>
 
           <p>
-            You can earn coins for completing achievements as you advance
-            through Mythgard. Team Rankstar was not able to compile a full list
-            of achievements at the time of publication but will update this
-            accordingly, as soon as we have a complete list of achievements.
-            Until then, be sure to check the Missions tab in-game to see your
-            current achievement progress.
+            You can earn coins for completing achievements as you advance through Mythgard. Be sure to check the Missions tab in-game to see your current achievement progress.
           </p>
 
           <h3>
@@ -1695,21 +1685,7 @@ function NewPlayerGuide() {
 
           <p>
             After finishing Story mode, you should try your chops at the Puzzle
-            mode as a good way to earn some extra coin. Puzzles not your thing?
-            We’ve got you covered. Puzzles are your thing but you’re stuck and
-            want to read a hint without spoiling the whole puzzle? We’ve got you
-            covered. Just want to watch a video for the solution? We’ve got you
-            covered You can find the Team Rankstar Puzzle Guide (with video
-            tutorials by Charm3r) here:
-            <br />{' '}
-            <a
-              href="https://teamrankstar.com/mythgard-puzzle-guide/"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label=" (opens in a new tab)"
-            >
-              https://teamrankstar.com/mythgard-puzzle-guide/
-            </a>{' '}
+            mode as a good way to earn some extra coin.
           </p>
 
           <h2>
