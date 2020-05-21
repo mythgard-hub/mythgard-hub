@@ -48,13 +48,7 @@ function NewPlayerGuide() {
         <PageBanner image={PageBanner.IMG_ARTICLES}>Media</PageBanner>
         <br />
         <div className="toc_column">
-          This article was produced in collaboration with{' '}
-          <a
-            href="https://teamrankstar.com/"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Team Rankstar
+          This article was produced in collaboration with Team Rankstar
           </a>
           <div className="article_title">Mythgard New Player Guide</div>
           <span style={{ fontStyle: 'italic' }}>September 19, 2019 </span>
