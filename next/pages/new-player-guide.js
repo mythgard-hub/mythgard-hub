@@ -1825,6 +1825,18 @@ function NewPlayerGuide() {
             >
               https://www.facebook.com/MythgardGame
             </a>
+            <br />
+            Instagram:{' '}
+            <a
+              rel="noreferrer noopener"
+              aria-label="https://www.instagram.com/mythgardgame  (opens in a new tab)"
+              href="https://www.instagram.com/mythgardgame"
+              target="_blank"
+            >
+              https://www.instagram.com/mythgardgame
+            </a>
+
+
           </p>
 
           <h2>
@@ -1843,16 +1855,7 @@ function NewPlayerGuide() {
             >
               https://mythgardhub.com/
             </a>{' '}
-            <br />
-            MythTournaments:{' '}
-            <a
-              rel="noreferrer noopener"
-              aria-label=" (opens in a new tab)"
-              href="https://mythtournaments.com/"
-              target="_blank"
-            >
-              https://mythtournaments.com/
-            </a>{' '}
+
           </p>
 
           <h2>
@@ -1860,14 +1863,14 @@ function NewPlayerGuide() {
           </h2>
 
           <p>
-            Team Rankstar:{' '}
+            Kryptic Gaming:{' '}
             <a
               rel="noreferrer noopener"
               aria-label=" (opens in a new tab)"
-              href="https://teamrankstar.com/category/mythgard/"
+              href="https://kryptikgaming.wixsite.com/mythgard/articles"
               target="_blank"
             >
-              https://teamrankstar.com/category/mythgard/
+              https://kryptikgaming.wixsite.com/mythgard/articles
             </a>{' '}
             <br />
             MinMaxer’s Blog:{' '}
@@ -1878,6 +1881,16 @@ function NewPlayerGuide() {
               target="_blank"
             >
               https://minmaxer.wixsite.com/mindfreak{' '}
+            </a>
+            <br />
+            NephilimGG:{' '}
+            <a
+              rel="noreferrer noopener"
+              aria-label="https://nephilimgg.wixsite.com/nephilimgg/blog/categories/mythgard  (opens in a new tab)"
+              href="https://nephilimgg.wixsite.com/nephilimgg/blog/categories/mythgard"
+              target="_blank"
+            >
+              https://nephilimgg.wixsite.com/nephilimgg/blog/categories/mythgard{' '}
             </a>
           </p>
 
