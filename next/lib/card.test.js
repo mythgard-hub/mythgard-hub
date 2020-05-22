@@ -208,4 +208,38 @@ describe('cardSort', () => {
       ]);
     });
   });
+
+  const cardNode2 = (faction, mana) => {
+    const result = cardNode(faction);
+    result.mana = mana;
+    return result;
+  };
+  describe('it considers cost', () => {
+    it('const test 1', function() {
+      const cardNodes = [cardNode2('parsa', 2), cardNode2('parsa', 1)];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode2('parsa', 1),
+        cardNode2('parsa', 2)
+      ]);
+    });
+    it('cost test 2', function() {
+      const cardNodes = [cardNode2('parsa', 1), cardNode2('parsa', 2)];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode2('parsa', 1),
+        cardNode2('parsa', 2)
+      ]);
+    });
+    it('cost test 3', function() {
+      const cardNodes = [
+        cardNode2('parsa', 2),
+        cardNode2('parsa', 1),
+        cardNode2('parsa', 3)
+      ];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode2('parsa', 1),
+        cardNode2('parsa', 2),
+        cardNode2('parsa', 3)
+      ]);
+    });
+  });
 });
