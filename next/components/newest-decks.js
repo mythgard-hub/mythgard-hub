@@ -11,6 +11,7 @@ function NewestDecks() {
       loading={loading}
       error={error}
       data={data}
+      hideDate={true}
       cyData="newestDecks"
     />
   );
