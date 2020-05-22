@@ -101,6 +101,7 @@ export const cardSort = (cardNodeA, cardNodeB) => {
       FACTION_ORDER.indexOf(cardBFactions[0]) ||
     FACTION_ORDER.indexOf(cardAFactions[1]) -
       FACTION_ORDER.indexOf(cardBFactions[1]) ||
-    cardNodeA.mana - cardNodeB.mana
+    cardNodeA.mana - cardNodeB.mana ||
+    cardNodeA.gems.length - cardNodeB.gems.length
   );
 };

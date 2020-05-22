@@ -242,4 +242,38 @@ describe('cardSort', () => {
       ]);
     });
   });
+  const cardNode3 = (faction, mana, gems) => {
+    const result = cardNode(faction);
+    result.mana = mana;
+    result.gems = gems;
+    return result;
+  };
+  describe('it considers num gems', () => {
+    it('considers num gems 1', () => {
+      const cardNodes = [
+        cardNode3('parsa', 2, 'Y'),
+        cardNode3('parsa', 2, 'YY'),
+        cardNode3('parsa', 1, 'Y')
+      ];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode3('parsa', 1, 'Y'),
+        cardNode3('parsa', 2, 'Y'),
+        cardNode3('parsa', 2, 'YY')
+      ]);
+    });
+    it('considers num gems 1', () => {
+      const cardNodes = [
+        cardNode3('parsa', 1, 'Y'),
+        cardNode3('parsa', 3, 'Y'),
+        cardNode3('parsa', 2, 'YY'),
+        cardNode3('parsa', 2, 'Y')
+      ];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode3('parsa', 1, 'Y'),
+        cardNode3('parsa', 2, 'Y'),
+        cardNode3('parsa', 2, 'YY'),
+        cardNode3('parsa', 3, 'Y')
+      ]);
+    });
+  });
 });
