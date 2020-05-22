@@ -178,4 +178,34 @@ describe('cardSort', () => {
       ]);
     });
   });
+  describe('it sorts mixed monofaction and multifaction', () => {
+    it('priotizes monofaction', function() {
+      const cardNodes = [cardNode('norden'), cardNode('norden', 'aztlan')];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode('norden'),
+        cardNode('norden', 'aztlan')
+      ]);
+    });
+    it('priotizes monofaction 2', function() {
+      const cardNodes = [cardNode('norden', 'aztlan'), cardNode('norden')];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode('norden'),
+        cardNode('norden', 'aztlan')
+      ]);
+    });
+    it('prioritizes monofaction 3', function() {
+      const cardNodes = [
+        cardNode('parsa'),
+        cardNode('oberos', 'norden'),
+        cardNode('norden', 'aztlan'),
+        cardNode('dreni')
+      ];
+      expect(cardNodes.sort(cardSort)).toEqual([
+        cardNode('dreni'),
+        cardNode('parsa'),
+        cardNode('norden', 'aztlan'),
+        cardNode('oberos', 'norden')
+      ]);
+    });
+  });
 });
