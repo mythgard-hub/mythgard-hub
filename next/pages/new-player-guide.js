@@ -49,7 +49,6 @@ function NewPlayerGuide() {
         <br />
         <div className="toc_column">
           This article was produced in collaboration with Team Rankstar
-          </a>
           <div className="article_title">Mythgard New Player Guide</div>
           <span style={{ fontStyle: 'italic' }}>September 19, 2019 </span>
           by <span style={{ color: '#F1810B' }}>noahc92</span>
@@ -1439,7 +1438,10 @@ function NewPlayerGuide() {
           </h3>
 
           <p>
-            You can earn coins through missions that are granted to you daily. Be sure to check the Missions tab in-game to see your current missions. Mission coin values are not static and vary from 600 to 900.
+            You can earn coins through missions that are granted to you daily.
+            Be sure to check the Missions tab in-game to see your current
+            missions. Mission coin values are not static and vary from 600 to
+            900.
           </p>
 
           <h3>
@@ -1447,7 +1449,9 @@ function NewPlayerGuide() {
           </h3>
 
           <p>
-            You can earn coins for completing achievements as you advance through Mythgard. Be sure to check the Missions tab in-game to see your current achievement progress.
+            You can earn coins for completing achievements as you advance
+            through Mythgard. Be sure to check the Missions tab in-game to see
+            your current achievement progress.
           </p>
 
           <h3>
@@ -1805,8 +1809,6 @@ function NewPlayerGuide() {
             >
               https://www.instagram.com/mythgardgame
             </a>
-
-
           </p>
 
           <h2>
@@ -1825,7 +1827,6 @@ function NewPlayerGuide() {
             >
               https://mythgardhub.com/
             </a>{' '}
-
           </p>
 
           <h2>
