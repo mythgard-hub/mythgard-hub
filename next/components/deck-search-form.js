@@ -214,6 +214,7 @@ export default function DeckSearchForm(props) {
             )}
             onSubmit={handleSubmit}
           />
+          <div>Path Selector Placeholder</div>
         </div>
         <div className="filter-column">
           <DeckSearchFormUpdated
@@ -228,6 +229,7 @@ export default function DeckSearchForm(props) {
             Includes cards
             {cardSearchElement}
           </label>
+          <div>Power Selector Placeholder</div>
         </div>
         <div className="filter-column">
           <DeckSearchFormDropdownFilter
