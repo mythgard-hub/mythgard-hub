@@ -48,13 +48,7 @@ function NewPlayerGuide() {
         <PageBanner image={PageBanner.IMG_ARTICLES}>Media</PageBanner>
         <br />
         <div className="toc_column">
-          This article was produced in collaboration with{' '}
-          <a
-            href="https://teamrankstar.com/"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Team Rankstar
+          This article was produced in collaboration with Team Rankstar
           </a>
           <div className="article_title">Mythgard New Player Guide</div>
           <span style={{ fontStyle: 'italic' }}>September 19, 2019 </span>
@@ -572,7 +566,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/guide1.png"
+          src="https://cdn.mythgardhub.com/articles/guide1.png"
         />
         <div className="article_caption">
           Your Gem Bar shows the Gems you have available and your Mana Circle
@@ -673,7 +667,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/image-33.png"
+          src="https://cdn.mythgardhub.com/articles/image-33.png"
           style={{ width: '877px' }}
         />
         <div className="article_caption">Image Courtesy of Rhino Games</div>
@@ -720,7 +714,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/image-34-768x524.png"
+          src="https://cdn.mythgardhub.com/articles/image-34-768x524.png"
           style={{ width: '66%' }}
         />
         <div className="article_caption">An example of a Burned card</div>
@@ -737,7 +731,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/guide2.png"
+          src="https://cdn.mythgardhub.com/articles/guide2.png"
         />
         <div className="article_caption">
           An example of playable and unplayable cards in hand.
@@ -771,7 +765,7 @@ function NewPlayerGuide() {
         </div>
         <img
           className="article"
-          src="https://teamrankstar.com/wp-content/uploads/2019/09/guide3.png"
+          src="https://cdn.mythgardhub.com/articles/guide3.png"
         />
         <div className="article_caption">
           An example of each minion’s area of influence.
@@ -1106,13 +1100,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guie_files/DiskOfCircadia-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Disk_Of_Circadia.png"
                     alt=""
                     className="wp-image-16387"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/DiskOfCircadia-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1126,13 +1118,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="alignrcenter is-resized">
                   <img
-                    src="./new_player_guide_files/FiresOfCreation-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Fires_Of_Creation.png"
                     alt=""
                     className="wp-image-16388"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/FiresOfCreation-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1148,13 +1138,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/JourneyOfSouls-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Journey_Of_Souls.png"
                     alt=""
                     className="wp-image-16389"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/JourneyOfSouls-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1168,13 +1156,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/RainbowsEnd-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Rainbows_End.png"
                     alt=""
                     className="wp-image-16390"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/RainbowsEnd-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1190,13 +1176,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/TurnOfSeasons-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Turn_Of_Seasons.png"
                     alt=""
                     className="wp-image-16391"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/TurnOfSeasons-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1225,13 +1209,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/ForesightPower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Foresight.png"
                     alt=""
                     className="wp-image-16392"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/ForesightPower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1245,13 +1227,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/ImpelPower-1-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Impel.png"
                     alt=""
                     className="wp-image-16393"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/ImpelPower-1-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1267,13 +1247,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/InfusePower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Infuse.png"
                     alt=""
                     className="wp-image-16394"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/InfusePower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1287,13 +1265,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/MendPower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Mend.png"
                     alt=""
                     className="wp-image-16395"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/MendPower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/MendPower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1309,13 +1285,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/ReanimatePower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Reanimate.png"
                     alt=""
                     className="wp-image-16396"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/ReanimatePower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1329,13 +1303,11 @@ function NewPlayerGuide() {
               <div className="wp-block-image">
                 <figure className="aligncenter is-resized">
                   <img
-                    src="./new_player_guide_files/SmitePower-1024x731.png"
+                    src="https://cards.mythgardhub.com/core/m/Smite.png"
                     alt=""
                     className="wp-image-16397"
                     width="373"
                     height="267"
-                    srcSet="https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower.png 1024w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-210x150.png 210w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-768x548.png 768w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-250x178.png 250w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-560x400.png 560w, https://teamrankstar.com/wp-content/uploads/2019/09/SmitePower-600x428.png 600w"
-                    sizes="(max-width: 373px) 100vw, 373px"
                   />
                 </figure>
               </div>
@@ -1467,12 +1439,7 @@ function NewPlayerGuide() {
           </h3>
 
           <p>
-            You can earn coins through missions that are granted to you daily.
-            Team Rankstar was not able to compile a full list of missions at the
-            time of publication but will update this accordingly, as soon as we
-            have a complete list of missions. Until then, be sure to check the
-            Missions tab in-game to see your current missions. Mission coin
-            values are not static and vary from 600 to 900.
+            You can earn coins through missions that are granted to you daily. Be sure to check the Missions tab in-game to see your current missions. Mission coin values are not static and vary from 600 to 900.
           </p>
 
           <h3>
@@ -1480,12 +1447,7 @@ function NewPlayerGuide() {
           </h3>
 
           <p>
-            You can earn coins for completing achievements as you advance
-            through Mythgard. Team Rankstar was not able to compile a full list
-            of achievements at the time of publication but will update this
-            accordingly, as soon as we have a complete list of achievements.
-            Until then, be sure to check the Missions tab in-game to see your
-            current achievement progress.
+            You can earn coins for completing achievements as you advance through Mythgard. Be sure to check the Missions tab in-game to see your current achievement progress.
           </p>
 
           <h3>
@@ -1717,21 +1679,7 @@ function NewPlayerGuide() {
 
           <p>
             After finishing Story mode, you should try your chops at the Puzzle
-            mode as a good way to earn some extra coin. Puzzles not your thing?
-            We’ve got you covered. Puzzles are your thing but you’re stuck and
-            want to read a hint without spoiling the whole puzzle? We’ve got you
-            covered. Just want to watch a video for the solution? We’ve got you
-            covered You can find the Team Rankstar Puzzle Guide (with video
-            tutorials by Charm3r) here:
-            <br />{' '}
-            <a
-              href="https://teamrankstar.com/mythgard-puzzle-guide/"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label=" (opens in a new tab)"
-            >
-              https://teamrankstar.com/mythgard-puzzle-guide/
-            </a>{' '}
+            mode as a good way to earn some extra coin.
           </p>
 
           <h2>
@@ -1847,6 +1795,18 @@ function NewPlayerGuide() {
             >
               https://www.facebook.com/MythgardGame
             </a>
+            <br />
+            Instagram:{' '}
+            <a
+              rel="noreferrer noopener"
+              aria-label="https://www.instagram.com/mythgardgame  (opens in a new tab)"
+              href="https://www.instagram.com/mythgardgame"
+              target="_blank"
+            >
+              https://www.instagram.com/mythgardgame
+            </a>
+
+
           </p>
 
           <h2>
@@ -1865,16 +1825,7 @@ function NewPlayerGuide() {
             >
               https://mythgardhub.com/
             </a>{' '}
-            <br />
-            MythTournaments:{' '}
-            <a
-              rel="noreferrer noopener"
-              aria-label=" (opens in a new tab)"
-              href="https://mythtournaments.com/"
-              target="_blank"
-            >
-              https://mythtournaments.com/
-            </a>{' '}
+
           </p>
 
           <h2>
@@ -1882,14 +1833,14 @@ function NewPlayerGuide() {
           </h2>
 
           <p>
-            Team Rankstar:{' '}
+            Kryptic Gaming:{' '}
             <a
               rel="noreferrer noopener"
               aria-label=" (opens in a new tab)"
-              href="https://teamrankstar.com/category/mythgard/"
+              href="https://kryptikgaming.wixsite.com/mythgard/articles"
               target="_blank"
             >
-              https://teamrankstar.com/category/mythgard/
+              https://kryptikgaming.wixsite.com/mythgard/articles
             </a>{' '}
             <br />
             MinMaxer’s Blog:{' '}
@@ -1900,6 +1851,16 @@ function NewPlayerGuide() {
               target="_blank"
             >
               https://minmaxer.wixsite.com/mindfreak{' '}
+            </a>
+            <br />
+            NephilimGG:{' '}
+            <a
+              rel="noreferrer noopener"
+              aria-label="https://nephilimgg.wixsite.com/nephilimgg/blog/categories/mythgard  (opens in a new tab)"
+              href="https://nephilimgg.wixsite.com/nephilimgg/blog/categories/mythgard"
+              target="_blank"
+            >
+              https://nephilimgg.wixsite.com/nephilimgg/blog/categories/mythgard{' '}
             </a>
           </p>
 
