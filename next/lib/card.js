@@ -1,4 +1,4 @@
-import { FACTION_COLORS } from '../constants/factions';
+import { FACTION_COLORS, FACTION_ORDER } from '../constants/factions';
 const cdn = process.env.MG_CARDS_CDN;
 
 export const IMAGE_SIZES = {
@@ -78,4 +78,28 @@ export const formatManaCost = card => {
   if (!card || (!card.mana && card.mana !== 0)) return '';
 
   return card.mana < 0 ? 'X' : card.mana;
+};
+
+function getCardNodeFactions(cardNode) {
+  return cardNode.cardFactions.nodes
+    .reduce((acc, factionNode) => {
+      acc.push(factionNode.faction.name);
+      return acc;
+    }, [])
+    .sort((a, b) => {
+      return FACTION_ORDER.indexOf(a) - FACTION_ORDER.indexOf(b);
+    });
+}
+
+export const cardSort = (cardNodeA, cardNodeB) => {
+  const [cardAFactions, cardBFactions] = [cardNodeA, cardNodeB].map(
+    getCardNodeFactions
+  );
+  return (
+    cardAFactions.length - cardBFactions.length ||
+    FACTION_ORDER.indexOf(cardAFactions[0]) -
+      FACTION_ORDER.indexOf(cardBFactions[0]) ||
+    FACTION_ORDER.indexOf(cardAFactions[1]) -
+      FACTION_ORDER.indexOf(cardBFactions[1])
+  );
 };
