@@ -242,37 +242,29 @@ describe('cardSort', () => {
       ]);
     });
   });
-  const cardNode3 = (faction, mana, gems) => {
+  const cardNode3 = (faction, mana, name = 'doots') => {
     const result = cardNode(faction);
     result.mana = mana;
-    result.gems = gems;
+    result.name = name;
     return result;
   };
-  describe('it considers num gems', () => {
+  describe('it considers name after mana', () => {
     it('considers num gems 1', () => {
       const cardNodes = [
-        cardNode3('parsa', 2, 'Y'),
-        cardNode3('parsa', 2, 'YY'),
-        cardNode3('parsa', 1, 'Y')
+        cardNode3('parsa', 1),
+        cardNode3('parsa', 2, 'foo'),
+        cardNode3('parsa', 2, 'bar'),
+        cardNode3('parsa', 2, 'zeta'),
+        cardNode3('parsa', 2, 'baz'),
+        cardNode3('parsa', 3)
       ];
       expect(cardNodes.sort(cardSort)).toEqual([
-        cardNode3('parsa', 1, 'Y'),
-        cardNode3('parsa', 2, 'Y'),
-        cardNode3('parsa', 2, 'YY')
-      ]);
-    });
-    it('considers num gems 1', () => {
-      const cardNodes = [
-        cardNode3('parsa', 1, 'Y'),
-        cardNode3('parsa', 3, 'Y'),
-        cardNode3('parsa', 2, 'YY'),
-        cardNode3('parsa', 2, 'Y')
-      ];
-      expect(cardNodes.sort(cardSort)).toEqual([
-        cardNode3('parsa', 1, 'Y'),
-        cardNode3('parsa', 2, 'Y'),
-        cardNode3('parsa', 2, 'YY'),
-        cardNode3('parsa', 3, 'Y')
+        cardNode3('parsa', 1),
+        cardNode3('parsa', 2, 'bar'),
+        cardNode3('parsa', 2, 'baz'),
+        cardNode3('parsa', 2, 'foo'),
+        cardNode3('parsa', 2, 'zeta'),
+        cardNode3('parsa', 3)
       ]);
     });
   });
