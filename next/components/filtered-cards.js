@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { executeCardQuery } from '../lib/card-queries.js';
 import CardList from './card-list';
 import ErrorMessage from './error-message';
+import { cardSort } from '../lib/card.js';
 
 function filteredCards({ filters, onCardClick }) {
   const {
@@ -27,7 +28,8 @@ function filteredCards({ filters, onCardClick }) {
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return null;
 
-  const cards = data && data.cards && data.cards.nodes;
+  const cards =
+    data && data.cards && data.cards.nodes && data.cards.nodes.sort(cardSort);
 
   return <CardList onCardClick={onCardClick} cards={cards} />;
 }
