@@ -120,12 +120,12 @@ const index = () => {
           <ArticleList max={3} />
         </div>
         <div className="mg-column">
-          <h2>New Decks</h2>
+          <h2>Newest Decks</h2>
           <hr className="orangeGrade" />
           <NewestDecks />
         </div>
         <div className="mg-column">
-          <h2>Top Decks</h2>
+          <h2>Featured Decks</h2>
           <hr className="orangeGrade" />
           <TopDecks />
         </div>

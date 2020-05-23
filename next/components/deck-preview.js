@@ -9,7 +9,7 @@ import { dateToDeltaString } from '../lib/time.js';
 import PropTypes from 'prop-types';
 import AuthorLink from './author-link.js';
 
-function DeckPreview({ deck }) {
+function DeckPreview({ deck, hideDate }) {
   const theme = useContext(ThemeContext);
   const username =
     (deck.author && deck.author.username && deck.author.username) || 'unknown';
@@ -77,7 +77,7 @@ function DeckPreview({ deck }) {
         </div>
         <div className="deckAuthor">
           by <AuthorLink author={username} />{' '}
-          <i>{dateToDeltaString(new Date(deck.created))}</i>
+          {!hideDate && <i>{dateToDeltaString(new Date(deck.created))}</i>}
         </div>
         <div className="subsection">
           <FactionsIndicator factions={deck.factions} />
@@ -103,7 +103,8 @@ DeckPreview.propTypes = {
       username: PropTypes.string
     }),
     created: PropTypes.string
-  })
+  }),
+  hideDate: PropTypes.bool
 };
 
 export default DeckPreview;
