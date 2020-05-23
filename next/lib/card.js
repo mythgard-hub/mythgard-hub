@@ -83,7 +83,9 @@ export const formatManaCost = card => {
 function getCardNodeFactions(cardNode) {
   return cardNode.cardFactions.nodes
     .reduce((acc, factionNode) => {
-      acc.push(factionNode.faction.name);
+      if (factionNode && factionNode.faction && factionNode.faction.name) {
+        acc.push(factionNode.faction.name);
+      }
       return acc;
     }, [])
     .sort((a, b) => {

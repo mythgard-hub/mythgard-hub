@@ -268,4 +268,12 @@ describe('cardSort', () => {
       ]);
     });
   });
+  it('handles null factions', () => {
+    const evilCardNode = cardNode('norden');
+    evilCardNode.cardFactions.nodes.push(null);
+    expect([evilCardNode, cardNode('parsa')].sort(cardSort)).toEqual([
+      evilCardNode,
+      cardNode('parsa')
+    ]);
+  });
 });
