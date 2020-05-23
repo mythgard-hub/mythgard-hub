@@ -276,4 +276,11 @@ describe('cardSort', () => {
       cardNode('parsa')
     ]);
   });
+  fit('sorts factionless last', () => {
+    const factionlessCardNode = { cardFactions: { nodes: [null] } };
+    expect([factionlessCardNode, cardNode('parsa')].sort(cardSort)).toEqual([
+      cardNode('parsa'),
+      factionlessCardNode
+    ]);
+  });
 });

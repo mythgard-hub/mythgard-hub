@@ -98,7 +98,7 @@ export const cardSort = (cardNodeA, cardNodeB) => {
     getCardNodeFactions
   );
   return (
-    cardAFactions.length - cardBFactions.length ||
+    (cardAFactions.length || 100) - (cardBFactions.length || 100) ||
     FACTION_ORDER.indexOf(cardAFactions[0]) -
       FACTION_ORDER.indexOf(cardBFactions[0]) ||
     FACTION_ORDER.indexOf(cardAFactions[1]) -
