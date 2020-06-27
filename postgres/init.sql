@@ -115,13 +115,17 @@ CREATE TABLE mythgard.account (
   google_id varchar(255) UNIQUE,
   email varchar(255) UNIQUE,
   username varchar(255) UNIQUE,
-  accountType mythgard.accountType default 'BASIC',
+  account_type mythgard.accountType default 'BASIC',
   registered timestamp default current_timestamp
 );
 
 INSERT INTO mythgard.account ("username") VALUES ('lsv');
-INSERT INTO mythgard.account ("username", "accountType") VALUES ('foo', 'UNCOMMON');
-INSERT INTO mythgard.account ("username", "accountType") VALUES ('bar', 'MYTHIC');
+INSERT INTO mythgard.account ("username") VALUES ('foo');
+INSERT INTO mythgard.account ("username") VALUES ('bar');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('commonAccount', 'COMMON');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('uncommonAccount', 'UNCOMMON');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('rareAccount', 'RARE');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('mythicAccount', 'MYTHIC');
 
 -- separate table from account b/c it's rarely needed and makes row level security easy
 CREATE TABLE mythgard.account_moderator (
@@ -275,6 +279,10 @@ CREATE TABLE mythgard.deck_vote (
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 3);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 4);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 5);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 6);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 7);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (3, 1);
