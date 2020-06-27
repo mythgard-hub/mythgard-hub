@@ -15,6 +15,8 @@ CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CON
 
 CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'ARENA', 'TOURNAMENT', 'TWOVTWO');
 
+CREATE TYPE mythgard.accountType as ENUM ('BASIC', 'COMMON', 'UNCOMMON', 'RARE', 'EPIC', 'MYTHIC');
+
 CREATE ROLE admin;
 CREATE ROLE authd_user;
 CREATE ROLE anon_user;
@@ -113,12 +115,17 @@ CREATE TABLE mythgard.account (
   google_id varchar(255) UNIQUE,
   email varchar(255) UNIQUE,
   username varchar(255) UNIQUE,
+  account_type mythgard.accountType default 'BASIC',
   registered timestamp default current_timestamp
 );
 
 INSERT INTO mythgard.account ("username") VALUES ('lsv');
 INSERT INTO mythgard.account ("username") VALUES ('foo');
 INSERT INTO mythgard.account ("username") VALUES ('bar');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('commonAccount', 'COMMON');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('uncommonAccount', 'UNCOMMON');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('rareAccount', 'RARE');
+INSERT INTO mythgard.account ("username", "account_type") VALUES ('mythicAccount', 'MYTHIC');
 
 -- separate table from account b/c it's rarely needed and makes row level security easy
 CREATE TABLE mythgard.account_moderator (
@@ -142,7 +149,7 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name", "author_id")
   VALUES (
-    'dragons', 
+    'dragons',
     1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
   VALUES (
@@ -161,7 +168,7 @@ INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
   VALUES (
     'norden aztlan',
     current_date - interval '9 month',
-    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[], 
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
     '{STANDARD}'::mythgard.deckType[]);
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
@@ -272,6 +279,10 @@ CREATE TABLE mythgard.deck_vote (
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 3);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 4);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 5);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 6);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 7);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (3, 1);
