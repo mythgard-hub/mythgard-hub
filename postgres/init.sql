@@ -15,6 +15,8 @@ CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CON
 
 CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'ARENA', 'TOURNAMENT', 'TWOVTWO');
 
+CREATE TYPE mythgard.accountType as ENUM ('BASIC', 'COMMON', 'UNCOMMON', 'RARE', 'EPIC', 'MYTHIC');
+
 CREATE ROLE admin;
 CREATE ROLE authd_user;
 CREATE ROLE anon_user;
@@ -113,12 +115,13 @@ CREATE TABLE mythgard.account (
   google_id varchar(255) UNIQUE,
   email varchar(255) UNIQUE,
   username varchar(255) UNIQUE,
+  accountType mythgard.accountType default 'BASIC',
   registered timestamp default current_timestamp
 );
 
 INSERT INTO mythgard.account ("username") VALUES ('lsv');
-INSERT INTO mythgard.account ("username") VALUES ('foo');
-INSERT INTO mythgard.account ("username") VALUES ('bar');
+INSERT INTO mythgard.account ("username", "accountType") VALUES ('foo', 'UNCOMMON');
+INSERT INTO mythgard.account ("username", "accountType") VALUES ('bar', 'MYTHIC');
 
 -- separate table from account b/c it's rarely needed and makes row level security easy
 CREATE TABLE mythgard.account_moderator (
@@ -142,7 +145,7 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name", "author_id")
   VALUES (
-    'dragons', 
+    'dragons',
     1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
   VALUES (
@@ -161,7 +164,7 @@ INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
   VALUES (
     'norden aztlan',
     current_date - interval '9 month',
-    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[], 
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
     '{STANDARD}'::mythgard.deckType[]);
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
