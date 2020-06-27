@@ -323,8 +323,8 @@ RETURNS mythgard.account as $$
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
 
+-- account policies
 ALTER TABLE mythgard.account ENABLE ROW LEVEL SECURITY;
-
 -- Admin users can make any changes and read all rows
 CREATE POLICY admin_all ON mythgard.account TO admin USING (true) WITH CHECK (true);
 -- Non-admins can read all rows
@@ -335,6 +335,12 @@ CREATE POLICY accountupdate_if_author
   FOR UPDATE
   USING ("id" = mythgard.current_user_id())
   WITH CHECK ("id" = mythgard.current_user_id());
+ -- mods can update rows
+CREATE POLICY update_account_if_moderator
+  ON mythgard.account
+  FOR UPDATE
+  USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
 
 ALTER TABLE mythgard.deck_vote ENABLE ROW LEVEL SECURITY;
 
