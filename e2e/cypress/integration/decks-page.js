@@ -49,7 +49,7 @@ describe('Decks Page', function() {
   it('works', function() {
     // Should show deck votes
     cy.get('[data-cy="deckVotesCell"]').should('have.length', 3);
-    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 3);
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 7);
     cy.get(deckArchetypePicker).should('have.length', 3);
     cy.get(deckTypePicker).should('have.length', 3);
     cy.get(deckArchetypePicker)

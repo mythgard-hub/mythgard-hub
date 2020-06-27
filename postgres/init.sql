@@ -279,6 +279,10 @@ CREATE TABLE mythgard.deck_vote (
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 3);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 4);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 5);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 6);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 7);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (3, 1);
