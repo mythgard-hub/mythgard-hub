@@ -4,7 +4,7 @@ import { handleInputChangeHooks } from '../lib/form-utils.js';
 import useAccountMutation from '../lib/use-account-mutation.js';
 
 function modAccountEditor() {
-  const [email, setEmail] = useState(-1);
+  const [email, setEmail] = useState('example@gmail.com');
   const onChangeEmail = handleInputChangeHooks(setEmail);
   const [accountType, setAccountType] = useState('BASIC');
   const onChangeAccountType = handleInputChangeHooks(setAccountType);
