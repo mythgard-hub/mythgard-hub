@@ -18,9 +18,7 @@ const accountMutation = gql`
 export default function() {
   const [updateAccount] = useMutation(accountMutation, {
     update() {
-      alert(
-        `account for ${updateAccount.email} is now ${updateAccount.accountType}`
-      );
+      alert('The account was updated successfully');
       window.location.reload();
     },
     onError() {

@@ -1,15 +1,17 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { useState } from 'react';
-// import { useMutation } from '@apollo/react-hooks';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
+import useAccountMutation from '../lib/use-account-mutation.js';
 
 function modAccountEditor() {
   const [email, setEmail] = useState(-1);
   const onChangeEmail = handleInputChangeHooks(setEmail);
+  const [accountType, setAccountType] = useState('BASIC');
+  const onChangeAccountType = handleInputChangeHooks(setAccountType);
+  const updateAccountMutation = useAccountMutation();
 
   const formData = {};
-  const updateAccount = () => {};
+  const updateAccount = () => updateAccountMutation({ email, accountType });
   return (
     <div>
       <h1>Edit Accounts</h1>
@@ -18,7 +20,7 @@ function modAccountEditor() {
       </label>
       <label>
         Account Type:{' '}
-        <select id="acctType" name="accountType">
+        <select id="acctType" name="accountType" onChange={onChangeAccountType}>
           <option value="BASIC">Basic</option>
           <option value="COMMON">Common</option>
           <option value="UNCOMMON">Uncommon</option>
