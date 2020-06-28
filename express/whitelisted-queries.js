@@ -629,4 +629,17 @@ mutation addFeaturedDeck($deckId: Int!) {
     }
   }
 `,
+  `
+  mutation updateAccount($email: String!, $accountType: Accounttype) {
+    updateAccountByEmail(
+      input: { email: $email, patch: { accountType: $accountType } }
+    ) {
+      account {
+        id
+        email
+        accountType
+      }
+    }
+  }
+`
 ];
