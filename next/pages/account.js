@@ -5,6 +5,7 @@ import UserContext from '../components/user-context';
 import { ApolloConsumer } from 'react-apollo';
 import updateUsername from '../lib/mutations/update-username';
 import UserDecks from '../components/user-decks';
+import PublicAccount from '../components/public-account.js';
 
 import Router from 'next/router';
 const cdn = process.env.MG_CDN;
@@ -13,7 +14,7 @@ const error403 = () => Router.push('/');
 export default withRouter(({ router }) => {
   const accountId = parseInt(router.query.id, 10);
   if (accountId) {
-    return '<div>public account page</div>';
+    return <PublicAccount id={accountId} />;
   }
 
   const { user, updateUser } = useContext(UserContext);
@@ -177,6 +178,4 @@ export default withRouter(({ router }) => {
       </Layout>
     </>
   );
-
-  return <Layout>{result}</Layout>;
 });
