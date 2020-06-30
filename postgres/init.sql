@@ -841,6 +841,6 @@ REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM anon_user;
 
 GRANT SELECT ON TABLE mythgard.account TO authd_user;
 GRANT UPDATE (username, account_type) ON TABLE mythgard.account TO authd_user;
-GRANT SELECT (id, username) ON TABLE mythgard.account TO anon_user;
+GRANT SELECT (id, username, account_type, registered) ON TABLE mythgard.account TO anon_user;
 
 \echo 'Remember to update the postgraphile users pw with the production version in the kubernetes secrets file.';

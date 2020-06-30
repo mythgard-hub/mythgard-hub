@@ -9,3 +9,4 @@ CREATE POLICY update_account_if_moderator
          where account_id = mythgard.current_user_id()));
 
 GRANT UPDATE (account_type) ON TABLE mythgard.account TO authd_user;
+GRANT SELECT (id, username, account_type, registered) ON TABLE mythgard.account TO anon_user;
