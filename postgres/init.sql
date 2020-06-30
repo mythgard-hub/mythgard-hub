@@ -116,6 +116,7 @@ CREATE TABLE mythgard.account (
   email varchar(255) UNIQUE,
   username varchar(255) UNIQUE,
   account_type mythgard.accountType default 'BASIC',
+  profile_icon_id integer,
   registered timestamp default current_timestamp
 );
 

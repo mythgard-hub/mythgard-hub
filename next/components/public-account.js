@@ -11,6 +11,7 @@ const query = gql`
       username
       accountType
       registered
+      profileIconId
     }
   }
 `;

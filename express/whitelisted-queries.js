@@ -645,10 +645,11 @@ mutation addFeaturedDeck($deckId: Int!) {
   `
   query publicAccountByUsername($username:String!) {
     accountByUsername(username: $username) {
-      id,
-      username,
-      accountType,
+      id
+      username
+      accountType
       registered
+      profileIconId
     }
   }
 `
