@@ -641,5 +641,15 @@ mutation addFeaturedDeck($deckId: Int!) {
       }
     }
   }
+`,
+  `
+  query publicAccountByUsername($username:String!) {
+    accountByUsername(username: $username) {
+      id,
+      username,
+      accountType,
+      registered
+    }
+  }
 `
 ];

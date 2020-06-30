@@ -12,9 +12,9 @@ const cdn = process.env.MG_CDN;
 const error403 = () => Router.push('/');
 
 export default withRouter(({ router }) => {
-  const accountId = parseInt(router.query.id, 10);
-  if (accountId) {
-    return <PublicAccount id={accountId} />;
+  const un = router.query.id;
+  if (un) {
+    return <PublicAccount username={un} />;
   }
 
   const { user, updateUser } = useContext(UserContext);
