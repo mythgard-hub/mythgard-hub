@@ -12,6 +12,7 @@ import { dbDateToDisplayDate } from '../lib/time.js';
 import { tournamentWithResultsQuery as tourneyQuery } from '../lib/tournament-queries.js';
 import { ordinalized } from '../lib/string-utils';
 import Router from 'next/router';
+import AuthorLink from '../components/author-link';
 
 export default withRouter(({ router }) => {
   const { error, loading, data } = useQuery(tourneyQuery, {
@@ -99,7 +100,7 @@ export default withRouter(({ router }) => {
                           </Link>{' '}
                           <br />
                           <span className="pilotedBy">piloted by</span>{' '}
-                          <span className="accent">{tourneyDeck.pilot}</span>
+                          <AuthorLink author={tourneyDeck.pilot} />
                         </span>
                       </td>
                       <td>
@@ -137,7 +138,9 @@ export default withRouter(({ router }) => {
           }
         `}
       </style>
-      <PageBanner image={PageBanner.IMG_EVENTS} url="/events">Events</PageBanner>
+      <PageBanner image={PageBanner.IMG_EVENTS} url="/events">
+        Events
+      </PageBanner>
       {tournamentDecksTable}
     </Layout>
   );
