@@ -30,9 +30,13 @@ export default function PublicAccount({ username }) {
     return <Layout>{result}</Layout>;
   }
 
-  const user = data && data.accountByUsername;
-
-  const viewMoreAuthorDecksLink = `/decks?updatedTime=100000&authorName=${user.username}&sortBy=hot`;
+  let user, viewMoreAuthorDecksLink;
+  try {
+    user = data && data.accountByUsername;
+    viewMoreAuthorDecksLink = `/decks?updatedTime=100000&authorName=${user.username}&sortBy=hot`;
+  } catch (e) {
+    return <Layout>No profile found for user: {username}</Layout>;
+  }
 
   return (
     <>
