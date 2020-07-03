@@ -12,7 +12,7 @@ import Router from 'next/router';
 const error403 = () => Router.push('/');
 
 export default withRouter(({ router }) => {
-  const un = router.query.id;
+  const un = router.query.name;
   if (un) {
     return <PublicAccount username={un} />;
   }
