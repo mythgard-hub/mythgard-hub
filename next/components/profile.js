@@ -38,7 +38,9 @@ export default function UserProfile({ user }) {
           alt="Profile Icon"
           className="profile-image"
         />
-        <div className="user-name">{user.username}</div>
+        <div data-cy="profile-name" className="user-name">
+          {user.username}
+        </div>
         <div className="member-since">Member since {regDateString}</div>
       </div>
     </>

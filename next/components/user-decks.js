@@ -61,13 +61,15 @@ function UserDecks({ userId, limit }) {
       <ul className="deck-list">
         {decks.map((deck, i) => {
           return (
-            <li key={i}>
+            <li data-cy="user-deck" key={i}>
               <DeckPreview deck={deck} />
             </li>
           );
         })}
       </ul>
       {limit !== -1 && userDeckCount > limit && (
+        // todo - replace with link to decks page
+        // and remove profile.js view more link
         <div className="view-more">
           <span
             className="view-more-button"
