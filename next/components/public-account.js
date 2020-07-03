@@ -27,11 +27,23 @@ export default function PublicAccount({ username }) {
   const user = data && data.accountByUsername;
 
   return result ? (
-    <Layout>result</Layout>
+    <Layout>{result}</Layout>
   ) : (
-    <Layout>
-      <UserProfile user={user} />
-    </Layout>
+    <>
+      <style jsx>{`
+        .public-profile {
+          text-align: center;
+          width: 100%;
+          border: 1px solid #458a9e;
+          background-color: #1c2d35;
+        }
+      `}</style>
+      <Layout>
+        <div className="public-profile">
+          <UserProfile user={user} />
+        </div>
+      </Layout>
+    </>
   );
 }
 

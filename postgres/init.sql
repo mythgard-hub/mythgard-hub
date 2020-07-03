@@ -116,7 +116,7 @@ CREATE TABLE mythgard.account (
   email varchar(255) UNIQUE,
   username varchar(255) UNIQUE,
   account_type mythgard.accountType default 'BASIC',
-  profile_icon_id integer,
+  profile_icon_id integer default 1,
   registered timestamp default current_timestamp
 );
 
@@ -841,7 +841,7 @@ REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM authd_user;
 REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM anon_user;
 
 GRANT SELECT ON TABLE mythgard.account TO authd_user;
-GRANT UPDATE (username, account_type) ON TABLE mythgard.account TO authd_user;
-GRANT SELECT (id, username, account_type, registered) ON TABLE mythgard.account TO anon_user;
+GRANT UPDATE (username, account_type, profile_icon_id) ON TABLE mythgard.account TO authd_user;
+GRANT SELECT (id, username, account_type, registered, profile_icon_id) ON TABLE mythgard.account TO anon_user;
 
 \echo 'Remember to update the postgraphile users pw with the production version in the kubernetes secrets file.';

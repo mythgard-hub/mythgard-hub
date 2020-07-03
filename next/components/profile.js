@@ -2,16 +2,21 @@ const cdn = process.env.MG_CDN;
 import PropTypes from 'prop-types';
 
 export default function UserProfile({ user }) {
+  const safeAvatarId = Math.ceil(Math.floor(Number(user.profileIconId), 0), 62);
+
+  const regDate = new Date(user.registered);
+  const regDateString = regDate.toLocaleDateString('en-us', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
   return (
     <>
       <style jsx>{`
         .user-profile {
           text-align: center;
-          width: 100%;
-          border: 1px solid #458a9e;
-          background-color: #1c2d35;
         }
-
         .profile-image {
           width: 138px;
           margin-top: 30px;
@@ -22,14 +27,19 @@ export default function UserProfile({ user }) {
           font-style: italic;
           font-weight: 600;
         }
+        .member-since {
+          font-style: italic;
+          font-weight: 300;
+        }
       `}</style>
       <div className="user-profile">
         <img
-          src={`${cdn}/mgh/avatar2.png`}
+          src={`${cdn}/avatars/avatar-${safeAvatarId}.png`}
           alt="Profile Icon"
           className="profile-image"
         />
         <div className="user-name">{user.username}</div>
+        <div className="member-since">Member since {regDateString}</div>
       </div>
     </>
   );
@@ -37,6 +47,9 @@ export default function UserProfile({ user }) {
 
 UserProfile.propTypes = {
   user: PropTypes.shape({
-    username: PropTypes.string
+    username: PropTypes.string,
+    registered: PropTypes.string,
+    profileIconId: PropTypes.number,
+    accountType: PropTypes.string
   })
 };

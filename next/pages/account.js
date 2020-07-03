@@ -6,9 +6,9 @@ import { ApolloConsumer } from 'react-apollo';
 import updateUsername from '../lib/mutations/update-username';
 import UserDecks from '../components/user-decks';
 import PublicAccount from '../components/public-account.js';
+import Profile from '../components/profile.js';
 
 import Router from 'next/router';
-const cdn = process.env.MG_CDN;
 const error403 = () => Router.push('/');
 
 export default withRouter(({ router }) => {
@@ -49,40 +49,15 @@ export default withRouter(({ router }) => {
       });
   };
 
-  const regDate = new Date(user.registered);
-  const regDateString = regDate.toLocaleDateString('en-us', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-
   return (
     <>
       <style jsx>{`
-        .user-profile {
+        .private-profile {
           text-align: center;
           width: 100%;
           border: 1px solid #458a9e;
           background-color: #1c2d35;
         }
-
-        .profile-image {
-          width: 138px;
-          margin-top: 30px;
-        }
-
-        .user-name {
-          color: #f1810b;
-          font-size: 1.5em;
-          font-style: italic;
-          font-weight: 600;
-        }
-
-        .member-since {
-          font-style: italic;
-          font-weight: 300;
-        }
-
         .profile-content {
           display: flex;
           flex-wrap: wrap;
@@ -121,14 +96,8 @@ export default withRouter(({ router }) => {
         title="Mythgard Hub | Account Settings"
         desc="Account settings for Mythgard Hub"
       >
-        <div className="user-profile">
-          <img
-            src={`${cdn}/mgh/avatar2.png`}
-            alt="Profile Icon"
-            className="profile-image"
-          />
-          <div className="user-name">{user.username}</div>
-          <div className="member-since">Member since {regDateString}</div>
+        <div className="private-profile">
+          <Profile user={user} />
           <br />
           <br />
           <div className="profile-content">
