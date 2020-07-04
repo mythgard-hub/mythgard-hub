@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import UserProfile from './profile.js';
 import UserDecks from '../components/user-decks';
+import { useContext } from 'react';
+import { ThemeContext } from './theme-context';
 import gql from 'graphql-tag';
 
 const query = gql`
@@ -18,6 +20,7 @@ const query = gql`
 `;
 
 export default function PublicAccount({ username }) {
+  const theme = useContext(ThemeContext);
   const { loading, error, data } = useQuery(query, {
     variables: {
       username
@@ -44,7 +47,7 @@ export default function PublicAccount({ username }) {
         .public-profile {
           text-align: center;
           width: 100%;
-          border: 1px solid #458a9e;
+          border: ${theme.sectionBorder};
           background-color: #1c2d35;
           padding-bottom: 40px;
         }

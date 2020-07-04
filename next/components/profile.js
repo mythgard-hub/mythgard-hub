@@ -1,7 +1,11 @@
-const cdn = process.env.MG_CDN;
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { ThemeContext } from './theme-context';
+
+const cdn = process.env.MG_CDN;
 
 export default function UserProfile({ user }) {
+  const theme = useContext(ThemeContext);
   const safeAvatarId = Math.ceil(Math.floor(Number(user.profileIconId), 0), 62);
 
   const regDate = new Date(user.registered);
@@ -22,7 +26,7 @@ export default function UserProfile({ user }) {
           margin-top: 30px;
         }
         .user-name {
-          color: #f1810b;
+          color: ${theme.fontColorAccent};
           font-size: 1.5em;
           font-style: italic;
           font-weight: 600;
