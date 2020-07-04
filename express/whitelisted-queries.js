@@ -643,7 +643,7 @@ mutation addFeaturedDeck($deckId: Int!) {
   }
 `,
   `
-  query publicAccountByUsername($username:String!) {
+  query publicAccount($username: String!) {
     accountByUsername(username: $username) {
       id
       username
@@ -652,5 +652,5 @@ mutation addFeaturedDeck($deckId: Int!) {
       profileIconId
     }
   }
-`
+`,
 ];
