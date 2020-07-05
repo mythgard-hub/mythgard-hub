@@ -43,7 +43,7 @@ export default withRouter(({ router }) => {
     if (!areSettingsValid()) return;
     updateUsername(apolloClient, user.id, username)
       .then(({ data }) => {
-        updateUser(data.updateAccount.account);
+        updateUser({ ...user, ...data.updateAccount.account });
       })
       .catch(err => {
         // TODO alert special msg if username not unique (or just suggest
