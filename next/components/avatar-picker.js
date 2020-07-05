@@ -7,12 +7,22 @@ const numAvatars = 62;
 const getLink = id => `${cdn}/avatars/avatar-${id}.png`;
 const cdn = process.env.MG_CDN;
 
-export default function AvatarPicker({ onSave }) {
+const limits = {
+  default: 31,
+  common: 37,
+  uncommon: 44,
+  rare: 50,
+  mythic: 62
+};
+
+export default function AvatarPicker({ onSave, accountType }) {
   // const theme = useContext(ThemeContext);
   const [newProfileId, setNewProfileId] = useState(-1);
   const avatarLinks = Array.from(Array(numAvatars)).map((key, index) =>
     getLink(index + 1)
   );
+
+  const userLimit = limits[accountType.toLowerCase()];
 
   return (
     <div className="avatar-picker">
@@ -38,12 +48,18 @@ export default function AvatarPicker({ onSave }) {
           margin: 10px 0;
           width: auto;
         }
+        .support {
+          margin: 40px 0;
+        }
       `}</style>
       <h3>My Avatar</h3>
       <div className="avatar-options">
-        {avatarLinks.map((url, i) => {
+        {avatarLinks.reduce((acc, url, i) => {
+          if (i >= userLimit) {
+            return acc;
+          }
           const selected = i + 1 === newProfileId;
-          const result = (
+          let result = (
             <img
               className={selected ? 'selected' : ''}
               src={url}
@@ -53,20 +69,30 @@ export default function AvatarPicker({ onSave }) {
             />
           );
           if (selected) {
-            return (
+            result = (
               <span className="selected-box" key={i + 1}>
                 {result}
                 <button onClick={() => onSave(newProfileId)}>Confirm</button>
               </span>
             );
           }
-          return result;
-        })}
+          acc.push(result);
+          return acc;
+        }, [])}
+        <span></span>
       </div>
+      {userLimit < numAvatars ? (
+        <div className="support">
+          Support Mythgard Hub on Patreon to unlock additional Avatars...
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 }
 
 AvatarPicker.propTypes = {
-  onSave: PropTypes.func
+  onSave: PropTypes.func,
+  accountType: PropTypes.string
 };

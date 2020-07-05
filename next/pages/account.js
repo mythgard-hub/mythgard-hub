@@ -178,6 +178,7 @@ export default withRouter(({ router }) => {
                 <div>
                   <AvatarPicker
                     onSave={profileIconId => updateAvatar(profileIconId)}
+                    accountType={user.accountType}
                   />
                 </div>
               </div>
