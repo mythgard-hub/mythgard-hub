@@ -66,6 +66,8 @@ export default withRouter(({ router }) => {
     `,
     {
       update() {
+        window.scrollTo(0, 0);
+        // TODO - write to cache instead?
         window.location.reload();
       },
       onError() {

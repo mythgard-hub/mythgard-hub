@@ -46,6 +46,9 @@ export default function UserProfile({ user }) {
           {user.username}
         </div>
         <div className="member-since">Member since {regDateString}</div>
+        <div className="account-type">
+          {user.accountType ? user.accountType : ''}
+        </div>
       </div>
     </>
   );
