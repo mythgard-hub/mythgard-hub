@@ -7,6 +7,7 @@ import updateUsername from '../lib/mutations/update-username';
 import UserDecks from '../components/user-decks';
 import PublicAccount from '../components/public-account.js';
 import Profile from '../components/profile.js';
+import AvatarPicker from '../components/avatar-picker.js';
 import Router from 'next/router';
 
 const error403 = () => Router.push('/');
@@ -125,6 +126,9 @@ export default withRouter(({ router }) => {
                     }}
                     value={username}
                   />
+                </div>
+                <div>
+                  <AvatarPicker />
                 </div>
                 <ApolloConsumer>
                   {client => (
