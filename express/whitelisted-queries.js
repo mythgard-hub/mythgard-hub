@@ -653,4 +653,15 @@ mutation addFeaturedDeck($deckId: Int!) {
     }
   }
 `,
+  `
+  mutation updateProfileIconId($accountId: Int!, $profileIconId: Int!) {
+    updateAccount(
+      input: { id: $accountId, patch: { profileIconId: $profileIconId } }
+    ) {
+      account {
+        profileIconId
+      }
+    }
+  }
+`
 ];

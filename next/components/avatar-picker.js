@@ -28,6 +28,11 @@ export default function AvatarPicker({ onSave }) {
           display: inline-flex;
           align-items: center;
           flex-direction: column;
+          vertical-align: top;
+          width: 146px;
+        }
+        .selected {
+          height: 111px;
         }
         button {
           margin: 10px 0;
