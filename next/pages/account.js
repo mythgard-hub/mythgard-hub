@@ -164,12 +164,12 @@ export default withRouter(({ router }) => {
                     <button
                       type="submit"
                       value="Save"
-                      style={{ width: '25%' }}
+                      style={{ width: 'auto' }}
                       onClick={() => {
                         handleSubmit(client);
                       }}
                     >
-                      Save
+                      Save Username
                     </button>
                   )}
                 </ApolloConsumer>

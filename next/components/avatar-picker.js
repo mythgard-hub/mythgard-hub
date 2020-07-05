@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useContext } from 'react';
-import { ThemeContext } from './theme-context';
+// import { useContext } from 'react';
+// import { ThemeContext } from './theme-context';
 import PropTypes from 'prop-types';
 
 const numAvatars = 62;
@@ -8,7 +8,7 @@ const getLink = id => `${cdn}/avatars/avatar-${id}.png`;
 const cdn = process.env.MG_CDN;
 
 export default function AvatarPicker({ onSave }) {
-  const theme = useContext(ThemeContext);
+  // const theme = useContext(ThemeContext);
   const [newProfileId, setNewProfileId] = useState(-1);
   const avatarLinks = Array.from(Array(numAvatars)).map((key, index) =>
     getLink(index + 1)
@@ -22,32 +22,41 @@ export default function AvatarPicker({ onSave }) {
           overflow-y: scroll;
         }
         img {
-          border: ${theme.borderHidden};
+          cursor: pointer;
         }
-        .selected {
-          border: ${theme.border};
+        .selected-box {
+          display: inline-flex;
+          align-items: center;
+          flex-direction: column;
         }
         button {
-          margin-top: 20px;
+          margin: 10px 0;
           width: auto;
         }
       `}</style>
       <h3>My Avatar</h3>
       <div className="avatar-options">
         {avatarLinks.map((url, i) => {
-          return (
+          const selected = i + 1 === newProfileId;
+          const result = (
             <img
-              className={i + 1 === newProfileId ? 'selected' : ''}
+              className={selected ? 'selected' : ''}
               src={url}
-              key={url}
+              key={i + 1}
               alt={'icon ' + i}
               onClick={() => setNewProfileId(i + 1)}
             />
           );
+          if (selected) {
+            return (
+              <span className="selected-box" key={i + 1}>
+                {result}
+                <button onClick={() => onSave(newProfileId)}>Confirm</button>
+              </span>
+            );
+          }
+          return result;
         })}
-      </div>
-      <div>
-        <button onClick={() => onSave(newProfileId)}>Save Avatar</button>
       </div>
     </div>
   );
