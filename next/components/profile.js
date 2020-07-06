@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
+import UserAvatar from './user-avatar';
 
 const cdn = process.env.MG_CDN;
 
 export default function UserProfile({ user }) {
   const theme = useContext(ThemeContext);
-  const safeAvatarId = Math.ceil(Math.floor(Number(user.profileIconId), 0), 62);
 
   const regDate = new Date(user.registered);
   const regDateString = regDate.toLocaleDateString('en-us', {
@@ -21,10 +21,6 @@ export default function UserProfile({ user }) {
         .user-profile {
           text-align: center;
         }
-        .profile-image {
-          width: 138px;
-          margin-top: 30px;
-        }
         .user-name {
           color: ${theme.fontColorAccent};
           font-size: 1.5em;
@@ -37,11 +33,7 @@ export default function UserProfile({ user }) {
         }
       `}</style>
       <div className="user-profile">
-        <img
-          src={`${cdn}/avatars/avatar-${safeAvatarId}.png`}
-          alt="Profile Icon"
-          className="profile-image"
-        />
+        <UserAvatar profileIconId={user && user.profileIconId} />
         <div data-cy="profile-name" className="user-name">
           {user.username}
         </div>

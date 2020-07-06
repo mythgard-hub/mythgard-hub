@@ -8,13 +8,25 @@ import LargeTable from './large-table.js';
 import UpvoteIndicator from './upvote-indicator.js';
 import { getArchetypeLabel, getTypeLabel } from '../lib/deck-utils';
 import AuthorLink from './author-link';
+import UserAvatar from './user-avatar';
 
 export default function DeckList({ decks }) {
   const theme = useContext(ThemeContext);
   return (
     <div>
       <style jsx>{`
-        .deckName :global(a) {
+        .deckNameAndAuthor {
+          display: flex;
+        }
+        .user-avatar {
+          padding-right: 20px;
+        }
+        .deckName {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .deckLink {
           color: ${theme.deckNameColor};
           font-size: 20px;
           font-weight: bold;
@@ -63,13 +75,18 @@ export default function DeckList({ decks }) {
             return (
               <tr key={index} className={classNames} data-cy="deckListItem">
                 <td>
-                  <div className="deckName" data-cy="deckName">
-                    <Link href={`/deck?id=${deck.deckId}`}>
-                      <a>{deck.deckName}</a>
-                    </Link>
-                  </div>
-                  <div className="deckAuthor">
-                    by <AuthorLink author={author} />
+                  <div className="deckNameAndAuthor" data-cy="deckName">
+                    <div className="user-avatar">
+                      <UserAvatar profileIconId={deck.profileIconId} small />
+                    </div>
+                    <div className="deckName">
+                      <Link href={`/deck?id=${deck.deckId}`}>
+                        <a className="deckLink">{deck.deckName}</a>
+                      </Link>
+                      <div className="deckAuthor">
+                        by <AuthorLink author={author} />
+                      </div>
+                    </div>
                   </div>
                 </td>
                 <td className="deckVotes">
