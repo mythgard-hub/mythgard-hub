@@ -264,13 +264,15 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
   VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1), (3, 18, 4);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (5, 1, 1), (5, 2, 1);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (6, 1, 1), (6, 2, 1);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (7, 1, 1), (7, 2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (5, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (6, 1, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (7, 1, 1), (7, 2, 1), (7, 3, 1), (7, 4, 1), (7, 5, 1), (7, 6, 1), (7, 18, 4);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (8, 1, 1), (8, 2, 1);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (9, 1, 1), (9, 2, 1);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (10, 1, 1), (10, 2, 1);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (11, 1, 1), (11, 2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (9, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (10, 1, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (11, 1, 1), (11, 2, 1), (11, 3, 1), (11, 4, 1), (11, 5, 1), (11, 6, 1), (11, 18, 4);
 
 ALTER TABLE mythgard.card_deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows
