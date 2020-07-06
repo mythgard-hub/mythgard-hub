@@ -186,7 +186,9 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
     cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', numRecentDecks);
+  });
 
+  it('should search decks by name', function() {
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckSearchSubmit"]').click();
 
@@ -263,9 +265,9 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckSearchDeckName"]').clear();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', numAllDecks);
+  });
 
-    // test deck sort
-    cy.get(deckSearchClear).click();
+  it('should sort decks', function() {
     // the default search is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
