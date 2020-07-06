@@ -310,12 +310,10 @@ describe('Decks Page', function() {
       .first()
       .find(deckName)
       .should('contain', deckNameDragons);
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 7);
     cy.get(decksSort).select(ratingAsc);
     cy.get(deckListRatingLowToHigh);
-    cy.get(deckListItem)
-      .find(deckName)
-      .first()
-      .should('contain', 'other cats');
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 0);
     // this test differs from the first sort test in that
     // it uses some-decks rather than all-decks
     cy.get(decksSort).select(hot);
