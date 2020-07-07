@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { RARITY_COLORS } from '../constants/rarities';
+import { ACCOUNT_BORDER_COLORS } from '../constants/account-types';
 
 const cdn = process.env.MG_CDN;
 
@@ -10,24 +10,26 @@ export default function UserAvatar({
 }) {
   const avatarId = profileIconId || 1;
   const safeAvatarId = Math.ceil(Math.floor(avatarId, 62));
-  const borderColor =
-    accountType && accountType !== 'BASIC'
-      ? RARITY_COLORS[accountType.toLowerCase()]
-      : '';
-  const backgroundClassName = `${borderColor ? 'hexagon' : 'n'} ${borderColor &&
-    small &&
-    'hexagon-small'} ${borderColor && !small && 'hexagon-large'}`;
+  const containerClassNames = `container ${small ? 'small' : ''}`;
+  const borderColor = accountType && ACCOUNT_BORDER_COLORS[accountType];
+  const backgroundClassName = [
+    borderColor ? 'hexagon' : '',
+    borderColor && (small ? 'hexagon-small' : 'hexagon-large')
+  ];
   const width = small ? '65px' : '138px';
   const height = small ? '75px' : '159px';
 
   return (
-    <div className="container">
+    <div className={containerClassNames}>
       <style jsx>{`
         .container {
           position: relative;
           width: ${width};
           height: ${height};
-          margin-top: ${small ? '0' : '30px'};
+          margin-top: 30px;
+        }
+        .small {
+          margin-top: 0;
         }
 
         .hexagon {
