@@ -15,7 +15,7 @@ export default function UserAvatar({
   const backgroundClassName = [
     borderColor ? 'hexagon' : '',
     borderColor && (small ? 'hexagon-small' : 'hexagon-large')
-  ];
+  ].join(' ');
   const width = small ? '65px' : '138px';
   const height = small ? '75px' : '159px';
 
