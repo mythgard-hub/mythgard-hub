@@ -123,10 +123,14 @@ CREATE TABLE mythgard.account (
 INSERT INTO mythgard.account ("username") VALUES ('lsv');
 INSERT INTO mythgard.account ("username") VALUES ('foo');
 INSERT INTO mythgard.account ("username") VALUES ('bar');
-INSERT INTO mythgard.account ("username", "account_type") VALUES ('commonAccount', 'COMMON');
-INSERT INTO mythgard.account ("username", "account_type") VALUES ('uncommonAccount', 'UNCOMMON');
-INSERT INTO mythgard.account ("username", "account_type") VALUES ('rareAccount', 'RARE');
-INSERT INTO mythgard.account ("username", "account_type") VALUES ('mythicAccount', 'MYTHIC');
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('commonAccount', 'COMMON', 1);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('uncommonAccount', 'UNCOMMON', 2);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('rareAccount', 'RARE', 3);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('mythicAccount', 'MYTHIC', 4);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('commonAccount2', 'COMMON', 5);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('uncommonAccount2', 'UNCOMMON', 6);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('rareAccount2', 'RARE', 7);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('mythicAccount2', 'MYTHIC', 8);
 
 -- separate table from account b/c it's rarely needed and makes row level security easy
 CREATE TABLE mythgard.account_moderator (
@@ -169,6 +173,52 @@ INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
   VALUES (
     'norden aztlan',
     current_date - interval '9 month',
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
+    '{STANDARD}'::mythgard.deckType[]);
+  INSERT INTO mythgard.deck("name", "author_id")
+  VALUES (
+    'other dragons',
+    11);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
+  VALUES (
+    'other cats',
+    1,
+    1,
+    10,
+    '{MIDRANGE}'::mythgard.deckArchetype[],
+    '{TOURNAMENT}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "type")
+  VALUES (
+    'other_all_factions',
+    current_date - interval '2 month',
+    '{GAUNTLET}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
+  VALUES (
+    'other norden aztlan',
+    current_date - interval '3 month',
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
+    '{STANDARD}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "author_id")
+  VALUES (
+    'mighty dragons',
+    1);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
+  VALUES (
+    'kitty cats',
+    1,
+    1,
+    9,
+    '{MIDRANGE}'::mythgard.deckArchetype[],
+    '{TOURNAMENT}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "type")
+  VALUES (
+    'all_factions_three',
+    current_date - interval '1 year',
+    '{GAUNTLET}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
+  VALUES (
+    'norden aztlan the third',
+    current_date - interval '2 year',
     '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
     '{STANDARD}'::mythgard.deckType[]);
 
@@ -214,6 +264,15 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
   VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1), (3, 18, 4);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (5, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (6, 1, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (7, 1, 1), (7, 2, 1), (7, 3, 1), (7, 4, 1), (7, 5, 1), (7, 6, 1), (7, 18, 4);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (8, 1, 1), (8, 2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (9, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (10, 1, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (11, 1, 1), (11, 2, 1), (11, 3, 1), (11, 4, 1), (11, 5, 1), (11, 6, 1), (11, 18, 4);
 
 ALTER TABLE mythgard.card_deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows
@@ -602,6 +661,8 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.modified as deck_modified,
          account.id as account_id,
          account.username as username,
+         account.account_type as account_type,
+         account.profile_icon_id as profile_icon_id,
          mythgard.deck_hotness(deck.id)::int as hotness,
          deck_views.views::int as views
   FROM mythgard.deck

@@ -17,6 +17,8 @@ const deckPreviewsFragment = `
         author {
           username
           id
+          accountType
+          profileIconId
         }
       }
   }`;
@@ -198,6 +200,8 @@ export const allDecksQuery = gql`
         deckName
         username
         accountId
+        accountType
+        profileIconId
         deckModified
         deckCreated
         factions
