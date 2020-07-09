@@ -27,7 +27,7 @@ export default function UserAvatar({
         }
         .small {
           margin-top: 0;
-          width: 72px;
+          width: 70px;
           height: 79px;
         }
         .image {
