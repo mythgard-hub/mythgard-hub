@@ -31,6 +31,9 @@ export default function AvatarPicker({ onSave, accountType }) {
           max-height: 424px;
           overflow-y: scroll;
         }
+        .avatar-options > div {
+          display: inline-block;
+        }
         img {
           cursor: pointer;
         }
@@ -51,22 +54,37 @@ export default function AvatarPicker({ onSave, accountType }) {
         .support {
           margin: 40px 0;
         }
+        .disabled {
+          position: relative;
+        }
+
+        .disabled:after {
+          content: ' ';
+          z-index: 10;
+          display: block;
+          position: absolute;
+          height: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.5);
+        }
       `}</style>
       <h3>My Avatar</h3>
       <div className="avatar-options">
         {avatarLinks.reduce((acc, url, i) => {
-          if (i >= userLimit) {
-            return acc;
-          }
+          const isDisabled = i >= userLimit;
           const selected = i + 1 === newProfileId;
           let result = (
-            <img
-              className={selected ? 'selected' : ''}
-              src={url}
-              key={i + 1}
-              alt={'icon ' + i}
-              onClick={() => setNewProfileId(i + 1)}
-            />
+            <div className={isDisabled ? 'disabled' : ''}>
+              <img
+                className={selected ? 'selected' : ''}
+                src={url}
+                key={i + 1}
+                alt={'icon ' + i}
+                onClick={() => !isDisabled && setNewProfileId(i + 1)}
+              />
+            </div>
           );
           if (selected) {
             result = (
@@ -83,7 +101,7 @@ export default function AvatarPicker({ onSave, accountType }) {
       </div>
       {userLimit < numAvatars ? (
         <div className="support">
-          Support Mythgard Hub on Patreon to unlock additional Avatars...
+          Each Patreon tier unlocks additional avatars. Thanks for your support!
         </div>
       ) : (
         ''
