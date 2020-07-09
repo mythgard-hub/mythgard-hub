@@ -1,7 +1,7 @@
-export const ACCOUNT_BORDER_COLORS = {
-  BASIC: null,
-  COMMON: '#926950',
-  UNCOMMON: '#A5A5A5',
-  RARE: '#ccac00',
-  MYTHINC: '#33A0E0'
+export const ACCOUNT_BORDERS = {
+  BASIC: 'border-default.png',
+  COMMON: 'border-common.png',
+  UNCOMMON: 'border-uncommon.png',
+  RARE: 'border-rare.png',
+  MYTHIC: 'border-mythic.png'
 };
