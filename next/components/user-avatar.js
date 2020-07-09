@@ -76,5 +76,6 @@ export default function UserAvatar({
 
 UserAvatar.propTypes = {
   profileIconId: PropTypes.number,
+  accountType: PropTypes.string,
   small: PropTypes.bool
 };
