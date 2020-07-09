@@ -101,7 +101,7 @@ export default function AvatarPicker({ onSave, accountType }) {
       </div>
       {userLimit < numAvatars ? (
         <div className="support">
-          Support Mythgard Hub on Patreon to unlock additional Avatars...
+          Each Patreon tier unlocks additional avatars. Thanks for your support!
         </div>
       ) : (
         ''
