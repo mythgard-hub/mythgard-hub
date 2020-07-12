@@ -1,5 +1,5 @@
 export const ACCOUNT_BORDERS = {
-  BASIC: 'border-default.png',
+  BASIC: null,
   COMMON: 'border-common.png',
   UNCOMMON: 'border-uncommon.png',
   RARE: 'border-rare.png',
