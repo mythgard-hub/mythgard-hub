@@ -192,9 +192,10 @@ INSERT INTO mythgard.deck("name", "modified", "type")
     'other_all_factions',
     current_date - interval '2 month',
     '{GAUNTLET}'::mythgard.deckType[]);
-INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
+INSERT INTO mythgard.deck("name", "author_id", "modified", "archetype", "type")
   VALUES (
     'other norden aztlan',
+    4,
     current_date - interval '3 month',
     '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
     '{STANDARD}'::mythgard.deckType[]);

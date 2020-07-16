@@ -77,7 +77,11 @@ export default function DeckList({ decks }) {
                 <td>
                   <div className="deckNameAndAuthor" data-cy="deckName">
                     <div className="user-avatar">
-                      <UserAvatar profileIconId={deck.profileIconId} small />
+                      <UserAvatar
+                        profileIconId={deck.profileIconId}
+                        accountType={deck.accountType}
+                        small
+                      />
                     </div>
                     <div className="deckName">
                       <Link href={`/deck?id=${deck.deckId}`}>

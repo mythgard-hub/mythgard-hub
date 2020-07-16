@@ -19,6 +19,11 @@ export default function UserProfile({ user }) {
     <>
       <style jsx>{`
         .user-profile {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .user-details {
           text-align: center;
         }
         .user-name {
@@ -33,13 +38,18 @@ export default function UserProfile({ user }) {
         }
       `}</style>
       <div className="user-profile">
-        <UserAvatar profileIconId={user && user.profileIconId} />
-        <div data-cy="profile-name" className="user-name">
-          {user.username}
-        </div>
-        <div className="member-since">Member since {regDateString}</div>
-        <div className="account-type">
-          {user.accountType ? user.accountType : ''}
+        <UserAvatar
+          profileIconId={user && user.profileIconId}
+          accountType={user && user.accountType}
+        />
+        <div className="user-details">
+          <div data-cy="profile-name" className="user-name">
+            {user.username}
+          </div>
+          <div className="member-since">Member since {regDateString}</div>
+          <div className="account-type">
+            {user.accountType ? user.accountType : ''}
+          </div>
         </div>
       </div>
     </>

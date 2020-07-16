@@ -186,7 +186,9 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckListItem"]').should('have.length', 3);
     cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', numRecentDecks);
+  });
 
+  it('should search decks by name', function() {
     cy.get('[data-cy="deckSearchUpdatedTime"]').select('100000');
     cy.get('[data-cy="deckSearchSubmit"]').click();
 
@@ -263,9 +265,9 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckSearchDeckName"]').clear();
     cy.get('[data-cy="deckSearchSubmit"]').click();
     cy.get('[data-cy="deckListItem"]').should('have.length', numAllDecks);
+  });
 
-    // test deck sort
-    cy.get(deckSearchClear).click();
+  it('should sort decks', function() {
     // the default search is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
@@ -308,12 +310,10 @@ describe('Decks Page', function() {
       .first()
       .find(deckName)
       .should('contain', deckNameDragons);
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 7);
     cy.get(decksSort).select(ratingAsc);
     cy.get(deckListRatingLowToHigh);
-    cy.get(deckListItem)
-      .find(deckName)
-      .first()
-      .should('contain', 'other cats');
+    cy.get('[data-cy="deckVotesCell"]:first').should('contain', 0);
     // this test differs from the first sort test in that
     // it uses some-decks rather than all-decks
     cy.get(decksSort).select(hot);
