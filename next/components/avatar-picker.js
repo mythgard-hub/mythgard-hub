@@ -8,7 +8,7 @@ const getLink = id => `${cdn}/avatars/avatar-${id}.png`;
 const cdn = process.env.MG_CDN;
 
 const limits = {
-  default: 31,
+  basic: 31,
   common: 37,
   uncommon: 44,
   rare: 50,
