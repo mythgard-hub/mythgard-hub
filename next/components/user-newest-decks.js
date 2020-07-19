@@ -15,7 +15,7 @@ function UserDecks({ userId, username, limit }) {
   const userDeckCount =
     data && data.deckPreviews && data.deckPreviews.totalCount;
 
-  const viewMoreAuthorDecksLink = `/decks?updatedTime=100000&authorName=${username}&sortBy=hot`;
+  const viewMoreAuthorDecksLink = `/decks?updatedTime=100000&authorName=${username}&sortBy=dateDesc`;
 
   return (
     <>
