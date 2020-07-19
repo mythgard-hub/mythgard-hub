@@ -49,7 +49,7 @@ function UserDecks({ userId, username, limit }) {
         error={error}
         data={data}
         hideDate={true}
-        cyData="newestDecks"
+        cyData="userTopDecks"
       />
       {limit !== -1 && userDeckCount > limit && (
         <div className="view-more">
