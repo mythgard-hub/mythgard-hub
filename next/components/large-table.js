@@ -15,7 +15,7 @@ export default function LargeTable(props) {
           border-top: ${theme.border};
         }
         :global(.mgLargeTable > tbody > tr > td) {
-          padding: 15px 10px 15px 10px;
+          padding: 10px;
         }
         :global(.mgLargeTable > tbody > tr > td) {
           text-align: center;

@@ -20,24 +20,29 @@ const findValueFromLabel = (optionsArray, label) => {
 
 const serializeDeckSearchResults = decks => {
   return decks.map(deck => {
-    const username = deck.author && deck.author.username;
     const deckPreview =
       deck &&
       deck.deckPreviews &&
       deck.deckPreviews.nodes &&
       deck.deckPreviews.nodes.length &&
       deck.deckPreviews.nodes[0];
+    const author = deckPreview && deckPreview.deck && deckPreview.deck.author;
     const deckCreated = deckPreview && deckPreview.deckCreated;
     const factions = deckPreview && deckPreview.factions;
     const essenceCost = deckPreview && deckPreview.essenceCost;
     const votes = deckPreview && deckPreview.votes;
     const deckArchetype = deckPreview && deckPreview.deckArchetype;
     const deckType = deckPreview && deckPreview.deckType;
+    const username = author && author.username;
+    const accountType = author && author.accountType;
+    const profileIconId = author && author.profileIconId;
 
     return {
       deckId: deck.id,
       deckName: deck.name,
       username,
+      accountType,
+      profileIconId,
       deckModified: deck.modified,
       deckCreated,
       factions,

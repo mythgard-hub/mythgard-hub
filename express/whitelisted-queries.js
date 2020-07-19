@@ -13,6 +13,8 @@ const deckPreviewsFragment = `
       author {
         username
         id
+        accountType
+        profileIconId
       }
     }
   }
@@ -299,6 +301,8 @@ mutation UpdateDeckAndRemoveCards(
         deckName
         username
         accountId
+        accountType
+        profileIconId
         deckModified
         deckCreated
         factions
@@ -650,6 +654,17 @@ mutation addFeaturedDeck($deckId: Int!) {
       accountType
       registered
       profileIconId
+    }
+  }
+`,
+  `
+  mutation updateProfileIconId($accountId: Int!, $profileIconId: Int!) {
+    updateAccount(
+      input: { id: $accountId, patch: { profileIconId: $profileIconId } }
+    ) {
+      account {
+        profileIconId
+      }
     }
   }
 `,

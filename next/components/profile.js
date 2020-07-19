@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
+import UserAvatar from './user-avatar';
 
 const cdn = process.env.MG_CDN;
 
 export default function UserProfile({ user }) {
   const theme = useContext(ThemeContext);
-  const safeAvatarId = Math.ceil(Math.floor(Number(user.profileIconId), 0), 62);
 
   const regDate = new Date(user.registered);
   const regDateString = regDate.toLocaleDateString('en-us', {
@@ -19,11 +19,12 @@ export default function UserProfile({ user }) {
     <>
       <style jsx>{`
         .user-profile {
-          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
-        .profile-image {
-          width: 138px;
-          margin-top: 30px;
+        .user-details {
+          text-align: center;
         }
         .user-name {
           color: ${theme.fontColorAccent};
@@ -37,15 +38,19 @@ export default function UserProfile({ user }) {
         }
       `}</style>
       <div className="user-profile">
-        <img
-          src={`${cdn}/avatars/avatar-${safeAvatarId}.png`}
-          alt="Profile Icon"
-          className="profile-image"
+        <UserAvatar
+          profileIconId={user && user.profileIconId}
+          accountType={user && user.accountType}
         />
-        <div data-cy="profile-name" className="user-name">
-          {user.username}
+        <div className="user-details">
+          <div data-cy="profile-name" className="user-name">
+            {user.username}
+          </div>
+          <div className="member-since">Member since {regDateString}</div>
+          <div className="account-type">
+            {user.accountType ? user.accountType : ''}
+          </div>
         </div>
-        <div className="member-since">Member since {regDateString}</div>
       </div>
     </>
   );
