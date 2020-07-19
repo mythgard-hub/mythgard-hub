@@ -34,7 +34,7 @@ export default function PublicAccount({ username }) {
     return <Layout>{result}</Layout>;
   }
 
-  let user, viewMoreAuthorDecksLink;
+  let user;
   try {
     user = data && data.accountByUsername;
   } catch (e) {
@@ -45,13 +45,14 @@ export default function PublicAccount({ username }) {
     <>
       <style jsx>{`
         .public-profile {
+          padding: 20px;
           text-align: center;
           width: 100%;
           border: ${theme.sectionBorder};
           background-color: #1c2d35;
           padding-bottom: 40px;
         }
-        .homePageColumns {
+        .accountPageColumns {
           display: flex;
           flex-wrap: wrap;
           margin: 0;
@@ -66,7 +67,7 @@ export default function PublicAccount({ username }) {
           flex: 1;
         }
 
-        .homePageColumns h2 {
+        .accountPageColumns h2 {
           text-align: center;
           font-size: 1.2em;
           font-weight: 700;
@@ -87,7 +88,7 @@ export default function PublicAccount({ username }) {
         <div className="public-profile">
           <UserProfile user={user} />
           <h2>{user.username}&apos;s Decks</h2>
-          <div className="homePageColumns">
+          <div className="accountPageColumns">
             <div className="mg-column">
               <h2>Top Decks</h2>
               <hr className="orangeGrade" />
