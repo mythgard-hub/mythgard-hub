@@ -1,73 +1,34 @@
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
-import ErrorMessage from './error-message';
-import CompactDeckList from './compact-deck-list.js';
+import DeckPreviewsColumn from './deck-previews-column.js';
 import { userNewestDecksQuery } from '../lib/deck-queries';
 
-function UserDecks({ userId, username, limit }) {
+function UserNewestDecks({ userId, username, limit }) {
   const { loading, error, data } = useQuery(userNewestDecksQuery, {
     variables: { userId, limit }
   });
 
-  if (error) return <ErrorMessage message={error.message} />;
-  if (loading) return <div>Loading...</div>;
-
-  const userDeckCount =
-    data && data.deckPreviews && data.deckPreviews.totalCount;
-
-  const viewMoreAuthorDecksLink = `/decks?updatedTime=100000&authorName=${username}&sortBy=dateDesc`;
+  const viewMoreUrl = `/decks?updatedTime=100000&authorName=${username}&sortBy=dateDesc`;
 
   return (
-    <>
-      <style jsx>{`
-        .deck-list {
-          padding: 0 20px;
-          list-style: none;
-        }
-        .view-more {
-          font-size: 0.7em;
-          margin-top: -5px;
-          margin-right: 20px;
-          font-weight: 600;
-          text-align: right;
-          color: #ffffff;
-          text-decoration: none;
-          text-transform: uppercase;
-        }
-        .view-more-button {
-          cursor: pointer;
-        }
-        .view-more-button:before {
-          text-decoration: none;
-          content: '\u25b6';
-          font-size: 80%;
-          margin-right: 5px;
-        }
-      `}</style>
-      <CompactDeckList
-        loading={loading}
-        error={error}
-        data={data}
-        hideDate={true}
-        cyData="userNewestDecks"
-      />
-      {limit !== -1 && userDeckCount > limit && (
-        <div className="view-more">
-          <a href={viewMoreAuthorDecksLink}>View More</a>
-        </div>
-      )}
-    </>
+    <DeckPreviewsColumn
+      data={data}
+      loading={loading}
+      cyData={'userNewestDecks'}
+      error={error}
+      viewMoreUrl={viewMoreUrl}
+    />
   );
 }
 
-UserDecks.propTypes = {
+UserNewestDecks.propTypes = {
   userId: PropTypes.number.isRequired,
   limit: PropTypes.number,
   username: PropTypes.string
 };
 
-UserDecks.defaultProps = {
+UserNewestDecks.defaultProps = {
   limit: 3
 };
 
-export default UserDecks;
+export default UserNewestDecks;
