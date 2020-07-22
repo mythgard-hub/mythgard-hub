@@ -668,4 +668,24 @@ mutation addFeaturedDeck($deckId: Int!) {
     }
   }
 `,
+  `
+  query userNewestDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(condition: { accountId: $userId }, orderBy: DECK_CREATED_DESC, first: $limit) {
+      ${deckPreviewsFragment}
+      totalCount
+    }
+  }
+`,
+  `
+  query userTopDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(
+      condition: { accountId: $userId }
+      orderBy: VOTES_DESC
+      first: $limit
+    ) {
+      ${deckPreviewsFragment}
+      totalCount
+    }
+  }
+`
 ];

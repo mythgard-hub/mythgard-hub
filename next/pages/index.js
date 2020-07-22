@@ -8,6 +8,7 @@ import { mgColors } from '../lib/theme.js';
 import Link from 'next/link';
 import useConfig from '../lib/use-config.js';
 import NewestDecks from '../components/newest-decks';
+import MultiColumn from '../components/multi-column.js';
 
 const defaultPatchNoteUrl =
   'https://www.mythgardgame.com/permalink/patch-notes-v0-17-3---holiday-edition';
@@ -45,28 +46,6 @@ const index = () => {
   return (
     <Layout>
       <style jsx>{`
-        .homePageColumns {
-          display: flex;
-          flex-wrap: wrap;
-          margin: 0;
-          padding: 10px 0;
-        }
-
-        .mg-column + .mg-column {
-          margin-left: ${theme.spacing * 2}px;
-        }
-
-        .mg-column {
-          flex: 1;
-        }
-
-        .homePageColumns h2 {
-          text-align: center;
-          font-size: 1.2em;
-          font-weight: 700;
-          font-style: italic;
-          text-transform: uppercase;
-        }
         :global(.newPlayerGuideBanner) {
           display: block;
           border-top: ${theme.border};
@@ -113,7 +92,7 @@ const index = () => {
         }
       `}</style>
       {banner}
-      <div className="homePageColumns">
+      <MultiColumn>
         <div className="mg-column">
           <h2>Recent Media</h2>
           <hr className="orangeGrade" />
@@ -129,7 +108,7 @@ const index = () => {
           <hr className="orangeGrade" />
           <TopDecks />
         </div>
-      </div>
+      </MultiColumn>
       <style jsx>{`
         .patchNotes {
           padding-bottom: ${theme.spacing / 2}px;

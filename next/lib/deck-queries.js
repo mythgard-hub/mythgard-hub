@@ -267,6 +267,28 @@ export const newDeckPreviewsQuery = gql`
   }
 `;
 
+export const userNewestDecksQuery = gql`
+  query userNewestDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(condition: { accountId: $userId }, orderBy: DECK_CREATED_DESC, first: $limit) {
+      ${deckPreviewsFragment}
+      totalCount
+    }
+  }
+`;
+
+export const userTopDecksQuery = gql`
+  query userTopDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(
+      condition: { accountId: $userId }
+      orderBy: VOTES_DESC
+      first: $limit
+    ) {
+      ${deckPreviewsFragment}
+      totalCount
+    }
+  }
+`;
+
 export const userDecksQuery = gql`
   query userDecks($authorId: Int!) {
     decks(condition: { authorId: $authorId }, orderBy: CREATED_DESC) {

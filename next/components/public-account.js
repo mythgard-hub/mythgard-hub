@@ -2,9 +2,11 @@ import Layout from '../components/layout';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import UserProfile from './profile.js';
-import UserDecks from '../components/user-decks';
+import UserNewestDecks from './user-newest-decks.js';
+import UserTopDecks from './user-top-decks.js';
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
+import MultiColumn from './multi-column.js';
 import gql from 'graphql-tag';
 
 const query = gql`
@@ -33,10 +35,9 @@ export default function PublicAccount({ username }) {
     return <Layout>{result}</Layout>;
   }
 
-  let user, viewMoreAuthorDecksLink;
+  let user;
   try {
     user = data && data.accountByUsername;
-    viewMoreAuthorDecksLink = `/decks?updatedTime=100000&authorName=${user.username}&sortBy=hot`;
   } catch (e) {
     return <Layout>No profile found for user: {username}</Layout>;
   }
@@ -45,6 +46,7 @@ export default function PublicAccount({ username }) {
     <>
       <style jsx>{`
         .public-profile {
+          padding: 20px;
           text-align: center;
           width: 100%;
           border: ${theme.sectionBorder};
@@ -56,10 +58,19 @@ export default function PublicAccount({ username }) {
         <div className="public-profile">
           <UserProfile user={user} />
           <h2>{user.username}&apos;s Decks</h2>
-          <UserDecks userId={user.id} limit={3} />
-          <div>
-            <a href={viewMoreAuthorDecksLink}>View More</a>
-          </div>
+
+          <MultiColumn>
+            <div className="mg-column">
+              <h2>Top Decks</h2>
+              <hr className="orangeGrade" />
+              <UserTopDecks userId={user.id} username={user.username} />
+            </div>
+            <div className="mg-column">
+              <h2>Newest Decks</h2>
+              <hr className="orangeGrade" />
+              <UserNewestDecks userId={user.id} username={user.username} />
+            </div>
+          </MultiColumn>
         </div>
       </Layout>
     </>

@@ -25,7 +25,7 @@ const searchQueryDefaults = {
   sortBy: 'hot'
 };
 
-const cardsErr = 'Error initializing deck seach';
+const cardsErr = 'Error initializing deck search';
 
 export default function DecksPage() {
   const router = useRouter();
