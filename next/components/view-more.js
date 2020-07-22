@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-function ViewMore({ url, count, limit }) {
+function ViewMore({ url, count, limit = 3 }) {
   return (
     <>
       <style jsx>{`
@@ -11,8 +11,10 @@ function ViewMore({ url, count, limit }) {
           font-weight: 600;
           text-align: right;
           color: #ffffff;
-          text-decoration: none;
           text-transform: uppercase;
+        }
+        .view-more > a {
+          text-decoration: none;
         }
         .view-more-button {
           cursor: pointer;

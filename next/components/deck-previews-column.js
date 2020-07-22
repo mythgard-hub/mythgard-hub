@@ -3,7 +3,14 @@ import ErrorMessage from './error-message';
 import CompactDeckList from './compact-deck-list.js';
 import ViewMore from './view-more.js';
 
-function DeckPreviewsColumn({ loading, error, data, viewMoreUrl, cyData }) {
+function DeckPreviewsColumn({
+  loading,
+  error,
+  data,
+  viewMoreUrl,
+  cyData,
+  limit = 3
+}) {
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading...</div>;
 
@@ -18,7 +25,7 @@ function DeckPreviewsColumn({ loading, error, data, viewMoreUrl, cyData }) {
         hideDate={true}
         cyData={cyData}
       />
-      <ViewMore limit={3} count={deckCount} url={viewMoreUrl} />
+      <ViewMore limit={limit} count={deckCount} url={viewMoreUrl} />
     </>
   );
 }
@@ -29,6 +36,7 @@ DeckPreviewsColumn.propTypes = {
   }),
   viewMoreUrl: PropTypes.string,
   cyData: PropTypes.string,
+  limit: PropTypes.number,
   error: PropTypes.any,
   loading: PropTypes.any
 };
