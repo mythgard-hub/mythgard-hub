@@ -211,9 +211,10 @@ INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype
     9,
     '{MIDRANGE}'::mythgard.deckArchetype[],
     '{TOURNAMENT}'::mythgard.deckType[]);
-INSERT INTO mythgard.deck("name", "modified", "type")
+INSERT INTO mythgard.deck("name", "author_id", "modified", "type")
   VALUES (
     'all_factions_three',
+    4,
     current_date - interval '1 year',
     '{GAUNTLET}'::mythgard.deckType[]);
 INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
@@ -347,6 +348,7 @@ INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 7);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (3, 1);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (11, 1);
 
 CREATE TABLE mythgard.deck_featured (
   id SERIAL PRIMARY KEY,
@@ -371,6 +373,7 @@ CREATE TABLE mythgard.deck_views (
 ALTER TABLE mythgard.deck_views ADD CONSTRAINT deckIdUniqVote UNIQUE (deck_id);
 
 INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (3, 4);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (11, 4);
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
