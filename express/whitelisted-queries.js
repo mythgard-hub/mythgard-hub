@@ -324,6 +324,8 @@ mutation UpdateDeckAndRemoveCards(
       author {
         id
         username
+        accountType
+        profileIconId
       }
       power {
         id
@@ -687,5 +689,5 @@ mutation addFeaturedDeck($deckId: Int!) {
       totalCount
     }
   }
-`
+`,
 ];

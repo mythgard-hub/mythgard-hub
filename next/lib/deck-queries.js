@@ -242,6 +242,8 @@ export const singleDeckQuery = gql`
       author {
         id
         username
+        accountType
+        profileIconId
       }
       power {
         id
