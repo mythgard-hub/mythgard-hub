@@ -29,6 +29,7 @@ import { getRarityCounts, getTypeCounts } from '../lib/deck-stats';
 import DeckCount from './deck-count';
 import ViewsIndicator from './views-indicator';
 import AuthorLink from './author-link';
+import UserAvatar from './user-avatar';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -82,6 +83,18 @@ export default function Deck({ deck }) {
           margin-top: ${theme.spacing}px;
           flex: 1;
           margin-left: ${theme.spacing * 2}px;
+        }
+
+        .deck-name-and-user-avatar {
+          display: flex;
+        }
+
+        .user-avatar {
+          padding-right: 10px;
+        }
+
+        .deck-name-and-author {
+          width: 100%;
         }
 
         .deck-name {
@@ -164,15 +177,28 @@ export default function Deck({ deck }) {
       `}</style>
       <div className="two-columns">
         <div className="left-col">
-          <div className="deck-name" data-cy="deckName">
-            {deck.name}
-          </div>
-          <div className="deck-subtitle">
-            <div className="deck-author">
-              by <AuthorLink author={authorName} />
-            </div>
-            <div className="card-count" data-cy="deckPageCardCount">
-              Cards: <span>{cardCount}</span>
+          <div className="deck-name-and-user-avatar">
+            {deck.author && (
+              <div className="user-avatar">
+                <UserAvatar
+                  profileIconId={deck.author.profileIconId}
+                  accountType={deck.author.accountType}
+                  small
+                />
+              </div>
+            )}
+            <div className="deck-name-and-author">
+              <div className="deck-name" data-cy="deckName">
+                {deck.name}
+              </div>
+              <div className="deck-subtitle">
+                <div className="deck-author">
+                  by <AuthorLink author={authorName} />
+                </div>
+                <div className="card-count" data-cy="deckPageCardCount">
+                  Cards: <span>{cardCount}</span>
+                </div>
+              </div>
             </div>
           </div>
           <DeckCardsTable deck={deckToExport} onlyTable />
