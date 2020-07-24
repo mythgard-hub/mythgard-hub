@@ -72,8 +72,8 @@ export default function WelcomeBanner() {
         Contact
       </a>
       <span className="welcome-message">
-        Welcome to the Mythgard Hub Beta Launch - NEW: Add descriptions and
-        types to your decks!
+        Welcome to the Mythgard Hub Beta Launch - NEW: Mythgard Hub's Patreon is
+        here! Want to show more support for our site? Check it out today.
       </span>
 
       <span className="spacer"></span>
