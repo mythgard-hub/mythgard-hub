@@ -37,6 +37,7 @@ export default function WelcomeBanner() {
           text-decoration: none;
           font-weight: 600;
           color: ${theme.background};
+          text-decoration: none;
         }
 
         .welcome-banner-link:hover,
@@ -44,10 +45,16 @@ export default function WelcomeBanner() {
           color: ${theme.fontColor};
         }
 
-        .welcome-message {
+        .welcome-message,
+        .welcome-message:visited {
           color: ${theme.background};
           font-weight: 600;
           margin-left: 20px;
+          text-decoration: none;
+        }
+
+        .welcome-message:hover {
+          color: ${theme.fontColor};
         }
 
         .spacer {
@@ -71,10 +78,11 @@ export default function WelcomeBanner() {
       >
         Contact
       </a>
-      <span className="welcome-message">
-        Welcome to the Mythgard Hub Beta Launch - NEW: Mythgard Hub's Patreon is
-        here! Want to show more support for our site? Check it out today.
-      </span>
+      <a href={process.env.PATREON_URL} className="welcome-message">
+        Welcome to the Mythgard Hub Beta Launch - NEW: Mythgard Hub&apos;s
+        Patreon is here! Want to show more support for our site? Check it out
+        today.
+      </a>
 
       <span className="spacer"></span>
 
