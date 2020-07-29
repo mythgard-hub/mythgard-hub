@@ -1,3 +1,7 @@
+# Changelog 1.9.2
+
+Patreon links
+
 # Changelog 1.9.0
 
 Avatars
