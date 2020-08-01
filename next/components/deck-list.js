@@ -9,6 +9,9 @@ import UpvoteIndicator from './upvote-indicator.js';
 import { getArchetypeLabel, getTypeLabel } from '../lib/deck-utils';
 import AuthorLink from './author-link';
 import UserAvatar from './user-avatar';
+import PathPowerIconContainer from './path-power-icon-container';
+import { matchPathNameToIcon } from '../constants/paths';
+import { matchPowerNameToIcon } from '../constants/powers';
 
 export default function DeckList({ decks }) {
   const theme = useContext(ThemeContext);
@@ -39,8 +42,16 @@ export default function DeckList({ decks }) {
         .modifiedDate span {
           float: right;
         }
+        .path-power {
+          display: flex;
+          justify-content: center;
+        }
+        .path {
+          padding-right: 10px;
+        }
         .factions {
           text-align: center;
+          padding-bottom: 10px;
         }
         .archetype {
           font-weight: 600;
@@ -96,8 +107,24 @@ export default function DeckList({ decks }) {
                 <td className="deckVotes">
                   <UpvoteIndicator votes={deck.votes || 0} />
                 </td>
-                <td className="factions" data-cy="deckFactionsCell">
-                  <FactionsIndicator factions={deck.factions} />
+                <td className="factions-path-power">
+                  <div className="factions" data-cy="deckFactionsCell">
+                    <FactionsIndicator factions={deck.factions} />
+                  </div>
+                  <div className="path-power" data-cy="deckPathPowerCell">
+                    <div className="path">
+                      <PathPowerIconContainer
+                        large
+                        icon={matchPathNameToIcon(deck.pathName)}
+                      />
+                    </div>
+                    <div className="power">
+                      <PathPowerIconContainer
+                        large
+                        icon={matchPowerNameToIcon(deck.powerName)}
+                      />
+                    </div>
+                  </div>
                 </td>
                 <td className="archetype-type-column">
                   <div className="archetype" data-cy="deckArchetypeCell">
