@@ -33,6 +33,7 @@ export default function Footer() {
       <span>&copy; {new Date().getFullYear()} Mythgard Hub</span>
       <a href={process.env.DISCORD_INVITE_URL}>Discord</a>
       <a href={process.env.TWITTER_URL}>Twitter</a>
+      <a href={process.env.PATREON_URL}>Patreon</a>
       <a href={`mailto:${process.env.EMAIL_MG_CONTACT}`}>General Contact</a>
       <a href={`mailto:${process.env.EMAIL_MG_SUPPORT}`}>Support</a>
       <a href={`mailto:${process.env.EMAIL_MG_EVENTS}`}>List Your Event</a>

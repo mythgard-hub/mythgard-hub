@@ -15,6 +15,8 @@ CREATE TYPE mythgard.deckArchetype as ENUM ('UNKNOWN', 'AGGRO', 'MIDRANGE', 'CON
 
 CREATE TYPE mythgard.deckType as ENUM ('STANDARD', 'GAUNTLET', 'ARENA', 'TOURNAMENT', 'TWOVTWO');
 
+CREATE TYPE mythgard.accountType as ENUM ('BASIC', 'COMMON', 'UNCOMMON', 'RARE', 'EPIC', 'MYTHIC');
+
 CREATE ROLE admin;
 CREATE ROLE authd_user;
 CREATE ROLE anon_user;
@@ -113,12 +115,22 @@ CREATE TABLE mythgard.account (
   google_id varchar(255) UNIQUE,
   email varchar(255) UNIQUE,
   username varchar(255) UNIQUE,
+  account_type mythgard.accountType default 'BASIC',
+  profile_icon_id integer default 1,
   registered timestamp default current_timestamp
 );
 
 INSERT INTO mythgard.account ("username") VALUES ('lsv');
 INSERT INTO mythgard.account ("username") VALUES ('foo');
 INSERT INTO mythgard.account ("username") VALUES ('bar');
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('commonAccount', 'COMMON', 1);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('uncommonAccount', 'UNCOMMON', 2);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('rareAccount', 'RARE', 3);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('mythicAccount', 'MYTHIC', 4);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('commonAccount2', 'COMMON', 5);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('uncommonAccount2', 'UNCOMMON', 6);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('rareAccount2', 'RARE', 7);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('mythicAccount2', 'MYTHIC', 8);
 
 -- separate table from account b/c it's rarely needed and makes row level security easy
 CREATE TABLE mythgard.account_moderator (
@@ -142,7 +154,7 @@ CREATE TABLE mythgard.deck (
 );
 INSERT INTO mythgard.deck("name", "author_id")
   VALUES (
-    'dragons', 
+    'dragons',
     1);
 INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
   VALUES (
@@ -161,7 +173,55 @@ INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
   VALUES (
     'norden aztlan',
     current_date - interval '9 month',
-    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[], 
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
+    '{STANDARD}'::mythgard.deckType[]);
+  INSERT INTO mythgard.deck("name", "author_id")
+  VALUES (
+    'other dragons',
+    11);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
+  VALUES (
+    'other cats',
+    1,
+    1,
+    10,
+    '{MIDRANGE}'::mythgard.deckArchetype[],
+    '{TOURNAMENT}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "type")
+  VALUES (
+    'other_all_factions',
+    current_date - interval '2 month',
+    '{GAUNTLET}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "author_id", "modified", "archetype", "type")
+  VALUES (
+    'other norden aztlan',
+    4,
+    current_date - interval '3 month',
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
+    '{STANDARD}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "author_id")
+  VALUES (
+    'mighty dragons',
+    1);
+INSERT INTO mythgard.deck("name", "path_id", "power_id", "author_id", "archetype", "type")
+  VALUES (
+    'kitty cats',
+    1,
+    1,
+    9,
+    '{MIDRANGE}'::mythgard.deckArchetype[],
+    '{TOURNAMENT}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "author_id", "modified", "type")
+  VALUES (
+    'all_factions_three',
+    4,
+    current_date - interval '1 year',
+    '{GAUNTLET}'::mythgard.deckType[]);
+INSERT INTO mythgard.deck("name", "modified", "archetype", "type")
+  VALUES (
+    'norden aztlan the third',
+    current_date - interval '2 year',
+    '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
     '{STANDARD}'::mythgard.deckType[]);
 
 ALTER TABLE mythgard.deck ENABLE ROW LEVEL SECURITY;
@@ -206,6 +266,15 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (2, 1, 1
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
   VALUES (3, 1, 1), (3, 2, 1), (3, 3, 1), (3, 4, 1), (3, 5, 1), (3, 6, 1), (3, 18, 4);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (4, 1, 1), (4, 2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (5, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (6, 1, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (7, 1, 1), (7, 2, 1), (7, 3, 1), (7, 4, 1), (7, 5, 1), (7, 6, 1), (7, 18, 4);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (8, 1, 1), (8, 2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (9, 4, 2);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (10, 1, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (11, 1, 1), (11, 2, 1), (11, 3, 1), (11, 4, 1), (11, 5, 1), (11, 6, 1), (11, 18, 4);
 
 ALTER TABLE mythgard.card_deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows
@@ -272,9 +341,14 @@ CREATE TABLE mythgard.deck_vote (
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 3);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 4);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 5);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 6);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (1, 7);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 1);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (2, 2);
 INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (3, 1);
+INSERT INTO mythgard.deck_vote("deck_id", "account_id") VALUES (11, 1);
 
 CREATE TABLE mythgard.deck_featured (
   id SERIAL PRIMARY KEY,
@@ -299,6 +373,7 @@ CREATE TABLE mythgard.deck_views (
 ALTER TABLE mythgard.deck_views ADD CONSTRAINT deckIdUniqVote UNIQUE (deck_id);
 
 INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (3, 4);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (11, 4);
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
@@ -312,8 +387,8 @@ RETURNS mythgard.account as $$
     RETURNING *
 $$ LANGUAGE sql VOLATILE;
 
+-- account policies
 ALTER TABLE mythgard.account ENABLE ROW LEVEL SECURITY;
-
 -- Admin users can make any changes and read all rows
 CREATE POLICY admin_all ON mythgard.account TO admin USING (true) WITH CHECK (true);
 -- Non-admins can read all rows
@@ -324,6 +399,12 @@ CREATE POLICY accountupdate_if_author
   FOR UPDATE
   USING ("id" = mythgard.current_user_id())
   WITH CHECK ("id" = mythgard.current_user_id());
+ -- mods can update rows
+CREATE POLICY update_account_if_moderator
+  ON mythgard.account
+  FOR UPDATE
+  USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
 
 ALTER TABLE mythgard.deck_vote ENABLE ROW LEVEL SECURITY;
 
@@ -584,6 +665,8 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          deck.modified as deck_modified,
          account.id as account_id,
          account.username as username,
+         account.account_type as account_type,
+         account.profile_icon_id as profile_icon_id,
          mythgard.deck_hotness(deck.id)::int as hotness,
          deck_views.views::int as views
   FROM mythgard.deck
@@ -823,7 +906,7 @@ REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM authd_user;
 REVOKE ALL PRIVILEGES ON TABLE mythgard.account FROM anon_user;
 
 GRANT SELECT ON TABLE mythgard.account TO authd_user;
-GRANT UPDATE (username) ON TABLE mythgard.account TO authd_user;
-GRANT SELECT (id, username) ON TABLE mythgard.account TO anon_user;
+GRANT UPDATE (username, account_type, profile_icon_id) ON TABLE mythgard.account TO authd_user;
+GRANT SELECT (id, username, account_type, registered, profile_icon_id) ON TABLE mythgard.account TO anon_user;
 
 \echo 'Remember to update the postgraphile users pw with the production version in the kubernetes secrets file.';

@@ -4,9 +4,10 @@ import { ThemeContext } from './theme-context';
 
 export default function AuthorLink({ author }) {
   const theme = useContext(ThemeContext);
-  const link = author
-    ? `/decks?updatedTime=100000&authorName=${author}&sortBy=hot`
-    : '/decks';
+
+  if (author === 'Mythgard Hub') return author;
+
+  const link = author ? `/account?name=${author}` : '/decks';
 
   return (
     <a href={link} className="authorLink" data-cy="author-link">

@@ -13,6 +13,8 @@ const deckPreviewsFragment = `
       author {
         username
         id
+        accountType
+        profileIconId
       }
     }
   }
@@ -299,6 +301,8 @@ mutation UpdateDeckAndRemoveCards(
         deckName
         username
         accountId
+        accountType
+        profileIconId
         deckModified
         deckCreated
         factions
@@ -320,6 +324,8 @@ mutation UpdateDeckAndRemoveCards(
       author {
         id
         username
+        accountType
+        profileIconId
       }
       power {
         id
@@ -626,6 +632,61 @@ mutation addFeaturedDeck($deckId: Int!) {
   query newestDecks {
     deckPreviews(orderBy: DECK_CREATED_DESC, first: 4) {
       ${deckPreviewsFragment}
+    }
+  }
+`,
+  `
+  mutation updateAccount($email: String!, $accountType: Accounttype) {
+    updateAccountByEmail(
+      input: { email: $email, patch: { accountType: $accountType } }
+    ) {
+      account {
+        id
+        email
+        accountType
+      }
+    }
+  }
+`,
+  `
+  query publicAccount($username: String!) {
+    accountByUsername(username: $username) {
+      id
+      username
+      accountType
+      registered
+      profileIconId
+    }
+  }
+`,
+  `
+  mutation updateProfileIconId($accountId: Int!, $profileIconId: Int!) {
+    updateAccount(
+      input: { id: $accountId, patch: { profileIconId: $profileIconId } }
+    ) {
+      account {
+        profileIconId
+      }
+    }
+  }
+`,
+  `
+  query userNewestDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(condition: { accountId: $userId }, orderBy: DECK_CREATED_DESC, first: $limit) {
+      ${deckPreviewsFragment}
+      totalCount
+    }
+  }
+`,
+  `
+  query userTopDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(
+      condition: { accountId: $userId }
+      orderBy: VOTES_DESC
+      first: $limit
+    ) {
+      ${deckPreviewsFragment}
+      totalCount
     }
   }
 `,

@@ -1,3 +1,12 @@
+# Changelog 1.9.2
+
+Patreon links
+
+# Changelog 1.9.0
+
+Avatars
+Account types (for Patreon + avatars)
+
 # Changelog 1.6.0
 
 Fix faction order

@@ -17,6 +17,8 @@ const deckPreviewsFragment = `
         author {
           username
           id
+          accountType
+          profileIconId
         }
       }
   }`;
@@ -198,6 +200,8 @@ export const allDecksQuery = gql`
         deckName
         username
         accountId
+        accountType
+        profileIconId
         deckModified
         deckCreated
         factions
@@ -238,6 +242,8 @@ export const singleDeckQuery = gql`
       author {
         id
         username
+        accountType
+        profileIconId
       }
       power {
         id
@@ -259,6 +265,28 @@ export const newDeckPreviewsQuery = gql`
   query newestDecks {
     deckPreviews(orderBy: DECK_CREATED_DESC, first: 4) {
       ${deckPreviewsFragment}
+    }
+  }
+`;
+
+export const userNewestDecksQuery = gql`
+  query userNewestDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(condition: { accountId: $userId }, orderBy: DECK_CREATED_DESC, first: $limit) {
+      ${deckPreviewsFragment}
+      totalCount
+    }
+  }
+`;
+
+export const userTopDecksQuery = gql`
+  query userTopDecks($userId: Int!, $limit: Int!) {
+    deckPreviews(
+      condition: { accountId: $userId }
+      orderBy: VOTES_DESC
+      first: $limit
+    ) {
+      ${deckPreviewsFragment}
+      totalCount
     }
   }
 `;

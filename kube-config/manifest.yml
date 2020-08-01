@@ -186,6 +186,11 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: TWITTER_URL
+            - name: PATREON_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PATREON_URL
         - name: express
           image: gsdf/mg-server:$VERSION
           ports:
@@ -342,3 +347,8 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: TWITTER_URL
+            - name: PATREON_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PATREON_URL

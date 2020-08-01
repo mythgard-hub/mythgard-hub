@@ -8,7 +8,7 @@ import { useContext } from 'react';
 
 function CompactDeckList(props) {
   const theme = useContext(ThemeContext);
-  const { loading, error, data, cyData } = props;
+  const { loading, error, data, cyData, hideDate } = props;
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading...</div>;
 
@@ -36,7 +36,7 @@ function CompactDeckList(props) {
       {decks.map((deck, i) => {
         return (
           <li key={i}>
-            <DeckPreview deck={deck} />
+            <DeckPreview deck={deck} hideDate={hideDate} />
           </li>
         );
       })}
@@ -54,7 +54,8 @@ CompactDeckList.propTypes = {
   error: PropTypes.shape({
     message: PropTypes.string
   }),
-  cyData: PropTypes.string
+  cyData: PropTypes.string,
+  hideDate: PropTypes.bool
 };
 
 export default CompactDeckList;

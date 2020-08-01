@@ -9,6 +9,8 @@ export const FACTION_NAMES = [
   'harmony'
 ];
 
+export const FACTION_ORDER = FACTION_NAMES;
+
 export const FACTION_IMAGES = {
   norden: `${cdn}Filter-Icons_0000s_0003s_0000_blue.png`,
   aztlan: `${cdn}Filter-Icons_0000s_0003s_0001_yellow.png`,
