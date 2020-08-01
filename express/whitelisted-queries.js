@@ -7,6 +7,8 @@ const deckPreviewsFragment = `
     votes
     deckArchetype
     deckType
+    pathName
+    powerName
     views
     deck{
       id
@@ -310,6 +312,8 @@ mutation UpdateDeckAndRemoveCards(
         votes
         deckArchetype
         deckType
+        pathName
+        powerName
       }
     }
   }

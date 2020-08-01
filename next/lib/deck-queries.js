@@ -11,6 +11,8 @@ const deckPreviewsFragment = `
       votes
       deckArchetype
       deckType
+      pathName
+      powerName
       views
       deck{
         id
@@ -209,6 +211,8 @@ export const allDecksQuery = gql`
         votes
         deckArchetype
         deckType
+        pathName
+        powerName
       }
     }
   }

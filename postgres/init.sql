@@ -668,12 +668,18 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
          account.account_type as account_type,
          account.profile_icon_id as profile_icon_id,
          mythgard.deck_hotness(deck.id)::int as hotness,
-         deck_views.views::int as views
+         deck_views.views::int as views,
+         path.name as path_name,
+         power.name as power_name
   FROM mythgard.deck
   LEFT JOIN mythgard.account
   ON mythgard.account.id = mythgard.deck.author_id
   LEFT JOIN mythgard.deck_views
   ON mythgard.deck_views.deck_id = mythgard.deck.id
+  LEFT JOIN mythgard.path
+  ON mythgard.path.id = mythgard.deck.path_id
+  LEFT JOIN mythgard.power
+  ON mythgard.power.id = mythgard.deck.power_id
 ;
 
 -- See https://www.graphile.org/postgraphile/smart-comments/#foreign-key
