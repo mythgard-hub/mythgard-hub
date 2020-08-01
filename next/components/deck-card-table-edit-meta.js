@@ -36,7 +36,7 @@ export default function DeckCardsTableEditMeta(props) {
         }
       `}</style>
       <div className={className} data-cy="deckBuilderMetaValue">
-        <PathPowerIconContainer icon={icon} />
+        <PathPowerIconContainer icon={icon} name={metaValue} />
         {metaValue || `No ${metaName} selected`}
       </div>
       {showEdit && (

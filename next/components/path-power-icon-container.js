@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export default function PathPowerIconContainer({ icon, large = false }) {
+export default function PathPowerIconContainer({ icon, name, large = false }) {
   if (!icon) return null;
 
   return (
@@ -23,7 +23,7 @@ export default function PathPowerIconContainer({ icon, large = false }) {
           width: 25px;
         }
       `}</style>
-      <img src={icon} />
+      <img title={name} aria-label={name} src={icon} />
     </div>
   );
 }

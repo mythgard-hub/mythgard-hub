@@ -115,12 +115,14 @@ export default function DeckList({ decks }) {
                     <div className="path">
                       <PathPowerIconContainer
                         large
+                        name={deck.pathName}
                         icon={matchPathNameToIcon(deck.pathName)}
                       />
                     </div>
                     <div className="power">
                       <PathPowerIconContainer
                         large
+                        name={deck.powerName}
                         icon={matchPowerNameToIcon(deck.powerName)}
                       />
                     </div>
