@@ -8,9 +8,10 @@ const pathIcons = {
   'turn of seasons': `${cdn}TurnOfSeasons.png`
 };
 
-export const matchPathNameToIcon = path => {
+export const matchPathToIcon = path => matchPathNameToIcon(path && path.name);
+
+export const matchPathNameToIcon = pathName => {
   try {
-    const pathName = path.name;
     const lowerCaseName = pathName.toLowerCase();
     return pathIcons[lowerCaseName] || null;
   } catch (e) {

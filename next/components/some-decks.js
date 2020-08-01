@@ -36,6 +36,8 @@ const serializeDeckSearchResults = decks => {
     const username = author && author.username;
     const accountType = author && author.accountType;
     const profileIconId = author && author.profileIconId;
+    const pathName = deckPreview && deckPreview.pathName;
+    const powerName = deckPreview && deckPreview.powerName;
 
     return {
       deckId: deck.id,
@@ -49,7 +51,9 @@ const serializeDeckSearchResults = decks => {
       essenceCost,
       votes,
       deckArchetype,
-      deckType
+      deckType,
+      pathName,
+      powerName
     };
   });
 };
