@@ -27,7 +27,24 @@ CREATE OR REPLACE VIEW mythgard.deck_preview as
   ON mythgard.power.id = mythgard.deck.power_id
 ;
 
-drop function mythgard.search_decks_nosort;
+drop function if exists mythgard.search_decks_nosort(
+  deckName varchar(255),
+  authorName varchar(255),
+  deckModified date,
+  card1 integer,
+  card2 Integer,
+  card3 Integer,
+  card4 Integer,
+  card5 Integer,
+  faction1 integer,
+  faction2 integer,
+  faction3 integer,
+  faction4 integer,
+  faction5 integer,
+  faction6 integer,
+  numFactions integer,
+  archetypeFilter mythgard.deckArchetype[],
+  typeFilter mythgard.deckType[]);
 
 create or replace function mythgard.search_decks_nosort(
   deckName varchar(255),
@@ -120,7 +137,25 @@ create or replace function mythgard.search_decks_nosort(
     LIMIT 2000;
   $$ language sql stable;
 
-drop function mythgard.search_decks;
+drop function if exists mythgard.search_decks(
+  deckName varchar(255),
+  authorName varchar(255),
+  deckModified date,
+  card1 integer,
+  card2 Integer,
+  card3 Integer,
+  card4 Integer,
+  card5 Integer,
+  faction1 integer,
+  faction2 integer,
+  faction3 integer,
+  faction4 integer,
+  faction5 integer,
+  faction6 integer,
+  numFactions integer,
+  archetypeFilter mythgard.deckArchetype[],
+  typeFilter mythgard.deckType[],
+  sortBy text);
 
 create or replace function mythgard.search_decks(
   deckName varchar(255),
