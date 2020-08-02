@@ -50,6 +50,8 @@ export default {
   deckSearchAllDecksLoaded: dcy('all-decks-loaded'),
   deckArchetypePicker: dcy('deckArchetypeCell'),
   deckTypePicker: dcy('deckTypeCell'),
+  deckSearchDeckPath: dcy('deckSearchPath'),
+  deckSearchDeckPower: dcy('deckSearchPower'),
 
   // decks page sorted data
   // used so cypress can know when newly sorted dom is loaded.
