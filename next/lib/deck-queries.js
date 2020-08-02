@@ -11,6 +11,8 @@ const deckPreviewsFragment = `
       votes
       deckArchetype
       deckType
+      pathName
+      powerName
       views
       deck{
         id
@@ -80,6 +82,8 @@ export const getDeckSearchVars = vars => {
     authorName: vars.authorName,
     archetype: vars.archetype,
     type: vars.type,
+    pathName: vars.pathName,
+    powerName: vars.powerName,
     sortBy: vars.sortBy,
     deckModified: daysAgoToGraphQLTimestamp(vars.updatedTime),
     ...cardIdsToVars(vars.cardIds),
@@ -107,6 +111,8 @@ const deckSearchQuery = gql`
       $numFactions: Int
       $archetype: [Deckarchetype]
       $type: [Decktype]
+      $pathName: String
+      $powerName: String
       $first: Int
       $offset: Int
       $sortBy: String
@@ -129,6 +135,8 @@ const deckSearchQuery = gql`
         numfactions: $numFactions
         archetypefilter: $archetype
         typefilter: $type
+        pathname: $pathName
+        powername: $powerName
         first: $first
         offset: $offset
         sortby: $sortBy
@@ -209,6 +217,8 @@ export const allDecksQuery = gql`
         votes
         deckArchetype
         deckType
+        pathName
+        powerName
       }
     }
   }
@@ -376,6 +386,23 @@ export const addFeaturedDeckMutation = gql`
       deckFeatured {
         deckId
         id
+      }
+    }
+  }
+`;
+
+export const pathPowerQuery = gql`
+  query pathPowerQuery {
+    paths {
+      nodes {
+        id
+        name
+      }
+    }
+    powers {
+      nodes {
+        id
+        name
       }
     }
   }

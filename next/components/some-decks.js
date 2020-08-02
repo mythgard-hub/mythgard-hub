@@ -36,6 +36,8 @@ const serializeDeckSearchResults = decks => {
     const username = author && author.username;
     const accountType = author && author.accountType;
     const profileIconId = author && author.profileIconId;
+    const pathName = deckPreview && deckPreview.pathName;
+    const powerName = deckPreview && deckPreview.powerName;
 
     return {
       deckId: deck.id,
@@ -49,7 +51,9 @@ const serializeDeckSearchResults = decks => {
       essenceCost,
       votes,
       deckArchetype,
-      deckType
+      deckType,
+      pathName,
+      powerName
     };
   });
 };
@@ -65,6 +69,8 @@ export default function SomeDecks(props) {
     isOnlyFactions,
     archetype,
     type,
+    pathName,
+    powerName,
     sortBy
   } = props.search;
   const archetypeValue = findValueFromLabel(ARCHETYPES, archetype);
@@ -79,6 +85,8 @@ export default function SomeDecks(props) {
       isOnlyFactions,
       archetype: archetypeValue,
       type: typeValue,
+      pathName,
+      powerName,
       sortBy,
       first: pageSize,
       offset: currentPage * pageSize

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import PathPowerIconContainer from './path-power-icon-container';
 
 export default function DeckCardsTableEditMeta(props) {
   const { metaName, metaValue, onEditClick, showEdit, icon } = props;
@@ -24,22 +25,9 @@ export default function DeckCardsTableEditMeta(props) {
         .no-meta-value {
           text-transform: uppercase;
         }
-        .icon-container {
-          width: 20px;
-          height: 20px;
-          margin-right: 5px;
-        }
-        img {
-          width: 20px;
-          height: auto;
-        }
       `}</style>
       <div className={className} data-cy="deckBuilderMetaValue">
-        {icon && (
-          <div className="icon-container">
-            <img src={icon} />
-          </div>
-        )}
+        <PathPowerIconContainer icon={icon} name={metaValue} />
         {metaValue || `No ${metaName} selected`}
       </div>
       {showEdit && (

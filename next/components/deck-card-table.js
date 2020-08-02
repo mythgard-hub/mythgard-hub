@@ -6,8 +6,8 @@ import DeckCardsTableRow from './deck-card-table-row';
 import DeckCardsTableEditMeta from './deck-card-table-edit-meta';
 import EditDeckName from './edit-deck-name';
 import DeckBuilderUser from './deck-builder-user';
-import { matchPathNameToIcon } from '../constants/paths';
-import { matchPowerNameToIcon } from '../constants/powers';
+import { matchPathToIcon } from '../constants/paths';
+import { matchPowerToIcon } from '../constants/powers';
 
 export default function DeckCardsTable({
   deck,
@@ -116,7 +116,7 @@ export default function DeckCardsTable({
                 metaName="path"
                 showEdit={!onlyTable}
                 metaValue={deck.deckPath && deck.deckPath.name}
-                icon={matchPathNameToIcon(deck.deckPath)}
+                icon={matchPathToIcon(deck.deckPath)}
                 onEditClick={() => {
                   setTab('Paths');
                   switchToCards();
@@ -131,7 +131,7 @@ export default function DeckCardsTable({
                 metaName="power"
                 showEdit={!onlyTable}
                 metaValue={deck.deckPower && deck.deckPower.name}
-                icon={matchPowerNameToIcon(deck.deckPower)}
+                icon={matchPowerToIcon(deck.deckPower)}
                 onEditClick={() => {
                   setTab('Powers');
                   switchToCards();

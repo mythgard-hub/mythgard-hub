@@ -22,7 +22,9 @@ import {
   deckArchetypePicker,
   deckTypePicker,
   deckSearchDeckArchetype,
-  deckSearchDeckType
+  deckSearchDeckType,
+  deckSearchDeckPath,
+  deckSearchDeckPower
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -127,6 +129,44 @@ describe('Decks Page', function() {
     cy.get(deckTypePicker)
       .eq(2)
       .should('contain', 'Gauntlet');
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', numRecentDecks);
+
+    // search by path
+    // specific path
+    cy.get(deckSearchDeckPath).select('Way of the Black Lotus');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    cy.get(deckSearchDeckPath)
+      .eq(0)
+      .should('contain', 'Way of the Black Lotus');
+    cy.get(deckSearchDeckPath).select('Path Variable');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 0);
+
+    // any path
+    cy.get(deckSearchDeckPath).select('Any');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', numRecentDecks);
+    cy.get(deckSearchClear).click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', numRecentDecks);
+
+    // search by power
+    // specific power
+    cy.get(deckSearchDeckPower).select("It's over 9000!!");
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 3);
+    cy.get(deckSearchDeckPower)
+      .eq(0)
+      .should('contain', "It's over 9000!!");
+    cy.get(deckSearchDeckPower).select('Power Rangers');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', 0);
+
+    // any path
+    cy.get(deckSearchDeckPower).select('Any');
+    cy.get('[data-cy="deckSearchSubmit"]').click();
+    cy.get('[data-cy="deckListItem"]').should('have.length', numRecentDecks);
     cy.get(deckSearchClear).click();
     cy.get('[data-cy="deckListItem"]').should('have.length', numRecentDecks);
 
