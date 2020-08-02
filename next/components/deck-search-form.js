@@ -7,10 +7,9 @@ import CardSearch from './card-search';
 import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
 import DeckSearchFormSort from './deck-search-form-sort.js';
-import { ARCHETYPES, PATHS, POWERS, TYPES } from '../constants/deck';
+import { ARCHETYPES, TYPES } from '../constants/deck';
 import DeckSearchFormDropdownFilter from './deck-search-form-dropdown-filter.js';
 import { pathPowerQuery } from '../lib/deck-queries.js';
-import ErrorMessage from './error-message.js';
 
 const resetFilters = values => {
   return {
