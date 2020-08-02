@@ -10,6 +10,9 @@ const powerIcons = {
   smite: `${cdn}smite_slug.png`
 };
 
+export const matchPowerToIcon = power =>
+  matchPowerNameToIcon(power && power.name);
+
 export const matchPowerNameToIcon = powerName => {
   try {
     const lowerCaseName = powerName.toLowerCase();
@@ -18,6 +21,3 @@ export const matchPowerNameToIcon = powerName => {
     return null;
   }
 };
-
-export const matchPowerToIcon = power =>
-  matchPowerNameToIcon(power && power.name);

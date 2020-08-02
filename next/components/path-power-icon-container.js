@@ -30,5 +30,6 @@ export default function PathPowerIconContainer({ icon, name, large = false }) {
 
 PathPowerIconContainer.propTypes = {
   icon: PropTypes.string,
+  name: PropTypes.string,
   large: PropTypes.bool
 };

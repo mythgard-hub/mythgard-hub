@@ -23,8 +23,8 @@ const searchQueryDefaults = {
   updatedTime: defaultUpdatedTime,
   authorName: '',
   sortBy: 'hot',
-  pathName: '',
-  powerName: ''
+  pathName: null,
+  powerName: null
 };
 
 const cardsErr = 'Error initializing deck search';
