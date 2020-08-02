@@ -412,6 +412,8 @@ mutation UpdateDeckAndRemoveCards(
       $numFactions: Int
       $archetype: [Deckarchetype]
       $type: [Decktype]
+      $pathName: String
+      $powerName: String
       $first: Int
       $offset: Int
       $sortBy: String
@@ -434,6 +436,8 @@ mutation UpdateDeckAndRemoveCards(
         numfactions: $numFactions
         archetypefilter: $archetype
         typefilter: $type
+        pathname: $pathName
+        powername: $powerName
         first: $first
         offset: $offset
         sortby: $sortBy
@@ -691,6 +695,22 @@ mutation addFeaturedDeck($deckId: Int!) {
     ) {
       ${deckPreviewsFragment}
       totalCount
+    }
+  }
+`,
+  `
+  query pathPowerQuery {
+    paths {
+      nodes {
+        id
+        name
+      }
+    }
+    powers {
+      nodes {
+        id
+        name
+      }
     }
   }
 `,
