@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import FactionFilters from './faction-filters.js';
 import PropTypes from 'prop-types';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
@@ -6,8 +7,10 @@ import CardSearch from './card-search';
 import SearchFormText from './search-form-text';
 import DeckSearchFormUpdated from './deck-search-form-updated';
 import DeckSearchFormSort from './deck-search-form-sort.js';
-import { ARCHETYPES, TYPES } from '../constants/deck';
+import { ARCHETYPES, PATHS, POWERS, TYPES } from '../constants/deck';
 import DeckSearchFormDropdownFilter from './deck-search-form-dropdown-filter.js';
+import { pathPowerQuery } from '../lib/deck-queries.js';
+import ErrorMessage from './error-message.js';
 
 const resetFilters = values => {
   return {
@@ -21,7 +24,9 @@ const resetFilters = values => {
     type: '',
     updatedTime: values.updatedTime,
     authorName: values.authorName,
-    sortBy: values.sortBy
+    sortBy: values.sortBy,
+    pathName: null,
+    powerName: null
   };
 };
 
@@ -37,6 +42,17 @@ const deserializeCards = (serializedCards, allCards) => {
   }, []);
 };
 
+const getPathOrPower = (data, key) => {
+  try {
+    return data[key].nodes.map(path => ({
+      value: path.name,
+      label: path.name
+    }));
+  } catch (e) {
+    return null;
+  }
+};
+
 export default function DeckSearchForm(props) {
   const {
     onSubmit,
@@ -45,6 +61,8 @@ export default function DeckSearchForm(props) {
     allCards,
     onClearFilters
   } = props;
+
+  const { loading, data } = useQuery(pathPowerQuery);
 
   searchQuery.cardSelections = deserializeCards(
     searchQuery.cardIds,
@@ -81,7 +99,9 @@ export default function DeckSearchForm(props) {
       archetype: filters.archetype,
       type: filters.type,
       authorName: filters.authorName,
-      sortBy: filters.sortBy
+      sortBy: filters.sortBy,
+      pathName: filters.pathName || null,
+      powerName: filters.powerName || null
     });
   };
 
@@ -89,6 +109,11 @@ export default function DeckSearchForm(props) {
     setFilters(resetFilters({ ...defaultQuery, cardSelections: [] }));
     onClearFilters();
   };
+
+  if (loading) return null;
+
+  const paths = getPathOrPower(data, 'paths');
+  const powers = getPathOrPower(data, 'powers');
 
   let cardSearchElement = null;
   if (allCards && allCards.cards) {
@@ -214,7 +239,16 @@ export default function DeckSearchForm(props) {
             )}
             onSubmit={handleSubmit}
           />
-          <div>Path Selector Placeholder</div>
+          {paths && paths.length && (
+            <DeckSearchFormDropdownFilter
+              label="Path"
+              options={paths}
+              filterValue={filters.pathName}
+              onChange={handleInputChangeHooks(pathName =>
+                changeState('pathName', pathName)
+              )}
+            />
+          )}
         </div>
         <div className="filter-column">
           <DeckSearchFormUpdated
@@ -229,7 +263,16 @@ export default function DeckSearchForm(props) {
             Includes cards
             {cardSearchElement}
           </label>
-          <div>Power Selector Placeholder</div>
+          {powers && powers.length && (
+            <DeckSearchFormDropdownFilter
+              label="Power"
+              options={powers}
+              filterValue={filters.powerName}
+              onChange={handleInputChangeHooks(powerName =>
+                changeState('powerName', powerName)
+              )}
+            />
+          )}
         </div>
         <div className="filter-column">
           <DeckSearchFormDropdownFilter

@@ -69,6 +69,8 @@ export default function SomeDecks(props) {
     isOnlyFactions,
     archetype,
     type,
+    pathName,
+    powerName,
     sortBy
   } = props.search;
   const archetypeValue = findValueFromLabel(ARCHETYPES, archetype);
@@ -83,6 +85,8 @@ export default function SomeDecks(props) {
       isOnlyFactions,
       archetype: archetypeValue,
       type: typeValue,
+      pathName,
+      powerName,
       sortBy,
       first: pageSize,
       offset: currentPage * pageSize
