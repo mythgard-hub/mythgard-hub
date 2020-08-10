@@ -55,7 +55,7 @@ export default function PublicAccount({ username }) {
         }
       `}</style>
       <Layout>
-        <div className="public-profile">
+        <div className="public-profile" data-cy="publicProfileWrapper">
           <UserProfile user={user} />
           <h2>{user.username}&apos;s Decks</h2>
 
