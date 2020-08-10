@@ -7,7 +7,7 @@ export default function AuthorLink({ author }) {
 
   if (author === 'Mythgard Hub') return author;
 
-  const link = author ? `/account?name=${author}` : '/decks';
+  const link = author ? `/account?name=${encodeURI(author)}` : '/decks';
 
   return (
     <a href={link} className="authorLink" data-cy="author-link">
