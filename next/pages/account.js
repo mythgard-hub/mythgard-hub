@@ -41,7 +41,7 @@ export default withRouter(({ router }) => {
 
   const handleSubmit = apolloClient => {
     if (!areSettingsValid()) return;
-    updateUsername(apolloClient, user.id, username)
+    updateUsername(apolloClient, user.id, username.trim())
       .then(({ data }) => {
         updateUser({ ...user, ...data.updateAccount.account });
       })

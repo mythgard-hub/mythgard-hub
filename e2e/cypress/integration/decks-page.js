@@ -82,6 +82,20 @@ describe('Decks Page', function() {
     cy.get(deckName).should('have.length', 1);
   });
 
+  it('goes to an user page where the username has spaces', function() {
+    cy.get('[data-cy="author-link"]')
+      .eq(5)
+      .should('contain', 'rare Account 2')
+      .should('have.attr', 'href')
+      .and('contain', '/account?name=%20rare%20Account%202%20');
+    cy.get('[data-cy="author-link"]')
+      .eq(5)
+      .click();
+    cy.location('pathname').should('eq', '/account');
+    cy.location('search').should('eq', '?name=%20rare%20Account%202%20');
+    cy.get('[data-cy="publicProfileWrapper"]').should('have.length', 1);
+  });
+
   it('should search for decks and clear filters', function() {
     // search by archetype
     // specific archetype

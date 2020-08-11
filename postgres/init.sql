@@ -129,7 +129,7 @@ INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VAL
 INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('mythicAccount', 'MYTHIC', 4);
 INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('commonAccount2', 'COMMON', 5);
 INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('uncommonAccount2', 'UNCOMMON', 6);
-INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('rareAccount2', 'RARE', 7);
+INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES (' rare Account 2 ', 'RARE', 7);
 INSERT INTO mythgard.account ("username", "account_type", "profile_icon_id") VALUES ('mythicAccount2', 'MYTHIC', 8);
 
 -- separate table from account b/c it's rarely needed and makes row level security easy
