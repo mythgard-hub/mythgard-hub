@@ -409,7 +409,7 @@ describe('Decks Page', function() {
     cy.get(deckListItem)
       .find(deckName)
       .first()
-      .should('contain', 'mighty dragons');
+      .should('contain', 'cats');
     // this test differs from the first sort test in that
     // it uses some-decks rather than all-decks
     cy.get(decksSort).select(hot);
