@@ -219,6 +219,7 @@ export const allDecksQuery = gql`
         deckType
         pathName
         powerName
+        views
       }
     }
   }
