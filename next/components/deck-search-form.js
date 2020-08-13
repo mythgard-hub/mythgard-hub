@@ -24,8 +24,8 @@ const resetFilters = values => {
     updatedTime: values.updatedTime,
     authorName: values.authorName,
     sortBy: values.sortBy,
-    pathName: null,
-    powerName: null
+    pathName: '',
+    powerName: ''
   };
 };
 
@@ -99,8 +99,8 @@ export default function DeckSearchForm(props) {
       type: filters.type,
       authorName: filters.authorName,
       sortBy: filters.sortBy,
-      pathName: filters.pathName || null,
-      powerName: filters.powerName || null
+      pathName: filters.pathName,
+      powerName: filters.powerName
     });
   };
 
