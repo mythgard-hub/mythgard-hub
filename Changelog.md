@@ -1,3 +1,8 @@
+# Changelog v1.10.0
+
+Url encode public page link and allow spaces in usernames (#291)
+Deck search by path power (#290)
+
 # Changelog 1.9.2
 
 Patreon links
