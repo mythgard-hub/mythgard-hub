@@ -21,6 +21,8 @@ export default function DeckSearchFormSort(props) {
         <option value="nameDesc">Name: Z-A</option>
         <option value="ratingDesc">Rating: High-Low</option>
         <option value="ratingAsc">Rating: Low-High</option>
+        <option value="viewsDesc">Views: High-Low</option>
+        <option value="viewsAsc">Views: Low-High</option>
       </select>
     </label>
   );
