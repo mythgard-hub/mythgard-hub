@@ -38,6 +38,7 @@ const serializeDeckSearchResults = decks => {
     const profileIconId = author && author.profileIconId;
     const pathName = deckPreview && deckPreview.pathName;
     const powerName = deckPreview && deckPreview.powerName;
+    const views = deckPreview && deckPreview.views;
 
     return {
       deckId: deck.id,
@@ -53,7 +54,8 @@ const serializeDeckSearchResults = decks => {
       deckArchetype,
       deckType,
       pathName,
-      powerName
+      powerName,
+      views
     };
   });
 };
