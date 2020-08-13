@@ -372,10 +372,15 @@ CREATE TABLE mythgard.deck_views (
 
 ALTER TABLE mythgard.deck_views ADD CONSTRAINT deckIdUniqVote UNIQUE (deck_id);
 
-INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (3, 4);
-INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (11, 3);
 INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (1, 6);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (3, 4);
 INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (5, 10);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (6, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (7, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (8, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (9, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (10, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (11, 3);
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
@@ -764,9 +769,19 @@ create or replace function mythgard.search_decks_nosort(
     -- type filter
     AND (typeFilter is NULL or deck.type = typeFilter)
     -- path filter
-    AND (pathName is NULL or pathName = '' or path.name = pathName)
+    AND (
+      pathName is NULL or
+      pathName = '' or
+      (pathName = 'No path selected' and deck.path_id is null) or
+      path.name = pathName
+      )
     -- power filter
-    AND (powerName is NULL or powerName = '' or power.name = powerName)
+    AND (
+      powerName is NULL or
+      powerName = '' or
+      (powerName = 'No power selected' and deck.power_id is null) or
+      power.name = powerName
+      )
 
     intersect
 

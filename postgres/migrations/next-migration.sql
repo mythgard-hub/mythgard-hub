@@ -38,9 +38,19 @@ create or replace function mythgard.search_decks_nosort(
     -- type filter
     AND (typeFilter is NULL or deck.type = typeFilter)
     -- path filter
-    AND (pathName is NULL or pathName = '' or path.name = pathName)
+    AND (
+      pathName is NULL or
+      pathName = '' or
+      (pathName = 'No path selected' and deck.path_id is null) or
+      path.name = pathName
+      )
     -- power filter
-    AND (powerName is NULL or powerName = '' or power.name = powerName)
+    AND (
+      powerName is NULL or
+      powerName = '' or
+      (powerName = 'No power selected' and deck.power_id is null) or
+      power.name = powerName
+      )
 
     intersect
 
