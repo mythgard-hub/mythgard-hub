@@ -771,7 +771,7 @@ create or replace function mythgard.search_decks_nosort(
     -- path filter
     AND (
       -- no specific path requested
-      pathName is NULL or pathName = '' or
+      pathName = '' or
       -- decks with no path requested
       (pathName = 'No path selected' and deck.path_id is null) or
       -- specific path requested
@@ -780,7 +780,7 @@ create or replace function mythgard.search_decks_nosort(
     -- power filter
     AND (
       -- no specific power requested
-      powerName is NULL or powerName = '' or
+      powerName = '' or
       -- decks with no power requested
       (powerName = 'No power selected' and deck.power_id is null) or
       -- specific power requested
