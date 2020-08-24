@@ -14,7 +14,7 @@ export default function ViewsIndicator({ views }) {
       `}</style>
       <img src={`${process.env.MG_CDN}/icons/eyeball.svg`} />
       <span className="viewsCell" data-cy="viewsCell">
-        {views}
+        {views || 0}
       </span>
     </span>
   );

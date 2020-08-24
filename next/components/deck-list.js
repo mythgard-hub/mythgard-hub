@@ -12,6 +12,7 @@ import UserAvatar from './user-avatar';
 import PathPowerIconContainer from './path-power-icon-container';
 import { matchPathNameToIcon } from '../constants/paths';
 import { matchPowerNameToIcon } from '../constants/powers';
+import ViewsIndicator from './views-indicator';
 
 export default function DeckList({ decks }) {
   const theme = useContext(ThemeContext);
@@ -59,9 +60,13 @@ export default function DeckList({ decks }) {
         .type {
           font-weight: 200;
         }
+        .views {
+          padding-bottom: 10px;
+        }
         .deckVotes,
         .factions,
         .mana,
+        views,
         .modifiedDate {
           white-space: nowrap;
         }
@@ -136,8 +141,13 @@ export default function DeckList({ decks }) {
                     {type}
                   </div>
                 </td>
-                <td className="mana">
-                  <EssenceIndicator essence={deck.essenceCost} />
+                <td className="mana-and-views">
+                  <div className="views" data-cy="deckViews">
+                    <ViewsIndicator views={deck.views} />
+                  </div>
+                  <div className="mana" data-cy="essenceCost">
+                    <EssenceIndicator essence={deck.essenceCost} />
+                  </div>
                 </td>
                 <td className="modifiedDate">
                   <span>

@@ -314,6 +314,7 @@ mutation UpdateDeckAndRemoveCards(
         deckType
         pathName
         powerName
+        views
       }
     }
   }

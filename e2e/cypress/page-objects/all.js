@@ -64,6 +64,8 @@ export default {
   deckListNameZtoA: '[data-cy-decksort="nameDesc"]',
   deckListRatingHighToLow: '[data-cy-decksort="ratingDesc"]',
   deckListRatingLowToHigh: '[data-cy-decksort="ratingAsc"]',
+  deckListViewsHighToLow: '[data-cy-decksort="viewsDesc"]',
+  deckListViewsLowToHigh: '[data-cy-decksort="viewsAsc"]',
 
   // deck page
   deckName: '[data-cy="deckName"]',

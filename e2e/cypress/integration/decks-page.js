@@ -24,7 +24,9 @@ import {
   deckSearchDeckArchetype,
   deckSearchDeckType,
   deckSearchDeckPath,
-  deckSearchDeckPower
+  deckSearchDeckPower,
+  deckListViewsHighToLow,
+  deckListViewsLowToHigh
 } from '../page-objects/all';
 
 const cardSearchSelections = `${cardSearch} ${cardSelectionItem}`;
@@ -38,10 +40,13 @@ const nameAsc = 'nameAsc';
 const nameDesc = 'nameDesc';
 const ratingDesc = 'ratingDesc';
 const ratingAsc = 'ratingAsc';
+const viewsAsc = 'viewsAsc';
+const viewsDesc = 'viewsDesc';
 
 const deckNameAllFactions = 'all_factions';
 const deckNameDragons = 'dragons';
 const deckNameCats = 'cats';
+const deckNameKittyCats = 'kitty cats';
 const numAllDecks = 12;
 const numRecentDecks = 9;
 const numCatDecks = 3;
@@ -53,10 +58,19 @@ describe('Decks Page', function() {
   });
 
   it('works', function() {
-    // Should show deck votes
+    cy.get('[data-cy="viewsCell"]').should('have.length', numRecentDecks);
+    cy.get('[data-cy="viewsCell"]')
+      .eq(0)
+      .should('contain', 6);
+    cy.get('[data-cy="viewsCell"]')
+      .eq(1)
+      .should('contain', 0);
+    cy.get('[data-cy="viewsCell"]')
+      .eq(2)
+      .should('contain', 4);
     cy.get('[data-cy="deckVotesCell"]').should('have.length', numRecentDecks);
-    cy.get('[data-cy="userAvatar"]').should('have.length', numRecentDecks);
     cy.get('[data-cy="deckVotesCell"]:first').should('contain', 7);
+    cy.get('[data-cy="userAvatar"]').should('have.length', numRecentDecks);
     cy.get(deckArchetypePicker).should('have.length', numRecentDecks);
     cy.get(deckTypePicker).should('have.length', numRecentDecks);
     cy.get(deckArchetypePicker)
@@ -328,36 +342,49 @@ describe('Decks Page', function() {
       .find(deckName)
       .first()
       .should('contain', deckNameDragons);
+    // newest first
+    cy.get(decksSort).select(newestFirst);
+    cy.get(deckListNewestFirst);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameKittyCats);
+    // oldest first
     cy.get(decksSort).select(oldestFirst);
     cy.get(deckListOldestFirst);
     cy.get(deckListItem)
       .find(deckName)
       .first()
       .should('contain', deckNameDragons);
+    // essence asc
     cy.get(decksSort).select(essenceAsc);
     cy.get(deckListCheapestFirst);
     cy.get(deckListItem)
       .first()
       .find(deckName)
       .should('contain', deckNameCats);
+    // essence desc
     cy.get(decksSort).select(essenceDesc);
     cy.get(deckListCostliestFirst);
     cy.get(deckListItem)
       .first()
       .find(deckName)
       .should('contain', deckNameAllFactions);
+    // name asc
     cy.get(decksSort).select(nameAsc);
     cy.get(deckListNameAtoZ);
     cy.get(deckListItem)
       .first()
       .find(deckName)
       .should('contain', deckNameAllFactions);
+    // name desc
     cy.get(decksSort).select(nameDesc);
     cy.get(deckListNameZtoA);
     cy.get(deckListItem)
       .first()
       .find(deckName)
       .should('contain', 'other norden aztlan');
+    // rating desc
     cy.get(decksSort).select(ratingDesc);
     cy.get(deckListRatingHighToLow);
     cy.get(deckListItem)
@@ -365,9 +392,24 @@ describe('Decks Page', function() {
       .find(deckName)
       .should('contain', deckNameDragons);
     cy.get('[data-cy="deckVotesCell"]:first').should('contain', 7);
+    // rating asc
     cy.get(decksSort).select(ratingAsc);
     cy.get(deckListRatingLowToHigh);
     cy.get('[data-cy="deckVotesCell"]:first').should('contain', 0);
+    // views desc
+    cy.get(decksSort).select(viewsDesc);
+    cy.get(deckListViewsHighToLow);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', 'other dragons');
+    // views asc
+    cy.get(decksSort).select(viewsAsc);
+    cy.get(deckListViewsLowToHigh);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', 'cats');
     // this test differs from the first sort test in that
     // it uses some-decks rather than all-decks
     cy.get(decksSort).select(hot);

@@ -372,8 +372,15 @@ CREATE TABLE mythgard.deck_views (
 
 ALTER TABLE mythgard.deck_views ADD CONSTRAINT deckIdUniqVote UNIQUE (deck_id);
 
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (1, 6);
 INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (3, 4);
-INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (11, 4);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (5, 10);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (6, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (7, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (8, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (9, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (10, 1);
+INSERT INTO mythgard.deck_views("deck_id", "views") VALUES (11, 3);
 
 CREATE OR REPLACE FUNCTION mythgard.find_account_or_create_by_google
 (
@@ -762,9 +769,23 @@ create or replace function mythgard.search_decks_nosort(
     -- type filter
     AND (typeFilter is NULL or deck.type = typeFilter)
     -- path filter
-    AND (pathName is NULL or path.name = pathName)
+    AND (
+      -- no specific path requested
+      pathName = '' or
+      -- decks with no path requested
+      (pathName = 'No path selected' and deck.path_id is null) or
+      -- specific path requested
+      path.name = pathName
+    )
     -- power filter
-    AND (powerName is NULL or power.name = powerName)
+    AND (
+      -- no specific power requested
+      powerName = '' or
+      -- decks with no power requested
+      (powerName = 'No power selected' and deck.power_id is null) or
+      -- specific power requested
+      power.name = powerName
+    )
 
     intersect
 
@@ -851,6 +872,22 @@ create or replace function mythgard.search_decks(
                   faction6, numFactions, archetypeFilter, typeFilter, pathName, powerName) as foo,
                   mythgard.deck_essence_cost(foo.id) as dec
                   order by dec asc nulls last) as bar;
+       ELSIF sortBy = 'viewsDesc' THEN
+        RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter, pathName, powerName) as deck
+          LEFT JOIN mythgard.deck_views
+          on deck_views.deck_id = deck.id
+          where deck.id is not null
+          order by mythgard.deck_views.views desc nulls last;
+        ELSIF sortBy = 'viewsAsc' THEN
+        RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
+                  card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,
+                  faction6, numFactions, archetypeFilter, typeFilter, pathName, powerName) as deck
+          LEFT JOIN mythgard.deck_views
+          on deck_views.deck_id = deck.id
+          where deck.id is not null
+          order by mythgard.deck_views.views asc nulls first;
        ELSIF sortBy = 'ratingDesc' THEN
         RETURN QUERY select deck.* from mythgard.search_decks_nosort(deckName, authorName, deckModified, card1,
                   card2, card3, card4, card5, faction1, faction2, faction3, faction4, faction5,

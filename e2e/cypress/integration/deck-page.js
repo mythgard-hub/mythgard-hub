@@ -29,7 +29,7 @@ describe('Deck Page', function() {
     cy.get('[data-cy="deckPageType"]').should('contain', 'Gauntlet');
     cy.get('[data-cy="deckPageArchetype"]').should('contain', 'Unknown');
     cy.get('[data-cy="deckPageCardCount"]').should('contain', '10');
-    cy.get('[data-cy="viewsCell"]').should('contain', '5');
+    cy.get('[data-cy="viewsCell"]').should('contain', '4');
     cy.get('[data-cy="deckRarityCount"]')
       .eq(0)
       .should('contain', '3');
