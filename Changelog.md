@@ -1,3 +1,7 @@
+# Changelog v1.11.0
+
+Option to sort decks by views (bi-directional) on decks page
+
 # Changelog v1.10.0
 
 Url encode public page link and allow spaces in usernames (#291)
