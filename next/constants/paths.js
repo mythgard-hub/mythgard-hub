@@ -5,7 +5,8 @@ const pathIcons = {
   'fires of creation': `${cdn}FiresOfCreation.png`,
   'journey of souls': `${cdn}JourneyOfSouls.png`,
   "rainbow's end": `${cdn}RainbowsEnd.png`,
-  'turn of seasons': `${cdn}TurnOfSeasons.png`
+  'turn of seasons': `${cdn}TurnOfSeasons.png`,
+  'coliseum of strife': `${cdn}ColiseumOfStrife.png`
 };
 
 export const matchPathToIcon = path => matchPathNameToIcon(path && path.name);
