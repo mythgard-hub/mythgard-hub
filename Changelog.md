@@ -1,3 +1,7 @@
+# Changelog v1.12.0
+
+Support for new path
+
 # Changelog v1.11.0
 
 Option to sort decks by views (bi-directional) on decks page
