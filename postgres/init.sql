@@ -503,7 +503,8 @@ INSERT INTO mythgard.card_faction("card_id","faction_id")
     (15, 1),
     (16, 1),
     (17, 2),
-    (18, 6);
+    (18, 6),
+    (19, 6);
 
 CREATE TABLE mythgard.site_config (
   id SERIAL PRIMARY KEY,
