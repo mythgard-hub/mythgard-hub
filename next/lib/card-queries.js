@@ -72,14 +72,14 @@ export const getCardsQuery = () => {
 };
 
 // ['1', '3', '6+'] => [[1,3], 6]
-export const intEnumsToGQLVars = (manaCostEnums) => {
+export const intEnumsToGQLVars = manaCostEnums => {
   if (!(manaCostEnums && manaCostEnums.length)) {
     return [null, null];
   }
 
   const discreteManaCosts = [];
   let manaGTE;
-  manaCostEnums.map((num) => {
+  manaCostEnums.map(num => {
     if (num.indexOf('+') < 0) {
       return discreteManaCosts.push(parseInt(num, 10));
     } else {
@@ -127,7 +127,7 @@ export const executeCardQuery = (
       defenseGTE: defenseGTE || null,
       supertypes:
         supertypes && supertypes.length
-          ? supertypes.map((s) => s.toUpperCase())
+          ? supertypes.map(s => s.toUpperCase())
           : null
     }
   });
