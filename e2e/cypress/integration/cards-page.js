@@ -5,6 +5,7 @@ import {
   getPagingTotalAsInt,
   superTypePickerBtn,
   strengthPicker,
+  cardsetFilterOptions,
   defensePickerBtn,
   rarityPickerBtn,
   manaPicker
@@ -158,6 +159,24 @@ describe('Cards Page', function() {
       })
       .then(length => {
         expect(allCardsLength).to.equal(length, 'clearing rarity filter works');
+
+        // basic test - set filter
+        cy.get(cardsetFilterOptions)
+          .eq(1)
+          .click();
+        cy.get(cardSearchSubmit).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(allCardsLength).to.be.above(length, 'set filter works');
+        cy.get(cardsetFilterOptions)
+          .eq(2)
+          .click();
+        cy.get(cardSearchSubmit).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(allCardsLength).to.equal(length, 'clearing set filter works');
 
         // basic test - clear filters
         cy.get(`${rarityPickerBtn}:first`).click();

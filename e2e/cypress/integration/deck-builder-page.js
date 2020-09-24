@@ -9,6 +9,7 @@ import {
   superTypePickerBtn,
   manaPicker,
   rarityPicker,
+  cardsetFilterOptions,
   rarityPickerBtn,
   getPagingTotalAsInt,
   leftSlider,
@@ -126,6 +127,26 @@ describe('Deck builder page', () => {
         cy.get(rightSlider).click();
         cy.get(superTypePickerBtn)
           .eq(1)
+          .click();
+        cy.get(leftSlider).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(numCardsBeforeFilter).to.equal(length);
+
+        // basic test - card set filter
+        cy.get(rightSlider).click();
+        cy.get(cardsetFilterOptions)
+          .eq(1)
+          .click();
+        cy.get(leftSlider).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(numCardsBeforeFilter).to.be.above(length);
+        cy.get(rightSlider).click();
+        cy.get(cardsetFilterOptions)
+          .eq(2)
           .click();
         cy.get(leftSlider).click();
         return getPagingTotalAsInt();
