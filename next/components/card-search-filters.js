@@ -13,11 +13,13 @@ export default function CardSearchFilters(props) {
     healths,
     types,
     rarities,
+    cardset,
     setCardStrengths,
     setCardHealths,
     setCardManaCosts,
     setSupertypes,
-    setCardRarities
+    setCardRarities,
+    setCardSet
   } = props;
 
   return (
@@ -34,6 +36,9 @@ export default function CardSearchFilters(props) {
         }
         .last-title {
           margin-top: 15px;
+        }
+        .card-set-filter {
+          padding-bottom: 20px;
         }
 
         @media only screen and (max-width: 600px) {
@@ -94,7 +99,7 @@ export default function CardSearchFilters(props) {
 
       {rarities && (
         <>
-          <div className="filter-title last-title">Rarity</div>
+          <div className="filter-title">Rarity</div>
           <hr className="gradient-hr" />
           <RarityFilter
             cyName="cardSearch_rarity"
@@ -103,6 +108,47 @@ export default function CardSearchFilters(props) {
           ></RarityFilter>
         </>
       )}
+
+      <>
+        <div className="filter-title last-title">Sets</div>
+        <hr className="gradient-hr" />
+        <div className="card-set-filter">
+          <label>
+            <input
+              type="radio"
+              name="cardset"
+              value="Core"
+              checked={cardset === 'Core'}
+              onChange={() => setCardSet('Core')}
+            />
+            Core
+          </label>
+          <br />
+          <label>
+            <input
+              type="radio"
+              id="Rings of Immortality"
+              name="cardset"
+              value="Rings of Immortality"
+              checked={cardset === 'Rings of Immortality'}
+              onChange={() => setCardSet('Rings of Immortality')}
+            />
+            Rings of Immortality
+          </label>
+          <br />
+          <label>
+            <input
+              type="radio"
+              id="all"
+              name="cardset"
+              value="all"
+              checked={cardset === 'all'}
+              onChange={() => setCardSet('all')}
+            />
+            All sets
+          </label>
+        </div>
+      </>
     </div>
   );
 }
