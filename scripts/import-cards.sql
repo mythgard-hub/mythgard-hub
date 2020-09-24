@@ -16,7 +16,7 @@ CREATE TEMPORARY TABLE t (
   def VARCHAR(255),
   rules TEXT,
   flavor VARCHAR(255),
-  set INTEGER,
+  set VARCHAR(255),
   owned BOOLEAN,
   artist VARCHAR(255),
   spawns VARCHAR(255)
@@ -41,6 +41,7 @@ select
   ,REGEXP_REPLACE(manaCost, '[^0-9]' ,'-1')::integer
   ,trim(gemCost)
   ,UPPER(trim(rarity))::mythgard.rarity
+  ,trim(set)
   from t
 ON CONFLICT (id) DO UPDATE
 SET name = excluded.name
@@ -52,6 +53,7 @@ SET name = excluded.name
     ,mana = excluded.mana
     ,gem = excluded.gem
     ,rarity = excluded.rarity
+    ,cardset = excluded.set
 ;
 
 truncate table mythgard.card_faction;
