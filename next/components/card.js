@@ -217,7 +217,9 @@ export default function Card({ card }) {
             <li className="card-detail">
               <div className="card-detail-label">Card Set</div>
               <hr />
-              <div className="card-detail-text">{card.cardset}</div>
+              <div className="card-detail-text" data-cy="cardPageCardSet">
+                {card.cardset}
+              </div>
             </li>
           </ul>
         </div>

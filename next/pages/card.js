@@ -42,7 +42,7 @@ export default withRouter(({ router }) => {
   )}, ${formatManaCost(data.card)}${data.card.gem} ${data.card.rarity &&
     firstLetterUppercase(data.card.rarity)} ${data.card.supertype &&
     firstLetterUppercase(data.card.supertype.toString())}, ${data.card
-    .subtype && firstLetterUppercase(data.card.subtype)}, Core`;
+    .subtype && firstLetterUppercase(data.card.subtype)}, ${data.card.cardset}`;
 
   return (
     <Layout
@@ -50,7 +50,9 @@ export default withRouter(({ router }) => {
       desc={description}
       image={getImagePath(data.card.name, data.card.set)}
     >
-      <PageBanner image={PageBanner.IMG_CARDS} url="/cards">Cards</PageBanner>
+      <PageBanner image={PageBanner.IMG_CARDS} url="/cards">
+        Cards
+      </PageBanner>
       <Card card={data.card} />
     </Layout>
   );
