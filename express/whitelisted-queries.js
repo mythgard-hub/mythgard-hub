@@ -179,6 +179,7 @@ mutation UpdateDeckAndRemoveCards(
       nodes {
         id
         name
+        cardset
         mana
         gem
         rarity
@@ -207,6 +208,7 @@ mutation UpdateDeckAndRemoveCards(
       $manaGTE: Int
       $strengthGTE: Int
       $defenseGTE: Int
+      $cardset: String
     ) {
       cards(
         filter: {
@@ -216,6 +218,7 @@ mutation UpdateDeckAndRemoveCards(
                 { name: { includesInsensitive: $searchText } }
                 { rules: { includesInsensitive: $searchText } }
                 { subtype: { includesInsensitive: $searchText } }
+                { cardset: { includesInsensitive: $cardset } }
               ]
             }
             {
@@ -244,6 +247,7 @@ mutation UpdateDeckAndRemoveCards(
       ) {
         nodes {
           name
+          cardset
           id
           mana
           gem
@@ -275,6 +279,7 @@ mutation UpdateDeckAndRemoveCards(
             gem
             supertype
             rarity
+            cardset
             cardFactions {
               nodes {
                 faction {
@@ -370,6 +375,7 @@ mutation UpdateDeckAndRemoveCards(
     card(id: $id) {
       id
       name
+      cardset
       mana
       gem
       atk

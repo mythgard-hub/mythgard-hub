@@ -175,6 +175,7 @@ export const deckCardsQuery = gql`
           quantity
           card {
             name
+            cardset
             id
             mana
             gem

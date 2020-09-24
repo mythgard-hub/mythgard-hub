@@ -6,6 +6,7 @@ const cardsQuery = gql`
       nodes {
         id
         name
+        cardset
         mana
         gem
         rarity
