@@ -12,7 +12,7 @@ import { ThemeContext } from '../components/theme-context.js';
 
 export default function Card({ card }) {
   const theme = useContext(ThemeContext);
-  const imagePath = getImagePath(card.name, card.set);
+  const imagePath = getImagePath(card.name);
   const imageAlt = card.name;
   // Technically this is an array but in actuality all cards should have
   // a single super type.
@@ -217,7 +217,7 @@ export default function Card({ card }) {
             <li className="card-detail">
               <div className="card-detail-label">Card Set</div>
               <hr />
-              <div className="card-detail-text">Core</div>
+              <div className="card-detail-text">{card.cardset}</div>
             </li>
           </ul>
         </div>
