@@ -17,7 +17,8 @@ export default function DeckBuilderCardDisplay(props) {
     cardRarities,
     cardManaCosts,
     supertypes,
-    factions
+    factions,
+    cardset
   } = props;
 
   const cardFilters = {
@@ -25,7 +26,8 @@ export default function DeckBuilderCardDisplay(props) {
     rarities: cardRarities,
     manaCosts: cardManaCosts,
     supertypes,
-    factions
+    factions,
+    cardset
   };
 
   const onCollectionClick = (_, card) => {
@@ -96,5 +98,6 @@ DeckBuilderCardDisplay.propTypes = {
   cardRarities: PropTypes.array,
   cardManaCosts: PropTypes.array,
   supertypes: PropTypes.array,
-  factions: PropTypes.array
+  factions: PropTypes.array,
+  cardset: PropTypes.string
 };

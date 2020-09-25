@@ -4,6 +4,7 @@ import RarityFilter from './rarity-filter.js';
 import SupertypeFilter from './supertype-filter.js';
 import NumericFilterGroup from './numeric-filter-group.js';
 import { ThemeContext } from './theme-context';
+import CardSearchFiltersSetOption from './card-search-filters-set-option.js';
 
 export default function CardSearchFilters(props) {
   const theme = useContext(ThemeContext);
@@ -13,11 +14,13 @@ export default function CardSearchFilters(props) {
     healths,
     types,
     rarities,
+    cardset,
     setCardStrengths,
     setCardHealths,
     setCardManaCosts,
     setSupertypes,
-    setCardRarities
+    setCardRarities,
+    setCardSet
   } = props;
 
   return (
@@ -34,6 +37,9 @@ export default function CardSearchFilters(props) {
         }
         .last-title {
           margin-top: 15px;
+        }
+        .card-set-filter {
+          padding-bottom: 20px;
         }
 
         @media only screen and (max-width: 600px) {
@@ -94,7 +100,7 @@ export default function CardSearchFilters(props) {
 
       {rarities && (
         <>
-          <div className="filter-title last-title">Rarity</div>
+          <div className="filter-title">Rarity</div>
           <hr className="gradient-hr" />
           <RarityFilter
             cyName="cardSearch_rarity"
@@ -103,6 +109,31 @@ export default function CardSearchFilters(props) {
           ></RarityFilter>
         </>
       )}
+
+      <>
+        <div className="filter-title last-title">Sets</div>
+        <hr className="gradient-hr" />
+        <div className="card-set-filter">
+          <CardSearchFiltersSetOption
+            cardset={cardset}
+            setCardSet={setCardSet}
+            optionName="Core"
+          />
+          <br />
+          <CardSearchFiltersSetOption
+            cardset={cardset}
+            setCardSet={setCardSet}
+            optionName="Rings of Immortality"
+          />
+          <br />
+          <CardSearchFiltersSetOption
+            cardset={cardset}
+            setCardSet={setCardSet}
+            optionName="All set"
+            optionValue="all"
+          />
+        </div>
+      </>
     </div>
   );
 }

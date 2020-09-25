@@ -28,6 +28,7 @@ export default function CardSearchForm(props) {
   const [strengths, setStrengths] = useState(searchQuery.strengths);
   const [defenses, setDefenses] = useState(searchQuery.defenses);
   const [rarities, setRarities] = useState(searchQuery.rarities);
+  const [cardset, setCardSet] = useState(searchQuery.cardset);
   const [viewFilters, setViewFilters] = useState(widthSupportsTwoColumn());
 
   const theme = useContext(ThemeContext);
@@ -40,6 +41,7 @@ export default function CardSearchForm(props) {
     setStrengths(defaultQuery.strengths);
     setDefenses(defaultQuery.defenses);
     setRarities(defaultQuery.rarities);
+    setCardSet(defaultQuery.cardset);
     props.onClearFilters();
   };
 
@@ -52,7 +54,8 @@ export default function CardSearchForm(props) {
       manaCosts,
       strengths,
       defenses,
-      rarities
+      rarities,
+      cardset
     });
   };
 
@@ -177,11 +180,13 @@ export default function CardSearchForm(props) {
               healths={defenses}
               rarities={rarities}
               types={supertypes}
+              cardset={cardset}
               setCardManaCosts={setManaCosts}
               setCardStrengths={setStrengths}
               setCardHealths={setDefenses}
               setCardRarities={setRarities}
               setSupertypes={setSupertypes}
+              setCardSet={setCardSet}
             />
             <div className="hideOnNotTablet">
               <SliderSwitch

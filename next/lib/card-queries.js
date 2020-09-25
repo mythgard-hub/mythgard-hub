@@ -14,6 +14,7 @@ export const getCardsQuery = () => {
       $manaGTE: Int
       $strengthGTE: Int
       $defenseGTE: Int
+      $cardset: String
     ) {
       cards(
         filter: {
@@ -23,6 +24,7 @@ export const getCardsQuery = () => {
                 { name: { includesInsensitive: $searchText } }
                 { rules: { includesInsensitive: $searchText } }
                 { subtype: { includesInsensitive: $searchText } }
+                { cardset: { includesInsensitive: $cardset } }
               ]
             }
             {
@@ -51,6 +53,7 @@ export const getCardsQuery = () => {
       ) {
         nodes {
           name
+          cardset
           id
           mana
           gem
@@ -93,7 +96,8 @@ export const executeCardQuery = (
   manaCostEnums,
   supertypes,
   strengthEnums,
-  defenseEnums
+  defenseEnums,
+  cardset
 ) => {
   let [manaCosts, manaCostGTE] = intEnumsToGQLVars(manaCostEnums);
   const [strengths, strengthGTE] = intEnumsToGQLVars(strengthEnums);
@@ -107,9 +111,12 @@ export const executeCardQuery = (
     manaCosts = [-1];
   }
 
+  const resolvedCardset = !cardset || cardset === 'all' ? null : cardset;
+
   return useQuery(query, {
     variables: {
       searchText: text || null,
+      cardset: resolvedCardset,
       factionIds: factions && factions.length ? factions : null,
       rarities: rarities && rarities.length ? rarities : null,
       manaCosts: manaCosts && manaCosts.length ? manaCosts : null,

@@ -23,6 +23,7 @@ import { DECK_BUILDER_TABS } from '../constants/deck';
 
 const initFilters = {
   cardSearchText: '',
+  cardset: 'all',
   cardRarities: [],
   cardManaCosts: [],
   supertypes: [],
@@ -132,6 +133,7 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
   const [cardManaCosts, setCardManaCosts] = useState(initFilters.cardManaCosts);
   const [supertypes, setSupertypes] = useState(initFilters.supertypes);
   const [factions, setFactions] = useState(initFilters.factions);
+  const [cardset, setCardSet] = useState(initFilters.cardset);
   const [currentTab, setTab] = useState(DECK_BUILDER_TABS[0]);
   const [viewFilters, setViewFilters] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -168,6 +170,7 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
     setCardManaCosts(initFilters.cardManaCosts);
     setSupertypes(initFilters.supertypes);
     setFactions(initFilters.factions);
+    setCardSet(initFilters.cardset);
   });
 
   return (
@@ -236,9 +239,11 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
                 rarities={cardRarities}
                 types={supertypes}
                 manaCosts={cardManaCosts}
+                cardset={cardset}
                 setCardManaCosts={setCardManaCosts}
                 setSupertypes={setSupertypes}
                 setCardRarities={setCardRarities}
+                setCardSet={setCardSet}
               />
             ) : (
               <DeckBuilderCardDisplay
@@ -251,6 +256,7 @@ function DeckBuilderPage({ deckId, useSessionStorage }) {
                 cardManaCosts={cardManaCosts}
                 supertypes={supertypes}
                 factions={factions}
+                cardset={cardset}
               />
             )}
           </div>

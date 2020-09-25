@@ -31,7 +31,8 @@ CREATE TABLE mythgard.card (
   def integer,
   mana integer,
   gem varchar(10),
-  rarity mythgard.rarity default 'COMMON'
+  rarity mythgard.rarity default 'COMMON',
+  cardset varchar(255) default 'Core'
 );
 
 INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
@@ -70,6 +71,8 @@ INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Ghul', 'rock', 'Earth Enchantment', '1', 'R', 'RARE', '{MINION}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('X Cost', 'lifelink', 'vampire', '-1', 'G', 'MYTHIC', '{MINION, ENCHANTMENT}');
+INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype, cardset)
+  VALUES ('New Set', 'example of the new set', 'vampire', '2', 'PP', 'MYTHIC', '{MINION, ENCHANTMENT}', 'Rings of Immortality');
 
 CREATE TABLE mythgard.card_spawn (
   card_id int CONSTRAINT spawner_card_id_fkey REFERENCES mythgard.card (id),
@@ -500,7 +503,8 @@ INSERT INTO mythgard.card_faction("card_id","faction_id")
     (15, 1),
     (16, 1),
     (17, 2),
-    (18, 6);
+    (18, 6),
+    (19, 6);
 
 CREATE TABLE mythgard.site_config (
   id SERIAL PRIMARY KEY,

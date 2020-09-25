@@ -37,6 +37,7 @@ export default {
   defensePickerBtn: '[data-cy="cardSearch_defense"] [data-cy="numFilterBtn"]',
   rarityPicker: '[data-cy="cardSearch_rarity"]',
   rarityPickerBtn: '[data-cy="cardSearch_rarity"] [data-cy="imgFilterBtn"]',
+  cardsetFilterOptions: '[data-cy="cardSetOption"]',
 
   // decks page
   deckFactionsPicker: '[data-cy="deckFactionsCell"] img',

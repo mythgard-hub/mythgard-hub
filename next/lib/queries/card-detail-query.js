@@ -5,6 +5,7 @@ export const cardQuery = gql`
     card(id: $id) {
       id
       name
+      cardset
       mana
       gem
       atk

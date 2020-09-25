@@ -8,6 +8,7 @@ import queryToParams from '../lib/url-to-search-parameters.js';
 
 const searchQueryDefaults = {
   text: '',
+  cardset: 'all',
   factions: [],
   supertypes: [],
   manaCosts: [],
