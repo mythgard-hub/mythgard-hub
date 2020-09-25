@@ -129,7 +129,7 @@ export default function CardSearchFilters(props) {
           <CardSearchFiltersSetOption
             cardset={cardset}
             setCardSet={setCardSet}
-            optionName="All set"
+            optionName="All sets"
             optionValue="all"
           />
         </div>
