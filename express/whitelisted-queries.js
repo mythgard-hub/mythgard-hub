@@ -275,12 +275,12 @@ mutation UpdateDeckAndRemoveCards(
           quantity
           card {
             name
+            cardset
             id
             mana
             gem
             supertype
             rarity
-            cardset
             cardFactions {
               nodes {
                 faction {
