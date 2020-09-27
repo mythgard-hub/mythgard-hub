@@ -1,3 +1,7 @@
+# Changelog v1.13.0
+
+Support for set filter and hiding spawns
+
 # Changelog v1.12.0
 
 Support for new path
