@@ -25,7 +25,7 @@ export default function SomeCards(props) {
       (strengths && strengths.length) ||
       (defenses && defenses.length) ||
       text ||
-      cardset;
+      cardset !== 'all';
   }
 
   if (!hasFilters) {

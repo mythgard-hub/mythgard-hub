@@ -175,7 +175,7 @@ mutation UpdateDeckAndRemoveCards(
 
   `
   query cards {
-    cards {
+    cards(condition: { spawnonly: false }) {
       nodes {
         id
         name
@@ -211,6 +211,7 @@ mutation UpdateDeckAndRemoveCards(
       $cardset: String
     ) {
       cards(
+        condition: { spawnonly: false }
         filter: {
           and: [
             {
@@ -274,12 +275,12 @@ mutation UpdateDeckAndRemoveCards(
           quantity
           card {
             name
+            cardset
             id
             mana
             gem
             supertype
             rarity
-            cardset
             cardFactions {
               nodes {
                 faction {
@@ -720,5 +721,5 @@ mutation addFeaturedDeck($deckId: Int!) {
       }
     }
   }
-`,
+`
 ];

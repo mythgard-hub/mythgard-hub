@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const cardsQuery = gql`
   query cards {
-    cards {
+    cards(condition: { spawnonly: false }) {
       nodes {
         id
         name

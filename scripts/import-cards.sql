@@ -16,20 +16,23 @@ CREATE TEMPORARY TABLE t (
   def VARCHAR(255),
   rules TEXT,
   flavor VARCHAR(255),
-  set VARCHAR(255),
-  owned BOOLEAN,
+  cardset VARCHAR(255),
+  spawnonly boolean,
   artist VARCHAR(255),
   spawns VARCHAR(255)
 );
 
 -- postgres only cares about index, so these names don't need
 -- to match the actual csv file's headers
-\copy t(id, name, facOne, facTwo, supertype, subtype, manaCost, gemCost, rarity, atk, def, rules, flavor, set, owned, artist, spawns) FROM 'mgcards.csv' WITH CSV HEADER;
+\copy t(id, name, facOne, facTwo, supertype, subtype, manaCost, gemCost, rarity, atk, def, rules, flavor, cardset, spawnonly, artist, spawns) FROM 'mgcards.csv' WITH CSV HEADER;
+
+update t set cardset = 'Core' where t.cardset IS NULL;
+update t set spawnonly = FALSE where t.spawnonly IS NULL;
 
 -- We use -1 to denote variable attack and defense values.
 -- However, the csv uses X or * to denote this. A regex is
 -- used to convert these to -1.
-insert into mythgard.card (id, name, rules, supertype, subtype, atk, def, mana, gem, rarity)
+insert into mythgard.card (id, name, rules, supertype, subtype, atk, def, mana, gem, rarity, cardset, spawnonly)
 select
   id
   ,trim(name)
@@ -41,7 +44,8 @@ select
   ,REGEXP_REPLACE(manaCost, '[^0-9]' ,'-1')::integer
   ,trim(gemCost)
   ,UPPER(trim(rarity))::mythgard.rarity
-  ,trim(set)
+  ,trim(cardset)
+  ,spawnonly
   from t
 ON CONFLICT (id) DO UPDATE
 SET name = excluded.name
@@ -53,7 +57,8 @@ SET name = excluded.name
     ,mana = excluded.mana
     ,gem = excluded.gem
     ,rarity = excluded.rarity
-    ,cardset = excluded.set
+    ,cardset = excluded.cardset
+    ,spawnonly = excluded.spawnonly
 ;
 
 truncate table mythgard.card_faction;

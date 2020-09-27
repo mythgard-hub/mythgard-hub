@@ -17,6 +17,7 @@ export const getCardsQuery = () => {
       $cardset: String
     ) {
       cards(
+        condition: { spawnonly: false }
         filter: {
           and: [
             {
