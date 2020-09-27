@@ -27,6 +27,7 @@ CREATE TEMPORARY TABLE t (
 \copy t(id, name, facOne, facTwo, supertype, subtype, manaCost, gemCost, rarity, atk, def, rules, flavor, cardset, spawnonly, artist, spawns) FROM 'mgcards.csv' WITH CSV HEADER;
 
 update t set cardset = 'Core' where t.cardset IS NULL;
+update t set spawnonly = FALSE where t.spawnonly IS NULL;
 
 -- We use -1 to denote variable attack and defense values.
 -- However, the csv uses X or * to denote this. A regex is
