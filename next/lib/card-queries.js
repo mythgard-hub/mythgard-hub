@@ -58,6 +58,7 @@ export const getCardsQuery = () => {
           id
           mana
           gem
+          rarity
           supertype
           cardFactions {
             nodes {
