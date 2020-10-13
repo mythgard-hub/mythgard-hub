@@ -219,9 +219,9 @@ mutation UpdateDeckAndRemoveCards(
                 { name: { includesInsensitive: $searchText } }
                 { rules: { includesInsensitive: $searchText } }
                 { subtype: { includesInsensitive: $searchText } }
-                { cardset: { includesInsensitive: $cardset } }
               ]
             }
+            { or: [{ cardset: { includesInsensitive: $cardset } }] }
             {
               or: [
                 { mana: { in: $manaCosts } }
@@ -252,6 +252,7 @@ mutation UpdateDeckAndRemoveCards(
           id
           mana
           gem
+          rarity
           supertype
           cardFactions {
             nodes {

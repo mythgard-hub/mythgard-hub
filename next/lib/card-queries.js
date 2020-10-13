@@ -25,9 +25,9 @@ export const getCardsQuery = () => {
                 { name: { includesInsensitive: $searchText } }
                 { rules: { includesInsensitive: $searchText } }
                 { subtype: { includesInsensitive: $searchText } }
-                { cardset: { includesInsensitive: $cardset } }
               ]
             }
+            { or: [{ cardset: { includesInsensitive: $cardset } }] }
             {
               or: [
                 { mana: { in: $manaCosts } }
@@ -58,6 +58,7 @@ export const getCardsQuery = () => {
           id
           mana
           gem
+          rarity
           supertype
           cardFactions {
             nodes {
