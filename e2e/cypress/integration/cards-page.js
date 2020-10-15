@@ -200,6 +200,25 @@ describe('Cards Page', function() {
           'not.have.class',
           'selected'
         );
+
+        // More advanced test - select set + text filter
+        cy.get(cardsetFilterOptions)
+          .eq(1)
+          .click({ force: true });
+        cy.get(cardSearchText).type('drag{enter}');
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(length).to.equal(0, 'Set + name filter work');
+
+        cy.get(cardsetFilterOptions)
+          .eq(0)
+          .click({ force: true });
+        cy.get(cardSearchSubmit).click();
+        return getPagingTotalAsInt();
+      })
+      .then(length => {
+        expect(length).to.equal(1, 'Set + name filter still works');
       });
   });
 });
