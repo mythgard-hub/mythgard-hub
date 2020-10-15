@@ -144,6 +144,7 @@ describe('Deck builder page', () => {
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.be.above(length);
+
         cy.get(rightSlider).click();
         cy.get(cardsetFilterOptions)
           .eq(2)
@@ -153,6 +154,31 @@ describe('Deck builder page', () => {
       })
       .then(length => {
         expect(numCardsBeforeFilter).to.equal(length);
+
+        // Now add a rare card to the deck to make sure the rarity
+        // limits are respected
+        cy.get(rightSlider).click();
+        cy.get(cardsetFilterOptions)
+          .eq(0)
+          .click();
+        cy.get(rarityPickerBtn)
+          .eq(2)
+          .click();
+        cy.get(leftSlider).click();
+        cy.get(`${cardListCard}`)
+          .eq(0)
+          .click();
+        cy.get(`${cardListCard}`)
+          .eq(0)
+          .click();
+        cy.get(`${cardListCard}`)
+          .eq(0)
+          .click();
+        cy.get(`${cardListCard}`)
+          .eq(0)
+          .click();
+
+        cy.get('[data-cy="deck-builder-card-quantity"]').should('contain', '2');
       });
   });
 

@@ -156,7 +156,7 @@ export default function DeckCardsTableRow({
               title={firstLetterUppercase(supertype)}
             />
           )}
-          &times;{quantity}
+          &times;<span data-cy="deck-builder-card-quantity">{quantity}</span>
         </span>
       </td>
       <td
