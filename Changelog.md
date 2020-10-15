@@ -1,3 +1,9 @@
+# Changelog v1.14.0
+
+    Filtering bug fixes (#300)
+    * Add rarity to the filtered cards query
+    * make the card set its own filter
+
 # Changelog v1.13.0
 
 Support for set filter and hiding spawns
