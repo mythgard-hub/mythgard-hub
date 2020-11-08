@@ -90,7 +90,7 @@ function ModeratorFeaturedDecksEditor() {
 
   return (
     <div>
-      <h1>Edit Featured Decks</h1>
+      <h2>Edit Featured Decks</h2>
 
       {deckFeatureds.map((df, index) => {
         return (

@@ -14,7 +14,7 @@ function modAccountEditor() {
   const updateAccount = () => updateAccountMutation({ email, accountType });
   return (
     <div>
-      <h1>Edit Accounts</h1>
+      <h2>Edit Accounts</h2>
       <label>
         Email: <input type="text" value={email} onChange={onChangeEmail} />
       </label>
