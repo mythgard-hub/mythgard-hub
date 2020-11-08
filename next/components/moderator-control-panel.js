@@ -4,6 +4,7 @@ import ModeratorDeckEditor from './moderator-deck-editor.js';
 import ModeratorConfigEditor from './moderator-config-editor.js';
 import ModeratorFeaturedDecksEditor from './moderator-featured-decks-editor.js';
 import ModAccountEditor from './mod-account-editor.js';
+import ModEventCreator from './mod-event-creator.js';
 
 function moderatorControlPanel() {
   return (
@@ -15,6 +16,8 @@ function moderatorControlPanel() {
       <ModeratorFeaturedDecksEditor />
       <hr />
       <ModAccountEditor />
+      <hr />
+      <ModEventCreator />
     </>
   );
 }
