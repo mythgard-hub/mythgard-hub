@@ -723,12 +723,28 @@ mutation addFeaturedDeck($deckId: Int!) {
     }
   }
 `,
-  // TODO - add the other fields
   `
-  mutation createEvent($name: String!) {
-    createTournament(input: { tournament: { name: $name } }) {
+  mutation createEvent(
+    $name: String!
+    $url: String!
+    $organizer: String!
+    $date: Date!
+  ) {
+    createTournament(
+      input: {
+        tournament: {
+          name: $name
+          url: $url
+          organizer: $organizer
+          date: $date
+        }
+      }
+    ) {
       tournament {
         name
+        url
+        organizer
+        date
       }
     }
   }
