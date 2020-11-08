@@ -11,7 +11,7 @@ const configMutation = gql`
   }
 `;
 
-export default function() {
+export default function UseConfigMutation() {
   const [updateConfig] = useMutation(configMutation, {
     update() {
       window.location.reload();

@@ -15,7 +15,7 @@ const accountMutation = gql`
   }
 `;
 
-export default function() {
+export default function UseAccountMutation() {
   const [updateAccount] = useMutation(accountMutation, {
     update() {
       alert('The account was updated successfully');
