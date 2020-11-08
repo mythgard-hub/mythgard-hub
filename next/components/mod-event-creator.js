@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
+import { formatDate } from '../lib/graphql-utils.js';
 import useCreateEventMutation from '../lib/use-create-event-mutation';
 
 function modEventCreator() {
@@ -10,7 +11,7 @@ function modEventCreator() {
   const onChangeOrganizer = handleInputChangeHooks(setOrganizer);
   const [url, setUrl] = useState('https://www.mythgardhub.com/');
   const onChangeUrl = handleInputChangeHooks(setUrl);
-  const [date, setDate] = useState('2000-01-01');
+  const [date, setDate] = useState(formatDate(new Date()));
   const onChangeDate = handleInputChangeHooks(setDate);
 
   const [createEventMutation] = useCreateEventMutation();
@@ -38,7 +39,7 @@ function modEventCreator() {
         Url: <input type="text" value={url} onChange={onChangeUrl} />
       </label>
       <label>
-        Date: <input type="text" value={date} onChange={onChangeDate} />
+        Date: <input type="date" value={date} onChange={onChangeDate} />
       </label>
       <br />
       <button style={{ width: 100 }} onClick={() => createEvent()}>
