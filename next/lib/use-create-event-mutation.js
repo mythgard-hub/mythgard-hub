@@ -3,13 +3,9 @@ import gql from 'graphql-tag';
 
 const mutation = gql`
   mutation createEvent($name: String!) {
-    updateAccountByEmail(
-      input: { email: $email, patch: { accountType: $accountType } }
-    ) {
-      account {
-        id
-        email
-        accountType
+    createTournament(input: { tournament: { name: $name } }) {
+      tournament {
+        name
       }
     }
   }
