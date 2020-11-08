@@ -7,8 +7,13 @@ function modEventCreator() {
   const [name, setName] = useState('My cool event');
   const onChangeName = handleInputChangeHooks(setName);
 
+  const organizer = 'org';
+  const url = 'http://www.mythardhub.com';
+  const date = '2000-01-01';
+
   const [createEventMutation] = useCreateEventMutation();
-  const createEvent = () => createEventMutation({ variables: { name } });
+  const createEvent = () =>
+    createEventMutation({ variables: { name, url, organizer, date } });
 
   return (
     <div>

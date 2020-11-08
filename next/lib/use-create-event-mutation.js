@@ -2,10 +2,27 @@ import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 const mutation = gql`
-  mutation createEvent($name: String!) {
-    createTournament(input: { tournament: { name: $name } }) {
+  mutation createEvent(
+    $name: String!
+    $url: String!
+    $organizer: String!
+    $date: Date!
+  ) {
+    createTournament(
+      input: {
+        tournament: {
+          name: $name
+          url: $url
+          organizer: $organizer
+          date: $date
+        }
+      }
+    ) {
       tournament {
         name
+        url
+        organizer
+        date
       }
     }
   }
