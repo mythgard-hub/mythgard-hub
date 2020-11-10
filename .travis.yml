@@ -20,8 +20,14 @@ services:
 
 before_install:
   - cp .env.template .env
+
+install:
+  # Install node modules (for jest)
+  - cd next
+  - npm install
+  - cd ..
   - docker-compose up --build -d
-  - docker ps -a
+  - docker-compose logs
 
 script:
   # Run unit tests
@@ -33,4 +39,5 @@ script:
   - npx cypress run -- --record
 
 post_script:
+  - docker-compose logs
   - docker-compose stop
