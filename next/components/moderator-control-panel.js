@@ -5,6 +5,7 @@ import ModeratorConfigEditor from './moderator-config-editor.js';
 import ModeratorFeaturedDecksEditor from './moderator-featured-decks-editor.js';
 import ModAccountEditor from './mod-account-editor.js';
 import ModEventCreator from './mod-event-creator.js';
+import ModEditEvents from './mod-edit-events.js';
 import TabGroup from './tab-group.js';
 import { useState } from 'react';
 
@@ -35,7 +36,13 @@ function moderatorControlPanel() {
       )}
       {currentTab === 'Config and Media' && <ModeratorConfigEditor />}
       {currentTab === 'Accounts' && <ModAccountEditor />}
-      {currentTab === 'Events' && <ModEventCreator />}
+      {currentTab === 'Events' && (
+        <div>
+          <ModEventCreator />
+          <hr />
+          <ModEditEvents />
+        </div>
+      )}
     </>
   );
 }
