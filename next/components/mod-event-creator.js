@@ -27,7 +27,7 @@ function modEventCreator() {
           white-space: nowrap;
         }
       `}</style>
-      <h1>Create Event</h1>
+      <h2>Create Event</h2>
       <label>
         Name: <input type="text" value={name} onChange={onChangeName} />
       </label>
