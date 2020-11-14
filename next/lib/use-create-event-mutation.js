@@ -28,7 +28,7 @@ const mutation = gql`
   }
 `;
 
-export default function() {
+export default function UseCreateEventMutation() {
   return useMutation(mutation, {
     update() {
       alert('The event was created successfully');

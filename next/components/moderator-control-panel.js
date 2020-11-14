@@ -22,7 +22,7 @@ function moderatorControlPanel() {
       `}</style>
       <TabGroup
         labels={tabs}
-        selectedLabel={'Decks'}
+        selectedLabel={currentTab}
         onChange={onChangeTab}
         name={'modTabs'}
       />
