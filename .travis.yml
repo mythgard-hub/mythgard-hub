@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '12.12.0'
+  - "12.12.0"
 
 sudo: required
 
@@ -31,7 +31,7 @@ before_install:
   - cp .env.template .env
 
 install:
-  # Install node modules and start up the docker containers
+  # Install node modules (for jest) and start up the docker containers
   - cd next
   - npm install
   - cd ..
@@ -44,7 +44,10 @@ script:
   # Run e2e tests
   - cd ../e2e
   - npx cypress verify
-  - npx cypress run -- --record
+  - npx cypress run --config video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
+  - docker-compose logs db
+  - docker-compose logs express
+  - docker-compose logs next
 
 post_script:
   - docker-compose stop

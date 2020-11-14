@@ -73,14 +73,6 @@ function ModeratorConfigEditor() {
 
   return (
     <>
-      <h2>Add New Media</h2>
-      <div>
-        <ModeratorEditArticle setArticle={addArticle}></ModeratorEditArticle>
-        <hr />
-      </div>
-      <h2>Edit Site Media</h2>
-      <h3>First Four Are Top Media</h3>
-      {topMediaEditForms}
       <h2>Edit Home Page Banner Ad</h2>
       <ModeratorAdConfig ad={config.homeBannerAd} setAd={updateHomeBannerAd} />
       <hr />
@@ -90,6 +82,14 @@ function ModeratorConfigEditor() {
         url={config.patchNoteUrl}
         updatePatchVersion={updatePatchVersion}
       />
+      <h2>Add New Media</h2>
+      <div>
+        <ModeratorEditArticle setArticle={addArticle}></ModeratorEditArticle>
+        <hr />
+      </div>
+      <h2>Edit Site Media</h2>
+      <h3>First Four Are Top Media</h3>
+      {topMediaEditForms}
     </>
   );
 }

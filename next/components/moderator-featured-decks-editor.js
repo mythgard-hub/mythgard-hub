@@ -13,17 +13,6 @@ function ModeratorFeaturedDecksEditor() {
   const onChangeNewFeaturedDeckId = handleInputChangeHooks(
     setNewFeaturedDeckId
   );
-
-  if (error) {
-    return 'error loading top decks';
-  }
-
-  if (loading) {
-    return 'loading...';
-  }
-
-  const deckFeatureds = data.deckFeatureds.nodes;
-
   const [deleteFeaturedDeck] = useMutation(deleteFeaturedDeckMutation, {
     update(cache, mutationResponse) {
       const { deckFeatured } = mutationResponse.data.deleteDeckFeatured;
@@ -46,12 +35,6 @@ function ModeratorFeaturedDecksEditor() {
       alert('Delete featured deck failed. Please check values and try again');
     }
   });
-
-  const deleteDeckFeaturedById = id => {
-    const variables = { id };
-    deleteFeaturedDeck({ variables });
-  };
-
   const [addFeaturedDeck] = useMutation(addFeaturedDeckMutation, {
     update(cache, mutationResponse) {
       const { deckFeatured } = mutationResponse.data.createDeckFeatured;
@@ -79,6 +62,22 @@ function ModeratorFeaturedDecksEditor() {
     }
   });
 
+
+  if (error) {
+    return 'error loading top decks';
+  }
+
+  if (loading) {
+    return 'loading...';
+  }
+
+  const deckFeatureds = data.deckFeatureds.nodes;
+
+  const deleteDeckFeaturedById = id => {
+    const variables = { id };
+    deleteFeaturedDeck({ variables });
+  };
+
   const addFeaturedDeckByDeckId = deckId => {
     const variables = { deckId: parseInt(deckId) };
     if (variables.deckId < 1 || isNaN(variables.deckId)) {
@@ -90,7 +89,7 @@ function ModeratorFeaturedDecksEditor() {
 
   return (
     <div>
-      <h1>Edit Featured Decks</h1>
+      <h2>Edit Featured Decks</h2>
 
       {deckFeatureds.map((df, index) => {
         return (

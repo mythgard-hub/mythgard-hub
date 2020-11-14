@@ -7,7 +7,7 @@
 import React from 'react';
 import UserContext from './user-context';
 
-export default WrappedComponent => {
+const WithUser = WrappedComponent => {
   return class extends React.Component {
     static displayName = 'withUser(WrappedComponent)';
 
@@ -30,3 +30,5 @@ export default WrappedComponent => {
     }
   };
 };
+
+export default WithUser;
