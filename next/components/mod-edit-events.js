@@ -24,7 +24,6 @@ function modEditEvents() {
 
   return (
     <div>
-      <style jsx>{``}</style>
       <h2>Public Events</h2>
       {eventList}
     </div>
