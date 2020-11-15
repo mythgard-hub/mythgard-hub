@@ -1,31 +1,28 @@
-import { useState } from 'react';
-import { handleInputChangeHooks } from '../lib/form-utils.js';
-import { formatDate } from '../lib/graphql-utils.js';
-import useCreateEventMutation from '../lib/use-create-event-mutation';
 import { useQuery } from '@apollo/react-hooks';
 import { allTournaments } from '../lib/tournament-queries.js';
+import EventForm from './event-form.js';
 
 function modEditEvents() {
-  const { loading, error, data } = useQuery(allTournaments);
-  // const [name, setName] = useState('My cool event');
-  // const onChangeName = handleInputChangeHooks(setName);
-  // const [organizer, setOrganizer] = useState('organizer');
-  // const onChangeOrganizer = handleInputChangeHooks(setOrganizer);
-  // const [url, setUrl] = useState('https://www.mythgardhub.com/');
-  // const onChangeUrl = handleInputChangeHooks(setUrl);
-  // const [date, setDate] = useState(formatDate(new Date()));
-  // const onChangeDate = handleInputChangeHooks(setDate);
+  const { data } = useQuery(allTournaments);
+  const events = data && data.tournaments && data.tournaments.nodes;
 
-  // const [createEventMutation] = useCreateEventMutation();
-  // const createEvent = () =>
-  //   createEventMutation({ variables: { name, url, organizer, date } });
-  //
+  const eventList =
+    events &&
+    events.map &&
+    events.map(e => (
+      <EventForm
+        key={e.id}
+        existingEvent={e}
+        onSave={(...args) => alert(JSON.stringify(args[0]))}
+      />
+    ));
 
   return (
     <div>
       <style jsx>{``}</style>
-      <h2>Event results</h2>
       {JSON.stringify(data)}
+      <h2>Public Events</h2>
+      {eventList}
     </div>
   );
 }
