@@ -10,11 +10,14 @@ function modEditEvents() {
     events &&
     events.map &&
     events.map(e => (
-      <EventForm
-        key={e.id}
-        existingEvent={e}
-        onSave={(...args) => alert(JSON.stringify(args[0]))}
-      />
+      <div>
+        <EventForm
+          key={e.id}
+          existingEvent={e}
+          onSave={(...args) => alert(JSON.stringify(args[0]))}
+        />
+        <hr />
+      </div>
     ));
 
   return (

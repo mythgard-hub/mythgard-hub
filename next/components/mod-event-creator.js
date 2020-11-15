@@ -7,7 +7,12 @@ function modEventCreator() {
   const createEvent = ({ name, url, organizer, date }) =>
     createEventMutation({ variables: { name, url, organizer, date } });
 
-  return <EventForm onSave={createEvent} />;
+  return (
+    <div>
+      <h2>Create Event</h2>
+      <EventForm onSave={createEvent} />
+    </div>
+  );
 }
 
 export default modEventCreator;
