@@ -1,50 +1,16 @@
 import React from 'react';
-import { useState } from 'react';
-import { handleInputChangeHooks } from '../lib/form-utils.js';
-import { formatDate } from '../lib/graphql-utils.js';
 import useCreateEventMutation from '../lib/use-create-event-mutation';
+import EventForm from './event-form.js';
 
 function modEventCreator() {
-  const [name, setName] = useState('My cool event');
-  const onChangeName = handleInputChangeHooks(setName);
-  const [organizer, setOrganizer] = useState('organizer');
-  const onChangeOrganizer = handleInputChangeHooks(setOrganizer);
-  const [url, setUrl] = useState('https://www.mythgardhub.com/');
-  const onChangeUrl = handleInputChangeHooks(setUrl);
-  const [date, setDate] = useState(formatDate(new Date()));
-  const onChangeDate = handleInputChangeHooks(setDate);
-
   const [createEventMutation] = useCreateEventMutation();
-  const createEvent = () =>
+  const createEvent = ({ name, url, organizer, date }) =>
     createEventMutation({ variables: { name, url, organizer, date } });
 
   return (
     <div>
-      <style jsx>{`
-        label {
-          display: inline-block;
-          margin: 0px 20px 20px;
-          white-space: nowrap;
-        }
-      `}</style>
       <h2>Create Event</h2>
-      <label>
-        Name: <input type="text" value={name} onChange={onChangeName} />
-      </label>
-      <label>
-        Organizer:{' '}
-        <input type="text" value={organizer} onChange={onChangeOrganizer} />
-      </label>
-      <label>
-        Url: <input type="text" value={url} onChange={onChangeUrl} />
-      </label>
-      <label>
-        Date: <input type="date" value={date} onChange={onChangeDate} />
-      </label>
-      <br />
-      <button style={{ width: 100 }} onClick={() => createEvent()}>
-        Save
-      </button>
+      <EventForm onSave={createEvent} />
     </div>
   );
 }

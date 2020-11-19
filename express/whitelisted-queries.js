@@ -748,5 +748,29 @@ mutation addFeaturedDeck($deckId: Int!) {
       }
     }
   }
+`,
+  `
+  mutation updateEvent(
+    $id: Int!
+    $name: String!
+    $url: String!
+    $organizer: String!
+    $date: Date!
+  ) {
+    updateTournament(
+      input: {
+        id: $id
+        patch: { name: $name, url: $url, organizer: $organizer, date: $date }
+      }
+    ) {
+      tournament {
+        id
+        name
+        url
+        organizer
+        date
+      }
+    }
+  }
 `
 ];

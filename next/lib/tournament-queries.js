@@ -59,3 +59,17 @@ export const tournamentWithResultsQuery = gql`
     }
   }
 `;
+
+export const allTournaments = gql`
+  query tournaments {
+    tournaments(orderBy: DATE_DESC) {
+      nodes {
+        id
+        name
+        organizer
+        date
+        url
+      }
+    }
+  }
+`;
