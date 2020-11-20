@@ -26,7 +26,7 @@ export default function Spoilers() {
     }
   ];
 
-  const spoilersUl = (
+  const spoilersGrid = (
     <>
       <style jsx>{`
         .spoilers {
@@ -65,7 +65,7 @@ export default function Spoilers() {
           Spoilers
         </PageBanner>
         {spoilers.length ? (
-          spoilersUl
+          spoilersGrid
         ) : (
           <p style={{ margin: '20px 0' }}>
             No spoilers right now, check back later!

@@ -10,7 +10,7 @@ import TabGroup from './tab-group.js';
 import { useState } from 'react';
 
 function moderatorControlPanel() {
-  const tabs = ['Decks', 'Config and Media', 'Accounts', 'Events'];
+  const tabs = ['Decks', 'Config and Media', 'Accounts', 'Events', 'Spoilers'];
   const [currentTab, setChosenTab] = useState('Decks');
   const onChangeTab = tab => setChosenTab(tab);
 
@@ -43,6 +43,7 @@ function moderatorControlPanel() {
           <ModEditEvents />
         </div>
       )}
+      {currentTab === 'Spoilers' && <div>Spoilers</div>}
     </>
   );
 }
