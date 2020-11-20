@@ -13,6 +13,16 @@ export default function Spoilers() {
       id: '1235',
       name: 'Academy Analyst',
       imagePath: getImagePath('Academy Analyst', 'spoilers')
+    },
+    {
+      id: '1235',
+      name: 'Academy Analyst',
+      imagePath: getImagePath('Academy Analyst', 'spoilers')
+    },
+    {
+      id: '1235',
+      name: 'Academy Analyst',
+      imagePath: getImagePath('Academy Analyst', 'spoilers')
     }
   ];
 
@@ -25,11 +35,31 @@ export default function Spoilers() {
   });
 
   return (
-    <Layout title={title}>
-      <PageBanner image={PageBanner.IMG_CARDS} url="/cards">
-        Spoilers
-      </PageBanner>
-      {spoilersHtml}
-    </Layout>
+    <>
+      <style jsx>{`
+        .spoilers {
+          display: grid;
+          margin: 0;
+          padding: 20px 0;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          column-gap: 10px;
+          row-gap: 10px;
+        }
+        :global(.spoilers > li) {
+          display: block;
+          list-style: none;
+        }
+        :global(.spoilers > li > img) {
+          display: block;
+          width: 100%;
+        }
+      `}</style>
+      <Layout title={title}>
+        <PageBanner image={PageBanner.IMG_CARDS} url="/cards">
+          Spoilers
+        </PageBanner>
+        <ul className="spoilers">{spoilersHtml}</ul>
+      </Layout>
+    </>
   );
 }
