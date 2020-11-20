@@ -26,15 +26,7 @@ export default function Spoilers() {
     }
   ];
 
-  const spoilersHtml = spoilers.map(s => {
-    return (
-      <li key={s.id}>
-        <img className="card-image" src={s.imagePath} alt={s.name} />
-      </li>
-    );
-  });
-
-  return (
+  const spoilersUl = (
     <>
       <style jsx>{`
         .spoilers {
@@ -45,20 +37,40 @@ export default function Spoilers() {
           column-gap: 10px;
           row-gap: 10px;
         }
-        :global(.spoilers > li) {
+        .spoilers > li {
           display: block;
           list-style: none;
         }
-        :global(.spoilers > li > img) {
+        .spoilers > li > img {
           display: block;
           width: 100%;
         }
       `}</style>
+      <ul className="spoilers">
+        {spoilers.map(s => {
+          return (
+            <li key={s.id}>
+              <img className="card-image" src={s.imagePath} alt={s.name} />
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
+
+  return (
+    <>
       <Layout title={title}>
         <PageBanner image={PageBanner.IMG_CARDS} url="/cards">
           Spoilers
         </PageBanner>
-        <ul className="spoilers">{spoilersHtml}</ul>
+        {spoilers.length ? (
+          spoilersUl
+        ) : (
+          <p style={{ margin: '20px 0' }}>
+            No spoilers right now, check back later!
+          </p>
+        )}
       </Layout>
     </>
   );
