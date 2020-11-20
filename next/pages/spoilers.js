@@ -5,22 +5,18 @@ export default function Spoilers() {
   const title = 'Spoilers | Mythgard Hub';
   const spoilers = [
     {
-      id: '1234',
       name: 'A Mind Of Its Own',
       imagePath: getImagePath('A Mind Of Its Own', 'spoilers')
     },
     {
-      id: '1235',
       name: 'Academy Analyst',
       imagePath: getImagePath('Academy Analyst', 'spoilers')
     },
     {
-      id: '1235',
       name: 'Academy Analyst',
       imagePath: getImagePath('Academy Analyst', 'spoilers')
     },
     {
-      id: '1235',
       name: 'Academy Analyst',
       imagePath: getImagePath('Academy Analyst', 'spoilers')
     }
@@ -49,7 +45,7 @@ export default function Spoilers() {
       <ul className="spoilers">
         {spoilers.map(s => {
           return (
-            <li key={s.id}>
+            <li key={s.name}>
               <img className="card-image" src={s.imagePath} alt={s.name} />
             </li>
           );
