@@ -38,6 +38,26 @@ function ModEditSpoilers() {
     updateConfig(config);
   };
 
+  const commitSpoilerMoveUp = index => {
+    if (!index) {
+      return;
+    }
+    config.spoilers[index - 1] = { ...spoilersModel[index] };
+    config.spoilers[index] = { ...spoilersModel[index - 1] };
+
+    updateConfig(config);
+  };
+
+  const commitSpoilerMoveDown = index => {
+    if (index + 1 >= config.spoilers.length) {
+      return;
+    }
+    config.spoilers[index + 1] = { ...spoilersModel[index] };
+    config.spoilers[index] = { ...spoilersModel[index + 1] };
+
+    updateConfig(config);
+  };
+
   const commitSpoilerDelete = index => {
     config.spoilers.splice(index, 1);
     updateConfig(config);
@@ -68,7 +88,6 @@ function ModEditSpoilers() {
           display: flex;
           align-content: stretch;
           justify-content: center;
-          max-width: 600px;
           margin: 20px 0;
         }
         .add-form > input {
@@ -90,6 +109,8 @@ function ModEditSpoilers() {
                 onChange={e => updateSpoilerName(e, index)}
                 type="text"
               />
+              <button onClick={() => commitSpoilerMoveUp(index)}>⬆️</button>
+              <button onClick={() => commitSpoilerMoveDown(index)}>⬇️</button>
               <button onClick={() => commitSpoilerUpdate(index)}>Update</button>
               <button onClick={() => commitSpoilerDelete(index)}>Delete</button>
             </div>
