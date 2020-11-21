@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import useConfig from '../lib/use-config.js';
 import useConfigMutation from '../lib/use-config-mutation.js';
 
 function ModEditSpoilers() {
   const { config, error, loading } = useConfig();
+  const updateConfig = useConfigMutation();
 
   if (error) {
     return 'error loading config';
@@ -12,9 +14,32 @@ function ModEditSpoilers() {
     return 'loading config';
   }
 
+  const [spoilersModel, setSpoilersModel] = useState(
+    (config.spoilers &&
+      config.spoilers.map(s => {
+        return { ...s };
+      })) ||
+      []
+  );
+
+  const updateSpoilerName = (e, index) => {
+    const val = e && e.target && e.target.value;
+    if (val) {
+      const newSpoilersModel = [...spoilersModel];
+      newSpoilersModel[index].name = val;
+      setSpoilersModel(newSpoilersModel);
+    }
+    return val;
+  };
+
+  const commitSpoilerUpdate = index => {
+    config.spoilers[index] = { ...spoilersModel[index] };
+    updateConfig(config);
+  };
+
   return (
     <div>
-      <p>
+      <div>
         <ol>
           <li>
             Add spoiler images to Amazon s3 cards bucket under spoilers folder
@@ -23,7 +48,7 @@ function ModEditSpoilers() {
             Add card names matching images here. Follow normal card name rules.
           </li>
         </ol>
-      </p>
+      </div>
       <style jsx>{`
         .add-form {
           display: flex;
@@ -43,16 +68,19 @@ function ModEditSpoilers() {
         }
       `}</style>
       <div>
-        {config.spoilers &&
-          config.spoilers.map(s => {
-            return (
-              <div key={s.name} className="add-form">
-                <input value={s.name} type="text" />
-                <button>Update</button>
-                <button>Delete</button>
-              </div>
-            );
-          })}
+        {spoilersModel.map((s, index) => {
+          return (
+            <div key={index} className="add-form">
+              <input
+                value={s.name}
+                onChange={e => updateSpoilerName(e, index)}
+                type="text"
+              />
+              <button onClick={() => commitSpoilerUpdate(index)}>Update</button>
+              <button>Delete</button>
+            </div>
+          );
+        })}
       </div>
       <div className="add-form">
         <input type="text" />
