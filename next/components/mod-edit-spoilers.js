@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { handleInputChangeHooks } from '../lib/form-utils.js';
 import useConfig from '../lib/use-config.js';
 import useConfigMutation from '../lib/use-config-mutation.js';
 
@@ -25,15 +26,22 @@ function ModEditSpoilers() {
   const updateSpoilerName = (e, index) => {
     const val = e && e.target && e.target.value;
     if (val) {
-      const newSpoilersModel = [...spoilersModel];
-      newSpoilersModel[index].name = val;
-      setSpoilersModel(newSpoilersModel);
+      const newSpoilerNamesModel = [...spoilersModel];
+      newSpoilerNamesModel[index].name = val;
+      setSpoilersModel(newSpoilerNamesModel);
     }
     return val;
   };
 
   const commitSpoilerUpdate = index => {
     config.spoilers[index] = { ...spoilersModel[index] };
+    updateConfig(config);
+  };
+
+  const [newSpoilerName, setNewSpoilerName] = useState('new spoiler');
+
+  const persistNewSpoiler = () => {
+    config.spoilers.push({ name: newSpoilerName });
     updateConfig(config);
   };
 
@@ -83,8 +91,12 @@ function ModEditSpoilers() {
         })}
       </div>
       <div className="add-form">
-        <input type="text" />
-        <button>Add</button>
+        <input
+          value={newSpoilerName}
+          onChange={handleInputChangeHooks(setNewSpoilerName)}
+          type="text"
+        />
+        <button onClick={persistNewSpoiler}>Add</button>
       </div>
     </div>
   );
