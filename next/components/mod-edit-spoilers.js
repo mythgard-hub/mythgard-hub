@@ -38,9 +38,15 @@ function ModEditSpoilers() {
     updateConfig(config);
   };
 
+  const commitSpoilerDelete = index => {
+    config.spoilers.splice(index, 1);
+    updateConfig(config);
+  };
+
   const [newSpoilerName, setNewSpoilerName] = useState('new spoiler');
 
   const persistNewSpoiler = () => {
+    config.spoilers = config.spoilers || [];
     config.spoilers.push({ name: newSpoilerName });
     updateConfig(config);
   };
@@ -85,7 +91,7 @@ function ModEditSpoilers() {
                 type="text"
               />
               <button onClick={() => commitSpoilerUpdate(index)}>Update</button>
-              <button>Delete</button>
+              <button onClick={() => commitSpoilerDelete(index)}>Delete</button>
             </div>
           );
         })}
