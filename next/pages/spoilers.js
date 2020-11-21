@@ -1,26 +1,25 @@
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import { imagePathMedium as getImagePath } from '../lib/card.js';
+import useConfig from '../lib/use-config.js';
 export default function Spoilers() {
   const title = 'Spoilers | Mythgard Hub';
-  const spoilers = [
-    {
-      name: 'A Mind Of Its Own',
-      imagePath: getImagePath('A Mind Of Its Own', 'spoilers')
-    },
-    {
-      name: 'Academy Analyst',
-      imagePath: getImagePath('Academy Analyst', 'spoilers')
-    },
-    {
-      name: 'Academy Analyst',
-      imagePath: getImagePath('Academy Analyst', 'spoilers')
-    },
-    {
-      name: 'Academy Analyst',
-      imagePath: getImagePath('Academy Analyst', 'spoilers')
-    }
-  ];
+  const { config, error, loading } = useConfig();
+
+  if (error) {
+    return 'error loading spoilers...';
+  }
+
+  if (loading) {
+    return 'loading config';
+  }
+
+  const spoilers = config.spoilers.map(({ name }) => {
+    return {
+      name,
+      imagePath: getImagePath(name, 'spoilers')
+    };
+  });
 
   const spoilersGrid = (
     <>
