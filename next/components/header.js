@@ -112,6 +112,11 @@ class Header extends React.Component {
               </HeaderLink>
             </li>
             <li>
+              <HeaderLink cyName="spoilers" route="/spoilers">
+                Spoilers
+              </HeaderLink>
+            </li>
+            <li>
               <HeaderLink cyName="events" route="/events">
                 Events
               </HeaderLink>

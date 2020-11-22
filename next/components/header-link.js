@@ -16,13 +16,14 @@ function HeaderLink(props) {
           text-decoration: none;
           content: '\u25b6';
           margin-right: 5px;
+          font-size: 14px;
         }
 
         a {
           text-transform: uppercase;
           text-decoration: none;
           margin-right: 22px;
-          font-size: 18px;
+          font-size: 16px;
           white-space: nowrap;
         }
 
