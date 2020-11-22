@@ -573,6 +573,26 @@ query tournaments($now: Date) {
   }
 `,
   `
+mutation favoriteDeck($deckId: Int, $accountId: Int) {
+  createDeckFavorite(
+    input: { deckFavorite: { deckId: $deckId, accountId: $accountId } }
+  ) {
+    deckFavorite {
+      id
+    }
+  }
+}
+`,
+  `
+mutation removeDeckFavorite($deckFavoriteId: Int!) {
+  deleteDeckFavorite(input: { id: $deckFavoriteId }) {
+    deckFavorite {
+      id
+    }
+  }
+}
+`,
+  `
   mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {
     updateDeck(
       input: {
