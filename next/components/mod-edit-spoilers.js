@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import useConfig from '../lib/use-config.js';
 import useConfigMutation from '../lib/use-config-mutation.js';
@@ -6,6 +6,19 @@ import useConfigMutation from '../lib/use-config-mutation.js';
 function ModEditSpoilers() {
   const { config, error, loading } = useConfig();
   const updateConfig = useConfigMutation();
+  const [newSpoilerName, setNewSpoilerName] = useState('new spoiler');
+  const [spoilersModel, setSpoilersModel] = useState(null);
+
+  useEffect(() => {
+    setSpoilersModel(
+      (config &&
+        config.spoilers &&
+        config.spoilers.map(s => {
+          return { ...s };
+        })) ||
+        []
+    );
+  }, [config]);
 
   if (error) {
     return 'error loading config';
@@ -14,14 +27,6 @@ function ModEditSpoilers() {
   if (loading) {
     return 'loading config';
   }
-
-  const [spoilersModel, setSpoilersModel] = useState(
-    (config.spoilers &&
-      config.spoilers.map(s => {
-        return { ...s };
-      })) ||
-      []
-  );
 
   const updateSpoilerName = (e, index) => {
     const val = e && e.target && e.target.value;
@@ -63,8 +68,6 @@ function ModEditSpoilers() {
     updateConfig(config);
   };
 
-  const [newSpoilerName, setNewSpoilerName] = useState('new spoiler');
-
   const persistNewSpoiler = () => {
     config.spoilers = config.spoilers || [];
     config.spoilers.push({ name: newSpoilerName });
@@ -101,21 +104,26 @@ function ModEditSpoilers() {
         }
       `}</style>
       <div>
-        {spoilersModel.map((s, index) => {
-          return (
-            <div key={index} className="add-form">
-              <input
-                value={s.name}
-                onChange={e => updateSpoilerName(e, index)}
-                type="text"
-              />
-              <button onClick={() => commitSpoilerMoveUp(index)}>⬆️</button>
-              <button onClick={() => commitSpoilerMoveDown(index)}>⬇️</button>
-              <button onClick={() => commitSpoilerUpdate(index)}>Update</button>
-              <button onClick={() => commitSpoilerDelete(index)}>Delete</button>
-            </div>
-          );
-        })}
+        {spoilersModel &&
+          spoilersModel.map((s, index) => {
+            return (
+              <div key={index} className="add-form">
+                <input
+                  value={s.name}
+                  onChange={e => updateSpoilerName(e, index)}
+                  type="text"
+                />
+                <button onClick={() => commitSpoilerMoveUp(index)}>⬆️</button>
+                <button onClick={() => commitSpoilerMoveDown(index)}>⬇️</button>
+                <button onClick={() => commitSpoilerUpdate(index)}>
+                  Update
+                </button>
+                <button onClick={() => commitSpoilerDelete(index)}>
+                  Delete
+                </button>
+              </div>
+            );
+          })}
       </div>
       <div className="add-form">
         <input
