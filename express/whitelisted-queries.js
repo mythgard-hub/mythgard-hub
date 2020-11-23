@@ -772,5 +772,12 @@ mutation addFeaturedDeck($deckId: Int!) {
       }
     }
   }
+`,
+  `
+  mutation deleteEvent($id: Int!) {
+    deleteTournament(input: { id: $id }) {
+      deletedTournamentNodeId
+    }
+  }
 `
 ];
