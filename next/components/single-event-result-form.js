@@ -13,7 +13,12 @@ export default function SingleEventResultForm({
   const [deckId, setDeckId] = useState(existingResult.deckId || -1);
 
   const saveResult = () =>
-    onSave({ rank: parseInt(rank, 10), pilot, deckId: parseInt(deckId, 10) });
+    onSave({
+      rank: parseInt(rank, 10),
+      pilot,
+      deckId: parseInt(deckId, 10),
+      id: existingResult.id
+    });
 
   return (
     <div>

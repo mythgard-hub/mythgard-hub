@@ -1,14 +1,20 @@
 import PropTypes from 'prop-types';
 import SingleEventResultForm from './single-event-result-form.js';
 import useCreateEventResultMutaton from '../lib/use-create-event-result-mutation.js';
+import useUpdateEventResultMutation from '../lib/use-update-event-result-mutation.js';
 import useDeleteEventResultMutation from '../lib/use-delete-event-result-mutation.js';
 
 export default function EventResultsForm({ eventId, eventResults }) {
-  const [createEventResultMutation] = useCreateEventResultMutaton();
+  const [updateEventResultMutation] = useUpdateEventResultMutation();
   const [deleteEventResultMutation] = useDeleteEventResultMutation();
-  // const [createEventMutation] = useCreateEventResultMutation();
-  // const createEvent = ({ name, url, organizer, date }) =>
-  // createEventMutation({ variables: { name, url, organizer, date } });
+  const [createEventResultMutation] = useCreateEventResultMutaton();
+
+  const updateEventResult = result =>
+    updateEventResultMutation({ variables: result });
+
+  const deleteEventResult = id =>
+    deleteEventResultMutation({ variables: { id } });
+
   const createEventResult = result =>
     createEventResultMutation({
       variables: {
@@ -16,11 +22,6 @@ export default function EventResultsForm({ eventId, eventResults }) {
         ...result
       }
     });
-
-  const deleteEventResult = id =>
-    deleteEventResultMutation({ variables: { id } });
-
-  const updateEventResult = () => alert(JSON.stringify(arguments));
 
   return (
     <div>
