@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import SingleEventResultForm from './single-event-result-form.js';
 import useCreateEventResultMutaton from '../lib/use-create-event-result-mutation.js';
+import useDeleteEventResultMutation from '../lib/use-delete-event-result-mutation.js';
 
 export default function EventResultsForm({ eventId, eventResults }) {
   const [createEventResultMutation] = useCreateEventResultMutaton();
+  const [deleteEventResultMutation] = useDeleteEventResultMutation();
   // const [createEventMutation] = useCreateEventResultMutation();
   // const createEvent = ({ name, url, organizer, date }) =>
   // createEventMutation({ variables: { name, url, organizer, date } });
@@ -14,6 +16,9 @@ export default function EventResultsForm({ eventId, eventResults }) {
         ...result
       }
     });
+
+  const deleteEventResult = id =>
+    deleteEventResultMutation({ variables: { id } });
 
   const updateEventResult = () => alert(JSON.stringify(arguments));
 
@@ -26,7 +31,7 @@ export default function EventResultsForm({ eventId, eventResults }) {
           existingResult={r}
           onSave={updateEventResult}
         >
-          <button>Delete</button>
+          <button onClick={() => deleteEventResult(r.id)}>Delete</button>
         </SingleEventResultForm>
       ))}
       <SingleEventResultForm onSave={createEventResult} label={'Add'} />
