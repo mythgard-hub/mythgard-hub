@@ -343,7 +343,7 @@ function Layout({ title, desc, image, router, children }) {
 
           .call-to-action-chevron:before {
             text-decoration: none;
-            content: '\u25b6';
+            content: '▶';
             margin-right: 3px;
             font-size: 10px;
           }
