@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { allTournaments } from '../lib/tournament-queries.js';
 
 const mutation = gql`
   mutation createEventResult(
@@ -32,10 +33,10 @@ export default function UseCreateSingleEventMutation() {
   return useMutation(mutation, {
     update() {
       alert('Result created successfully');
-      window.location.reload();
     },
     onError() {
       alert('That failed. Please check values and try again');
-    }
+    },
+    refetchQueries: [{ query: allTournaments }]
   });
 }

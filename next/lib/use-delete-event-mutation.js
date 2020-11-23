@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { allTournaments } from '../lib/tournament-queries.js';
 
 const mutation = gql`
   mutation deleteEvent($id: Int!) {
@@ -13,10 +14,10 @@ export default function UseDeleteEventMutation() {
   return useMutation(mutation, {
     update() {
       alert('Event deleted succesfully');
-      window.location.reload();
     },
     onError() {
       alert('That failed. Please check values and try again');
-    }
+    },
+    refetchQueries: [{ query: allTournaments }]
   });
 }

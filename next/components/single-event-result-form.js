@@ -6,19 +6,26 @@ export default function SingleEventResultForm({
   onSave,
   existingResult = {},
   label = 'Update',
+  clearOnSave = false,
   children
 }) {
   const [rank, setRank] = useState(existingResult.rank || 0);
   const [pilot, setPilot] = useState(existingResult.pilot || '');
   const [deckId, setDeckId] = useState(existingResult.deckId || -1);
 
-  const saveResult = () =>
+  const saveResult = () => {
     onSave({
       rank: parseInt(rank, 10),
       pilot,
       deckId: parseInt(deckId, 10),
       id: existingResult.id
     });
+    if (clearOnSave) {
+      setRank(0);
+      setPilot('');
+      setDeckId(-1);
+    }
+  };
 
   return (
     <div>
@@ -74,5 +81,6 @@ SingleEventResultForm.propTypes = {
     deckId: PropTypes.number
   }),
   label: PropTypes.string,
+  clearOnSave: PropTypes.bool,
   children: PropTypes.element
 };

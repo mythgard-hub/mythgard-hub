@@ -38,7 +38,11 @@ export default function EventResultsForm({ eventId, eventResults }) {
           <button onClick={() => deleteEventResult(r.id)}>Delete</button>
         </SingleEventResultForm>
       ))}
-      <SingleEventResultForm onSave={createEventResult} label={'Add'} />
+      <SingleEventResultForm
+        onSave={createEventResult}
+        clearOnSave={true}
+        label={'Add'}
+      />
     </div>
   );
 }
