@@ -7,7 +7,6 @@ function ViewMore({ url, count, limit = 3 }) {
         .view-more {
           font-size: 0.7em;
           margin-top: -5px;
-          margin-right: 20px;
           font-weight: 600;
           text-align: right;
           color: #ffffff;
@@ -21,7 +20,7 @@ function ViewMore({ url, count, limit = 3 }) {
         }
         .view-more-button:before {
           text-decoration: none;
-          content: '\u25b6';
+          content: '▶';
           font-size: 80%;
           margin-right: 5px;
         }
