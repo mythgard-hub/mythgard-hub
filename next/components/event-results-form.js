@@ -12,8 +12,11 @@ export default function EventResultsForm({ eventId, eventResults }) {
   const updateEventResult = result =>
     updateEventResultMutation({ variables: result });
 
-  const deleteEventResult = id =>
-    deleteEventResultMutation({ variables: { id } });
+  const deleteEventResult = id => {
+    if (confirm('Are you sure you want to delete that event result?')) {
+      deleteEventResultMutation({ variables: { id } });
+    }
+  };
 
   const createEventResult = result =>
     createEventResultMutation({

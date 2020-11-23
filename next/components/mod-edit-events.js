@@ -18,7 +18,7 @@ function modEditEvents() {
   const eventResults = e => e.tournamentDecks && e.tournamentDecks.nodes;
 
   const deleteEvent = id => {
-    if (confirm('Are you sure?')) {
+    if (confirm('Are you sure you want to delete that event?')) {
       deleteEventMutation({ variables: { id } });
     }
   };
