@@ -69,6 +69,14 @@ export const allTournaments = gql`
         organizer
         date
         url
+        tournamentDecks {
+          nodes {
+            rank
+            id
+            pilot
+            deckId
+          }
+        }
       }
     }
   }
