@@ -772,5 +772,78 @@ mutation addFeaturedDeck($deckId: Int!) {
       }
     }
   }
+`,
+  `
+  query allTournaments {
+    tournaments(orderBy: DATE_DESC) {
+      nodes {
+        id
+        name
+        organizer
+        date
+        url
+        tournamentDecks {
+          nodes {
+            rank
+            id
+            pilot
+            deckId
+          }
+        }
+      }
+    }
+  }
+`,
+  `
+  mutation createEventResult(
+    $pilot: String!
+    $rank: Int!
+    $deckId: Int!
+    $eventId: Int!
+  ) {
+    createTournamentDeck(
+      input: {
+        tournamentDeck: {
+          rank: $rank
+          deckId: $deckId
+          pilot: $pilot
+          tournamentId: $eventId
+        }
+      }
+    ) {
+      tournamentDeck {
+        id
+        pilot
+        rank
+        deckId
+      }
+    }
+  }
+`,
+  `
+  mutation updateEventResult(
+    $pilot: String!
+    $rank: Int!
+    $deckId: Int!
+    $id: Int!
+  ) {
+    updateTournamentDeck(
+      input: { id: $id, patch: { rank: $rank, deckId: $deckId, pilot: $pilot } }
+    ) {
+      tournamentDeck {
+        id
+        pilot
+        rank
+        deckId
+      }
+    }
+  }
+`,
+  `
+  mutation deleteEventResult($id: Int!) {
+    deleteTournamentDeck(input: { id: $id }) {
+      deletedTournamentDeckNodeId
+    }
+  }
 `
 ];
