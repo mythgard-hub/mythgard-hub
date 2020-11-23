@@ -5,6 +5,7 @@ import UserContext from '../components/user-context';
 import { ApolloConsumer } from 'react-apollo';
 import updateUsername from '../lib/mutations/update-username';
 import UserDecks from '../components/user-decks';
+import UserFavoriteDecks from '../components/user-favorite-decks';
 import PublicAccount from '../components/public-account.js';
 import Profile from '../components/profile.js';
 import AvatarPicker from '../components/avatar-picker.js';
@@ -139,7 +140,12 @@ export default withRouter(({ router }) => {
             <div className="profile-column">
               <h2>My Decks</h2>
               <hr className="ograd" />
-              <UserDecks userId={user.id} limit={3} />
+              <UserDecks user={user} limit={3} />
+            </div>
+            <div className="profile-column">
+              <h2>My Favorite Decks</h2>
+              <hr className="ograd" />
+              <UserFavoriteDecks userId={user.id} limit={3} />
             </div>
             <div className="profile-column">
               <h2>Profile</h2>
