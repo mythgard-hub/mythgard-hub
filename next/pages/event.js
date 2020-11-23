@@ -78,7 +78,7 @@ export default withRouter(({ router }) => {
             <tbody>
               {tournamentDecks
                 .sort((a, b) => {
-                  return a.rank > b.rank;
+                  return a.rank - b.rank;
                 })
                 .map((tourneyDeck, index) => {
                   const { deck } = tourneyDeck;
