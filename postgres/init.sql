@@ -474,7 +474,7 @@ CREATE POLICY deck_favorite_insert_if_author
   WITH CHECK ((account_id = mythgard.current_user_id())
               AND
               NOT EXISTS(select * from mythgard.deck
-                         where id = deck_vote.deck_id
+                         where id = deck_favorite.deck_id
                          and author_id = mythgard.current_user_id()));
 CREATE POLICY deck_favorite_delete_if_author
   ON mythgard.deck_favorite
