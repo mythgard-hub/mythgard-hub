@@ -315,6 +315,22 @@ export const userDecksQuery = gql`
   }
 `;
 
+export const userFavoriteDecksQuery = gql`
+  query userFavoriteDecks($userId: Int!) {
+    account(id: $userId) {
+      deckFavorites {
+        nodes {
+          deck {
+            deckPreviews {
+              ${deckPreviewsFragment}
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 // converts a deckPreview view to a deck-like object
 // for use in components that expect a deck-like
 export const deckPreviewToDeck = d => {

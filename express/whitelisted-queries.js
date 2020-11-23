@@ -584,6 +584,21 @@ mutation favoriteDeck($deckId: Int, $accountId: Int) {
 }
 `,
   `
+  query userFavoriteDecks($userId: Int!) {
+    account(id: $userId) {
+      deckFavorites {
+        nodes {
+          deck {
+            deckPreviews {
+              ${deckPreviewsFragment}
+            }
+          }
+        }
+      }
+    }
+  }
+`,
+  `
 mutation removeDeckFavorite($deckFavoriteId: Int!) {
   deleteDeckFavorite(input: { id: $deckFavoriteId }) {
     deckFavorite {
