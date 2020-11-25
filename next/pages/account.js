@@ -9,7 +9,8 @@ import PublicAccount from '../components/public-account.js';
 import Profile from '../components/profile.js';
 import AvatarPicker from '../components/avatar-picker.js';
 import Router from 'next/router';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useLazyQuery } from '@apollo/react-hooks';
+import { query } from '../components/public-account.js';
 import gql from 'graphql-tag';
 
 const error403 = () => Router.push('/');
@@ -38,15 +39,27 @@ export default withRouter(({ router }) => {
     return <Layout>{result}</Layout>;
   }
 
-  const [username, setUsername] = useState(user.username);
+  const [usernameUntrimmed, setUsername] = useState(user.username);
+  const username = usernameUntrimmed.trim();
+  const [lastUsername, setLastUsername] = useState('');
 
-  const areSettingsValid = () => !!username;
+  const [checkUserNameQuery, unQuery] = useLazyQuery(query);
+
+  const checking = unDebounceTimer || unQuery.loading;
+  const showResults = unQuery.called && !checking && username != lastUsername;
+  const lastQueryHadResult = unQuery.data && unQuery.data.accountByUsername;
+  const usernameTaken = showResults && lastQueryHadResult;
+  const usernameAvailable = username && showResults && !lastQueryHadResult;
+
+  const areSettingsValid = () =>
+    !!username && usernameAvailable && username != lastUsername;
 
   const handleSubmit = apolloClient => {
     if (!areSettingsValid()) return;
-    updateUsername(apolloClient, user.id, username.trim())
+    updateUsername(apolloClient, user.id, username)
       .then(({ data }) => {
         updateUser({ ...user, ...data.updateAccount.account });
+        setLastUsername(username);
       })
       .catch(err => {
         // TODO alert special msg if username not unique (or just suggest
@@ -71,8 +84,8 @@ export default withRouter(({ router }) => {
     );
   };
 
-  const checkUsernameHelper = un => {
-    console.log('un: ', un);
+  const checkUsernameHelper = username => {
+    checkUserNameQuery({ variables: { username } });
   };
 
   const [patchAvatar] = useMutation(
@@ -185,13 +198,16 @@ export default withRouter(({ router }) => {
                     value={username}
                   />
                   <br />
-                  {unDebounceTimer && <span>Checking availability...</span>}
+                  {checking && <span>Checking availability...</span>}
+                  {usernameTaken && <span>Username is not available 🚫</span>}
+                  {usernameAvailable && <span>Username available ✅</span>}
                 </div>
                 <ApolloConsumer>
                   {client => (
                     <button
                       type="submit"
                       value="Save"
+                      disabled={!areSettingsValid()}
                       style={{ width: 'auto' }}
                       onClick={() => {
                         handleSubmit(client);

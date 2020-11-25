@@ -9,7 +9,7 @@ import { ThemeContext } from './theme-context';
 import MultiColumn from './multi-column.js';
 import gql from 'graphql-tag';
 
-const query = gql`
+export const query = gql`
   query publicAccount($username: String!) {
     accountByUsername(username: $username) {
       id
