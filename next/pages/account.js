@@ -63,7 +63,12 @@ export default withRouter(({ router }) => {
     if (unDebounceTimer) {
       clearTimeout(unDebounceTimer);
     }
-    setUnDebounceTimer(setTimeout(cb, UN_DEBOUNCE_MS));
+    setUnDebounceTimer(
+      setTimeout(() => {
+        cb();
+        setUnDebounceTimer(false);
+      }, UN_DEBOUNCE_MS)
+    );
   };
 
   const checkUsernameHelper = un => {
@@ -179,6 +184,8 @@ export default withRouter(({ router }) => {
                     }}
                     value={username}
                   />
+                  <br />
+                  {unDebounceTimer && <span>Checking availability...</span>}
                 </div>
                 <ApolloConsumer>
                   {client => (
