@@ -80,7 +80,7 @@ export default function AvatarPicker({ onSave, accountType }) {
               <img
                 className={selected ? 'selected' : ''}
                 src={url}
-                key={url}
+                key={i + 1}
                 alt={'icon ' + i}
                 onClick={() => !isDisabled && setNewProfileId(i + 1)}
               />
