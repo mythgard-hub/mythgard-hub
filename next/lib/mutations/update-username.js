@@ -1,3 +1,4 @@
+import { query as usernameQuery } from '../../pages/account.js';
 import gql from 'graphql-tag';
 
 // prettier-ignore
@@ -23,6 +24,9 @@ const updateAccountUsername = gql`
 const updateUsername = (apolloClient, accountId, username) => {
   return apolloClient.mutate({
     mutation: updateAccountUsername,
+    refetchQueries: {
+      usernameQuery
+    },
     variables: {
       accountId,
       username

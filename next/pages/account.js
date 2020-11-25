@@ -10,7 +10,7 @@ import Profile from '../components/profile.js';
 import AvatarPicker from '../components/avatar-picker.js';
 import Router from 'next/router';
 import { useMutation, useLazyQuery } from '@apollo/react-hooks';
-import { query } from '../components/public-account.js';
+import { query as usernameQuery } from '../components/public-account.js';
 import gql from 'graphql-tag';
 
 const error403 = () => Router.push('/');
@@ -41,25 +41,26 @@ export default withRouter(({ router }) => {
 
   const [usernameUntrimmed, setUsername] = useState(user.username);
   const username = usernameUntrimmed.trim();
-  const [lastUsername, setLastUsername] = useState('');
+  const [lastSavedUsername, setLastSavedUsername] = useState(user.username);
 
-  const [checkUserNameQuery, unQuery] = useLazyQuery(query);
+  const [checkUserNameQuery, unQuery] = useLazyQuery(usernameQuery);
 
   const checking = unDebounceTimer || unQuery.loading;
-  const showResults = unQuery.called && !checking && username != lastUsername;
+  const usernameUnchanged = username != lastSavedUsername;
+  const showResults = unQuery.called && !checking && usernameUnchanged;
   const lastQueryHadResult = unQuery.data && unQuery.data.accountByUsername;
   const usernameTaken = showResults && lastQueryHadResult;
   const usernameAvailable = username && showResults && !lastQueryHadResult;
 
   const areSettingsValid = () =>
-    !!username && usernameAvailable && username != lastUsername;
+    !!username && usernameAvailable && username != lastSavedUsername;
 
   const handleSubmit = apolloClient => {
     if (!areSettingsValid()) return;
     updateUsername(apolloClient, user.id, username)
       .then(({ data }) => {
         updateUser({ ...user, ...data.updateAccount.account });
-        setLastUsername(username);
+        setLastSavedUsername(username);
       })
       .catch(err => {
         // TODO alert special msg if username not unique (or just suggest
