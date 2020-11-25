@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { configQuery } from './use-config.js';
 
 const configMutation = gql`
   mutation setConfig($config: JSON!) {
@@ -13,12 +14,10 @@ const configMutation = gql`
 
 export default function UseConfigMutation() {
   const [updateConfig] = useMutation(configMutation, {
-    update() {
-      window.location.reload();
-    },
     onError() {
       alert('That failed. Please check values and try again');
-    }
+    },
+    refetchQueries: [{ query: configQuery }]
   });
 
   const updateConfigWithObject = newConfigObject => {
