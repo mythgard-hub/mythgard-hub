@@ -10,7 +10,7 @@ import Profile from '../components/profile.js';
 import AvatarPicker from '../components/avatar-picker.js';
 import Router from 'next/router';
 import { useMutation, useLazyQuery } from '@apollo/react-hooks';
-import { query as usernameQuery } from '../components/public-account.js';
+import usernameQuery from '../lib/account-by-username-query.js';
 import gql from 'graphql-tag';
 
 const error403 = () => Router.push('/');

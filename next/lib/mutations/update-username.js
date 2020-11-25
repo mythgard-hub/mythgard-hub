@@ -1,4 +1,4 @@
-import { query as usernameQuery } from '../../pages/account.js';
+import usernameQuery from '../account-by-username-query.js';
 import gql from 'graphql-tag';
 
 // prettier-ignore
