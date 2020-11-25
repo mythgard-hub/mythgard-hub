@@ -3,8 +3,11 @@
 // but with any provided url values replaced. Supports strings, ints, booleans and arrays.
 // NOTE that arrays will always become an array of strings, so postprocessing is likely
 // required for number arrays. See searchParamsPostProcessNumArray.
-export default (defaultParams, queryObject) => {
+export default function UrlToSearchParameters(defaultParams, queryObject) {
   const searchParams = { ...defaultParams };
+  if (!queryObject) {
+    return searchParams;
+  }
   for (const entry of Object.entries(queryObject)) {
     const [name, value] = entry;
     if (value) {
@@ -25,7 +28,7 @@ export default (defaultParams, queryObject) => {
     }
   }
   return searchParams;
-};
+}
 
 // supports default fn
 export const searchParamsPostProcessNumArray = (searchParams, key) =>

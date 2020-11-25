@@ -18,7 +18,7 @@ const error403 = () => Router.push('/');
 const UN_DEBOUNCE_MS = 1000;
 
 export default withRouter(({ router }) => {
-  const un = router.query.name;
+  const un = router && router.query && router.query.name;
   if (un) {
     return <PublicAccount username={un} />;
   }

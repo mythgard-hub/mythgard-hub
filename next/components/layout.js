@@ -33,7 +33,7 @@ function Layout({ title, desc, image, router, children }) {
         <meta
           key="og:url"
           property="og:url"
-          content={`https://mythgardhub.com${router.asPath}`}
+          content={`https://mythgardhub.com${router && router.asPath}`}
         />
         <meta key="og:type" property="og:type" content="article" />
         <meta key="og:image" property="og:image" content={image} />
