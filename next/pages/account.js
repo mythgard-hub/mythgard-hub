@@ -14,6 +14,8 @@ import gql from 'graphql-tag';
 
 const error403 = () => Router.push('/');
 
+const UN_DEBOUNCE_MS = 1000;
+
 export default withRouter(({ router }) => {
   const un = router.query.name;
   if (un) {
@@ -21,6 +23,7 @@ export default withRouter(({ router }) => {
   }
 
   const { user, updateUser } = useContext(UserContext);
+  const [unDebounceTimer, setUnDebounceTimer] = useState(false);
 
   let result = null;
 
@@ -50,6 +53,21 @@ export default withRouter(({ router }) => {
         // a different one regardless of error).
         console.error('Something went wrong while updating user name', err);
       });
+  };
+
+  const checkUsername = un => {
+    debounceUn(() => checkUsernameHelper(un));
+  };
+
+  const debounceUn = cb => {
+    if (unDebounceTimer) {
+      clearTimeout(unDebounceTimer);
+    }
+    setUnDebounceTimer(setTimeout(cb, UN_DEBOUNCE_MS));
+  };
+
+  const checkUsernameHelper = un => {
+    console.log('un: ', un);
   };
 
   const [patchAvatar] = useMutation(
@@ -156,6 +174,7 @@ export default withRouter(({ router }) => {
                     type="text"
                     name="username"
                     onChange={e => {
+                      checkUsername(e.target.value);
                       setUsername(e.target.value);
                     }}
                     value={username}
