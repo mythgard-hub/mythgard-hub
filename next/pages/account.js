@@ -39,8 +39,7 @@ export default withRouter(({ router }) => {
     return <Layout>{result}</Layout>;
   }
 
-  const [usernameUntrimmed, setUsername] = useState(user.username);
-  const username = usernameUntrimmed.trim();
+  const [username, setUsername] = useState(user.username);
   const [lastSavedUsername, setLastSavedUsername] = useState(user.username);
 
   const [checkUserNameQuery, unQuery] = useLazyQuery(usernameQuery);
@@ -193,8 +192,11 @@ export default withRouter(({ router }) => {
                     type="text"
                     name="username"
                     onChange={e => {
-                      checkUsername(e.target.value);
-                      setUsername(e.target.value);
+                      const valTrimmed = e.target.value.trim();
+                      if (valTrimmed !== username) {
+                        checkUsername(valTrimmed);
+                        setUsername(valTrimmed);
+                      }
                     }}
                     value={username}
                   />
