@@ -7,19 +7,7 @@ import UserTopDecks from './user-top-decks.js';
 import { useContext } from 'react';
 import { ThemeContext } from './theme-context';
 import MultiColumn from './multi-column.js';
-import gql from 'graphql-tag';
-
-const query = gql`
-  query publicAccount($username: String!) {
-    accountByUsername(username: $username) {
-      id
-      username
-      accountType
-      registered
-      profileIconId
-    }
-  }
-`;
+import query from '../lib/account-by-username-query.js';
 
 export default function PublicAccount({ username }) {
   const theme = useContext(ThemeContext);

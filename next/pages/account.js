@@ -9,10 +9,13 @@ import PublicAccount from '../components/public-account.js';
 import Profile from '../components/profile.js';
 import AvatarPicker from '../components/avatar-picker.js';
 import Router from 'next/router';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useLazyQuery } from '@apollo/react-hooks';
+import usernameQuery from '../lib/account-by-username-query.js';
 import gql from 'graphql-tag';
 
 const error403 = () => Router.push('/');
+
+const UN_DEBOUNCE_MS = 1000;
 
 export default withRouter(({ router }) => {
   const un = router.query.name;
@@ -21,6 +24,7 @@ export default withRouter(({ router }) => {
   }
 
   const { user, updateUser } = useContext(UserContext);
+  const [unDebounceTimer, setUnDebounceTimer] = useState(false);
 
   let result = null;
 
@@ -36,20 +40,52 @@ export default withRouter(({ router }) => {
   }
 
   const [username, setUsername] = useState(user.username);
+  const [lastSavedUsername, setLastSavedUsername] = useState(user.username);
 
-  const areSettingsValid = () => !!username;
+  const [checkUserNameQuery, unQuery] = useLazyQuery(usernameQuery);
+
+  const checking = unDebounceTimer || unQuery.loading;
+  const usernameUnchanged = username != lastSavedUsername;
+  const showResults = unQuery.called && !checking && usernameUnchanged;
+  const lastQueryHadResult = unQuery.data && unQuery.data.accountByUsername;
+  const usernameTaken = showResults && lastQueryHadResult;
+  const usernameAvailable = username && showResults && !lastQueryHadResult;
+
+  const areSettingsValid = () =>
+    !!username && usernameAvailable && username != lastSavedUsername;
 
   const handleSubmit = apolloClient => {
     if (!areSettingsValid()) return;
-    updateUsername(apolloClient, user.id, username.trim())
+    updateUsername(apolloClient, user.id, username)
       .then(({ data }) => {
         updateUser({ ...user, ...data.updateAccount.account });
+        setLastSavedUsername(username);
       })
       .catch(err => {
         // TODO alert special msg if username not unique (or just suggest
         // a different one regardless of error).
         console.error('Something went wrong while updating user name', err);
       });
+  };
+
+  const checkUsername = un => {
+    debounceUn(() => checkUsernameHelper(un));
+  };
+
+  const debounceUn = cb => {
+    if (unDebounceTimer) {
+      clearTimeout(unDebounceTimer);
+    }
+    setUnDebounceTimer(
+      setTimeout(() => {
+        cb();
+        setUnDebounceTimer(false);
+      }, UN_DEBOUNCE_MS)
+    );
+  };
+
+  const checkUsernameHelper = username => {
+    checkUserNameQuery({ variables: { username } });
   };
 
   const [patchAvatar] = useMutation(
@@ -88,6 +124,12 @@ export default withRouter(({ router }) => {
   return (
     <>
       <style jsx>{`
+        input {
+          margin: 10px 0;
+        }
+        label {
+          display: block;
+        }
         .private-profile {
           text-align: center;
           width: 100%;
@@ -98,11 +140,9 @@ export default withRouter(({ router }) => {
           flex-wrap: wrap;
           margin-bottom: 20px;
         }
-
         .profile-column {
           flex: 1;
         }
-
         h2.column-label {
           font-size: 1.2em;
           font-weight: 700;
@@ -145,27 +185,38 @@ export default withRouter(({ router }) => {
               <h2>Profile</h2>
               <hr className="ograd" />
               <div className="stack">
-                <div>
-                  <label>Email: </label>
+                <div className="profile-section">
+                  <label className="input-label">Email: </label>
                   <span>{user.email}</span>
                 </div>
-                <div>
-                  <label>User Name: </label>
-                  <input
-                    data-cy="username"
-                    type="text"
-                    name="username"
-                    onChange={e => {
-                      setUsername(e.target.value);
-                    }}
-                    value={username}
-                  />
+                <div className="profile-section">
+                  <label className="input-label">
+                    User Name:
+                    <br />
+                    <input
+                      data-cy="username"
+                      type="text"
+                      name="username"
+                      onChange={e => {
+                        const valTrimmed = e.target.value.trim();
+                        if (valTrimmed !== username) {
+                          checkUsername(valTrimmed);
+                          setUsername(valTrimmed);
+                        }
+                      }}
+                      value={username}
+                    />
+                  </label>
+                  {checking && <span>Checking availability...</span>}
+                  {usernameTaken && <span>Username is not available 🚫</span>}
+                  {usernameAvailable && <span>Username available ✅</span>}
                 </div>
                 <ApolloConsumer>
                   {client => (
                     <button
                       type="submit"
                       value="Save"
+                      disabled={!areSettingsValid()}
                       style={{ width: 'auto' }}
                       onClick={() => {
                         handleSubmit(client);
