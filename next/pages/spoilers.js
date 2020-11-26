@@ -45,7 +45,12 @@ export default function Spoilers() {
         {spoilers.map(s => {
           return (
             <li key={s.name}>
-              <img className="card-image" src={s.imagePath} alt={s.name} />
+              <img
+                data-cy="spoilerImg"
+                className="card-image"
+                src={s.imagePath}
+                alt={s.name}
+              />
             </li>
           );
         })}
