@@ -14,7 +14,7 @@ import { firstLetterUppercase } from '../lib/string-utils';
 
 export default withRouter(({ router }) => {
   const { loading, error, data } = useQuery(cardQuery, {
-    variables: { id: parseInt(router.query.id, 10) }
+    variables: { id: parseInt(router && router.query && router.query.id, 10) }
   });
 
   if (loading)

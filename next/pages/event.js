@@ -16,7 +16,7 @@ import AuthorLink from '../components/author-link';
 
 export default withRouter(({ router }) => {
   const { error, loading, data } = useQuery(tourneyQuery, {
-    variables: { id: parseInt(router.query.id, 10) }
+    variables: { id: parseInt(router && router.query && router.query.id, 10) }
   });
 
   let pageTitle = 'Mythgard Hub | Event Results';

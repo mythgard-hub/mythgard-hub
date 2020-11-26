@@ -16,7 +16,7 @@ import PageBanner from '../components/page-banner';
 import { firstLetterUppercase } from '../lib/string-utils';
 
 export default withRouter(({ router }) => {
-  const deckId = parseInt(router.query.id, 10);
+  const deckId = parseInt(router && router.query && router.query.id, 10);
 
   const { error, loading, data } = useQuery(singleDeckQuery, {
     variables: { id: deckId }
