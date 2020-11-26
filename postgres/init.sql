@@ -546,6 +546,23 @@ CREATE POLICY insert_deck_featured_moderator
   WITH CHECK (exists(select * from mythgard.account_moderator
          where account_id = mythgard.current_user_id()));
 
+-- moderator controlled tables need row level security so regular users
+-- cannot use the postgraphile mutations even though they are whitelisted
+ALTER TABLE mythgard.tournament ENABLE ROW LEVEL SECURITY;
+CREATE POLICY admin_all ON mythgard.tournament TO admin USING (true) WITH CHECK (true);
+CREATE POLICY all_view on mythgard.tournament FOR SELECT USING (true);
+CREATE POLICY crud_if_mod on mythgard.tournament
+  FOR ALL
+  USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
+ALTER TABLE mythgard.tournament_deck ENABLE ROW LEVEL SECURITY;
+CREATE POLICY admin_all ON mythgard.tournament_deck TO admin USING (true) WITH CHECK (true);
+CREATE POLICY all_view on mythgard.tournament_deck FOR SELECT USING (true);
+CREATE POLICY crud_if_mod on mythgard.tournament_deck
+  FOR ALL
+  USING (exists(select * from mythgard.account_moderator
+         where account_id = mythgard.current_user_id()));
+
 -- Save deck modification time so decks can be searched by last update time
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$

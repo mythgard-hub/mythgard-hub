@@ -4,7 +4,7 @@ import { handleInputChangeHooks } from '../lib/form-utils.js';
 import { formatDate } from '../lib/graphql-utils.js';
 import PropTypes from 'prop-types';
 
-function EventForm({ onSave, existingEvent = {} }) {
+function EventForm({ onSave, children, existingEvent = {} }) {
   const [name, setName] = useState(existingEvent.name || 'My cool event');
   const onChangeName = handleInputChangeHooks(setName);
 
@@ -51,6 +51,7 @@ function EventForm({ onSave, existingEvent = {} }) {
       <button style={{ width: 100 }} onClick={() => saveForm()}>
         Save
       </button>
+      {children}
     </div>
   );
 }
@@ -62,7 +63,8 @@ EventForm.propTypes = {
     organizer: PropTypes.string,
     url: PropTypes.string,
     date: PropTypes.string
-  })
+  }),
+  children: PropTypes.element
 };
 
 export default EventForm;

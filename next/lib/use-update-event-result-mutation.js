@@ -3,34 +3,29 @@ import gql from 'graphql-tag';
 import { allTournaments } from '../lib/tournament-queries.js';
 
 const mutation = gql`
-  mutation updateEvent(
+  mutation updateEventResult(
+    $pilot: String!
+    $rank: Int!
+    $deckId: Int!
     $id: Int!
-    $name: String!
-    $url: String!
-    $organizer: String!
-    $date: Date!
   ) {
-    updateTournament(
-      input: {
-        id: $id
-        patch: { name: $name, url: $url, organizer: $organizer, date: $date }
-      }
+    updateTournamentDeck(
+      input: { id: $id, patch: { rank: $rank, deckId: $deckId, pilot: $pilot } }
     ) {
-      tournament {
+      tournamentDeck {
         id
-        name
-        url
-        organizer
-        date
+        pilot
+        rank
+        deckId
       }
     }
   }
 `;
 
-export default function UseUpdateEventMutation() {
+export default function UseUpdateEventResultMutation() {
   return useMutation(mutation, {
     update() {
-      alert('The event was updated successfully');
+      alert('Result updated succesfully');
     },
     onError() {
       alert('That failed. Please check values and try again');
