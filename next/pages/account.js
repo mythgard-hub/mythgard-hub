@@ -124,6 +124,12 @@ export default withRouter(({ router }) => {
   return (
     <>
       <style jsx>{`
+        input {
+          margin: 10px 0;
+        }
+        label {
+          display: block;
+        }
         .private-profile {
           text-align: center;
           width: 100%;
@@ -134,11 +140,9 @@ export default withRouter(({ router }) => {
           flex-wrap: wrap;
           margin-bottom: 20px;
         }
-
         .profile-column {
           flex: 1;
         }
-
         h2.column-label {
           font-size: 1.2em;
           font-weight: 700;
@@ -181,26 +185,28 @@ export default withRouter(({ router }) => {
               <h2>Profile</h2>
               <hr className="ograd" />
               <div className="stack">
-                <div>
-                  <label>Email: </label>
+                <div className="profile-section">
+                  <label className="input-label">Email: </label>
                   <span>{user.email}</span>
                 </div>
-                <div>
-                  <label>User Name: </label>
-                  <input
-                    data-cy="username"
-                    type="text"
-                    name="username"
-                    onChange={e => {
-                      const valTrimmed = e.target.value.trim();
-                      if (valTrimmed !== username) {
-                        checkUsername(valTrimmed);
-                        setUsername(valTrimmed);
-                      }
-                    }}
-                    value={username}
-                  />
-                  <br />
+                <div className="profile-section">
+                  <label className="input-label">
+                    User Name:
+                    <br />
+                    <input
+                      data-cy="username"
+                      type="text"
+                      name="username"
+                      onChange={e => {
+                        const valTrimmed = e.target.value.trim();
+                        if (valTrimmed !== username) {
+                          checkUsername(valTrimmed);
+                          setUsername(valTrimmed);
+                        }
+                      }}
+                      value={username}
+                    />
+                  </label>
                   {checking && <span>Checking availability...</span>}
                   {usernameTaken && <span>Username is not available 🚫</span>}
                   {usernameAvailable && <span>Username available ✅</span>}
