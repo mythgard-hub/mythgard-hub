@@ -7,7 +7,7 @@ import { ThemeContext } from './theme-context';
 function HeaderLink(props) {
   const { route, children, cyName, router } = props;
   const theme = useContext(ThemeContext);
-  let selectedClassName = router.pathname === route ? 'selected' : '';
+  let selectedClassName = router && router.pathname === route ? 'selected' : '';
 
   return (
     <>
@@ -62,7 +62,8 @@ function HeaderLink(props) {
 HeaderLink.propTypes = {
   route: PropTypes.string,
   cyName: PropTypes.string,
-  children: PropTypes.string
+  children: PropTypes.string,
+  router: PropTypes.any
 };
 
 export default withRouter(HeaderLink);
