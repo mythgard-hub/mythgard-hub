@@ -65,8 +65,6 @@ function UserFavoriteDecks({ userId, limit = -1 }) {
         })}
       </ul>
       {limit !== -1 && userDeckCount > limit && (
-        // todo - replace with link to decks page
-        // and remove profile.js view more link
         <div className="view-more">
           <span
             className="view-more-button"
