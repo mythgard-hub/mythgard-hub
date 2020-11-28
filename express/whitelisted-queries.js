@@ -553,6 +553,22 @@ query tournaments($now: Date) {
   }
 `,
   `
+query deckAccountFavorites($deckId: Int!, $accountId: Int!) {
+  deckFavorites(
+    filter: {
+      deckId: { equalTo: $deckId }
+      accountId: { equalTo: $accountId }
+    }
+  ) {
+    nodes {
+      id
+      __typename
+    }
+    __typename
+  }
+}
+`,
+  `
   mutation upvoteDeck($deckId: Int, $accountId: Int) {
     createDeckVote(
       input: { deckVote: { deckId: $deckId, accountId: $accountId } }
