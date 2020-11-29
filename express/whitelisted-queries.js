@@ -546,9 +546,7 @@ query tournaments($now: Date) {
     ) {
       nodes {
         id
-        __typename
       }
-      __typename
     }
   }
 `,
@@ -562,9 +560,7 @@ query deckAccountFavorites($deckId: Int!, $accountId: Int!) {
   ) {
     nodes {
       id
-      __typename
     }
-    __typename
   }
 }
 `,
