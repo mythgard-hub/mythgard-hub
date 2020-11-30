@@ -76,7 +76,7 @@ export default function AvatarPicker({ onSave, accountType }) {
           const isDisabled = i >= userLimit;
           const selected = i + 1 === newProfileId;
           let result = (
-            <div className={isDisabled ? 'disabled' : ''}>
+            <div className={isDisabled ? 'disabled' : ''} key={i + 1}>
               <img
                 className={selected ? 'selected' : ''}
                 src={url}

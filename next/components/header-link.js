@@ -14,7 +14,7 @@ function HeaderLink(props) {
       <style jsx>{`
         a:before {
           text-decoration: none;
-          content: '\u25b6';
+          content: '▶';
           margin-right: 5px;
           font-size: 14px;
         }

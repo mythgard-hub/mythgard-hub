@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { ThemeContext } from './theme-context';
 
 const cdn = process.env.MG_CDN;
 const images = [
@@ -36,6 +37,7 @@ const images = [
 ];
 
 export default function NumericFilterGroup({ cyName, selected, onChange }) {
+  const theme = useContext(ThemeContext);
   const onClick = image => {
     if (selected.indexOf(image.label) > -1) {
       onChange(selected.filter(s => s !== image.label));
@@ -60,7 +62,7 @@ export default function NumericFilterGroup({ cyName, selected, onChange }) {
         }
 
         img:hover {
-          filter: drop-shadow(0px 0px 3px #fff);
+          filter: ${theme.hoverGlow};
         }
 
         img.selected {

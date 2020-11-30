@@ -30,6 +30,7 @@ import DeckCount from './deck-count';
 import ViewsIndicator from './views-indicator';
 import AuthorLink from './author-link';
 import UserAvatar from './user-avatar';
+import DeckFavorite from './deck-favorite';
 
 const getDeckToExport = (deckCards, deckName, path = null, power = null) => {
   const deckToExport = initializeDeckBuilder();
@@ -209,6 +210,7 @@ export default function Deck({ deck }) {
             <DeckEdit className="deck-action" deck={deck} />
             <DeckDelete className="deck-action" deck={deck} />
             <DeckVote className="deck-action no-grow" deck={deck} />
+            <DeckFavorite className="deck-action no-grow" deck={deck} />
           </div>
           <div className="deck-stats-container">
             <div className="deck-stats">

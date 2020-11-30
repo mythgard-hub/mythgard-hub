@@ -1,15 +1,12 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from './error-message';
-import DeckPreview from './deck-preview';
-import { userDecksQuery, deckPreviewsToDecks } from '../lib/deck-queries';
+import { userDecksQuery } from '../lib/deck-queries';
+import DeckPreviewsColumn from './deck-previews-column';
 
-function UserDecks({ userId, limit }) {
-  const [showLess, setShowLess] = useState(true);
-
+function UserDecks({ user, limit = -1 }) {
   const { loading, error, data } = useQuery(userDecksQuery, {
-    variables: { authorId: userId }
+    variables: { authorId: user.id }
   });
 
   if (error) return <ErrorMessage message={error.message} />;
@@ -25,73 +22,33 @@ function UserDecks({ userId, limit }) {
     console.error('Lily was right and JavaScript is not to be trusted', error);
   }
 
-  const userDeckCount = decks.length;
-  if (showLess && limit !== -1) {
-    decks = decks.slice(0, limit);
-  }
-
-  decks = deckPreviewsToDecks(decks);
   return (
-    <>
+    <div>
       <style jsx>{`
-        .deck-list {
-          padding: 0 20px;
-          list-style: none;
-        }
-        .view-more {
-          font-size: 0.7em;
-          margin-top: -5px;
-          margin-right: 20px;
-          font-weight: 600;
-          text-align: right;
-          color: #ffffff;
-          text-decoration: none;
-          text-transform: uppercase;
-        }
-        .view-more-button {
-          cursor: pointer;
-        }
-        .view-more-button:before {
-          text-decoration: none;
-          content: '\u25b6';
-          font-size: 80%;
-          margin-right: 5px;
+        div {
+          padding-left: 25px;
         }
       `}</style>
-      <ul className="deck-list">
-        {decks.map((deck, i) => {
-          return (
-            <li data-cy="user-deck" key={i}>
-              <DeckPreview deck={deck} />
-            </li>
-          );
-        })}
-      </ul>
-      {limit !== -1 && userDeckCount > limit && (
-        // todo - replace with link to decks page
-        // and remove profile.js view more link
-        <div className="view-more">
-          <span
-            className="view-more-button"
-            onClick={() => {
-              setShowLess(!showLess);
-            }}
-          >
-            View {showLess ? 'More' : 'Less'}
-          </span>
-        </div>
-      )}
-    </>
+      <DeckPreviewsColumn
+        data={{
+          deckPreviews: {
+            totalCount: decks.length,
+            nodes: decks.slice(0, limit)
+          }
+        }}
+        loading={loading}
+        cyData={'userDecks'}
+        error={error}
+        limit={limit}
+        viewMoreUrl={`/decks?updatedTime=100000&authorName=${user.username}&sortBy=dateDesc`}
+      />
+    </div>
   );
 }
 
 UserDecks.propTypes = {
-  userId: PropTypes.number.isRequired,
+  user: PropTypes.object,
   limit: PropTypes.number
-};
-
-UserDecks.defaultProps = {
-  limit: -1
 };
 
 export default UserDecks;

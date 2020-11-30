@@ -546,11 +546,23 @@ query tournaments($now: Date) {
     ) {
       nodes {
         id
-        __typename
       }
-      __typename
     }
   }
+`,
+  `
+query deckAccountFavorites($deckId: Int!, $accountId: Int!) {
+  deckFavorites(
+    filter: {
+      deckId: { equalTo: $deckId }
+      accountId: { equalTo: $accountId }
+    }
+  ) {
+    nodes {
+      id
+    }
+  }
+}
 `,
   `
   mutation upvoteDeck($deckId: Int, $accountId: Int) {
@@ -571,6 +583,41 @@ query tournaments($now: Date) {
       }
     }
   }
+`,
+  `
+mutation favoriteDeck($deckId: Int, $accountId: Int) {
+  createDeckFavorite(
+    input: { deckFavorite: { deckId: $deckId, accountId: $accountId } }
+  ) {
+    deckFavorite {
+      id
+    }
+  }
+}
+`,
+  `
+  query userFavoriteDecks($userId: Int!) {
+    account(id: $userId) {
+      deckFavorites {
+        nodes {
+          deck {
+            deckPreviews {
+              ${deckPreviewsFragment}
+            }
+          }
+        }
+      }
+    }
+  }
+`,
+  `
+mutation removeDeckFavorite($deckFavoriteId: Int!) {
+  deleteDeckFavorite(input: { id: $deckFavoriteId }) {
+    deckFavorite {
+      id
+    }
+  }
+}
 `,
   `
   mutation updateDeck($deckId: Int!, $deckDesc: String, $deckName: String) {

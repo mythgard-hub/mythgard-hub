@@ -54,6 +54,7 @@ export const themes = {
     panelBackground: mgColors.grayBlue,
     cardTableRowQuantityBackground: mgColors.blackPearl,
     authorLinkColor: mgColors.orange,
+    hoverGlow: 'drop-shadow(0px 0px 3px #fff)',
     spacing: 20,
     cardSpacing: 15
   }
