@@ -1,3 +1,11 @@
+# Changelog v1.15.0
+
+    * miscellaneous upgrades
+    * user can favorite decks
+    * inform user about username availability
+    * mods can manage events/tournaments
+    * spoilers page with moderator controls
+
 # Changelog v1.14.0
 
     Filtering bug fixes (#300)
