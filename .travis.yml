@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "12.12.0"
 
+services:
+  - docker
+
 sudo: required
 
 # Supposedly this is needed for Cypress to work in Ubuntu 16
@@ -11,22 +14,7 @@ addons:
     packages:
       - libgconf-2-4
 
-env:
-  global:
-    - DOCKER_COMPOSE_VERSION: 1.24.1
-
-services:
-  - docker
-
 before_install:
-  # Upgrade docker-compose to the desired version
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  # Upgrade docker
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
   # Put the .env file in place
   - cp .env.template .env
 
@@ -41,6 +29,7 @@ script:
   # Run unit tests
   - cd next
   - npm run test
+  - sleep 30
   # Run e2e tests
   - cd ../e2e
   - npx cypress verify
@@ -50,4 +39,4 @@ script:
   - docker-compose logs next
 
 post_script:
-  - docker-compose stop
+  - docker-compose down
