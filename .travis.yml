@@ -19,11 +19,15 @@ before_install:
   - cp .env.template .env
 
 install:
-  # Install node modules (for jest) and start up the docker containers
+  # Install node modules (for jest and wait-on) and start up the docker containers
   - cd next
   - npm ci
   - cd ..
   - docker-compose up --build -d
+  - cd e2e
+  - npm ci
+  - npx wait-on http://localhost:3001
+  - cd ..
 
 script:
   # Run unit tests
