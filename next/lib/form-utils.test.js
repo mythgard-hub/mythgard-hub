@@ -3,7 +3,7 @@ import { submitOnEnter } from './form-utils';
 describe('Form utility methods', () => {
   describe('Test submitOnEnter', () => {
     it('Should call onSubmit on enter key', function() {
-      const mockOnSubmit = jest.fn();
+      const mockOnSubmit = jest.fn(e => console.log('submitted'));
       const event = {
         keyCode: 13
       };
@@ -14,7 +14,7 @@ describe('Form utility methods', () => {
     });
 
     it('Should not call it on other keys', function() {
-      const mockOnSubmit = jest.fn();
+      const mockOnSubmit = jest.fn(e => console.log('submitted'));
       const event = {
         keyCode: 12
       };
@@ -29,7 +29,7 @@ describe('Form utility methods', () => {
     });
 
     it('Should handle missing data gracefully', function() {
-      const mockOnSubmit = jest.fn();
+      const mockOnSubmit = jest.fn(e => console.log('submitted'));
 
       submitOnEnter(null, mockOnSubmit);
       submitOnEnter(1, mockOnSubmit);
