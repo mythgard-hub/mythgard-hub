@@ -23,21 +23,19 @@ install:
   - cd next
   - npm ci
   - cd ..
-  - docker-compose up --build -d
   - cd e2e
   - npm ci
-  - npx wait-on http://localhost:3001
   - cd ..
+  - docker-compose up --build -d
 
 script:
   # Run unit tests
   - cd next
   - npm run test
-  - sleep 30
   # Run e2e tests
   - cd ../e2e
   - npx cypress verify
-  - CYPRESS_FAIL_FAST=true npx cypress run --config video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
+  - CYPRESS_FAIL_FAST=true npx wait-on http://localhost:3001 --timeout 100000 && npx cypress run --config video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
   - docker-compose logs db
   - docker-compose logs express
   - docker-compose logs next
