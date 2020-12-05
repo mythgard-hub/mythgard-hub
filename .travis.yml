@@ -33,7 +33,7 @@ script:
   # Run e2e tests
   - cd ../e2e
   - npx cypress verify
-  - npx cypress run --config video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
+  - CYPRESS_FAIL_FAST=true npx cypress run --config video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
   - docker-compose logs db
   - docker-compose logs express
   - docker-compose logs next
