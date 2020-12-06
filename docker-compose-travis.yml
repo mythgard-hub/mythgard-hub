@@ -4,5 +4,6 @@ services:
   express:
     volumes: []
   next:
-    network: host
     volumes: []
+    build:
+      network: host
