@@ -53,7 +53,7 @@ script:
   # - CYPRESS_FAIL_FAST=true npx wait-on http://localhost:3001 --timeout 100000 && npx cypress run --config video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
   - sleep 30
   - curl http://127.0.0.1:3001 --max-time 30
-  - sudo journalctl -fu docker.service
+  - sudo journalctl -u --no-pager docker.service
   - sudo ss -tulwn
 
 post_script:
