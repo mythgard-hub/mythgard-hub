@@ -268,9 +268,9 @@ describe('Deck builder page', () => {
     // should be able to enter and exist import mode
     cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
-    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.exist');
     cy.get('[data-cy="cancelImportMode"]').click();
-    cy.get('[data-cy="importDeckTextarea"]').should('not.be.visible');
+    cy.get('[data-cy="importDeckTextarea"]').should('not.exist');
 
     cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').type(input);
