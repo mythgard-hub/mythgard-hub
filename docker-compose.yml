@@ -1,19 +1,19 @@
-version: '3.7'
+version: "3.7"
 
 services:
   db:
     image: mg-postgres
     build: ./postgres
     ports:
-      - '5433:5432'
+      - "5433:5432"
     environment:
-      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      POSTGRES_HOST_AUTH_METHOD: "trust"
   adminer:
     image: adminer
     depends_on:
       - db
     ports:
-      - '8080:8080'
+      - "8080:8080"
   express:
     image: mg-server
     build: ./express
@@ -30,7 +30,7 @@ services:
         target: /app
       - /app/node_modules
     ports:
-      - '3000:3000'
+      - "3000:3000"
   next:
     image: mg-next
     build: ./next
@@ -45,5 +45,5 @@ services:
         target: /app
       - /app/node_modules
     ports:
-      - '3001:3001'
-    command: ['npm', 'run', 'dev']
+      - "3001:3001"
+    command: ["npm", "run", "dev"]

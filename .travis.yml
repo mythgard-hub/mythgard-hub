@@ -46,7 +46,7 @@ install:
 script:
   - docker --version
   - docker-compose --version
-  - docker-compose up --build -d
+  - docker-compose -f docker-compose.yml -f docker-compose-travis.yml up --build -d
   # Run unit tests
   # - cd next
   # - npm run test

@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+  express:
+    volumes:
+  next:
+    network: host
+    volumes:
