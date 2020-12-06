@@ -30,10 +30,18 @@ before_install:
   # Put the .env file in place
   - cp .env.template .env
 
+cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
+
 install:
   # Install node modules (for jest) and start up the docker containers
   - cd next
-  - npm install
+  - npm ci
   - cd ..
   - docker-compose up --build -d
 
@@ -43,8 +51,7 @@ script:
   - npm run test
   # Run e2e tests
   - cd ../e2e
-  - ./node_modules/.bin/cypress verify
-  - ./node_modules/.bin/cypress run --config video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
+  - $(npm bin)/cypress run --record
   - docker-compose logs db
   - docker-compose logs express
   - docker-compose logs next
