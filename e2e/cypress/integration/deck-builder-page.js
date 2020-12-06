@@ -27,9 +27,9 @@ describe('Deck builder page', () => {
   it('should have a happy path', function() {
     cy.get('[data-cy="header"]').should('be.visible');
     cy.get('[data-cy="goToImportMode"]').should('be.visible');
-    cy.get('[data-cy="importDeckButton"]').should('not.be.visible');
-    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
-    cy.get('[data-cy="deckManaCurve"]').should('not.be.visible');
+    cy.get('[data-cy="importDeckButton"]').should('not.exist');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.exist');
+    cy.get('[data-cy="deckManaCurve"]').should('not.exist');
     cy.get(cardList).should('be.visible');
     cy.get(deckInProgress).should('be.visible');
     cy.get('[data-cy="factionFilters"]').should('be.visible');
@@ -268,9 +268,9 @@ describe('Deck builder page', () => {
     // should be able to enter and exist import mode
     cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').should('be.visible');
-    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.exist');
     cy.get('[data-cy="cancelImportMode"]').click();
-    cy.get('[data-cy="importDeckTextarea"]').should('not.be.visible');
+    cy.get('[data-cy="importDeckTextarea"]').should('not.exist');
 
     cy.get('[data-cy="goToImportMode"]').click();
     cy.get('[data-cy="importDeckTextarea"]').type(input);

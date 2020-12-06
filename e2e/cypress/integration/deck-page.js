@@ -19,9 +19,9 @@ describe('Deck Page', function() {
       .should('contain', 'Gauntlet Mythgard Deck, YGPBRO, 12750 Essence');
 
     // Page elements
-    cy.get('[data-cy="editMetaValue"]').should('not.be.visible');
+    cy.get('[data-cy="editMetaValue"]').should('not.exist');
     cy.get('[data-cy="userAvatar"]').should('have.length', 1);
-    cy.get('[data-cy="userLink"]').should('not.be.visible');
+    cy.get('[data-cy="userLink"]').should('not.exist');
     cy.get('[data-cy="deckPageType"]').should('be.visible');
     cy.get('[data-cy="deckPageArchetype"]').should('be.visible');
     cy.get('[data-cy="deckPageCardCount"]').should('be.visible');
