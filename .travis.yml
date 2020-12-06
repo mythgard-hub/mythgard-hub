@@ -2,6 +2,8 @@ language: node_js
 node_js:
   - "12.19.0"
 
+dist: bionic
+
 env:
   - DOCKER_COMPOSE_VERSION=1.25.4
 
