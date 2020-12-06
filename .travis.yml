@@ -33,7 +33,7 @@ before_install:
 install:
   # Install node modules (for jest) and start up the docker containers
   - cd next
-  - npm ci
+  - npm install
   - cd ..
   - docker-compose up --build -d
 

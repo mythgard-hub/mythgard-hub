@@ -3,6 +3,6 @@ FROM node:lts-alpine
 WORKDIR /app
 COPY . /app
 
-RUN npm ci --production --no-optional
+RUN npm i --production --no-optional
 
 CMD ["npm", "start"]
