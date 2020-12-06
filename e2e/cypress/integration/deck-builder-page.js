@@ -27,9 +27,9 @@ describe('Deck builder page', () => {
   it('should have a happy path', function() {
     cy.get('[data-cy="header"]').should('be.visible');
     cy.get('[data-cy="goToImportMode"]').should('be.visible');
-    cy.get('[data-cy="importDeckButton"]').should('not.be.visible');
-    cy.get('[data-cy="deckBuilderActions"]').should('not.be.visible');
-    cy.get('[data-cy="deckManaCurve"]').should('not.be.visible');
+    cy.get('[data-cy="importDeckButton"]').should('not.exist');
+    cy.get('[data-cy="deckBuilderActions"]').should('not.exist');
+    cy.get('[data-cy="deckManaCurve"]').should('not.exist');
     cy.get(cardList).should('be.visible');
     cy.get(deckInProgress).should('be.visible');
     cy.get('[data-cy="factionFilters"]').should('be.visible');
