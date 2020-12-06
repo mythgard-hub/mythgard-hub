@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   express:
-    volumes:
+    volumes: []
   next:
     network: host
-    volumes:
+    volumes: []
