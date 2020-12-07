@@ -352,3 +352,8 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: PATREON_URL
+            - name: NODE_TLS_REJECT_UNAUTHORIZED
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: NODE_TLS_REJECT_UNAUTHORIZED
