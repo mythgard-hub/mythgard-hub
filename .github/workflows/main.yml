@@ -2,13 +2,13 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -32,27 +32,26 @@ jobs:
           curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
           chmod +x docker-compose
           sudo mv docker-compose /usr/local/bin
-      
+
       - name: Upgrade Docker
         run: |
           sudo apt-get update
-          sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-      
+
       - name: Copy env file
         run: cp .env.template .env
-      
+
       - name: Run Docker
         run: |
           cd next
           npm ci
           cd ..
           docker-compose up --build -d
-      
+
       - name: Run Jest
         run: |
           cd next
           npm run test
-      
+
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
