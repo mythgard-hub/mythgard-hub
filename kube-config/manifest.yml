@@ -36,6 +36,11 @@ spec:
             - containerPort: 3001
               protocol: TCP
           env:
+            - name: NODE_TLS_REJECT_UNAUTHORIZED
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: NODE_TLS_REJECT_UNAUTHORIZED
             - name: GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
