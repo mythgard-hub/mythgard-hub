@@ -25,18 +25,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Install Docker
-        run: |
-          sudo rm /usr/local/bin/docker-compose
-          curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-          chmod +x docker-compose
-          sudo mv docker-compose /usr/local/bin
-
-      - name: Upgrade Docker
-        run: |
-          sudo apt-get update
-
       - name: Copy env file
         run: cp .env.template .env
 
