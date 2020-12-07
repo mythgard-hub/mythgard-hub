@@ -46,4 +46,5 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           working-directory: e2e
+          config: video=false,pageLoadTimeout=100000,screenshotOnRunFailure=false
           build: npx cypress info
