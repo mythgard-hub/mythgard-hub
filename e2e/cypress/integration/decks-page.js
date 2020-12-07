@@ -335,7 +335,15 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckListItem"]').should('have.length', numAllDecks);
   });
 
-  it('should sort decks', function() {
+  it('should sort decks - default', function() {
+    // the default search is hot
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
+  });
+  it('should sort decks - by time', function() {
     // the default search is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
@@ -356,6 +364,14 @@ describe('Decks Page', function() {
       .find(deckName)
       .first()
       .should('contain', deckNameDragons);
+  });
+  it('should sort decks - by essence cost', function() {
+    // the default search is hot
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
     // essence asc
     cy.get(decksSort).select(essenceAsc);
     cy.get(deckListCheapestFirst);
@@ -370,6 +386,14 @@ describe('Decks Page', function() {
       .first()
       .find(deckName)
       .should('contain', deckNameAllFactions);
+  });
+  it('should sort decks - by name', function() {
+    // the default search is hot
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
     // name asc
     cy.get(decksSort).select(nameAsc);
     cy.get(deckListNameAtoZ);
@@ -384,6 +408,14 @@ describe('Decks Page', function() {
       .first()
       .find(deckName)
       .should('contain', 'other norden aztlan');
+  });
+  it('should sort decks - by rating', function() {
+    // the default search is hot
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
     // rating desc
     cy.get(decksSort).select(ratingDesc);
     cy.get(deckListRatingHighToLow);
@@ -396,6 +428,14 @@ describe('Decks Page', function() {
     cy.get(decksSort).select(ratingAsc);
     cy.get(deckListRatingLowToHigh);
     cy.get('[data-cy="deckVotesCell"]:first').should('contain', 0);
+  });
+  it('should sort decks - by views', function() {
+    // the default search is hot
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
     // views desc
     cy.get(decksSort).select(viewsDesc);
     cy.get(deckListViewsHighToLow);
@@ -410,8 +450,17 @@ describe('Decks Page', function() {
       .find(deckName)
       .first()
       .should('contain', 'cats');
+  });
+  it('should sort decks - by hotness', function() {
+    // the default search is hot
+    cy.get(deckSearchAllDecksLoaded);
+    cy.get(deckListItem)
+      .find(deckName)
+      .first()
+      .should('contain', deckNameDragons);
     // this test differs from the first sort test in that
     // it uses some-decks rather than all-decks
+    cy.get(decksSort).select(viewsDesc);
     cy.get(decksSort).select(hot);
     cy.get(deckListHotFirst);
     cy.get(deckListItem)
