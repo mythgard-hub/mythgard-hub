@@ -28,17 +28,19 @@ jobs:
       - name: Copy env file
         run: cp .env.template .env
 
-      - name: Run Docker
+      - name: Install next npm packages
         run: |
           cd next
           npm ci
           cd ..
-          docker-compose up --build -d
 
       - name: Run Jest
         run: |
           cd next
           npm run test
+
+      - name: Run Docker
+        run: docker-compose up --build -d
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2
