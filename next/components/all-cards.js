@@ -6,18 +6,16 @@ import { cardSort } from '../lib/card.js';
 
 import allCardsQuery from '../lib/queries/all-cards-query';
 
-export default function AllCards(props) {
-  const { onCardClick } = props;
+export default function AllCards({ onCardClick }) {
   const { loading, error, data } = useQuery(allCardsQuery);
 
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <div>Loading cards...</div>;
   if (!data || !data.cards) return null;
 
-  data.cards.nodes = data.cards.nodes.sort(cardSort);
+  const sortedNodes = [...data.cards.nodes].sort(cardSort);
 
-  const cards = data.cards;
-  return <CardList onCardClick={onCardClick} cards={cards.nodes} />;
+  return <CardList onCardClick={onCardClick} cards={sortedNodes} />;
 }
 
 AllCards.propTypes = {

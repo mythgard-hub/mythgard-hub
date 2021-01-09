@@ -97,13 +97,15 @@ export const cardSort = (cardNodeA, cardNodeB) => {
   const [cardAFactions, cardBFactions] = [cardNodeA, cardNodeB].map(
     getCardNodeFactions
   );
-  return (
+
+  const result =
     (cardAFactions.length || 100) - (cardBFactions.length || 100) ||
     FACTION_ORDER.indexOf(cardAFactions[0]) -
       FACTION_ORDER.indexOf(cardBFactions[0]) ||
     FACTION_ORDER.indexOf(cardAFactions[1]) -
       FACTION_ORDER.indexOf(cardBFactions[1]) ||
     cardNodeA.mana - cardNodeB.mana ||
-    cardNodeA.name.localeCompare(cardNodeB.name)
-  );
+    cardNodeA.name.localeCompare(cardNodeB.name);
+
+  return result;
 };
