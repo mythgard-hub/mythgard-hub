@@ -365,7 +365,7 @@ mutation UpdateDeckAndRemoveCards(
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_ASC, first: 4, filter: {
       deck: {
-        deckFeaturedByDeckIdExists: true
+        deckFeaturedExists: true
       }
     }) {
       ${deckPreviewsFragment}
