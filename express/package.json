@@ -10,12 +10,12 @@
   "author": "Alex Middeleer",
   "license": "MIT",
   "dependencies": {
-    "@graphile-contrib/pg-simplify-inflector": "^5.0.0-beta.1",
+    "@graphile-contrib/pg-simplify-inflector": "6.1.0",
     "compression": "^1.7.4",
     "express": "4.17.1",
-    "helmet": "^3.21.0",
-    "postgraphile": "4.9.2",
-    "postgraphile-plugin-connection-filter": "^1.1.2"
+    "helmet": "4.3.1",
+    "postgraphile": "4.10.0",
+    "postgraphile-plugin-connection-filter": "2.1.1"
   },
   "devDependencies": {
     "eslint": "^6.0.1",
