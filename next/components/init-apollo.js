@@ -1,7 +1,7 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from '@apollo/client/cache';
+import { ApolloClient } from '@apollo/client';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { setContext } from '@apollo/client/link/context';
 import Cookies from 'js-cookie';
 import fetch from 'isomorphic-unfetch';
 

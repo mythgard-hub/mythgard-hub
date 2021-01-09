@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { ApolloConsumer } from 'react-apollo';
+import { ApolloConsumer } from '@apollo/client';
 import Link from 'next/link';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import UserContext from '../components/user-context';

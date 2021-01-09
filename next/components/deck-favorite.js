@@ -4,7 +4,7 @@ import favoriteDeckMutation from '../lib/mutations/deck-favorite';
 import removeDeckFavoriteMutation from '../lib/mutations/deck-remove-favorite';
 import UserContext from './user-context';
 import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import ErrorMessage from './error-message.js';
 import { ThemeContext } from './theme-context';
 import Router from 'next/router';

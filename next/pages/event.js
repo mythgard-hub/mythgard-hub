@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import ErrorMessage from '../components/error-message';
 import LargeTable from '../components/large-table.js';
 import FactionsIndicator from '../components/factions-indicator.js';

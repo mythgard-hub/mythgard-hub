@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import CompactDeckList from './compact-deck-list.js';
 import { topDeckPreviewsQuery as decksQuery } from '../lib/deck-queries.js';
 

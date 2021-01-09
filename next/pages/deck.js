@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { withRouter } from 'next/router';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import ErrorMessage from '../components/error-message';
 import Deck from '../components/deck';
 import Layout from '../components/layout';

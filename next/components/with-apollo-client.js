@@ -18,7 +18,7 @@ const WithApolloClient = App => {
       const apollo = initApollo();
       if (!process.browser) {
         try {
-          const { getDataFromTree } = await import('@apollo/react-ssr');
+          const { getDataFromTree } = await import('@apollo/client/react/ssr');
           // Run all GraphQL queries
           await getDataFromTree(
             <App
@@ -30,8 +30,10 @@ const WithApolloClient = App => {
           );
         } catch (error) {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
-          // Handle them in components via the data.error prop:
-          // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
+          // Handle them in components via the data.error prop
+          console.error(
+            '----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'
+          );
           console.error('Error while running `getDataFromTree`', error);
         }
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useState } from 'react';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 import deleteDeck from '../lib/mutations/delete-deck';
 import UserContext from '../components/user-context';
 

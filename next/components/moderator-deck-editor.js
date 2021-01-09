@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { handleInputChangeHooks } from '../lib/form-utils.js';
 import { updateDeck as deckQuery } from '../lib/deck-queries.js';
 

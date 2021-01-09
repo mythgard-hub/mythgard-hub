@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import ErrorMessage from './error-message';
 import { userDecksQuery } from '../lib/deck-queries';
 import DeckPreviewsColumn from './deck-previews-column';

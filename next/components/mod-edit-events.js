@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { allTournaments } from '../lib/tournament-queries.js';
 import EventForm from './event-form.js';
 import EventResultsForm from './event-results-form.js';

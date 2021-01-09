@@ -1,6 +1,5 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import ErrorMessage from './error-message';
 import { formatDate } from '../lib/graphql-utils.js';
 import LargeTable from './large-table.js';
