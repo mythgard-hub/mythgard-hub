@@ -17,7 +17,7 @@ const uri = process.browser ? browserUri : serverUri;
 
 const makeCache = initialState =>
   new InMemoryCache({
-    dataIdFromObject: object => object.nodeId || null
+    dataIdFromObject: object => object.nodeId || object.id || null
   }).restore(initialState || {});
 
 // Tries to read the JWT cookie and adds an authorization
