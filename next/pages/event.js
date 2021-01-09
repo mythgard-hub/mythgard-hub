@@ -76,7 +76,7 @@ export default withRouter(({ router }) => {
               }
             `}</style>
             <tbody>
-              {tournamentDecks
+              {[...tournamentDecks]
                 .sort((a, b) => {
                   return a.rank - b.rank;
                 })
