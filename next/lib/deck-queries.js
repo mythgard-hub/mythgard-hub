@@ -1,5 +1,4 @@
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/client';
 import { formatDate } from './graphql-utils.js';
 
 const deckPreviewsFragment = `
@@ -92,7 +91,7 @@ export const getDeckSearchVars = vars => {
 };
 
 // big query for decks advanced search
-const deckSearchQuery = gql`
+export const deckSearchQuery = gql`
     query decks(
       $deckName: String
       $authorName: String
@@ -156,14 +155,6 @@ const deckSearchQuery = gql`
       }
     }
   `;
-
-export const useDeckSearchQuery = (vars, onCompleted) => {
-  const variables = getDeckSearchVars(vars);
-  return useQuery(deckSearchQuery, {
-    variables,
-    onCompleted
-  });
-};
 
 export const deckCardsQuery = gql`
   query($id: Int!) {
@@ -347,7 +338,7 @@ export const topDeckPreviewsQuery = gql`
   query deckPreview {
     deckPreviews(orderBy: DECK_CREATED_ASC, first: 4, filter: {
       deck: {
-        deckFeaturedByDeckIdExists: true
+        deckFeaturedExists: true
       }
     }) {
       ${deckPreviewsFragment}

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/client';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';
-import { useDeckSearchQuery } from '../lib/deck-queries';
+import { getDeckSearchVars, deckSearchQuery } from '../lib/deck-queries';
 import { useState } from 'react';
 import PagingControls from './paging-controls.js';
 import { scrollToTopOfElement } from '../lib/ui-utils';
@@ -77,24 +78,26 @@ export default function SomeDecks(props) {
   } = props.search;
   const archetypeValue = findValueFromLabel(ARCHETYPES, archetype);
   const typeValue = findValueFromLabel(TYPES, type);
-  const { loading, error, data } = useDeckSearchQuery(
-    {
-      authorName,
-      deckName,
-      updatedTime,
-      cardIds,
-      factionNames,
-      isOnlyFactions,
-      archetype: archetypeValue,
-      type: typeValue,
-      pathName,
-      powerName,
-      sortBy,
-      first: pageSize,
-      offset: currentPage * pageSize
-    },
-    () => scrollToTopOfElement(listRef)
-  );
+  const variables = getDeckSearchVars({
+    authorName,
+    deckName,
+    updatedTime,
+    cardIds,
+    factionNames,
+    isOnlyFactions,
+    archetype: archetypeValue,
+    type: typeValue,
+    pathName,
+    powerName,
+    sortBy,
+    first: pageSize,
+    offset: currentPage * pageSize
+  });
+
+  const { loading, error, data } = useQuery(deckSearchQuery, {
+    variables,
+    onCompleted: () => scrollToTopOfElement(listRef)
+  });
 
   if (error) return <ErrorMessage message="Error loading decks." />;
   if (loading) return <div>Loading...</div>;
@@ -132,7 +135,7 @@ SomeDecks.propTypes = {
     isOnlyFactions: PropTypes.bool,
     updatedTime: PropTypes.string,
     sortBy: PropTypes.string,
-    archetype: PropTypes.string,
+    archetype: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
     type: PropTypes.string
   }).isRequired
 };
