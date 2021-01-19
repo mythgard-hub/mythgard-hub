@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import UserContext from '../components/user-context';
 import ReactMarkdown from 'react-markdown';
 import { handleInputChangeHooks } from '../lib/form-utils.js';

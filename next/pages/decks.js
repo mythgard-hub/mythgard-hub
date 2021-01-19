@@ -5,8 +5,8 @@ import SomeDecks from '../components/some-decks';
 import PageBanner from '../components/page-banner';
 import AllDecks from '../components/all-decks.js';
 import Layout from '../components/layout';
-import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
+import { withRouter } from 'next/router';
+import { useQuery } from '@apollo/client';
 import allCardsQuery from '../lib/queries/all-cards-query';
 import queryToParams from '../lib/url-to-search-parameters.js';
 import { searchParamsPostProcessNumArray as postProcessNumArray } from '../lib/url-to-search-parameters.js';
@@ -29,8 +29,7 @@ const searchQueryDefaults = {
 
 const cardsErr = 'Error initializing deck search';
 
-export default function DecksPage() {
-  const router = useRouter();
+function DecksPage({ router }) {
   const urlSearchQuery = queryToParams(searchQueryDefaults, router.query);
   postProcessNumArray(urlSearchQuery, 'cardIds');
   const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
@@ -75,3 +74,5 @@ export default function DecksPage() {
     </Layout>
   );
 }
+
+export default withRouter(DecksPage);

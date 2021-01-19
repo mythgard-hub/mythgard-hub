@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 
 import allPathsQuery from '../lib/queries/paths-query';
 import allPowersQuery from '../lib/queries/powers-query';

@@ -31,7 +31,10 @@ function filteredCards({ filters, onCardClick }) {
   if (loading) return null;
 
   const cards =
-    data && data.cards && data.cards.nodes && data.cards.nodes.sort(cardSort);
+    data &&
+    data.cards &&
+    data.cards.nodes &&
+    [...data.cards.nodes].sort(cardSort);
 
   return <CardList onCardClick={onCardClick} cards={cards} />;
 }

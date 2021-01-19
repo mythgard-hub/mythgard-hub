@@ -4,7 +4,7 @@ import upvoteDeckMutation from '../lib/mutations/deck-upvote.js';
 import removeDeckUpvoteMutation from '../lib/mutations/deck-remove-upvote.js';
 import UserContext from '../components/user-context';
 import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import ErrorMessage from './error-message.js';
 import { ThemeContext } from './theme-context';
 import { DECK_ICONS } from '../constants/deck.js';

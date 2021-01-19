@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import ErrorMessage from './error-message';
 import DeckList from './deck-list';

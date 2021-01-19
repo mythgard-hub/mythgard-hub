@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import ErrorMessage from './error-message';
 import FeaturedTournament from './featured-tournament.js';
 import { formatDate } from '../lib/graphql-utils.js';

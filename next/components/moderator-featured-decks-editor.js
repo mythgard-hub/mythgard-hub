@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import {
   deckFeaturedQuery,
@@ -61,7 +61,6 @@ function ModeratorFeaturedDecksEditor() {
       );
     }
   });
-
 
   if (error) {
     return 'error loading top decks';

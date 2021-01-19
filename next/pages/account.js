@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
 import Layout from '../components/layout';
 import UserContext from '../components/user-context';
-import { ApolloConsumer } from 'react-apollo';
+import { ApolloConsumer } from '@apollo/client';
 import updateUsername from '../lib/mutations/update-username';
 import UserDecks from '../components/user-decks';
 import UserFavoriteDecks from '../components/user-favorite-decks';
@@ -10,7 +10,7 @@ import PublicAccount from '../components/public-account.js';
 import Profile from '../components/profile.js';
 import AvatarPicker from '../components/avatar-picker.js';
 import Router from 'next/router';
-import { useMutation, useLazyQuery } from '@apollo/react-hooks';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import usernameQuery from '../lib/account-by-username-query.js';
 import gql from 'graphql-tag';
 

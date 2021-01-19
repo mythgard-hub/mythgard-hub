@@ -3,7 +3,7 @@ import Layout from '../components/layout';
 import PageBanner from '../components/page-banner';
 import { useState } from 'react';
 import CardSearchForm from '../components/card-search-form';
-import { useRouter } from 'next/router';
+import { withRouter } from 'next/router';
 import queryToParams from '../lib/url-to-search-parameters.js';
 
 const searchQueryDefaults = {
@@ -17,8 +17,7 @@ const searchQueryDefaults = {
   rarities: []
 };
 
-function CardsPage() {
-  const router = useRouter();
+function CardsPage({ router }) {
   const urlSearchQuery = queryToParams(searchQueryDefaults, router.query);
   const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
 
@@ -56,4 +55,4 @@ function CardsPage() {
   );
 }
 
-export default CardsPage;
+export default withRouter(CardsPage);

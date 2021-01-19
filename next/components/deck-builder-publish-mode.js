@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
-import { ApolloConsumer } from 'react-apollo';
+import { ApolloConsumer } from '@apollo/client';
 import { saveDeckWithCards } from '../lib/deck-utils.js';
 import { PAGE_MODES } from '../constants/deck-builder';
 import { clearDeckInProgress } from '../lib/deck-utils';

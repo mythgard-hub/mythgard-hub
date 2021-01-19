@@ -2,8 +2,7 @@ import App from 'next/app';
 import React from 'react';
 import Router from 'next/router';
 import withApolloClient from '../components/with-apollo-client';
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import { pageview, USE_GOOGLE_ANALYTICS } from '../lib/gtag';
 import UserContext from '../components/user-context';
 import redirect from '../lib/redirect';
@@ -79,13 +78,11 @@ class MyApp extends App {
     const { Component, apolloClient, ...pageProps } = this.props;
     const { user } = this.state;
     return (
-      <ApolloHooksProvider client={apolloClient}>
-        <ApolloProvider client={apolloClient}>
-          <UserContext.Provider value={{ user, updateUser: this.updateUser }}>
-            <Component {...pageProps} />
-          </UserContext.Provider>
-        </ApolloProvider>
-      </ApolloHooksProvider>
+      <ApolloProvider client={apolloClient}>
+        <UserContext.Provider value={{ user, updateUser: this.updateUser }}>
+          <Component {...pageProps} />
+        </UserContext.Provider>
+      </ApolloProvider>
     );
   }
 }

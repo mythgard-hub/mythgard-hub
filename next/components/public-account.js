@@ -1,5 +1,5 @@
 import Layout from '../components/layout';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
 import UserProfile from './profile.js';
 import UserNewestDecks from './user-newest-decks.js';

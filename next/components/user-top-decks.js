@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import DeckPreviewsColumn from './deck-previews-column.js';
 import { userTopDecksQuery } from '../lib/deck-queries';
 
