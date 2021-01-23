@@ -6,6 +6,7 @@ describe('Card Page', function() {
     cy.get('[data-cy="cardName"]').should('be.visible');
     cy.get('[data-cy="cardPrimaryFaction"]').should('contain', 'Norden');
     cy.get('[data-cy="cardSecondaryFaction"]').should('contain', 'Aztlan');
+    cy.get('[data-cy="cardTertiaryFaction"]').should('not.exist');
   });
 });
 
@@ -62,5 +63,17 @@ describe('Card Page Metas From Different Set', function() {
         'contain',
         'Harmony, 2PP Mythic Minion,enchantment, Vampire, Rings of Immortality'
       );
+  });
+});
+
+describe('Card Page Metas With All Factions', function() {
+  beforeEach(() => {
+    cy.visit('/card?id=18');
+  });
+  it('looks inside head tags', function() {
+    cy.get('head title').should('contain', 'X Cost');
+    cy.get('[data-cy="cardPrimaryFaction"]').should('contain', 'Norden');
+    cy.get('[data-cy="cardSecondaryFaction"]').should('contain', 'Aztlan');
+    cy.get('[data-cy="cardTertiaryFaction"]').should('contain', 'Oberos');
   });
 });

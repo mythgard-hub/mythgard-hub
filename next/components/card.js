@@ -37,6 +37,7 @@ export default function Card({ card }) {
 
   const primaryFaction = factions.length ? factions[0] : '';
   const secondaryFaction = factions.length > 1 ? factions[1] : '';
+  const tertiaryFaction = factions.length > 2 ? factions[2] : '';
 
   return (
     <>
@@ -157,6 +158,15 @@ export default function Card({ card }) {
                 {secondaryFaction}
               </div>
             </li>
+            {tertiaryFaction && (
+              <li className="card-detail">
+                <div className="card-detail-label">Tertiary Faction</div>
+                <hr />
+                <div className="card-detail-text" data-cy="cardTertiaryFaction">
+                  {tertiaryFaction}
+                </div>
+              </li>
+            )}
             <li className="card-detail">
               <div className="card-detail-label">Cost</div>
               <hr />
