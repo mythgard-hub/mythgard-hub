@@ -407,7 +407,7 @@ describe('Decks Page', function() {
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', 'multi faction card');
+      .should('contain', 'other dragons');
   });
   it('should sort decks - by rating', function() {
     // the default sort is hot
