@@ -200,7 +200,7 @@ INSERT INTO mythgard.deck("name", "modified", "type")
     '{GAUNTLET}'::mythgard.deckType[]);
 INSERT INTO mythgard.deck("name", "author_id", "modified", "archetype", "type")
   VALUES (
-    'three faction card',
+    'multi faction card',
     4,
     current_date - interval '3 month',
     '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
