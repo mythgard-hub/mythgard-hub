@@ -1,3 +1,7 @@
+# Changelog v1.15.1
+
+    * Upgrades to our libraries (Apollo mainly) and fixes for SSR
+
 # Changelog v1.15.0
 
     * miscellaneous upgrades
