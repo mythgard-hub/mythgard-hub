@@ -200,7 +200,7 @@ INSERT INTO mythgard.deck("name", "modified", "type")
     '{GAUNTLET}'::mythgard.deckType[]);
 INSERT INTO mythgard.deck("name", "author_id", "modified", "archetype", "type")
   VALUES (
-    'other norden aztlan',
+    'multi faction card',
     4,
     current_date - interval '3 month',
     '{CONTROL, MIDRANGE}'::mythgard.deckArchetype[],
@@ -276,7 +276,7 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (5, 4, 2
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (6, 1, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
   VALUES (7, 1, 1), (7, 2, 1), (7, 3, 1), (7, 4, 1), (7, 5, 1), (7, 6, 1), (7, 18, 4);
-INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (8, 1, 1), (8, 2, 1);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (8, 18, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (9, 4, 2);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (10, 1, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
@@ -547,6 +547,11 @@ INSERT INTO mythgard.card_faction("card_id","faction_id")
     (15, 1),
     (16, 1),
     (17, 2),
+    (18, 1),
+    (18, 2),
+    (18, 3),
+    (18, 4),
+    (18, 5),
     (18, 6),
     (19, 6);
 

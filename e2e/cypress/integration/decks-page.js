@@ -50,7 +50,7 @@ const deckNameKittyCats = 'kitty cats';
 const numAllDecks = 12;
 const numRecentDecks = 9;
 const numCatDecks = 3;
-const numNordenDecks = 3;
+const numNordenDecks = 2;
 
 describe('Decks Page', function() {
   beforeEach(() => {
@@ -388,7 +388,7 @@ describe('Decks Page', function() {
       .should('contain', deckNameAllFactions);
   });
   it('should sort decks - by name', function() {
-    // the default search is hot
+    // the default sort is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
       .find(deckName)
@@ -407,10 +407,10 @@ describe('Decks Page', function() {
     cy.get(deckListItem)
       .first()
       .find(deckName)
-      .should('contain', 'other norden aztlan');
+      .should('contain', 'other dragons');
   });
   it('should sort decks - by rating', function() {
-    // the default search is hot
+    // the default sort is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
       .find(deckName)
@@ -430,7 +430,7 @@ describe('Decks Page', function() {
     cy.get('[data-cy="deckVotesCell"]:first').should('contain', 0);
   });
   it('should sort decks - by views', function() {
-    // the default search is hot
+    // the default sort is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
       .find(deckName)
@@ -452,7 +452,7 @@ describe('Decks Page', function() {
       .should('contain', 'cats');
   });
   it('should sort decks - by hotness', function() {
-    // the default search is hot
+    // the default sort is hot
     cy.get(deckSearchAllDecksLoaded);
     cy.get(deckListItem)
       .find(deckName)
