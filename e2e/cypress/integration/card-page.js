@@ -66,7 +66,7 @@ describe('Card Page Metas From Different Set', function() {
   });
 });
 
-describe('Card Page Metas With All Factions', function() {
+describe('Card Page With More Than 2 Factions', function() {
   beforeEach(() => {
     cy.visit('/card?id=18');
   });
