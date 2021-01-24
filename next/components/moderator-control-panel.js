@@ -7,11 +7,19 @@ import ModAccountEditor from './mod-account-editor.js';
 import ModEventCreator from './mod-event-creator.js';
 import ModEditEvents from './mod-edit-events.js';
 import ModEditSpoilers from './mod-edit-spoilers.js';
+import ModEditCards from './mod-edit-cards.js';
 import TabGroup from './tab-group.js';
 import { useState } from 'react';
 
 function moderatorControlPanel() {
-  const tabs = ['Decks', 'Config and Media', 'Accounts', 'Events', 'Spoilers'];
+  const tabs = [
+    'Decks',
+    'Config and Media',
+    'Accounts',
+    'Events',
+    'Spoilers',
+    'Cards'
+  ];
   const [currentTab, setChosenTab] = useState('Decks');
   const onChangeTab = tab => setChosenTab(tab);
 
@@ -45,6 +53,7 @@ function moderatorControlPanel() {
         </div>
       )}
       {currentTab === 'Spoilers' && <ModEditSpoilers />}
+      {currentTab === 'Cards' && <ModEditCards />}
     </>
   );
 }
