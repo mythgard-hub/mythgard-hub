@@ -281,6 +281,8 @@ INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (9, 4, 2
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity") VALUES (10, 1, 1);
 INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
   VALUES (11, 1, 1), (11, 2, 1), (11, 3, 1), (11, 4, 1), (11, 5, 1), (11, 6, 1), (11, 18, 4);
+INSERT INTO mythgard.card_deck("deck_id", "card_id", "quantity")
+  VALUES (12, 7, 1), (12, 6, 1);
 
 ALTER TABLE mythgard.card_deck ENABLE ROW LEVEL SECURITY;
 -- Admin users can make any changes and read all rows
