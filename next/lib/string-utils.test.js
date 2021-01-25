@@ -1,4 +1,4 @@
-import { ordinalized } from './string-utils';
+import { ordinalized, cardNameToSlug } from './string-utils';
 
 describe('String utility methods', () => {
   describe('Test ordinalized', () => {
@@ -21,6 +21,32 @@ describe('String utility methods', () => {
       expect(ordinalized([1, 1])).toBe('');
       expect(ordinalized({ a: 'a' })).toBe('');
       expect(ordinalized(null)).toBe('');
+    });
+  });
+
+  describe('Test cardNameToSlug', () => {
+    it('Should a name with underscores', function() {
+      expect(cardNameToSlug('a b')).toBe('a_b');
+      expect(cardNameToSlug('A b')).toBe('A_b');
+      expect(cardNameToSlug('a B')).toBe('a_B');
+      expect(cardNameToSlug('A B')).toBe('A_B');
+      expect(cardNameToSlug('Foo Bar')).toBe('Foo_Bar');
+      expect(cardNameToSlug('Foo Bar 4th')).toBe('Foo_Bar_4th');
+    });
+
+    it('Should handle single word gracefully', function() {
+      expect(cardNameToSlug('a')).toBe('a');
+      expect(cardNameToSlug(' a ')).toBe('_a_');
+      expect(cardNameToSlug(' a')).toBe('_a');
+      expect(cardNameToSlug('a ')).toBe('a_');
+    });
+
+    it('shuold handle bad data gracefully', function() {
+      expect(cardNameToSlug(1)).toBe(null);
+      expect(cardNameToSlug([])).toBe(null);
+      expect(cardNameToSlug([1, 2])).toBe(null);
+      expect(cardNameToSlug({})).toBe(null);
+      expect(cardNameToSlug({ a: 1, b: 2 })).toBe(null);
     });
   });
 });

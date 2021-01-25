@@ -37,3 +37,11 @@ export const ordinalized = i => {
     return '';
   }
 };
+
+export const cardNameToSlug = name => {
+  try {
+    return name.split(' ').join('_');
+  } catch (e) {
+    return null;
+  }
+};
