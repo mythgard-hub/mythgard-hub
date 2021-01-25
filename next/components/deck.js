@@ -78,6 +78,7 @@ export default function Deck({ deck }) {
         .left-col {
           margin-top: ${theme.spacing}px;
           flex: 1;
+          max-width: 345px;
         }
 
         .right-col {
