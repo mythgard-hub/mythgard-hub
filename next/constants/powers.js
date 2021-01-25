@@ -7,7 +7,9 @@ const powerIcons = {
   infuse: `${cdn}infuse_slug.png`,
   reconstruct: `${cdn}reanimate_slug.png`,
   mend: `${cdn}rejuvenate_slug.png`,
-  smite: `${cdn}smite_slug.png`
+  smite: `${cdn}smite_slug.png`,
+  bolser: `${cdn}Bolster.png`,
+  erode: `${cdn}Erode.png`
 };
 
 export const matchPowerToIcon = power =>
