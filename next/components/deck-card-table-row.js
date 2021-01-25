@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { ThemeContext } from './theme-context';
 import GemDot from './gem-dot';
 import { cardMainColor, imagePathSmall, formatManaCost } from '../lib/card';
-import { firstLetterUppercase } from '../lib/string-utils';
+import { cardNameToSlug, firstLetterUppercase } from '../lib/string-utils';
 import { getRarityColor } from '../constants/rarities';
 import { SUPERTYPE_IMAGES } from '../constants/supertypes.js';
+
+const cdn = process.env.MG_CARDS_CDN;
 
 export default function DeckCardsTableRow({
   deckCard,
@@ -21,6 +23,45 @@ export default function DeckCardsTableRow({
   const color = backgroundColor ? theme.cardTableName : 'white';
   const imagePath = imagePathSmall(card.name, card.set || undefined);
   const supertype = (card.supertype && card.supertype[0]) || '';
+  const cardSlugName = cardNameToSlug(card.name);
+  const cardSlug = cardSlugName && `${cdn}/deckslugs/${cardSlugName}.png`;
+
+  if (cardSlug) {
+    return (
+      <tr key={card.id} data-cy="deckCardRowSlug">
+        <style jsx>{`
+          .deck-card-quantity {
+            background-color: ${theme.cardTableRowQuantityBackground};
+            font-size: 1.3em;
+            font-style: italic;
+            padding: 0 10px;
+          }
+
+          .deck-card-slug {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            color: white;
+            background-image: url(${cardSlug});
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 45px;
+          }
+
+          .deck-card-slug span {
+            font-size: 1.5rem;
+            padding-right: 11px;
+            text-shadow: -2px 1px 3px black, -2px 1px 2px black, 0 0 10px black;
+          }
+        `}</style>
+        <td colSpan="3">
+          <div className="deck-card-slug">
+            <span>{quantity}</span>
+          </div>
+        </td>
+      </tr>
+    );
+  }
 
   return (
     <tr key={card.id} data-cy="deckCardRow">
