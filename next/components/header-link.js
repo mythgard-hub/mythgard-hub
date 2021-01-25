@@ -23,7 +23,7 @@ function HeaderLink(props) {
           text-transform: uppercase;
           text-decoration: none;
           margin-right: 22px;
-          font-size: 16px;
+          font-size: 20px;
           white-space: nowrap;
         }
 
