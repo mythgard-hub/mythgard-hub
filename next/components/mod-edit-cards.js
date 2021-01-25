@@ -32,9 +32,13 @@ function ModEditCards() {
   };
   const formatAtkAndDef = card => {
     card.atk = card.atk ? parseInt(card.atk, 10) : null;
-    card.def = card.atk ? parseInt(card.def, 10) : null;
-    if (isNaN(card.atk) || isNaN(card.def)) {
-      error = `${card.name} has invalid atk or def`;
+    card.def = card.def ? parseInt(card.def, 10) : null;
+    const checkInt = (c, t) => c[t] !== null && isNaN(c[t]);
+    if (checkInt(card, 'atk')) {
+      error = `${card.name} has invalid atk`;
+    }
+    if (checkInt(card, 'def')) {
+      error = `${card.name} has invalid def`;
     }
     return card;
   };
