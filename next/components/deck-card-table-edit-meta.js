@@ -10,6 +10,7 @@ export default function DeckCardsTableEditMeta(props) {
       <style jsx>{`
         .meta-value {
           display: flex;
+          align-items: center;
         }
         .no-meta-value-selected-container {
           display: flex;
