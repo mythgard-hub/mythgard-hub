@@ -1,3 +1,7 @@
+# Changelog v1.16.1
+
+  * support paths and powers and hide spoilers
+
 # Changelog v1.16.0
 
   * new set support
