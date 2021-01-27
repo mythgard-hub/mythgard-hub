@@ -12,6 +12,9 @@ class Header extends React.Component {
     return (
       <div className="header">
         <style jsx>{`
+          nav {
+            width: 100%;
+          }
           .header {
             background: ${theme.background};
             padding: ${theme.spacing / 2}px 0;
@@ -23,11 +26,15 @@ class Header extends React.Component {
           .header .home {
             display: flex;
             position: relative;
-            margin-right: 15px;
             align-items: center;
           }
           .header .home .wordmark {
             width: 205px;
+          }
+          @media only screen and (min-width: 576px) {
+            .header .home {
+              margin-right: 35px;
+            }
           }
           .header .home .crownIcon {
             width: 80px;
@@ -57,6 +64,7 @@ class Header extends React.Component {
             list-style: none;
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
           }
 
           @media only screen and (max-width: 575.98px) {
@@ -111,7 +119,7 @@ class Header extends React.Component {
                 Deck Builder
               </HeaderLink>
             </li>
-            <li>
+            <li style={{ display: 'none' }}>
               <HeaderLink cyName="spoilers" route="/spoilers">
                 Spoilers
               </HeaderLink>

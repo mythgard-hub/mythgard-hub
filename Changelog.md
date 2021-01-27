@@ -1,3 +1,15 @@
+# Changelog v1.16.1
+
+  * support paths and powers and hide spoilers
+
+# Changelog v1.16.0
+
+  * new set support
+
+# Changelog v1.15.7
+
+    * Upgrades to our libraries (Apollo mainly) and fixes for SSR
+
 # Changelog v1.15.0
 
     * miscellaneous upgrades

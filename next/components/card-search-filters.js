@@ -129,6 +129,12 @@ export default function CardSearchFilters(props) {
           <CardSearchFiltersSetOption
             cardset={cardset}
             setCardSet={setCardSet}
+            optionName="The Winter War"
+          />
+          <br />
+          <CardSearchFiltersSetOption
+            cardset={cardset}
+            setCardSet={setCardSet}
             optionName="All sets"
             optionValue="all"
           />
