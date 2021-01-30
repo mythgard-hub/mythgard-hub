@@ -170,7 +170,7 @@ describe('Cards Page', function() {
       .then(length => {
         expect(allCardsLength).to.be.above(length, 'set filter works');
         cy.get(cardsetFilterOptions)
-          .eq(2)
+          .eq(3)
           .click();
         cy.get(cardSearchSubmit).click();
         return getPagingTotalAsInt();
