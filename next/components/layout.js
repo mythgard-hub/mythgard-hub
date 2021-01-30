@@ -63,28 +63,16 @@ function Layout({ title, desc, image, router, children }) {
             background: ${theme.background};
           }
 
-          @media only screen and (min-width: 576px) {
+          @media only screen and (min-width: 1100px) {
             .container:before {
               content: '';
               position: fixed;
               z-index: -1;
               top: 0;
               left: 0;
-              width: calc((100% - 960px) / 2);
+              width: 100%;
               height: 100%;
-              background-image: url(${process.env.MG_CDN}/backgrounds/BG-LeftSide.png);
-              background-size: cover;
-            }
-
-            .container:after {
-              content: '';
-              position: fixed;
-              z-index: -1;
-              top: 0;
-              right: 0;
-              width: calc((100% - 960px) / 2);
-              height: 100%;
-              background: url(${process.env.MG_CDN}/backgrounds/BG-RightSide.png);
+              background-image: url(${process.env.MG_CDN}/backgrounds/bg_set31.png);
               background-size: cover;
             }
           }
