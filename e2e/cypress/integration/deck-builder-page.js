@@ -8,7 +8,6 @@ import {
   cardSearchText,
   superTypePickerBtn,
   manaPicker,
-  rarityPicker,
   cardsetFilterOptions,
   rarityPickerBtn,
   getPagingTotalAsInt,
@@ -147,7 +146,7 @@ describe('Deck builder page', () => {
 
         cy.get(rightSlider).click();
         cy.get(cardsetFilterOptions)
-          .eq(2)
+          .eq(3)
           .click();
         cy.get(leftSlider).click();
         return getPagingTotalAsInt();
@@ -178,7 +177,7 @@ describe('Deck builder page', () => {
           .eq(0)
           .click();
 
-        cy.get('[data-cy="deck-builder-card-quantity"]').should('contain', '2');
+        cy.get('[data-cy="deckCardQuantity"]').should('contain', '2');
       });
   });
 
