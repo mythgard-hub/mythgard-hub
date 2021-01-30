@@ -38,6 +38,10 @@ export const imagePathMedium = (name, set = 'core') => {
   return `${cdn}/${set.toLowerCase()}/m/${nameToImage(name)}.png`;
 };
 
+export const imagePathSlug = name => {
+  return `${cdn}/deckslugs/${nameToImage(name)}.png`;
+};
+
 export const mainFaction = card => {
   try {
     return card.cardFactions.nodes[0].faction.name;
