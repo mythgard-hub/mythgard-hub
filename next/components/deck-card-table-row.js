@@ -51,6 +51,8 @@ export default function DeckCardsTableRow({
         }
         .deck-card-slug-image {
           height: 40px;
+          min-width: 297.5px;
+          width: 297.5px;
         }
         // bigger version of the image (hidden until hover)
         .deck-card-slug-container::before {
