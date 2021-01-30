@@ -17,14 +17,18 @@ export default function DeckCardsTableRow({
   const cardSlug = imagePathSlug(card.name);
 
   return (
-    <div key={card.id} className="deck-card-row" data-cy="deckCardRowSlug">
+    <div key={card.id} className="deck-card-row" data-cy="deckCardRow">
       <style jsx>{`
         .deck-card-row {
           display: flex;
         }
         .deck-card-plus-minus {
+          position: absolute;
+          right: 50px;
           display: flex;
           align-items: center;
+          opacity: 0;
+          visibility: hidden;
         }
         .deck-card-plus-minus button {
           margin-left: 5px;
@@ -62,6 +66,7 @@ export default function DeckCardsTableRow({
           font-size: 1.5rem;
           text-shadow: -2px 1px 3px black, -2px 1px 2px black, 0 0 10px black;
           position: relative;
+          width: 15px;
           right: 21px;
         }
         .deck-delete-card {
@@ -72,7 +77,8 @@ export default function DeckCardsTableRow({
         }
         @media (hover: hover) {
           // Show the hover image (but only on devices that have hover)
-          .deck-card-slug:hover .deck-card-slug-container::before {
+          .deck-card-slug:hover .deck-card-slug-container::before,
+          .deck-card-slug:hover .deck-card-plus-minus {
             visibility: visible;
             opacity: 1;
           }
@@ -81,12 +87,36 @@ export default function DeckCardsTableRow({
       <Link href={`/card?id=${card.id}`}>
         <div className="deck-card-slug">
           <div className="deck-card-slug-container">
-            <img
-              data-cy="deckCardSlugImage"
-              className="deck-card-slug-image"
-              src={cardSlug}
-              alt={card.name}
-            />
+            <a data-cy="deckCardLink">
+              <img
+                data-cy="deckCardSlugImage"
+                className="deck-card-slug-image"
+                src={cardSlug}
+                alt={card.name}
+              />
+            </a>
+            {increaseCardQuantity && decreaseCardQuantity && (
+              <div className="deck-card-plus-minus">
+                <button
+                  data-cy="deckAddCard"
+                  onClick={e => {
+                    e.stopPropagation();
+                    increaseCardQuantity(deckCard);
+                  }}
+                >
+                  +
+                </button>
+                <button
+                  data-cy="deckRemoveCard"
+                  onClick={e => {
+                    e.stopPropagation();
+                    decreaseCardQuantity(deckCard);
+                  }}
+                >
+                  -
+                </button>
+              </div>
+            )}
             <span
               data-cy="deckCardQuantity"
               className="deck-card-slug-quantity"
@@ -96,22 +126,6 @@ export default function DeckCardsTableRow({
           </div>
         </div>
       </Link>
-      {increaseCardQuantity && decreaseCardQuantity && (
-        <div className="deck-card-plus-minus">
-          <button
-            data-cy="deckAddCard"
-            onClick={() => increaseCardQuantity(deckCard)}
-          >
-            +
-          </button>
-          <button
-            data-cy="deckRemoveCard"
-            onClick={() => decreaseCardQuantity(deckCard)}
-          >
-            -
-          </button>
-        </div>
-      )}
       {deleteCard && (
         <div
           colSpan="1"

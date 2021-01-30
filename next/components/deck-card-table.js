@@ -91,9 +91,10 @@ export default function DeckCardsTable({
           margin-top: 10px;
           padding: 10px;
         }
-        .deck-card-table {
+        .deck-meta-info {
           border-collapse: collapse;
           width: 100%;
+          margin-bottom: 10px;
         }
         .deck-author {
           margin: 10px 0;
@@ -107,11 +108,11 @@ export default function DeckCardsTable({
         <EditDeckName deckName={deck.deckName} onChange={updateDeckName} />
       )}
       {!onlyTable && <DeckBuilderUser />}
-      <table className="deck-card-table" data-cy="deckCardTable">
+      <table className="deck-meta-info" data-cy="deckCardTable">
         <tbody>
           <tr>
-            <td colSpan={2}>Path</td>
-            <td colSpan={colspan}>
+            <td>Path</td>
+            <td>
               <DeckCardsTableEditMeta
                 metaName="path"
                 showEdit={!onlyTable}
@@ -125,8 +126,8 @@ export default function DeckCardsTable({
             </td>
           </tr>
           <tr>
-            <td colSpan={2}>Power</td>
-            <td colSpan={colspan}>
+            <td>Power</td>
+            <td>
               <DeckCardsTableEditMeta
                 metaName="power"
                 showEdit={!onlyTable}
@@ -139,17 +140,18 @@ export default function DeckCardsTable({
               />
             </td>
           </tr>
-          {sortedCards.map((deckCard, i) => (
-            <DeckCardsTableRow
-              key={i}
-              deckCard={deckCard}
-              deleteCard={deleteCard}
-              increaseCardQuantity={increaseCardQuantity}
-              decreaseCardQuantity={decreaseCardQuantity}
-            />
-          ))}
         </tbody>
       </table>
+      <div></div>
+      {sortedCards.map((deckCard, i) => (
+        <DeckCardsTableRow
+          key={i}
+          deckCard={deckCard}
+          deleteCard={deleteCard}
+          increaseCardQuantity={increaseCardQuantity}
+          decreaseCardQuantity={decreaseCardQuantity}
+        />
+      ))}
     </div>
   );
 }
