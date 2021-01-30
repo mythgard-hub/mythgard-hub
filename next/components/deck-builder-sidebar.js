@@ -78,6 +78,9 @@ export default function DeckBuilderSidebar(props) {
   return (
     <div className="deck-builder-actions">
       <style jsx>{`
+        :global(.deck-card-table-container) {
+          width: 365px;
+        }
         .deck-builder-actions {
           width: 60%;
         }

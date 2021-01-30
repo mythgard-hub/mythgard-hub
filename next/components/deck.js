@@ -140,6 +140,10 @@ export default function Deck({ deck }) {
           flex-grow: 1;
         }
 
+        :global(.deck-card-table-container) {
+          width: 325px;
+        }
+
         .gradient-hr {
           margin: 8px 0;
         }
