@@ -20,6 +20,8 @@ function _bannerWithoutLink(children, backgroundImage) {
           border-bottom: ${theme.border};
           background: url(${backgroundImage}) left no-repeat,
             ${theme.background};
+          background-position: right;
+          background-size: cover;
           height: 70px;
           display: flex;
           flex-direction: row;
@@ -31,11 +33,12 @@ function _bannerWithoutLink(children, backgroundImage) {
           padding-right: 0.5em;
           text-align: right; /* multiline situations */
           font-style: italic;
-          text-shadow: -2px 1px 3px black, -2px 1px 2px black, 0 0 10px black;
+          text-align: center;
+          white-space: nowrap;
         }
 
         .spacer1 {
-          min-width: 536px;
+          flex-basis: 536px;
           flex-grow: 0;
         }
 
@@ -45,9 +48,7 @@ function _bannerWithoutLink(children, backgroundImage) {
         }
 
         @media only screen and (max-width: 600px) {
-          .page-banner {
-            background-position: center;
-            text-shadow: 0px 0px 6px #000;
+          .page-banner .spacer2 {
           }
         }
       `}</style>
