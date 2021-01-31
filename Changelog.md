@@ -1,3 +1,7 @@
+# Changelog v1.16.2
+
+  * updated site design
+
 # Changelog v1.16.1
 
   * support paths and powers and hide spoilers
