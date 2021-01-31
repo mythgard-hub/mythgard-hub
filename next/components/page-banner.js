@@ -16,8 +16,6 @@ function _bannerWithoutLink(children, backgroundImage) {
     <div className="page-banner">
       <style jsx>{`
         .page-banner {
-          border-top: ${theme.border};
-          border-bottom: ${theme.border};
           background: url(${backgroundImage}) left no-repeat,
             ${theme.background};
           background-position: right;
