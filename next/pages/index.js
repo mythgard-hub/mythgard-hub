@@ -1,14 +1,13 @@
 import Layout from '../components/layout';
-import PageBanner from '../components/page-banner';
 import ArticleList from '../components/article-list.js';
 import TopDecks from '../components/top-decks.js';
 import { useContext } from 'react';
 import { ThemeContext } from '../components/theme-context.js';
 import { mgColors } from '../lib/theme.js';
-import Link from 'next/link';
 import useConfig from '../lib/use-config.js';
 import NewestDecks from '../components/newest-decks';
 import MultiColumn from '../components/multi-column.js';
+import BigBanner from '../components/big-banner.js';
 
 const defaultPatchNoteUrl =
   'https://www.mythgardgame.com/permalink/patch-notes-v0-17-3---holiday-edition';
@@ -21,9 +20,13 @@ const index = () => {
   const now = new Date();
 
   let banner = (
-    <Link href="/new-player-guide">
-      <a className="newPlayerGuideBanner">New Player Guide</a>
-    </Link>
+    <BigBanner
+      href="/new-player-guide"
+      src="https://cdn.mythgardhub.com/banner/npg_set3.png"
+      mobileSrc="https://cdn.mythgardhub.com/banner/npg_set3_mobile.png"
+    >
+      NEW PLAYER GUIDE
+    </BigBanner>
   );
 
   if (
@@ -48,24 +51,23 @@ const index = () => {
       <style jsx>{`
         :global(.newPlayerGuideBanner) {
           display: block;
-          border-top: ${theme.border};
-          border-bottom: ${theme.border};
           background: ${theme.background}
-            url(https://cdn.mythgardhub.com/banner/Banner_Bulwark.jpg) no-repeat;
-          height: 136px;
-          padding-right: 0.5em;
+            url(https://cdn.mythgardhub.com/banner/npg_set3.png) no-repeat;
+          height: 171px;
+          padding-right: 3.5em;
           display: flex;
           flex-direction: row-reverse;
           align-items: center;
-          color: ${theme.fontColorHeading};
+          color: ${theme.background};
           font-size: 1.8em;
           font-weight: 700;
           text-align: right;
           vertical-align: middle;
           text-decoration: none;
+          font-style: italic;
         }
         :global(.newPlayerGuideBanner:hover) {
-          color: ${mgColors.orange};
+          color: ${mgColors.white};
         }
         :global(.promo-banner) {
           background-image: url(${homeBannerAd && homeBannerAd.imgUrl});
@@ -123,16 +125,19 @@ const index = () => {
           text-transform: lowercase;
         }
       `}</style>
-      <div className="patchNotes">
-        <a href={patchNoteUrl}>
-          <PageBanner image={PageBanner.IMG_PATCH_NOTES}>
-            Latest Patch Notes
-            <br />
-            <span className="patchNotes__v">v</span>
-            {patchVersion}
-          </PageBanner>
-        </a>
-      </div>
+
+      <BigBanner
+        href="{patchNoteUrl}"
+        src="https://cdn.mythgardhub.com/banner/patchnotes_set3.png"
+        mobileSrc="https://cdn.mythgardhub.com/banner/patchnotes_set3_mobile.png"
+      >
+        <div>
+          Latest Patch Notes
+          <br />
+          <span className="patchNotes__v">v</span>
+          {patchVersion}
+        </div>
+      </BigBanner>
     </Layout>
   );
 };

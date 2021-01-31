@@ -79,9 +79,8 @@ export default function WelcomeBanner() {
         Contact
       </a>
       <a href={process.env.PATREON_URL} className="welcome-message">
-        Welcome to the Mythgard Hub Beta Launch - NEW: Mythgard Hub&apos;s
-        Patreon is here! Want to show more support for our site? Check it out
-        today.
+        NEW: Mythgard Hub&apos;s Patreon is here! Want to show more support for
+        our site? Check it out today.
       </a>
 
       <span className="spacer"></span>

@@ -50,14 +50,6 @@ class Header extends React.Component {
             position: relative;
           }
 
-          .wordmarkWrapper:after {
-            content: 'BETA';
-            top: -20px;
-            right: -33px;
-            position: absolute;
-            color: #ce0000;
-          }
-
           ul {
             padding: 0;
             margin: 0;
