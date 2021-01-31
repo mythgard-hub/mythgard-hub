@@ -1,6 +1,6 @@
-# changelog v1.16.3
+# changelog v1.16.4
 
-  * fixed patch notes
+  * fixed banner borders
 
 # changelog v1.16.2
 
