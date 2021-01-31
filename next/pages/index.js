@@ -127,7 +127,7 @@ const index = () => {
       `}</style>
 
       <BigBanner
-        href="{patchNoteUrl}"
+        href={patchNoteUrl}
         src="https://cdn.mythgardhub.com/banner/patchnotes_set3.png"
         mobileSrc="https://cdn.mythgardhub.com/banner/patchnotes_set3_mobile.png"
       >

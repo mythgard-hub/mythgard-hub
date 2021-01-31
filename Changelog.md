@@ -1,5 +1,9 @@
 # Changelog v1.16.2
 
+  * Fixed patch notes
+
+# Changelog v1.16.2
+
   * updated site design
 
 # Changelog v1.16.1
