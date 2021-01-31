@@ -59,7 +59,7 @@ class Header extends React.Component {
             justify-content: space-between;
           }
 
-          @media only screen and (max-width: 575.98px) {
+          @media only screen and (max-width: 920px) {
             .header {
               flex-direction: column;
             }
