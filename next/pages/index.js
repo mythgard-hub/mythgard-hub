@@ -23,6 +23,7 @@ const index = () => {
     <BigBanner
       href="/new-player-guide"
       src="https://cdn.mythgardhub.com/banner/npg_set3.png"
+      mobileSrc="https://cdn.mythgardhub.com/banner/npg_set3_mobile.png"
     >
       NEW PLAYER GUIDE
     </BigBanner>
@@ -128,6 +129,7 @@ const index = () => {
       <BigBanner
         href="{patchNoteUrl}"
         src="https://cdn.mythgardhub.com/banner/patchnotes_set3.png"
+        mobileSrc="https://cdn.mythgardhub.com/banner/patchnotes_set3_mobile.png"
       >
         <div>
           Latest Patch Notes
