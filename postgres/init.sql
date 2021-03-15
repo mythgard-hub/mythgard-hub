@@ -72,12 +72,12 @@ INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('Ghul', 'rock', 'Earth Enchantment', '1', 'R', 'RARE', '{MINION}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype)
   VALUES ('X Cost', 'lifelink', 'vampire', '-1', 'G', 'MYTHIC', '{MINION, ENCHANTMENT}');
-INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
-  VALUES ('0 Cost 0 attack 0 defense', 'lifelink', 'vampire', '0', '0', '0', 'G', 'MYTHIC', '{MINION, ENCHANTMENT}');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype, cardset)
   VALUES ('New Set', 'example of the new set', 'vampire', '2', 'PP', 'MYTHIC', '{MINION, ENCHANTMENT}', 'Rings of Immortality');
 INSERT INTO mythgard.card (name, rules, subtype, mana, gem, rarity, supertype, spawnonly)
   VALUES ('Statue', 'example of spawn only (hidden on card page)', 'Construct', '2', 'Y', 'COMMON', '{MINION}', TRUE);
+INSERT INTO mythgard.card (name, rules, subtype, atk, def, mana, gem, rarity, supertype)
+  VALUES ('0 Cost 0 attack 0 defense', 'lifelink', 'vampire', '0', '0', '0', 'G', 'MYTHIC', '{MINION, ENCHANTMENT}');
 
 CREATE TABLE mythgard.card_spawn (
   card_id int CONSTRAINT spawner_card_id_fkey REFERENCES mythgard.card (id),
