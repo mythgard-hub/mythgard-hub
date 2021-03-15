@@ -5,6 +5,11 @@ import { ThemeContext } from './theme-context';
 const cdn = process.env.MG_CDN;
 const images = [
   {
+    key: 0,
+    label: '0',
+    link: `${cdn}/filters/Filter-Icons_0000s_0001s_0006_0.png`
+  },
+  {
     key: 1,
     label: '1',
     link: `${cdn}/filters/Filter-Icons_0000s_0001s_0005_1.png`
@@ -52,8 +57,8 @@ export default function NumericFilterGroup({ cyName, selected, onChange }) {
       <style jsx>{`
         img {
           cursor: pointer;
-          height: 30px;
-          margin-right: 20px;
+          height: 28px;
+          margin-right: 15px;
           opacity: 0.6;
         }
 
